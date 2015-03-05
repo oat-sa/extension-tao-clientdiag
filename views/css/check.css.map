@@ -1,0 +1,7 @@
+{
+"version": 3,
+"mappings": ";;;;AAEA,YAAY,GACV,KAAK,EAAE,KAAK,EACZ,UAAU,EAAE,MAAM,EAClB,MAAM,EAAE,WAAW;;AAErB,QAAQ,GACN,UAAU,EAAE,0DAA0D,EACtE,MAAM,EAAE,IAAI",
+"sources": ["../scss/check.scss"],
+"names": [],
+"file": "check.css"
+}
