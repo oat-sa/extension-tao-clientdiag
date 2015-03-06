@@ -40,7 +40,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
     }
 
     public function check(){
-        if(!empty($this->getRequest()->getParameters())){
+        if($this->getRequest()->hasParameter('os')){
             $this->getData();
             $store = new DataStorage($this->browser, $this->browserVersion, $this->ip, $this->os, $this->osVersion);
             $checker = new CompatibilityCheckerModel($this->browser, $this->browserVersion, $this->os, $this->osVersion);
