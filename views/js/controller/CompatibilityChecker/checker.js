@@ -17,7 +17,7 @@ define([
 
         _start : function(){
 
-            $('#proceed').remove();
+            $('.index').remove();
             var $info = $('#checker-box');
             $info.append('<div class="loading"></div>');
             //browser
