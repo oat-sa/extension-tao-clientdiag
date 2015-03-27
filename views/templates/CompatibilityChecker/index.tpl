@@ -39,10 +39,10 @@ use oat\tao\helpers\Layout;
 
         <div id="checker-box" class="entry-point entry-point-container">
             <h1>Outil de diagnostic</h1>
-            <h1><small>Syst&egrave;me d'exploitation et navigateur</small></h1>
-            <button id="proceed" class="saver btn btn-info small">Proc&eacute;der &agrave; l'inspection</button>
-            <div id="os" class="col-6 hidden"><h1>OS</h1></div>
-            <div id="browser" class="col-6 hidden"><h1>Browser</h1></div>
+            <h1 class="index"><small>Syst&egrave;me d'exploitation et navigateur</small></h1>
+            <button id="proceed" class="saver index btn btn-info small">Proc&eacute;der au diagnostic</button>
+            <div id="os" class="col-6 hidden"><h1>Syst&egrave;me d'exploitation</h1></div>
+            <div id="browser" class="col-6 hidden"><h1>Navigateur</h1></div>
 
             <p id="message" class="alert hidden"></p>
         </div>
