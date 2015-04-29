@@ -19,7 +19,6 @@
  *
  */
 
-use \oat\tao\model\media\MediaSource;
 use \oat\taoMediaManager\model\fileManagement\FileManager;
 use oat\taoMediaManager\model\fileManagement\TaoFileManagement;
 

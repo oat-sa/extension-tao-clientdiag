@@ -22,7 +22,8 @@
 namespace oat\taoClientDiagnostic\model;
 
 
-class CompatibilityChecker {
+class CompatibilityChecker
+{
 
     private $os;
     private $osVersion;
@@ -38,36 +39,47 @@ class CompatibilityChecker {
         $this->osVersion = $osVersion;
 
         $compatibilityFile = __DIR__ . '/../include/compatibility.json';
-        if(!file_exists($compatibilityFile)){
+        if (!file_exists($compatibilityFile)) {
             throw new \tao_models_classes_FileNotFoundException("Unable to find the compatibility file");
         }
         $this->compatibility = json_decode(file_get_contents($compatibilityFile));
     }
 
-    public function isCompatibleConfig(){
+    public function isCompatibleConfig()
+    {
         $browserVersion = explode('.', $this->browserVersion);
 
         $osVersion = explode('.', $this->osVersion);
-        foreach($this->compatibility as $rule){
-            $osVersionCompatible = true;
+        foreach ($this->compatibility as $rule) {
             //os name
-            if($rule->os === $this->os){
+            if ($rule->os === $this->os) {
                 //os Version
-                if($rule->osVersion !== ""){
-                    foreach(explode('.', $rule->osVersion) as $key=>$version){
-                        if($osVersion[$key] !== $version){
-                            $osVersionCompatible = false;
-                            break;
+                $validOs = true;
+                if ($rule->osVersion !== "") {
+                    foreach (explode('.', $rule->osVersion) as $key => $version) {
+                        if ($osVersion[$key] !== $version) {
+                            $validOs = false;
                         }
                     }
                 }
-                if($osVersionCompatible
-                    && ($rule->browser === $this->browser && (in_array($browserVersion[0], $rule->versions) || empty($rule->versions))
-                        ||$rule->browser === "")){
+
+                //browser validation
+                if (empty($rule->versions)) {
+                    // all versions work
+                    $isValid = true;
+                } else {
+                    // it is valid if the version is in the array
+                    // OR if the browser is chrome or firefox and it is a newer version than those in the array
+                    $isValid = in_array($browserVersion[0], $rule->versions) 
+                        || (in_array($rule->browser, array('Chrome','Firefox')) && $browserVersion[0] > max($rule->versions));
+                }
+
+                if ($validOs && ($rule->browser === ""
+                    || $rule->browser === $this->browser && $isValid)
+                ) {
                     return true;
                 }
             }
-
         }
 
         return false;
