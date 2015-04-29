@@ -54,23 +54,28 @@ class CompatibilityChecker
             //os name
             if ($rule->os === $this->os) {
                 //os Version
+                $validOs = true;
                 if ($rule->osVersion !== "") {
                     foreach (explode('.', $rule->osVersion) as $key => $version) {
                         if ($osVersion[$key] !== $version) {
-                            return false;
+                            $validOs = false;
                         }
                     }
                 }
 
                 //browser validation
                 if (empty($rule->versions)) {
+                    // all versions work
                     $isValid = true;
                 } else {
-                    $isValid = in_array($browserVersion[0], $rule->versions) || $browserVersion[0] > max($rule->versions);
+                    // it is valid if the version is in the array
+                    // OR if the browser is chrome or firefox and it is a newer version than those in the array
+                    $isValid = in_array($browserVersion[0], $rule->versions) 
+                        || (in_array($rule->browser, array('Chrome','Firefox')) && $browserVersion[0] > max($rule->versions));
                 }
 
-                if ($rule->browser === ""
-                    || $rule->browser === $this->browser && $isValid
+                if ($validOs && ($rule->browser === ""
+                    || $rule->browser === $this->browser && $isValid)
                 ) {
                     return true;
                 }

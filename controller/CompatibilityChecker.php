@@ -47,14 +47,14 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             $isCompatible = $checker->isCompatibleConfig();
             if($store->storeData($isCompatible)){
                 if($isCompatible){
-                    $this->returnJson(array('success' => true, 'image' => '../views/img/tick.svg'));
+                    $this->returnJson(array('success' => true, 'image' => '../views/img/tick.png'));
                     return;
                 }
             }
 
         }
 
-        $this->returnJson(array('success' => false, 'image' => '../views/img/cross.svg'));
+        $this->returnJson(array('success' => false, 'image' => '../views/img/cross.png'));
     }
 
     private function getData(){
