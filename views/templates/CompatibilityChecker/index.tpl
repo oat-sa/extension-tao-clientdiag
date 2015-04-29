@@ -25,9 +25,8 @@ use oat\tao\helpers\Layout;
 <body>
 <div id="requirement-check" class="feedback-error js-hide">
     <span class="icon-error"></span>
-    <span class="requirement-msg-area"><?=__('You must activate JavaScript in your browser to run this application.')?></span>
+    <span id="requirement-msg-area"><?=__('You must activate JavaScript in your browser to run this application.')?></span>
 </div>
-<script src="<?= Template::js('layout/requirement-check.js', 'tao')?>"></script>
 
 <div class="content-wrap">
 
@@ -46,10 +45,10 @@ use oat\tao\helpers\Layout;
             <div id="os" class="col-6 hidden"><h1>Syst&egrave;me d'exploitation</h1></div>
             <div id="browser" class="col-6 hidden"><h1>Navigateur</h1></div>
 
-            <p id="message" class="alert hidden"></p>
+            <p id="message" class="alert hidden"><img height="45" src="<?= Template::img('cross.png', 'taoClientDiagnostic') ?>"/></p>
         </div>
 </div>
-
+<script src="<?= Template::js('requirement-check.js', 'taoClientDiagnostic')?>"></script>
 <footer class="dark-bar">
     <?php
     if (!$val = Layout::getCopyrightNotice()):

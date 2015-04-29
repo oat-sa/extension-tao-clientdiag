@@ -23,6 +23,7 @@ namespace oat\taoClientDiagnostic\controller;
 
 use oat\taoClientDiagnostic\model\DataStorage;
 use \oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
+use oat\tao\helpers\Template;
 
 class CompatibilityChecker extends \tao_actions_CommonModule{
 
@@ -47,14 +48,14 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             $isCompatible = $checker->isCompatibleConfig();
             if($store->storeData($isCompatible)){
                 if($isCompatible){
-                    $this->returnJson(array('success' => true, 'image' => '../views/img/tick.png'));
+                    $this->returnJson(array('success' => true, 'image' => Template::img('tick.png', 'taoClientDiagnostic')));
                     return;
                 }
             }
 
         }
 
-        $this->returnJson(array('success' => false, 'image' => '../views/img/cross.png'));
+        $this->returnJson(array('success' => false, 'image' => Template::img('cross.png', 'taoClientDiagnostic')));
     }
 
     private function getData(){
