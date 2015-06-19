@@ -24,7 +24,7 @@ return array(
 	'label' => 'Browser and OS diagnostic tool',
 	'description' => 'Check compatibility of the os and browser of a client',
     'license' => 'GPL-2.0',
-    'version' => '1.0',
+    'version' => '1.0.1',
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array('tao' => '>=2.7.8'),
 	// for compatibility
@@ -42,11 +42,7 @@ return array(
     ),
     'uninstall' => array(
     ),
-    'autoload' => array (
-        'psr-4' => array(
-            'oat\\taoClientDiagnostic\\' => dirname(__FILE__).DIRECTORY_SEPARATOR
-        )
-    ),
+    'update' => 'oat\\taoClientDiagnostic\\scripts\\update\\Updater',
     'routes' => array(
         '/taoClientDiagnostic' => 'oat\\taoClientDiagnostic\\controller'
     ),    
