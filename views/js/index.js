@@ -29,7 +29,7 @@
     require([appConfig], function(){
 
         //loads components and the login controller manually
-        require(['jquery', 'ui', checker+'checker.js', checker+'data.js'], function($, ui){
+        require(['jquery', 'ui', checker+'checker.js'], function($, ui){
             ui.startEventComponents($('.content-wrap'));
         });
 
