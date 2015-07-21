@@ -45,7 +45,7 @@ use oat\tao\helpers\Layout;
             p.push('w=' + screen.width);
             p.push('h=' + screen.height);
             var s = d.createElement('script');
-            s.src = '<?= \tao_helpers_Uri::getBaseUrl() ?>CompatibilityChecker/whichBrowser?' + p.join('&');
+            s.src = '<?= \tao_helpers_Uri::url("whichBrowser","CompatibilityChecker","taoClientDiagnostic") ?>?' + p.join('&');
             d.getElementsByTagName('head')[0].appendChild(s);
         })();
     </script>
@@ -64,7 +64,7 @@ use oat\tao\helpers\Layout;
             'You must activate JavaScript in your browser to run this application.'
         ) ?></span>
 </div>
-<script src="<?= Template::js('requirement-check.js', 'taoClientDiagnostic') ?>"></script>
+<script src="<?= Template::js('layout/requirement-check.js', 'tao')?>"></script>
 
 <div class="content-wrap">
 

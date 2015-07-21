@@ -1,2 +1,2 @@
 <?php
-include 'C:/htdocs/tao3x/vendor/whichBrowser/detect.php';
+include __DIR__.'/../../../lib/whichBrowser/detect.php';
