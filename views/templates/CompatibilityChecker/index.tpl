@@ -35,7 +35,6 @@ use oat\tao\helpers\Layout;
     <span class="icon-error"></span>
     <span id="requirement-msg-area"><?=__('You must activate JavaScript in your browser to run this application.')?></span>
 </div>
-<script src="<?= Template::js('requirement-check.js', 'taoClientDiagnostic')?>"></script>
 
 <div class="content-wrap">
 
@@ -53,9 +52,8 @@ use oat\tao\helpers\Layout;
 
         <ul class="plain">
             <li data-result="browser"><?= __('Operating system and browser')?>
-                <div class="feedback-success small">
-                    <span class="icon-success"></span>
-                    Firefox 41.0 / Windows 8.1
+                <div id="feedback" class="small">
+                    <span></span>
                 </div>
             </li>
             <li data-result="bandwidth"><?= __('Bandwidth')?>

@@ -23,9 +23,10 @@
  */
 define([
     'jquery',
-    'layout/loading-bar'
+    'layout/loading-bar',
+    'helpers'
 
-], function ($, loadingBar) {
+], function ($, loadingBar, helpers) {
     'use strict';
 
     /**
@@ -35,6 +36,7 @@ define([
      * @param percentage
      */
     function displayQualityBar(name, percentage) {
+        if (typeof percentage === 'undefined') { percentage = 50; }
         var $bar = $('[data-result="' + name + '"]'),
             $indicator = $bar.find('.quality-indicator'),
             $barWidth = (function() {
@@ -59,24 +61,107 @@ define([
     /**
      *
      */
-    function checkBrowser() {
+    function checkBrowser(callback, options) {
+        console.log('browser');
+        var info = new WhichBrowser();
+        var osVersion = info.os.version.alias;
+        if(osVersion === null){
+            osVersion = info.os.version.original;
+        }
+
+        var information = {
+            browser: info.browser.name,
+            browserVersion: info.browser.version.original,
+            os: info.os.name,
+            osVersion: osVersion
+        };
+
 
         // which browser
-        return $.get(/* ...*/);
+        return $.post(
+            helpers._url('check', 'CompatibilityChecker', 'taoClientDiagnostic'),
+            information,
+            function(data){
+                var $feedback = $('#feedback'),
+                    $span = $('span', $feedback);
+                $feedback.append(information.browser + ' ' + information.browserVersion + ' / ' + information.os + ' ' + information.osVersion);
+                $feedback.addClass('feedback-'+data.status);
+                $span.addClass('icon-'+data.status);
+
+                displayQualityBar('browser');
+
+                if (typeof callback === "function") {
+                    callback(options);
+                }
+            },
+            "json"
+        );
     }
 
     /**
      *
      */
-    function checkBandwidth() {
-        return $.get(/* ...*/);
+    function checkBandwidth(callback) {
+        console.log('band');
+        var info = new WhichBrowser();
+        var osVersion = info.os.version.alias;
+        if(osVersion === null){
+            osVersion = info.os.version.original;
+        }
+
+        var information = {
+            browser: info.browser.name,
+            browserVersion: info.browser.version.original,
+            os: info.os.name,
+            osVersion: osVersion
+        };
+
+
+        // which browser
+        return $.post(
+            helpers._url('check', 'CompatibilityChecker', 'taoClientDiagnostic'),
+            information,
+            function(data){
+                displayQualityBar('bandwidth', 68);
+
+                if (typeof callback === "function") {
+                    callback();
+                }
+            },
+            "json"
+        );
     }
 
     /**
      *
      */
     function checkPerformance() {
-        return $.get(/* ...*/);
+        console.log('perf');
+        var info = new WhichBrowser();
+        var osVersion = info.os.version.alias;
+        if(osVersion === null){
+            osVersion = info.os.version.original;
+        }
+
+        var information = {
+            browser: info.browser.name,
+            browserVersion: info.browser.version.original,
+            os: info.os.name,
+            osVersion: osVersion
+        };
+
+
+        // which browser
+        return $.post(
+            helpers._url('check', 'CompatibilityChecker', 'taoClientDiagnostic'),
+            information,
+            function(data){
+
+                displayQualityBar('performance', 57);
+
+            },
+            "json"
+        );
     }
 
     /**
@@ -87,10 +172,8 @@ define([
         $triggerBtn.on('click', function(){
             loadingBar.start();
             $triggerBtn.hide();
+            checkBrowser(checkBandwidth, checkPerformance);
             setTimeout(function() {
-                displayQualityBar('browser', 50);
-                displayQualityBar('bandwidth', 68);
-                displayQualityBar('performance', 57);
                 displayQualityBar('total', 73);
                 loadingBar.stop();
             }, 3000);
