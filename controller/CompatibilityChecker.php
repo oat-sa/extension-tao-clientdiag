@@ -30,7 +30,6 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
     public function index(){
         $this->setData('clientConfigUrl',$this->getClientConfigUrl());
         $this->setView('CompatibilityChecker/index.tpl');
-
     }
 
     public function check(){

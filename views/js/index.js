@@ -24,12 +24,13 @@
     'use strict';
 
     //the url of the app config is set into the data-config attr of the loader.
-    var appConfig = document.getElementById('amd-loader').getAttribute('data-config');
-    var checker = document.getElementById('amd-loader').getAttribute('data-controller');
+    var amdLoader = document.getElementById('amd-loader');
+    var appConfig = amdLoader.getAttribute('data-config');
+    var appUrl = amdLoader.getAttribute('data-controller');
     require([appConfig], function(){
 
         //loads components and the login controller manually
-        require(['jquery', 'ui', checker+'checker.js'], function($, ui){
+        require(['jquery', 'ui', appUrl+'diagnostics.js'], function($, ui){
             ui.startEventComponents($('.content-wrap'));
         });
 

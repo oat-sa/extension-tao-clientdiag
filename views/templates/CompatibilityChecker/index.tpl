@@ -3,7 +3,7 @@ use oat\tao\helpers\Template;
 use oat\tao\helpers\Layout;
 ?>
 <!doctype html>
-<html class="no-js">
+<html class="no-js no-version-warning">
 <head>
     <script src="<?= Template::js('lib/modernizr-2.8/modernizr.js', 'tao')?>"></script>
     <meta charset="utf-8">
@@ -12,13 +12,12 @@ use oat\tao\helpers\Layout;
     <title><?= Layout::getTitle() ?></title>
     <link rel="shortcut icon" href="<?= Template::img('img/favicon.ico') ?>"/>
 
-
     <script id="amd-loader" src="<?=Template::js('lib/require.js', 'tao')?>" data-controller="<?=BASE_WWW.'js/controller/CompatibilityChecker/'?>"
             data-main="<?=BASE_WWW.'js/index'?>" data-config="<?=get_data('clientConfigUrl')?>"></script>
-    <link rel='stylesheet' type='text/css' href="<?=BASE_WWW?>css/check.css" />
+    <link rel='stylesheet' type='text/css' href="<?= Template::css('diagnostics.css') ?>" />
     <?= tao_helpers_Scriptloader::render() ?>
     <?php if (($themeUrl = Layout::getThemeUrl()) !== null): ?>
-    <link rel="stylesheet" href="<?= $themeUrl ?>" />
+        <link rel="stylesheet" href="<?= $themeUrl ?>" />
     <?php endif; ?>
 
     <script>
@@ -36,43 +35,71 @@ use oat\tao\helpers\Layout;
     <span class="icon-error"></span>
     <span id="requirement-msg-area"><?=__('You must activate JavaScript in your browser to run this application.')?></span>
 </div>
+<script src="<?= Template::js('requirement-check.js', 'taoClientDiagnostic')?>"></script>
 
 <div class="content-wrap">
 
-    <?php /* alpha|beta|sandbox message */
-        if(empty($_COOKIE['versionWarning'])) {
-            Template::inc('blocks/version-warning.tpl', 'tao');
-        }?>
-
     <?php Template::inc('blocks/header.tpl', 'tao'); ?>
 
+    <div class="diagnostics-main-area">
 
-        <div id="checker-box" class="entry-point entry-point-container">
-            <h1>Outil de diagnostic</h1>
-            <h1 class="index"><small>Syst&egrave;me d'exploitation et navigateur</small></h1>
-            <button id="proceed" class="saver index btn btn-info small">Proc&eacute;der au diagnostic</button>
-            <div id="os" class="col-6 hidden"><h1>Syst&egrave;me d'exploitation</h1></div>
-            <div id="browser" class="col-6 hidden"><h1>Navigateur</h1></div>
-
-            <p id="message" class="alert hidden"><img height="45" src="<?= Template::img('cross.png', 'taoClientDiagnostic') ?>"/></p>
+        <h1><?=__('Diagnostics tool')?></h1>
+        <div class="intro">
+            <?= __('This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform. Be aware that these tests will take up to several minutes.')?>
         </div>
+        <div class="clearfix">
+            <button data-action="launcher" class="btn-info small rgt"><?= __('Begin diagnostics')?></button>
+        </div>
+
+        <ul class="plain">
+            <li data-result="browser"><?= __('Operating system and browser')?>
+                <div class="feedback-success small">
+                    <span class="icon-success"></span>
+                    Firefox 41.0 / Windows 8.1
+                </div>
+            </li>
+            <li data-result="bandwidth"><?= __('Bandwidth')?>
+                <div>
+                    <div class="quality-bar">
+                        <div class="quality-indicator"></div>
+                    </div>
+                </div>
+            </li>
+            <li data-result="performance"><?= __('Performance')?>
+                <div>
+                    <div class="quality-bar">
+                        <div class="quality-indicator"></div>
+                    </div>
+                </div>
+            </li>
+            <li data-result="total"><?= __('Total')?>
+                <div>
+                    <div class="quality-bar" data-result="total">
+                        <div class="quality-indicator"></div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+
 </div>
-<script src="<?= Template::js('requirement-check.js', 'taoClientDiagnostic')?>"></script>
+
 <footer class="dark-bar">
     <?php
     if (!$val = Layout::getCopyrightNotice()):
-    ?>
-    © 2013 - <?= date('Y') ?> · <span class="tao-version"><?= TAO_VERSION_NAME ?></span> ·
-    <a href="http://taotesting.com" target="_blank">Open Assessment Technologies S.A.</a>
-    · <?= __('All rights reserved.') ?>
+        ?>
+        © 2013 - <?= date('Y') ?> · <span class="tao-version"><?= TAO_VERSION_NAME ?></span> ·
+        <a href="http://taotesting.com" target="_blank">Open Assessment Technologies S.A.</a>
+        · <?= __('All rights reserved.') ?>
     <?php else: ?>
-    <?= $val ?>
+        <?= $val ?>
     <?php endif; ?>
     <?php $releaseMsgData = Layout::getReleaseMsgData();
     if ($releaseMsgData['is-unstable'] || $releaseMsgData['is-sandbox']): ?>
         <span class="rgt">
             <?php if ($releaseMsgData['is-unstable']): ?>
-            <span class="icon-warning"></span>
+                <span class="icon-warning"></span>
 
             <?php endif; ?>
             <?=$releaseMsgData['version-type']?> ·

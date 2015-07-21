@@ -1,0 +1,49 @@
+@import "inc/bootstrap";
+
+
+.diagnostics-main-area {
+    max-width: 768px;
+    margin: 40px auto 0 auto;
+    background: $canvas;
+    @include simple-border();
+    padding: 20px;
+
+    h1 {
+        font-family: $headingFont;
+        margin-bottom: 20px;
+        @include font-size(20);
+        font-style: normal;
+    }
+
+    .quality-bar {
+        height: 20px;
+        @include linear-gradient(#CE1431 #D57915 #D5A215 #D5CB15 #36B111);
+        opacity: .8;
+        @include border-radius(2);
+        margin-top: 5px;
+        position: relative;
+    }
+
+    .quality-indicator {
+        content: '';
+        position: absolute;
+        border-width: 10px 8px;
+        border-style: solid;
+        border-color: $darkBar transparent transparent;
+        top: -1px;
+        height: 25px;
+        width: 0;
+    }
+
+    [data-result] {
+        display: none;
+    }
+
+    li {
+        padding-bottom: 10px;
+    }
+
+    .intro {
+        margin-bottom: 20px;
+    }
+}

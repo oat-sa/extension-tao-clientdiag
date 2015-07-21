@@ -1,7 +1,0 @@
-{
-"version": 3,
-"mappings": "AAEA,YAAY,CACV,KAAK,CAAE,KAAK,CACZ,UAAU,CAAE,MAAM,CAClB,MAAM,CAAE,WAAW,CAErB,QAAQ,CACN,UAAU,CAAE,0DAA0D,CACtE,MAAM,CAAE,IAAI",
-"sources": ["../scss/check.scss"],
-"names": [],
-"file": "check.css"
-}
