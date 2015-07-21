@@ -34,11 +34,26 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
     private $browserVersion;
 
 
+    public function login(){
+        $this->setData('clientConfigUrl',$this->getClientConfigUrl());
+        $this->setView('CompatibilityChecker/login.tpl');
+    }
+
+
     public function index(){
         $this->setData('clientConfigUrl',$this->getClientConfigUrl());
         $this->setView('CompatibilityChecker/index.tpl');
-
     }
+
+    /**
+     * Get browser and operating system
+     */
+    public function getBrowserOs(){
+    }
+
+
+    /** legacy below this line **/
+
 
     public function check(){
         if($this->getRequest()->hasParameter('os')){

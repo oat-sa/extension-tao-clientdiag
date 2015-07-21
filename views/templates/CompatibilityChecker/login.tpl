@@ -32,49 +32,31 @@ use oat\tao\helpers\Layout;
 
     <?php Template::inc('blocks/header.tpl', 'tao'); ?>
 
-    <div class="diagnostics-main-area">
 
-        <h1><?=__('Diagnostics tool')?></h1>
-        <div class="intro">
-            <?= __('This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform. Be aware that these tests will take up to several minutes.')?>
+        <div id="feedback-box"></div>
+
+        <div id="login-box" class="entry-point entry-point-container">
+            <h1><?= __('Connect to the diagnostic tool')?></h1>
+            <div class='xhtml_form'>
+                <form method='post' id='loginForm' name='loginForm' action='/tao/Main/login' >
+                    <input type='hidden' class='global' name='loginForm_sent' value='1' />
+                    <div><label class='form_desc' for='login'><?= __('Login')?></label><input type='text' name='login' id='login'  autofocus='autofocus'  value="" /></div><div><label class='form_desc' for='password'><?= __('Password')?></label><input type='password' name='password' id='password'  value=""  /></div><div class='form-toolbar' ><input type='submit' id='connect' name='connect'  value="Log in"  /></div></form>
+            </div>
         </div>
-        <div class="clearfix">
-            <button data-action="launcher" class="btn-info small rgt"><?= __('Begin diagnostics')?></button>
-        </div>
-
-        <ul class="plain">
-            <li data-result="browser"><?= __('Operating system and browser')?>
-                <div class="feedback-success small">
-                    <span class="icon-success"></span>
-                    Firefox 41.0 / Windows 8.1
-                </div>
-            </li>
-            <li data-result="bandwidth"><?= __('Bandwidth')?>
-                <div>
-                    <div class="quality-bar">
-                        <div class="quality-indicator"></div>
-                    </div>
-                </div>
-            </li>
-            <li data-result="performance"><?= __('Performance')?>
-                <div>
-                    <div class="quality-bar">
-                        <div class="quality-indicator"></div>
-                    </div>
-                </div>
-            </li>
-            <li data-result="total"><?= __('Total')?>
-                <div>
-                    <div class="quality-bar" data-result="total">
-                        <div class="quality-indicator"></div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-
+        <script>
+            requirejs.config({
+                config: {
+                    'controller/login': {
+                        'message' : {
+                            'info': null,
+                            'error': ""                }
+                    }
+                }
+            });
+        </script>
     </div>
 
-</div>
+
 
 <footer class="dark-bar">
     <?php
