@@ -24,39 +24,25 @@ namespace oat\taoClientDiagnostic\model;
 
 class DataStorage {
 
-    private $ip;
-    private $os;
-    private $osVersion;
-    private $browser;
-    private $browserVersion;
-    private $filePath;
+    private $data, $dataList, $filePath;
 
-    function __construct($browser, $browserVersion, $ip, $os, $osVersion)
+    function __construct($data)
     {
-        $this->browser = $browser;
-        $this->browserVersion = $browserVersion;
-        $this->ip = $ip;
-        $this->os = $os;
-        $this->osVersion = $osVersion;
+        $this->dataList = array_keys($data);
+        $this->data = array_values($data);
 
         $dataPath = FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR. 'storage' . DIRECTORY_SEPARATOR;
         $this->filePath = $dataPath.'store.csv';
     }
 
     public function storeData($isCompatible = false){
-
         if(!file_exists($this->filePath)){
-            $header = $this->formatData('ip', 'os', 'osVersion', 'browser', 'browserVersion', 'isCompatible');
-            file_put_contents($this->filePath, $header);
+            $handle = fopen($this->filePath, 'w');
+            fputcsv($handle, array_merge($this->dataList, array('compatible')),';');
+            fclose($handle);
         }
-
-        $data = $this->formatData($this->ip, $this->os, $this->osVersion, $this->browser, $this->browserVersion, (int)$isCompatible);
-
-        return (file_put_contents($this->filePath, $data, FILE_APPEND) !== false);
-    }
-
-    private function formatData($ip, $os, $osVersion, $browser, $browserVersion, $isCompatible){
-        $data = '"' . $ip . '";"' . $os . '";"' . $osVersion . '";"' . $browser . '";"' . $browserVersion . '";"'.$isCompatible.'"'."\n";
-        return $data;
+        $handle = fopen($this->filePath, 'a');
+        fputcsv($handle, array_merge($this->data, array((int) $isCompatible)) ,';');
+        return fclose($handle);
     }
 }

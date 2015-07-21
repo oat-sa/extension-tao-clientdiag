@@ -27,13 +27,6 @@ use oat\tao\helpers\Template;
 
 class CompatibilityChecker extends \tao_actions_CommonModule{
 
-    private $ip;
-    private $os;
-    private $osVersion;
-    private $browser;
-    private $browserVersion;
-
-
     public function index(){
         $this->setData('clientConfigUrl',$this->getClientConfigUrl());
         $this->setView('CompatibilityChecker/index.tpl');
@@ -42,9 +35,9 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
 
     public function check(){
         if($this->getRequest()->hasParameter('os')){
-            $this->getData();
-            $store = new DataStorage($this->browser, $this->browserVersion, $this->ip, $this->os, $this->osVersion);
-            $checker = new CompatibilityCheckerModel($this->browser, $this->browserVersion, $this->os, $this->osVersion);
+            $data = $this->getData();
+            $checker = new CompatibilityCheckerModel($data);
+            $store = new DataStorage($data);
             $isCompatible = $checker->isCompatibleConfig();
             if($store->storeData($isCompatible)){
                 if($isCompatible){
@@ -72,11 +65,16 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             throw new \common_exception_MissingParameter('browserVersion');
         }
 
-        $this->ip = $_SERVER['REMOTE_ADDR'];
-        $this->os = $this->getRequestParameter('os');
-        $this->osVersion = preg_replace('/[^\w\.]/','',$this->getRequestParameter('osVersion'));
-        $this->browser = $this->getRequestParameter('browser');
-        $this->browserVersion = preg_replace('/[^\w\.]/','',$this->getRequestParameter('browserVersion'));
+        $login = \common_session_SessionManager::getSession()->getUserLabel();
+
+        $data['login'] = $login;
+        $data['ip'] = $_SERVER['REMOTE_ADDR'];
+        $data = array_merge($data,$this->getRequestParameters());
+        $data['osVersion'] = preg_replace('/[^\w\.]/','',$data['osVersion']);
+        $data['browserVersion'] = preg_replace('/[^\w\.]/','',$data['browserVersion']);
+
+
+        return $data;
     }
 
 } 

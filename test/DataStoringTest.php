@@ -29,13 +29,17 @@ class DataStoringTest extends \PHPUnit_Framework_TestCase {
 
     public function testStoreData(){
         $sampleFilePath = \tao_helpers_File::createTempDir() . 'stored.csv';
-        $os = 'Windows';
-        $osVersion = '8.1';
-        $browser = 'Chrome';
-        $browserVersion = '33';
-        $ip = '10.9.8.7';
 
-        $store = new DataStorage($browser, $browserVersion, $ip, $os, $osVersion);
+        $sentData = array(
+            'login'             => 'test',
+            'ip'                => '10.9.8.7',
+            'os'                => 'Windows',
+            'osVersion'         => '8.1',
+            'browser'           => 'Chrome',
+            'browserVersion'    => '33'
+        );
+
+        $store = new DataStorage($sentData);
 
         $ref = new \ReflectionProperty('oat\taoClientDiagnostic\model\DataStorage', 'filePath');
         $ref->setAccessible(true);
@@ -50,18 +54,19 @@ class DataStoringTest extends \PHPUnit_Framework_TestCase {
         if (($handle = fopen($sampleFilePath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 $num = count($data);
-                $this->assertEquals(6, $num);
+                $this->assertEquals(7, $num);
                 $row ++;
                 if($row === 2){
-                    $this->assertEquals($ip,$data[0]);
-                    $this->assertEquals($os,$data[1]);
-                    $this->assertEquals($osVersion,$data[2]);
-                    $this->assertEquals($browser,$data[3]);
-                    $this->assertEquals($browserVersion,$data[4]);
-                    $this->assertEquals(1,$data[5]);
+                    $this->assertEquals($sentData['login'],$data[0]);
+                    $this->assertEquals($sentData['ip'],$data[1]);
+                    $this->assertEquals($sentData['os'],$data[2]);
+                    $this->assertEquals($sentData['osVersion'],$data[3]);
+                    $this->assertEquals($sentData['browser'],$data[4]);
+                    $this->assertEquals($sentData['browserVersion'],$data[5]);
+                    $this->assertEquals(1,$data[6]);
                 }
                 if($row === 3){
-                    $this->assertEquals(0,$data[5]);
+                    $this->assertEquals(0,$data[6]);
                 }
             }
             fclose($handle);

@@ -6,13 +6,14 @@ use oat\taoClientDiagnostic\model\CompatibilityChecker;
 class CompatibilityCheckerTest extends \PHPUnit_Framework_TestCase {
 
     public function testCompatibleConfigTrue(){
+        $sentData = array(
+            'os'                => 'Windows',
+            'osVersion'         => '8.1',
+            'browser'           => 'Chrome',
+            'browserVersion'    => '33'
+        );
 
-        $os = 'Windows';
-        $osVersion = '8.1';
-        $browser = 'Chrome';
-        $browserVersion = '33';
-
-        $checker = new CompatibilityChecker($browser, $browserVersion, $os, $osVersion);
+        $checker = new CompatibilityChecker($sentData);
 
         
         $compatibility = json_decode(json_encode(array(
@@ -30,12 +31,14 @@ class CompatibilityCheckerTest extends \PHPUnit_Framework_TestCase {
 
     public function testCompatibleConfigFalse(){
 
-        $os = 'Windows';
-        $osVersion = '8.1';
-        $browser = 'Chrome';
-        $browserVersion = 'NotVerison';
+        $sentData = array(
+            'os'                => 'Windows',
+            'osVersion'         => '8.1',
+            'browser'           => 'Chrome',
+            'browserVersion'    => 'NotVerison'
+        );
 
-        $checker = new CompatibilityChecker($browser, $browserVersion, $os, $osVersion);
+        $checker = new CompatibilityChecker($sentData);
 
         $compatibility = json_decode(json_encode(array(
             array("os" => "Windows", "osVersion" => "8.1", "browser" => "Chrome", "versions" => array(33, 34, 35))
