@@ -183,6 +183,7 @@ define(['lodash', 'async', 'context', 'lib/polyfill/performance-now'], function(
 
                     async.series(tests, function(err, results){
                         var sum;
+                        var avg;
                         if(err && !results.length){
                             //something went wrong
                             throw err;
@@ -190,13 +191,14 @@ define(['lodash', 'async', 'context', 'lib/polyfill/performance-now'], function(
 
                         sum = _.reduce(results, function(acc, result){
                             //Speed in Mbps
-                            var speed =  getSpeed(result) / _mega * 8;
+                            var speed =  getSpeed(result) * 8 / _mega;
                             speed = Math.round( speed * 100) / 100;
 
                             return acc + speed;
                         }, 0);
 
-                        done( sum / results.length );
+                        avg = sum / results.length;
+                        done( Math.round( avg * 100) / 100 );
                     });
                 });
             }
