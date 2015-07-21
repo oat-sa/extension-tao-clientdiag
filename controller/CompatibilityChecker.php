@@ -40,6 +40,11 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
     }
 
 
+    public function whichBrowser(){
+        $this->setView('CompatibilityChecker/browserDetection.php');
+    }
+
+
     public function index(){
         $this->setData('clientConfigUrl',$this->getClientConfigUrl());
         $this->setView('CompatibilityChecker/index.tpl');

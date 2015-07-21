@@ -22,7 +22,32 @@ use oat\tao\helpers\Layout;
         data-config="<?= get_data('clientConfigUrl') ?>">
     </script>
     <script>
-        (function(){var p=[],w=window,d=document,e=f=0;p.push('ua='+encodeURIComponent(navigator.userAgent));e|=w.ActiveXObject?1:0;e|=w.opera?2:0;e|=w.chrome?4:0;e|='getBoxObjectFor' in d || 'mozInnerScreenX' in w?8:0;e|=('WebKitCSSMatrix' in w||'WebKitPoint' in w||'webkitStorageInfo' in w||'webkitURL' in w)?16:0;e|=(e&16&&({}.toString).toString().indexOf("\n")===-1)?32:0;p.push('e='+e);f|='sandbox' in d.createElement('iframe')?1:0;f|='WebSocket' in w?2:0;f|=w.Worker?4:0;f|=w.applicationCache?8:0;f|=w.history && history.pushState?16:0;f|=d.documentElement.webkitRequestFullScreen?32:0;f|='FileReader' in w?64:0;p.push('f='+f);p.push('r='+Math.random().toString(36).substring(7));p.push('w='+screen.width);p.push('h='+screen.height);var s=d.createElement('script');s.src='<?= \tao_helpers_Uri::getBaseUrl() ?>vendor/whichbrowser/detect.js?' + p.join('&');d.getElementsByTagName('head')[0].appendChild(s);})();
+        (function () {
+            var p = [], w = window, d = document, e = f = 0;
+            p.push('ua=' + encodeURIComponent(navigator.userAgent));
+            e |= w.ActiveXObject ? 1 : 0;
+            e |= w.opera ? 2 : 0;
+            e |= w.chrome ? 4 : 0;
+            e |= 'getBoxObjectFor' in d || 'mozInnerScreenX' in w ? 8 : 0;
+            e |=
+                ('WebKitCSSMatrix' in w || 'WebKitPoint' in w || 'webkitStorageInfo' in w || 'webkitURL' in w) ? 16 : 0;
+            e |= (e & 16 && ({}.toString).toString().indexOf("\n") === -1) ? 32 : 0;
+            p.push('e=' + e);
+            f |= 'sandbox' in d.createElement('iframe') ? 1 : 0;
+            f |= 'WebSocket' in w ? 2 : 0;
+            f |= w.Worker ? 4 : 0;
+            f |= w.applicationCache ? 8 : 0;
+            f |= w.history && history.pushState ? 16 : 0;
+            f |= d.documentElement.webkitRequestFullScreen ? 32 : 0;
+            f |= 'FileReader' in w ? 64 : 0;
+            p.push('f=' + f);
+            p.push('r=' + Math.random().toString(36).substring(7));
+            p.push('w=' + screen.width);
+            p.push('h=' + screen.height);
+            var s = d.createElement('script');
+            s.src = '<?= \tao_helpers_Uri::getBaseUrl() ?>CompatibilityChecker/whichBrowser?' + p.join('&');
+            d.getElementsByTagName('head')[0].appendChild(s);
+        })();
     </script>
     <link rel='stylesheet' type='text/css' href="<?= Template::css('diagnostics.css') ?>"/>
     <?= tao_helpers_Scriptloader::render() ?>
@@ -34,7 +59,8 @@ use oat\tao\helpers\Layout;
 <body>
 <div id="requirement-check" class="feedback-error js-hide">
     <span class="icon-error"></span>
-    <span id="requirement-msg-area"><?= __(
+    <span id="requirement-msg-area"><?=
+        __(
             'You must activate JavaScript in your browser to run this application.'
         ) ?></span>
 </div>
@@ -49,7 +75,8 @@ use oat\tao\helpers\Layout;
         <h1><?= __('Diagnostics tool') ?></h1>
 
         <div class="intro">
-            <?= __(
+            <?=
+            __(
                 'This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform. Be aware that these tests will take up to several minutes.'
             ) ?>
         </div>
@@ -78,7 +105,8 @@ use oat\tao\helpers\Layout;
             <li class="bandwidth-box"><?= __('Bandwidth') ?>
 
                 <div class="clearfix">
-                    <button data-action="bandwidth-launcher" class="btn-info small"><?= __(
+                    <button data-action="bandwidth-launcher" class="btn-info small"><?=
+                        __(
                             'Run bandwidth test'
                         ) ?></button>
                 </div>
