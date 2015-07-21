@@ -23,10 +23,11 @@
  */
 define([
     'jquery',
+    'i18n',
     'layout/loading-bar',
     'helpers'
 
-], function ($, loadingBar, helpers) {
+], function ($, __, loadingBar, helpers) {
     'use strict';
 
     /**
@@ -96,14 +97,12 @@ define([
     /**
      *
      */
-    function checkBrowser(callback, options) {
-        console.log('browser');
+    function checkBrowser() {
         var info = new WhichBrowser();
         var osVersion = info.os.version.alias;
         if(osVersion === null){
             osVersion = info.os.version.original;
         }
-
         var information = {
             browser: info.browser.name,
             browserVersion: info.browser.version.original,
@@ -117,17 +116,7 @@ define([
             helpers._url('check', 'CompatibilityChecker', 'taoClientDiagnostic'),
             information,
             function(data){
-                var $feedback = $('#feedback'),
-                    $span = $('span', $feedback);
-                $feedback.append(information.browser + ' ' + information.browserVersion + ' / ' + information.os + ' ' + information.osVersion);
-                $feedback.addClass('feedback-'+data.status);
-                $span.addClass('icon-'+data.status);
-
-                displayQualityBar('browser');
-
-                if (typeof callback === "function") {
-                    callback(options);
-                }
+                displayTestResult('browser', data);
             },
             "json"
         );
@@ -231,14 +220,10 @@ define([
         $testTriggerBtn.on('click', function(){
             loadingBar.start();
             $testTriggerBtn.hide();
+            var browser = checkBrowser();
+
             setTimeout(function() {
                 // Browser/OS is result of async query
-                // Dummy result
-                var status = {
-                    type: 'success',
-                    message: 'Firefox 32 / Windows 8'
-                };
-                displayTestResult('browser', status);
 
                 status = getStatus(thresholds, 20);
                 displayTestResult('performance', status);
@@ -255,6 +240,7 @@ define([
         $bandWidthTriggerBtn.on('click', function() {
             loadingBar.start();
             $bandWidthTriggerBtn.hide();
+
             setTimeout(function() {
 
                 status = getStatus(thresholds, 68);

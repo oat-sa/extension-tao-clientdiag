@@ -32,6 +32,10 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
         $this->setView('CompatibilityChecker/index.tpl');
     }
 
+    public function whichBrowser(){
+        $this->setView('CompatibilityChecker/browserDetection.php');
+    }
+
     public function check(){
         if($this->getRequest()->hasParameter('os')){
             $data = $this->getData();
@@ -40,7 +44,8 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             $isCompatible = $checker->isCompatibleConfig();
             if($store->storeData($isCompatible)){
                 if($isCompatible){
-                    $this->returnJson(array('success' => true, 'status' => 'success'));
+                    $message = $data['browser'] . ' ' . $data['browserVersion'] . ' / ' . $data['os'] . ' ' . $data['osVersion'];
+                    $this->returnJson(array('success' => true, 'type' => 'success', 'message' => $message));
                     return;
                 }
             }
