@@ -1,0 +1,4 @@
+<IfModule mod_deflate.c>
+    SetOutputFilter DEFLATE
+    SetEnvIfNoCase Request_URI \.data$ no-gzip dont-vary
+</IfModule>
