@@ -45,6 +45,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $accessService->revokeExtensionAccess($anonymous, 'taoClientDiagnostic');
             $accessService->grantActionAccess($subject, 'taoClientDiagnostic', 'CompatibilityChecker', 'index');
             $accessService->grantActionAccess($subject, 'taoClientDiagnostic', 'CompatibilityChecker', 'check');
+            $accessService->grantActionAccess($subject, 'taoClientDiagnostic', 'CompatibilityChecker', 'whichBrowser');
 
             $currentVersion = '1.1.0';
         }
