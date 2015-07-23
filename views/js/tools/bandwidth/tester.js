@@ -171,7 +171,7 @@ define(['lodash', 'async', 'context', 'lib/polyfill/performance-now'], function(
                         return acc + speed;
                     }, 0);
 
-                    avg = sum / count;
+                    avg = sum / (count || 1);
 
                     // compute the sum of variances
                     sum2 = _.reduce(measures, function(acc, measure){
@@ -183,7 +183,7 @@ define(['lodash', 'async', 'context', 'lib/polyfill/performance-now'], function(
                         return acc + diff * diff;
                     }, 0);
 
-                    variance = sum2 / (count - 1);
+                    variance = count > 1 ? sum2 / (count - 1) : 0;
 
                     results = {
                         min : fixedDecimals(min, 2),
