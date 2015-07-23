@@ -55,23 +55,13 @@ use oat\tao\helpers\Layout;
         <link rel="stylesheet" href="<?= $themeUrl ?>"/>
     <?php endif; ?>
 
-    <script>
-        (function(){var p=[],w=window,d=document,e=f=0;p.push('ua='+encodeURIComponent(navigator.userAgent));e|=w.ActiveXObject?1:0;e|=w.opera?2:0;e|=w.chrome?4:0;
-    e|='getBoxObjectFor' in d || 'mozInnerScreenX' in w?8:0;e|=('WebKitCSSMatrix' in w||'WebKitPoint' in w||'webkitStorageInfo' in w||'webkitURL' in w)?16:0;
-    e|=(e&16&&({}.toString).toString().indexOf("\n")===-1)?32:0;p.push('e='+e);f|='sandbox' in d.createElement('iframe')?1:0;f|='WebSocket' in w?2:0;
-    f|=w.Worker?4:0;f|=w.applicationCache?8:0;f|=w.history && history.pushState?16:0;f|=d.documentElement.webkitRequestFullScreen?32:0;f|='FileReader' in w?64:0;
-    p.push('f='+f);p.push('r='+Math.random().toString(36).substring(7));p.push('w='+screen.width);p.push('h='+screen.height);var s=d.createElement('script');
-    s.src='http://tao.dev/vendor/whichbrowser/detect.js?' + p.join('&');d.getElementsByTagName('head')[0].appendChild(s);})();
-    </script>
 </head>
 
 <body>
 <div id="requirement-check" class="feedback-error js-hide">
     <span class="icon-error"></span>
     <span id="requirement-msg-area"><?=
-        __(
-            'You must activate JavaScript in your browser to run this application.'
-        ) ?></span>
+        __('You must activate JavaScript in your browser to run this application.') ?></span>
 </div>
 <script src="<?= Template::js('layout/requirement-check.js', 'tao')?>"></script>
 
@@ -85,9 +75,7 @@ use oat\tao\helpers\Layout;
 
         <div class="intro">
             <?=
-            __(
-                'This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform. Be aware that these tests will take up to several minutes.'
-            ) ?>
+            __('This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform. Be aware that these tests will take up to several minutes.') ?>
         </div>
         <div class="clearfix">
             <button data-action="test-launcher" class="btn-info small rgt"><?= __('Begin diagnostics') ?></button>
@@ -100,7 +88,7 @@ use oat\tao\helpers\Layout;
                     <span class="msg"></span>
                 </div>
             </li>
-            <li data-result="performance"><?= __('Performance') ?>
+            <li data-result="performance"><?= __('Workstation Performance') ?>
                 <div>
                     <div class="small feedback">
                         <span class="icon"></span>
@@ -115,9 +103,7 @@ use oat\tao\helpers\Layout;
 
                 <div class="clearfix">
                     <button data-action="bandwidth-launcher" class="btn-info small"><?=
-                        __(
-                            'Run bandwidth test'
-                        ) ?></button>
+                        __('Run bandwidth test') ?></button>
                 </div>
                 <div data-result="bandwidth">
                     <div class="small feedback">
@@ -139,6 +125,19 @@ use oat\tao\helpers\Layout;
                         <div class="quality-indicator"></div>
                     </div>
                 </div>
+                <div class="clearfix">
+                    <button data-action="display-details" class="rgt btn-info small"><?=
+                        __('Show Details') ?></button>
+                </div>
+            </li>
+            <li data-result="details"><?= __('Details') ?>
+                <div>
+                    <table class="matrix" id="details">
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
             </li>
         </ul>
 

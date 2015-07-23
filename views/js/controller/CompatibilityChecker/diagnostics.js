@@ -112,7 +112,7 @@ define([
 
 
         // which browser
-        return $.post(
+        $.post(
             helpers._url('check', 'CompatibilityChecker', 'taoClientDiagnostic'),
             information,
             function(data){
@@ -120,72 +120,20 @@ define([
             },
             "json"
         );
+
+        return information;
     }
 
     /**
      *
      */
     function checkBandwidth(callback) {
-        console.log('band');
-        var info = new WhichBrowser();
-        var osVersion = info.os.version.alias;
-        if(osVersion === null){
-            osVersion = info.os.version.original;
-        }
-
-        var information = {
-            browser: info.browser.name,
-            browserVersion: info.browser.version.original,
-            os: info.os.name,
-            osVersion: osVersion
-        };
-
-
-        // which browser
-        return $.post(
-            helpers._url('check', 'CompatibilityChecker', 'taoClientDiagnostic'),
-            information,
-            function(data){
-                displayQualityBar('bandwidth', 68);
-
-                if (typeof callback === "function") {
-                    callback();
-                }
-            },
-            "json"
-        );
     }
 
     /**
      *
      */
     function checkPerformance() {
-        console.log('perf');
-        var info = new WhichBrowser();
-        var osVersion = info.os.version.alias;
-        if(osVersion === null){
-            osVersion = info.os.version.original;
-        }
-
-        var information = {
-            browser: info.browser.name,
-            browserVersion: info.browser.version.original,
-            os: info.os.name,
-            osVersion: osVersion
-        };
-
-
-        // which browser
-        return $.post(
-            helpers._url('check', 'CompatibilityChecker', 'taoClientDiagnostic'),
-            information,
-            function(data){
-
-                displayQualityBar('performance', 57);
-
-            },
-            "json"
-        );
     }
 
     /**
@@ -195,8 +143,10 @@ define([
 
         var $testTriggerBtn = $('[data-action="test-launcher"]');
         var $bandWidthTriggerBtn = $('[data-action="bandwidth-launcher"]');
+        var $detailsBtn = $('[data-action="display-details"]');
         var $bandWidthBox = $('.bandwidth-box'),
-            status;
+            status, information;
+        var $detailsTable = $('#details');
 
         var thresholds = [{
             threshold: 0,
@@ -207,21 +157,17 @@ define([
             message: __('Low'),
             type: 'warning'
         }, {
-            threshold: 50,
-            message: __('Good enough'),
-            type: 'success'
-        }, {
             threshold: 75,
             message: __('Nice!'),
             type: 'success'
         }];
 
-        // fake simulator
         $testTriggerBtn.on('click', function(){
             loadingBar.start();
             $testTriggerBtn.hide();
-            var browser = checkBrowser();
+            information = checkBrowser();
 
+            // fake simulator
             setTimeout(function() {
                 // Browser/OS is result of async query
 
@@ -241,6 +187,7 @@ define([
             loadingBar.start();
             $bandWidthTriggerBtn.hide();
 
+            // fake simulator
             setTimeout(function() {
 
                 status = getStatus(thresholds, 68);
@@ -248,6 +195,21 @@ define([
                 loadingBar.stop();
 
             }, 3000);
+        });
+
+        $detailsBtn.on('click', function() {
+            loadingBar.start();
+            $detailsBtn.hide();
+
+            $.each(information, function(index, value) {
+                var line = '<td>'+ index +'</td><td>'+ value +'</td>';
+                $('tbody', $detailsTable).append('<tr>' + line + '</tr>');
+            });
+
+            status = getStatus(thresholds, 68);
+            displayTestResult('details', status);
+
+            loadingBar.stop();
         });
     };
 
