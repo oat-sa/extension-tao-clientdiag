@@ -37,9 +37,8 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
     }
 
     public function check(){
-        $message = '';
         try{
-            $data = $this->getData();
+            $data = $this->getData(true);
             if(!isset($_COOKIE['key'])){
                 $data['key'] = uniqid();
                 setcookie('key', $data['key']);
@@ -47,7 +46,6 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             else{
                 $data['key'] = $_COOKIE['key'];
             }
-            ksort($data);
 
             $checker = new CompatibilityCheckerModel($data);
             $store = new DataStorage($data);
@@ -71,7 +69,6 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             setcookie('key', uniqid());
         }
         $data['key'] = $_COOKIE['key'];
-        ksort($data);
 
         $store = new DataStorage($data);
         if($store->storeData()){
@@ -81,28 +78,28 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
         $this->returnJson(array('success' => false, 'type' => 'error'));
     }
 
-    private function getData(){
-        if(!$this->hasRequestParameter('os')){
-            throw new \common_exception_MissingParameter('os');
-        }
-        if(!$this->hasRequestParameter('osVersion')){
-            throw new \common_exception_MissingParameter('osVersion');
-        }
-        if(!$this->hasRequestParameter('browser')){
-            throw new \common_exception_MissingParameter('browser');
-        }
-        if(!$this->hasRequestParameter('browserVersion')){
-            throw new \common_exception_MissingParameter('browserVersion');
-        }
-
+    private function getData($check = false){
         $login = \common_session_SessionManager::getSession()->getUserLabel();
-
         $data['login'] = $login;
         $data['ip'] = $_SERVER['REMOTE_ADDR'];
         $data = array_merge($data,$this->getRequestParameters());
-        $data['osVersion'] = preg_replace('/[^\w\.]/','',$data['osVersion']);
-        $data['browserVersion'] = preg_replace('/[^\w\.]/','',$data['browserVersion']);
 
+        if($check){
+            if(!$this->hasRequestParameter('os')){
+                throw new \common_exception_MissingParameter('os');
+            }
+            if(!$this->hasRequestParameter('osVersion')){
+                throw new \common_exception_MissingParameter('osVersion');
+            }
+            if(!$this->hasRequestParameter('browser')){
+                throw new \common_exception_MissingParameter('browser');
+            }
+            if(!$this->hasRequestParameter('browserVersion')){
+                throw new \common_exception_MissingParameter('browserVersion');
+            }
+            $data['osVersion'] = preg_replace('/[^\w\.]/','',$data['osVersion']);
+            $data['browserVersion'] = preg_replace('/[^\w\.]/','',$data['browserVersion']);
+        }
 
         return $data;
     }
