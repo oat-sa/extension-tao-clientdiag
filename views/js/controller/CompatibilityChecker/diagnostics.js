@@ -121,13 +121,17 @@ define([
             "json"
         );
 
-        return information;
+        var returnValue = {
+            browser : information.browser + ' ' + information.browserVersion,
+            os      : information.os + ' ' + information.osVersion
+        };
+        return returnValue;
     }
 
     /**
      *
      */
-    function checkBandwidth(callback) {
+    function checkBandwidth() {
     }
 
     /**
