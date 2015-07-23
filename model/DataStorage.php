@@ -41,8 +41,6 @@ class DataStorage {
         if(isset($data['key'])){
             $this->key = $data['key'];
         }
-
-        $this->dataList = array_keys($data);
         $this->data = $data;
 
         $dataPath = FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR. 'storage' . DIRECTORY_SEPARATOR;
