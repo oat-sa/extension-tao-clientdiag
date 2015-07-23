@@ -38,7 +38,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
 
     public function check(){
         $message = '';
-        if($this->getRequest()->hasParameter('os')){
+        try{
             $data = $this->getData();
             if(!isset($_COOKIE['key'])){
                 $data['key'] = uniqid();
@@ -52,15 +52,16 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             $checker = new CompatibilityCheckerModel($data);
             $store = new DataStorage($data);
             $isCompatible = $checker->isCompatibleConfig();
-            $message = $data['browser'] . ' ' . $data['browserVersion'] . ' / ' . $data['os'] . ' ' . $data['osVersion'];
             if($store->setIsCompatible($isCompatible)->storeData($isCompatible)){
                 if($isCompatible){
-                    $this->returnJson(array('success' => true, 'type' => 'success', 'message' => $message));
+                    $this->returnJson(array('success' => true, 'type' => 'success', 'message' => __('Conform')));
                     return;
                 }
             }
+            $this->returnJson(array('success' => true, 'type' => 'error', 'message' => __('Requires a compliance update (please contact your academic platform')));
+        }catch(\common_exception_MissingParameter $e){
+            $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $e->getUserMessage()));
         }
-        $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $message));
     }
 
     public function storeData(){

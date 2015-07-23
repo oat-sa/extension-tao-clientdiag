@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TAO 3.1.0-sprint03\n"
-"PO-Revision-Date: 2015-07-23T09:31:25\n"
+"PO-Revision-Date: 2015-07-23T12:02:32\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-FR\n"
@@ -22,6 +22,12 @@ msgstr "Bande passante"
 msgid "Begin diagnostics"
 msgstr "Démarrer le diagnostic"
 
+msgid "Browser"
+msgstr "Navigateur"
+
+msgid "Conform"
+msgstr "Conforme"
+
 msgid "Details"
 msgstr "Détails"
 
@@ -34,11 +40,14 @@ msgstr "Performance moyenne (risque de lenteurs)"
 msgid "Nice!"
 msgstr "Performance correcte"
 
+msgid "Operating system"
+msgstr "Système d'exploitation"
+
 msgid "Operating system and browser"
 msgstr "Navigateur et système d’exploitation"
 
-msgid "Workstation Performance"
-msgstr "Performance du poste de travail"
+msgid "Requires a compliance update (please contact your academic platform"
+msgstr "Nécessite une mise en conformité (contactez votre plateforme académique)"
 
 msgid "Run bandwidth test"
 msgstr "Lancer le test de bande passante"
@@ -55,8 +64,9 @@ msgstr ""
 msgid "Very bad"
 msgstr "Performance faible (lenteurs très importantes)"
 
+msgid "Workstation Performance"
+msgstr "Performance du poste de travail"
+
 msgid "You must activate JavaScript in your browser to run this application."
 msgstr "Vous devez activer JavaScript dans votre navigateur pour lancer cette application"
-
-
 

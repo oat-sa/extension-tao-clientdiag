@@ -121,11 +121,10 @@ define([
             "json"
         );
 
-        var returnValue = {
-            browser : information.browser + ' ' + information.browserVersion,
-            os      : information.os + ' ' + information.osVersion
+        return {
+            browser : {message : __('Browser'), value:information.browser + ' ' + information.browserVersion},
+            os      : {message : __('Operating system'), value:information.os + ' ' + information.osVersion}
         };
-        return returnValue;
     }
 
     /**
@@ -174,7 +173,6 @@ define([
             // fake simulator
             setTimeout(function() {
                 // Browser/OS is result of async query
-
                 status = getStatus(thresholds, 20);
                 displayTestResult('performance', status);
 
@@ -205,8 +203,8 @@ define([
             loadingBar.start();
             $detailsBtn.hide();
 
-            $.each(information, function(index, value) {
-                var line = '<td>'+ index +'</td><td>'+ value +'</td>';
+            $.each(information, function(index, object) {
+                var line = '<td>'+ object.message +'</td><td>'+ object.value +'</td>';
                 $('tbody', $detailsTable).append('<tr>' + line + '</tr>');
             });
 
