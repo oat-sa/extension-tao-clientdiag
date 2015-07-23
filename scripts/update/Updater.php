@@ -43,9 +43,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $anonymous = new \core_kernel_classes_Resource('http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole');
             $subject = new \core_kernel_classes_Resource('http://www.tao.lu/Ontologies/TAO.rdf#DeliveryRole');
             $accessService->revokeExtensionAccess($anonymous, 'taoClientDiagnostic');
-            $accessService->grantActionAccess($subject, 'taoClientDiagnostic', 'CompatibilityChecker', 'index');
-            $accessService->grantActionAccess($subject, 'taoClientDiagnostic', 'CompatibilityChecker', 'check');
-            $accessService->grantActionAccess($subject, 'taoClientDiagnostic', 'CompatibilityChecker', 'whichBrowser');
+            $accessService->grantModuleAccess($subject, 'taoClientDiagnostic', 'CompatibilityChecker');
 
             $currentVersion = '1.1.0';
         }

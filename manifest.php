@@ -32,9 +32,7 @@ return array(
 	'managementRole' => 'http://www.tao.lu/Ontologies/generis.rdf#taoClientDiagnosticManager',
     'acl' => array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#taoClientDiagnosticManager', array('ext'=>'taoClientDiagnostic')),
-        array('grant', 'http://www.tao.lu/Ontologies/TAO.rdf#DeliveryRole', array('ext'=>'taoClientDiagnostic','mod' => 'CompatibilityChecker', 'act' => 'index')),
-        array('grant', 'http://www.tao.lu/Ontologies/TAO.rdf#DeliveryRole', array('ext'=>'taoClientDiagnostic','mod' => 'CompatibilityChecker', 'act' => 'check')),
-        array('grant', 'http://www.tao.lu/Ontologies/TAO.rdf#DeliveryRole', array('ext'=>'taoClientDiagnostic','mod' => 'CompatibilityChecker', 'act' => 'whichBrowser')),
+        array('grant', 'http://www.tao.lu/Ontologies/TAO.rdf#DeliveryRole', array('ext'=>'taoClientDiagnostic','mod' => 'CompatibilityChecker')),
     ),
     'install' => array(
         'php' => array(
