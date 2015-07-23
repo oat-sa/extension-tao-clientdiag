@@ -37,22 +37,47 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
     }
 
     public function check(){
+        $message = '';
         if($this->getRequest()->hasParameter('os')){
             $data = $this->getData();
+            if(!isset($_COOKIE['key'])){
+                $data['key'] = uniqid();
+                setcookie('key', $data['key']);
+            }
+            else{
+                $data['key'] = $_COOKIE['key'];
+            }
+            ksort($data);
+
             $checker = new CompatibilityCheckerModel($data);
             $store = new DataStorage($data);
             $isCompatible = $checker->isCompatibleConfig();
-            if($store->storeData($isCompatible)){
+            $message = $data['browser'] . ' ' . $data['browserVersion'] . ' / ' . $data['os'] . ' ' . $data['osVersion'];
+            if($store->setIsCompatible($isCompatible)->storeData($isCompatible)){
                 if($isCompatible){
-                    $message = $data['browser'] . ' ' . $data['browserVersion'] . ' / ' . $data['os'] . ' ' . $data['osVersion'];
                     $this->returnJson(array('success' => true, 'type' => 'success', 'message' => $message));
                     return;
                 }
             }
-
         }
+        $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $message));
+    }
 
-        $this->returnJson(array('success' => false, 'status' => 'error'));
+    public function storeData(){
+        $data = $this->getData();
+
+        if(!isset($_COOKIE['key'])){
+            setcookie('key', uniqid());
+        }
+        $data['key'] = $_COOKIE['key'];
+        ksort($data);
+
+        $store = new DataStorage($data);
+        if($store->storeData()){
+                $this->returnJson(array('success' => true, 'type' => 'success'));
+                return;
+        }
+        $this->returnJson(array('success' => false, 'type' => 'error'));
     }
 
     private function getData(){
