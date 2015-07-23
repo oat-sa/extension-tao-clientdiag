@@ -47,7 +47,7 @@ define(['taoClientDiagnostic/tools/performances/tester'], function(performancesT
             assert.ok(typeof details.average === 'number', 'The average speed is provided inside the details');
             assert.ok(typeof details.variance === 'number', 'The speed variance is provided inside the details');
             assert.equal(duration, details.average, 'The total duration provided inside the details must be equal to provided duration');
-            assert.ok(toString.call(details.measures) === '[object Array]', 'The detailed measures are provided inside the details');
+            assert.ok(toString.call(details.values) === '[object Array]', 'The detailed measures are provided inside the details');
 
             QUnit.start();
         });

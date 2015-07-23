@@ -23,8 +23,10 @@ define([
     'lodash',
     'async',
     'context',
+    'taoClientDiagnostic/tools/stats',
+    'taoClientDiagnostic/tools/fixedDecimals',
     'lib/polyfill/performance-now'
-], function($, _, async, context) {
+], function($, _, async, context, stats, fixedDecimals) {
     'use strict';
 
     /**
@@ -43,9 +45,21 @@ define([
      * @private
      */
     var _samples = {
-        'sample' : {
-            id : 'sample',
-            url : 'data/sample.html',
+        'sample1' : {
+            id : 'sample1',
+            url : 'data/sample1.html',
+            timeout : 30 * _second,
+            nb : 3
+        },
+        'sample2' : {
+            id : 'sample2',
+            url : 'data/sample2.html',
+            timeout : 30 * _second,
+            nb : 3
+        },
+        'sample3' : {
+            id : 'sample3',
+            url : 'data/sample3.html',
             timeout : 30 * _second,
             nb : 3
         }
@@ -115,17 +129,6 @@ define([
     };
 
     /**
-     * Rounds a value to a fixed number of decimals
-     * @param {Number} value The value to round
-     * @param {Number} decimals The number of decimal
-     * @returns {Number}
-     */
-    var fixedDecimals = function fixedDecimals(value, decimals) {
-        var shift = Math.pow(10, Math.abs(decimals || 0));
-        return Math.round(value * shift) / shift;
-    };
-
-    /**
      * Performs a browser performances test by running a heavy page
      *
      * @returns {{start: Function}}
@@ -147,49 +150,17 @@ define([
                 });
 
                 async.series(tests, function(err, measures) {
-                    var sum;
-                    var sum2;
-                    var avg;
-                    var min = Number.MAX_VALUE;
-                    var max = 0;
-                    var variance;
+                    var decimals = 2;
                     var results;
-                    var count = measures.length;
 
-                    if(err && !count){
+                    if(err && !measures.length){
                         //something went wrong
                         throw err;
                     }
 
-                    // compute each duration, then compute the sum
-                    sum = _.reduce(measures, function(acc, measure) {
-                        var duration = measure.displayDuration;
-                        min = Math.min(min, duration);
-                        max = Math.max(max, duration);
-                        return acc + duration;
-                    }, 0);
+                    results = stats(measures, 'displayDuration', decimals);
 
-                    avg = sum / (count || 1);
-
-                    // compute the sum of variances
-                    sum2 = _.reduce(measures, function(acc, measure) {
-                        var duration = measure.displayDuration;
-                        var diff = duration - avg;
-
-                        return acc + diff * diff;
-                    }, 0);
-
-                    variance = count > 1 ? sum2 / (count - 1) : 0;
-
-                    results = {
-                        min : min,
-                        max : max,
-                        average : fixedDecimals(avg, 2),
-                        variance : fixedDecimals(variance, 2),
-                        measures : measures
-                    };
-
-                    done( results.average, results );
+                    done(results.average, results);
                 });
             }
         };

@@ -49,7 +49,7 @@ define(['taoClientDiagnostic/tools/bandwidth/tester'], function(bandwidthTester)
             assert.ok(typeof details.duration === 'number', 'The total duration of the test is provided inside the details');
             assert.ok(typeof details.size === 'number', 'The total size of the test is provided inside the details');
             assert.equal(speed, details.average, 'The speed provided inside the details must be equal to provided speed');
-            assert.ok(toString.call(details.measures) === '[object Array]', 'The detailed measures are provided inside the details');
+            assert.ok(toString.call(details.values) === '[object Array]', 'The detailed measures are provided inside the details');
 
             QUnit.start();
         });

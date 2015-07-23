@@ -15,7 +15,14 @@
  *
  * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
  */
-define(['lodash', 'async', 'context', 'lib/polyfill/performance-now'], function(_, async, context){
+define([
+    'lodash',
+    'async',
+    'context',
+    'taoClientDiagnostic/tools/stats',
+    'taoClientDiagnostic/tools/fixedDecimals',
+    'lib/polyfill/performance-now'
+], function(_, async, context, stats, fixedDecimals) {
     'use strict';
 
     /**
@@ -77,7 +84,7 @@ define(['lodash', 'async', 'context', 'lib/polyfill/performance-now'], function(
      * @param {Function} cb A callback function called at the end of the download.
      * This callback is also called if a timeout breaks the download;
      */
-    var download = function download(data, cb){
+    var download = function download(data, cb) {
         var start, end;
         var timeoutId;
         var url = context.root_url + '/taoClientDiagnostic/views/js/tools/bandwidth/' + data.file + '?' + Date.now();
@@ -85,7 +92,7 @@ define(['lodash', 'async', 'context', 'lib/polyfill/performance-now'], function(
         request.open('GET', url, true);
         request.setRequestHeader('Accept', 'application/octet-stream');
 
-        request.onload = function onRequestLoad (){
+        request.onload = function onRequestLoad () {
             end = window.performance.now();
             clearTimeout(timeoutId);
             return cb(null, {
@@ -95,7 +102,7 @@ define(['lodash', 'async', 'context', 'lib/polyfill/performance-now'], function(
                 duration : end - start
             });
         };
-        request.onerror = function onRequestError (err){
+        request.onerror = function onRequestError (err) {
             clearTimeout(timeoutId);
             cb(err);
         };
@@ -103,17 +110,6 @@ define(['lodash', 'async', 'context', 'lib/polyfill/performance-now'], function(
         timeoutId = _.delay(cb, data.timeout, 'timeout');
         start = window.performance.now();
         request.send();
-    };
-
-    /**
-     * Rounds a value to a fixed number of decimals
-     * @param {Number} value The value to round
-     * @param {Number} decimals The number of decimal
-     * @returns {Number}
-     */
-    var fixedDecimals = function fixedDecimals(value, decimals) {
-        var shift = Math.pow(10, Math.abs(decimals || 0));
-        return Math.round(value * shift) / shift;
     };
 
     /**
@@ -137,65 +133,39 @@ define(['lodash', 'async', 'context', 'lib/polyfill/performance-now'], function(
                     }
                 });
 
-                async.series(tests, function(err, measures){
-                    var sum;
-                    var sum2;
-                    var avg;
-                    var min = Number.MAX_VALUE;
-                    var max = 0;
-                    var variance;
+                async.series(tests, function(err, measures) {
                     var duration = 0;
                     var size = 0;
+                    var decimals = 2;
+                    var getValue;
                     var results;
-                    var count = measures.length;
 
-                    if(err && !count){
+                    if (err && !measures.length) {
                         //something went wrong
                         throw err;
                     }
 
-                    // compute each speed, then compute the sum
-                    sum = _.reduce(measures, function(acc, measure){
-                        var bytes = measure.size;
-                        var seconds = measure.duration / _second;
+                    getValue = function(value) {
+                        var bytes = value.size;
+                        var seconds = value.duration / _second;
                         var speed = bytes / seconds;
 
-                        //Speed in Mbps
-                        speed = speed * 8 / _mega;
-                        measure.speed = speed;
-                        min = Math.min(min, speed);
-                        max = Math.max(max, speed);
                         duration += seconds;
                         size += bytes;
 
-                        return acc + speed;
-                    }, 0);
+                        //Speed in Mbps
+                        speed = speed * 8 / _mega;
+                        value.speed = fixedDecimals(speed, decimals);
 
-                    avg = sum / (count || 1);
-
-                    // compute the sum of variances
-                    sum2 = _.reduce(measures, function(acc, measure){
-                        var speed = measure.speed;
-                        var diff = speed - avg;
-
-                        measure.speed = fixedDecimals(speed, 2);
-
-                        return acc + diff * diff;
-                    }, 0);
-
-                    variance = count > 1 ? sum2 / (count - 1) : 0;
-
-                    results = {
-                        min : fixedDecimals(min, 2),
-                        max : fixedDecimals(max, 2),
-                        average : fixedDecimals(avg, 2),
-                        variance : fixedDecimals(variance, 2),
-                        duration : fixedDecimals(duration, 2),
-                        size : fixedDecimals(size, 2),
-                        measures : measures
+                        return speed;
                     };
 
-                    done( results.average, results );
+                    results = stats(measures, getValue, decimals);
+
+                    results.duration = fixedDecimals(duration, decimals);
+                    results.size = size;
+
+                    done(results.average, results);
                 });
             }
         };
