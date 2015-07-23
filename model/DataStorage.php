@@ -24,16 +24,32 @@ namespace oat\taoClientDiagnostic\model;
 
 class DataStorage {
 
-    private $data, $filePath, $key, $isCompatible;
+    private $filePath, $key, $isCompatible;
     private $dataList = array(
-        'browser',
-        'browserVersion',
-        'ip',
-        'key',
-        'login',
-        'os',
-        'osVersion',
-        'compatible'
+        'key' => '',
+        'login' => '',
+        'ip' => '',
+        'browser' => '',
+        'browserVersion' => '',
+        'os' => '',
+        'osVersion' => '',
+        'bandwidth_min' => '',
+        'bandwidth_max' => '',
+        'bandwidth_sum' => '',
+        'bandwidth_count' => '',
+        'bandwidth_average' => '',
+        'bandwidth_median' => '',
+        'bandwidth_variance' => '',
+        'bandwidth_duration' => '',
+        'bandwidth_size' => '',
+        'performance_min' => '',
+        'performance_max' => '',
+        'performance_sum' => '',
+        'performance_count' => '',
+        'performance_average' => '',
+        'performance_median' => '',
+        'performance_variance' => '',
+        'compatible' => '',
     );
 
     function __construct($data)
@@ -41,7 +57,7 @@ class DataStorage {
         if(isset($data['key'])){
             $this->key = $data['key'];
         }
-        $this->data = $data;
+        $this->dataList = array_merge($this->dataList, $data);
 
         $dataPath = FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR. 'storage' . DIRECTORY_SEPARATOR;
         $this->filePath = $dataPath.'store.csv';
@@ -50,23 +66,23 @@ class DataStorage {
     public function storeData(){
         if(!file_exists($this->filePath)){
             $handle = fopen($this->filePath, 'w');
-            fputcsv($handle, $this->dataList,';');
+            fputcsv($handle, array_keys($this->dataList),';');
             fclose($handle);
         }
 
         if(!is_null($this->isCompatible)){
-            $this->data = array_merge($this->data, array('compatible' => (int) $this->isCompatible));
+            $this->dataList['compatible'] = (int)$this->isCompatible;
         }
 
         if(!is_null($this->key)){
             $data = $this->getStoredData();
             if(is_array($data)){
-                $this->data = array_merge($data, $this->data);
+                $this->dataList = array_merge($data, $this->dataList);
                 $this->deleteData();
             }
         }
         $handle = fopen($this->filePath, 'a');
-        fputcsv($handle, $this->data ,';');
+        fputcsv($handle, $this->dataList ,';');
         return fclose($handle);
     }
 
