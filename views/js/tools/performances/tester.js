@@ -23,10 +23,10 @@ define([
     'lodash',
     'async',
     'context',
+    'helpers',
     'taoClientDiagnostic/tools/stats',
-    'taoClientDiagnostic/tools/fixedDecimals',
     'lib/polyfill/performance-now'
-], function($, _, async, context, stats, fixedDecimals) {
+], function($, _, async, context, helpers, stats) {
     'use strict';
 
     /**
@@ -71,7 +71,8 @@ define([
      * @param {Function} done A callback function called to provide the result
      */
     var loadFrame = function loadFrame(data, done) {
-        var url = context.root_url + '/taoClientDiagnostic/views/js/tools/performances/' + data.url + '?' + Date.now();
+        var clientConfigUrl = helpers._url('config', 'ClientConfig', 'tao', {extension: 'taoQtiItem', module: 'QtiPreview', action: 'index'});
+        var url = context.root_url + '/taoClientDiagnostic/views/js/tools/performances/' + data.url + '?clientConfigUrl=' + encodeURIComponent(clientConfigUrl) + '&' + Date.now();
         var $frame = $('<iframe name="performancesCheck" style="position: absolute; left: -100000px;" />');
         var frameEl = $frame.get(0);
         var frameWindow;
