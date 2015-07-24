@@ -25,10 +25,29 @@ define([
     'jquery',
     'i18n',
     'layout/loading-bar',
-    'helpers'
-
-], function ($, __, loadingBar, helpers) {
+    'helpers',
+    'taoClientDiagnostic/tools/performances/tester',
+    'taoClientDiagnostic/tools/bandwidth/tester'
+], function ($, __, loadingBar, helpers, performancesTester, bandwidthTester) {
     'use strict';
+
+    /**
+     * A list of thresholds
+     * @type {Array}
+     */
+    var thresholds = [{
+        threshold: 0,
+        message: __("Very bad"),
+        type: 'error'
+    }, {
+        threshold: 25,
+        message: __('Low'),
+        type: 'warning'
+    }, {
+        threshold: 75,
+        message: __('Nice!'),
+        type: 'success'
+    }];
 
     /**
      * Gets the correct status message for a given percentage
@@ -95,9 +114,10 @@ define([
 
 
     /**
-     *
+     * Performs a browser checks
+     * @param {Function} done
      */
-    function checkBrowser() {
+    function checkBrowser(done) {
         var info = new WhichBrowser();
         var osVersion = info.os.version.alias;
         if(osVersion === null){
@@ -116,27 +136,34 @@ define([
             helpers._url('check', 'CompatibilityChecker', 'taoClientDiagnostic'),
             information,
             function(data){
-                displayTestResult('browser', data);
+                done(data, information);
             },
             "json"
         );
-
-        return {
-            browser : {message : __('Browser'), value:information.browser + ' ' + information.browserVersion},
-            os      : {message : __('Operating system'), value:information.os + ' ' + information.osVersion}
-        };
     }
 
     /**
-     *
+     * Performs a browser bandwidth check
+     * @param {Function} done
      */
-    function checkBandwidth() {
+    function checkBandwidth(done) {
+        bandwidthTester().start(function(average, details) {
+            var max = 100;
+            var status = getStatus(thresholds, details.max / max * 100);
+            done(status, details);
+        });
     }
 
     /**
-     *
+     * Performs a browser performances check
+     * @param {Function} done
      */
-    function checkPerformance() {
+    function checkPerformance(done) {
+        performancesTester().start(function(average, details) {
+            var max = 100;
+            var status = getStatus(thresholds, average / max * 100);
+            done(status, details);
+        });
     }
 
     /**
@@ -148,32 +175,27 @@ define([
         var $bandWidthTriggerBtn = $('[data-action="bandwidth-launcher"]');
         var $detailsBtn = $('[data-action="display-details"]');
         var $bandWidthBox = $('.bandwidth-box'),
-            status, information;
+            status, information = {};
         var $detailsTable = $('#details');
-
-        var thresholds = [{
-            threshold: 0,
-            message: __("Very bad"),
-            type: 'error'
-        }, {
-            threshold: 25,
-            message: __('Low'),
-            type: 'warning'
-        }, {
-            threshold: 75,
-            message: __('Nice!'),
-            type: 'success'
-        }];
 
         $testTriggerBtn.on('click', function(){
             loadingBar.start();
             $testTriggerBtn.hide();
-            information = checkBrowser();
 
-            // fake simulator
-            setTimeout(function() {
-                // Browser/OS is result of async query
-                status = getStatus(thresholds, 20);
+            checkBrowser(function(status, details) {
+                _.assign(information, {
+                    browser : {message : __('Browser'), value:details.browser + ' ' + details.browserVersion},
+                    os      : {message : __('Operating system'), value:details.os + ' ' + details.osVersion}
+                });
+                displayTestResult('browser', status);
+            });
+
+            checkPerformance(function(status, details) {
+                _.assign(information, {
+                    performancesMin : {message : __('Minimum render time'), value:details.min + ' s'},
+                    performancesMax : {message : __('Maximum render time'), value:details.max + ' s'},
+                    performancesAverage : {message : __('Average render time'), value:details.average + ' s'}
+                });
                 displayTestResult('performance', status);
 
                 status = getStatus(thresholds, 75);
@@ -181,7 +203,7 @@ define([
 
                 loadingBar.stop();
                 $bandWidthBox.show();
-            }, 3000);
+            });
         });
 
 
@@ -189,14 +211,15 @@ define([
             loadingBar.start();
             $bandWidthTriggerBtn.hide();
 
-            // fake simulator
-            setTimeout(function() {
-
-                status = getStatus(thresholds, 68);
+            checkBandwidth(function(status, details) {
+                _.assign(information, {
+                    bandwidthMin : {message : __('Minimum bandwidth'), value:details.min + ' Mbps'},
+                    bandwidthMax : {message : __('Maximum bandwidth'), value:details.max + ' Mbps'},
+                    bandwidthAverage : {message : __('Average bandwidth'), value:details.average + ' Mbps'}
+                });
                 displayTestResult('bandwidth', status);
                 loadingBar.stop();
-
-            }, 3000);
+            });
         });
 
         $detailsBtn.on('click', function() {
