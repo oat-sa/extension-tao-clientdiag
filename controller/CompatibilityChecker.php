@@ -79,10 +79,16 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
     }
 
     private function getData($check = false){
-        $login = \common_session_SessionManager::getSession()->getUserLabel();
-        $data['login'] = $login;
-        $data['ip'] = $_SERVER['REMOTE_ADDR'];
-        $data = array_merge($data,$this->getRequestParameters());
+        $data = $this->getRequestParameters();
+
+        if($this->hasRequestParameter('type')){
+            $type = $this->getRequestParameter('type');
+            foreach($data as $key => $value){
+                $data[$type . '_' . $key] = $value;
+                unset($data[$key]);
+            }
+            unset($data[$type.'_type']);
+        }
 
         if($check){
             if(!$this->hasRequestParameter('os')){
@@ -100,6 +106,10 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             $data['osVersion'] = preg_replace('/[^\w\.]/','',$data['osVersion']);
             $data['browserVersion'] = preg_replace('/[^\w\.]/','',$data['browserVersion']);
         }
+
+        $login = \common_session_SessionManager::getSession()->getUserLabel();
+        $data['login'] = $login;
+        $data['ip'] = $_SERVER['REMOTE_ADDR'];
 
         return $data;
     }
