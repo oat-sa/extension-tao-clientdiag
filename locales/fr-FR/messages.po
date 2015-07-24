@@ -46,7 +46,7 @@ msgstr "Système d'exploitation"
 msgid "Operating system and browser"
 msgstr "Navigateur et système d’exploitation"
 
-msgid "Requires a compliance update (please contact your academic platform"
+msgid "Requires a compliance update (please contact your academic platform)"
 msgstr "Nécessite une mise en conformité (contactez votre plateforme académique)"
 
 msgid "Run bandwidth test"

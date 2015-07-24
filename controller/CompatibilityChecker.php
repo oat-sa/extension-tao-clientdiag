@@ -56,7 +56,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
                     return;
                 }
             }
-            $this->returnJson(array('success' => true, 'type' => 'error', 'message' => __('Requires a compliance update (please contact your academic platform')));
+            $this->returnJson(array('success' => true, 'type' => 'error', 'message' => __('Requires a compliance update (please contact your academic platform)')));
         }catch(\common_exception_MissingParameter $e){
             $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $e->getUserMessage()));
         }
