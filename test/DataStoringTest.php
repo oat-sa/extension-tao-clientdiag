@@ -30,11 +30,11 @@ class DataStoringTest extends \PHPUnit_Framework_TestCase {
 
     public function setUp(){
         $this->sentData = array(
-            'browser'           => 'Chrome',
-            'browserVersion'    => '33',
-            'ip'                => '10.9.8.7',
             'key'               => '1234567',
             'login'             => 'test',
+            'ip'                => '10.9.8.7',
+            'browser'           => 'Chrome',
+            'browserVersion'    => '33',
             'os'                => 'Windows',
             'osVersion'         => '8.1',
         );
@@ -57,9 +57,8 @@ class DataStoringTest extends \PHPUnit_Framework_TestCase {
         if (($handle = fopen($this->sampleFilePath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 $num = count($data);
-
-                $this->assertEquals(24, $num);
                 $row ++;
+                $this->assertEquals(24, $num);
                 if($row === 2){
                     $this->assertEquals($this->sentData['key'],$data[0]);
                     $this->assertEquals($this->sentData['login'],$data[1]);
@@ -81,8 +80,8 @@ class DataStoringTest extends \PHPUnit_Framework_TestCase {
         if (($handle = fopen($this->sampleFilePath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 $num = count($data);
-                $this->assertEquals(24, $num);
                 $row ++;
+                $this->assertEquals(24, $num);
                 if($row === 2){
                     $this->assertEquals($this->sentData['key'],$data[0]);
                     $this->assertEquals($this->sentData['login'],$data[1]);
@@ -118,6 +117,20 @@ class DataStoringTest extends \PHPUnit_Framework_TestCase {
         $this->assertEquals($this->sentData['os'],$data['os']);
         $this->assertEquals($this->sentData['osVersion'],$data['osVersion']);
         $this->assertEquals(0,$data['compatible']);
+
+        return $store;
+    }
+
+    /**
+    * @depends testStoreData
+    */
+    public function testDeleteData($store){
+
+        $deleted = $store->deleteData();
+
+        $this->assertTrue($deleted);
+        $data = $store->getStoredData();
+        $this->assertEmpty($data);
     }
 
 }
