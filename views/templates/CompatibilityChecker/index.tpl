@@ -71,7 +71,7 @@ use oat\tao\helpers\Layout;
 
     <div class="diagnostics-main-area">
 
-        <h1><?= __('Diagnostics tool') ?></h1>
+        <h1><?= __('Diagnostic tool') ?></h1>
 
         <div class="intro">
             <?=
@@ -82,13 +82,13 @@ use oat\tao\helpers\Layout;
         </div>
 
         <ul class="plain">
-            <li data-result="browser"><?= __('Operating system and browser') ?>
+            <li data-result="browser"><?= __('Operating system and web browser') ?>
                 <div class="small feedback">
                     <span class="icon"></span>
                     <span class="msg"></span>
                 </div>
             </li>
-            <li data-result="performance"><?= __('Workstation Performance') ?>
+            <li data-result="performance"><?= __('Workstation performance') ?>
                 <div>
                     <div class="small feedback">
                         <span class="icon"></span>
