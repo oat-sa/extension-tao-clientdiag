@@ -146,16 +146,22 @@ define([
                     }
 
                     getValue = function(value) {
-                        var bytes = value.size;
-                        var seconds = value.duration / _second;
-                        var speed = bytes / seconds;
+                        var bytes;
+                        var seconds;
+                        var speed = 0;
 
-                        duration += seconds;
-                        size += bytes;
+                        if (value) {
+                            bytes = value.size;
+                            seconds = value.duration / _second;
+                            speed = bytes / seconds;
 
-                        //Speed in Mbps
-                        speed = speed * 8 / _mega;
-                        value.speed = fixedDecimals(speed, decimals);
+                            duration += seconds;
+                            size += bytes;
+
+                            //Speed in Mbps
+                            speed = speed * 8 / _mega;
+                            value.speed = fixedDecimals(speed, decimals);
+                        }
 
                         return speed;
                     };
