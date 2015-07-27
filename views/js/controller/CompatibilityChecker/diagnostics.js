@@ -58,15 +58,15 @@ define([
      */
     var thresholds = [{
         threshold: 0,
-        message: __("Very bad"),
+        message: __("Very slow performance"),
         type: 'error'
     }, {
         threshold: 25,
-        message: __('Low'),
+        message: __('Average performance'),
         type: 'warning'
     }, {
         threshold: 75,
-        message: __('Nice!'),
+        message: __('Good performance'),
         type: 'success'
     }];
 
@@ -219,6 +219,14 @@ define([
         });
     }
 
+    function displayDetails(information) {
+        var $detailsTable = $('#details');
+        $.each(information, function(index, object) {
+            var line = '<td>'+ object.message +'</td><td>'+ object.value +'</td>';
+            $('tbody', $detailsTable).append('<tr>' + line + '</tr>');
+        });
+    }
+
     /**
      *
      */
@@ -238,7 +246,7 @@ define([
 
             checkBrowser(function(status, details) {
                 _.assign(information, {
-                    browser : {message : __('Browser'), value:details.browser + ' ' + details.browserVersion},
+                    browser : {message : __('Web browser'), value:details.browser + ' ' + details.browserVersion},
                     os      : {message : __('Operating system'), value:details.os + ' ' + details.osVersion}
                 });
                 updateTestResult('browser', status, scores);
@@ -246,9 +254,9 @@ define([
 
             checkPerformance(function(status, details) {
                 _.assign(information, {
-                    performancesMin : {message : __('Minimum render time'), value:details.min + ' s'},
-                    performancesMax : {message : __('Maximum render time'), value:details.max + ' s'},
-                    performancesAverage : {message : __('Average render time'), value:details.average + ' s'}
+                    performancesMin : {message : __('Minimum rendering time'), value:details.min + ' s'},
+                    performancesMax : {message : __('Maximum rendering time'), value:details.max + ' s'},
+                    performancesAverage : {message : __('Average rendering time'), value:details.average + ' s'}
                 });
                 updateTestResult('performance', status, scores);
 
@@ -263,7 +271,7 @@ define([
             $bandWidthTriggerBtn.hide();
 
             checkBandwidth(function(status, details) {
-                _.assign(information, {
+                displayDetails({
                     bandwidthMin : {message : __('Minimum bandwidth'), value:details.min + ' Mbps'},
                     bandwidthMax : {message : __('Maximum bandwidth'), value:details.max + ' Mbps'},
                     bandwidthAverage : {message : __('Average bandwidth'), value:details.average + ' Mbps'}
@@ -281,10 +289,7 @@ define([
             loadingBar.start();
             $detailsBtn.hide();
 
-            $.each(information, function(index, object) {
-                var line = '<td>'+ object.message +'</td><td>'+ object.value +'</td>';
-                $('tbody', $detailsTable).append('<tr>' + line + '</tr>');
-            });
+            displayDetails(information);
 
             status = getStatus(thresholds, 68);
             displayTestResult('details', status);
