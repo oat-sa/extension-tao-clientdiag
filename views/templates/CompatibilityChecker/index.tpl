@@ -105,9 +105,20 @@ use oat\tao\helpers\Layout;
                     <button data-action="bandwidth-launcher" class="btn-info small"><?=
                         __('Run bandwidth test') ?></button>
                 </div>
-                <div data-result="bandwidth">
+                <div data-result="bandwidth-0">
                     <div class="small feedback">
                         <span class="icon"></span>
+                        <span class="title"><?= __('%s test takers', 20); ?></span>
+                        <span class="msg"></span>
+                    </div>
+                    <div class="quality-bar">
+                        <div class="quality-indicator"></div>
+                    </div>
+                </div>
+                <div data-result="bandwidth-1">
+                    <div class="small feedback">
+                        <span class="icon"></span>
+                        <span class="title"><?= __('%s test takers', 30); ?></span>
                         <span class="msg"></span>
                     </div>
                     <div class="quality-bar">
