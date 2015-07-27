@@ -76,7 +76,7 @@ define([
         });
 
         // compute de standard variance
-        variance = count > 1 ? sum2 / (count - 1) : 0;
+        variance = count > 1 ? Math.sqrt(sum2 / (count - 1)) : 0;
 
         // compute the median value
         values.sort();
