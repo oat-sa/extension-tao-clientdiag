@@ -86,5 +86,5 @@ msgid "You must activate JavaScript in your browser to run this application."
 msgstr ""
 
 msgid "Your system requires a compatibility update, please contact your system administrator."
-msgstr "Nécessite une mise en conformité (contactez votre plateforme académique)"
+msgstr "Configuration nécessitant une mise en conformité (contactez votre plateforme académique)"
 
