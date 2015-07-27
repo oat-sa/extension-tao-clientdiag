@@ -25,8 +25,10 @@ define([
     'context',
     'helpers',
     'taoClientDiagnostic/tools/stats',
+    'taoQtiItem/qtiItem/core/Loader',
+    'taoQtiItem/qtiCommonRenderer/renderers/Renderer',
     'lib/polyfill/performance-now'
-], function($, _, async, context, helpers, stats) {
+], function($, _, async, context, helpers, stats, Loader, Renderer) {
     'use strict';
 
     /**
@@ -47,19 +49,19 @@ define([
     var _samples = {
         'sample1' : {
             id : 'sample1',
-            url : 'data/sample1.html',
+            url : 'taoClientDiagnostic/tools/performances/data/sample1/',
             timeout : 30 * _second,
             nb : 3
         },
         'sample2' : {
             id : 'sample2',
-            url : 'data/sample2.html',
+            url : 'taoClientDiagnostic/tools/performances/data/sample2/',
             timeout : 30 * _second,
             nb : 3
         },
         'sample3' : {
             id : 'sample3',
-            url : 'data/sample3.html',
+            url : 'taoClientDiagnostic/tools/performances/data/sample3/',
             timeout : 30 * _second,
             nb : 3
         }
@@ -128,7 +130,100 @@ define([
         start = Date.now();
         $frame.attr('src', url);
     };
+    
+    function loadFrame2(data, done){
+        
+        //perf variables
+        var totalDuration;
+        var networkDuration;
+        var requestDuration;
+        var displayDuration;
+        var start;
+        var end;
+        var requestStart;
+        var responseEnd;
+        var framePerfData;
+        
+        //item location config
+        var qtiJsonFile = data.url+'qti.json';
+        var urlTokens = data.url.split('/');
+        var extension = urlTokens[0];
+        var requireConfig = require.s.contexts._.config;
+        var fullpath = requireConfig.baseUrl + requireConfig.paths[extension];
+        var baseUrl = data.url.replace(extension, fullpath);
+        
+        require(['json!'+qtiJsonFile], function(itemData){
+            start = Date.now();
+            console.log(itemData);
+            renderQtiItem(itemData, $('#items'), {baseUrl : baseUrl}, function(){
+                
+                end = Date.now();
 
+                if (framePerfData) {
+                    totalDuration = Math.round(framePerf.now());
+                    start = framePerfData.navigationStart;
+                    responseEnd = framePerfData.responseEnd;
+                    requestStart = framePerfData.requestStart;
+
+                    displayDuration = end - responseEnd;
+                    networkDuration = responseEnd - start;
+                    requestDuration = responseEnd - requestStart;
+                } else {
+                    totalDuration = end - start;
+                    displayDuration = totalDuration;
+                    networkDuration = 0;
+                    requestDuration = 0;
+                }
+                
+                var result = {
+                    id : data.id,
+                    url : data.url,
+                    totalDuration: totalDuration,
+                    networkDuration : networkDuration,
+                    requestDuration : requestDuration,
+                    displayDuration : displayDuration,
+                    performance: framePerfData
+                };
+                
+                console.log('loaded', result);
+            });
+        });
+        
+    }
+    
+    function renderQtiItem(itemData, $container, config, done){
+        
+        var loader = new Loader();
+        var renderer = new Renderer();
+        renderer.getAssetManager().setData('baseUrl', config.baseUrl);
+
+        //allow specifying the runtimeLocation (useful in debug mode)
+        if(config.runtimeLocations){
+            renderer.setOption('runtimeLocations', config.runtimeLocations);
+        }
+            
+        loader.loadItemData(itemData, function(item){
+            renderer.load(function(){
+
+                //set renderer
+                item.setRenderer(this);
+
+                //render markup
+                $container.append(item.render());
+
+                //execute javascript
+                item.postRender();
+                
+                //done
+                done();
+                
+                //remove item
+                item.getContainer().remove();
+                
+            }, this.getLoadedClasses());
+        });
+    }
+    
     /**
      * Performs a browser performances test by running a heavy page
      *
@@ -148,6 +243,7 @@ define([
                     while (iterations --) {
                         tests.push(cb);
                     }
+                    loadFrame2(data);
                 });
 
                 async.series(tests, function(err, measures) {
