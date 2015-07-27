@@ -55,12 +55,15 @@ define([
 
         // process 1st pass stats: compute sum, min and max values
         _.forEach(list, function(item) {
-            var value = getValue(item);
-            values.push(value);
-            min = Math.min(min, value);
-            max = Math.max(max, value);
-            sum += value;
-            count ++;
+            var value;
+            if (undefined !== item) {
+                value = getValue(item);
+                values.push(value);
+                min = Math.min(min, value);
+                max = Math.max(max, value);
+                sum += value;
+                count++;
+            }
         });
 
         // compute the average value
