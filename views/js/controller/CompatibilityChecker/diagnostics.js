@@ -47,10 +47,28 @@ define([
     ];
 
     /**
+     * Maximum number of test takers to display
+     * @type {Number}
+     */
+    var maxTestTakers = 100;
+
+    /**
      * The threshold for optimal performances
      * @type {Number}
      */
-    var performanceThreshold = 250;
+    var performanceOptimal = 0.02;
+
+    /**
+     * The threshold for minimal performances
+     * @type {Number}
+     */
+    var performanceThreshold = 0.5;
+
+    /**
+     * The range of performance displayed on a bar
+     * @type {Number}
+     */
+    var performanceRange = Math.abs(performanceOptimal - performanceThreshold);
 
     /**
      * A list of thresholds
@@ -203,7 +221,11 @@ define([
                 _.forEach(bandwidthThresholds, function(threshold) {
                     var max = threshold * bandwidthUnit;
                     var st = getStatus(thresholds, details.max / max * 100);
-                    var nb = Math.min(Math.floor(details.max / bandwidthUnit), threshold);
+                    var nb = Math.floor(details.max / bandwidthUnit);
+
+                    if (nb > maxTestTakers) {
+                        nb = '>' + maxTestTakers;
+                    }
 
                     st.number = nb;
                     status.push(st);
@@ -220,8 +242,8 @@ define([
      */
     function checkPerformance(done) {
         performancesTester().start(function(average, details) {
-            var max = 100;
-            var status = getStatus(thresholds, performanceThreshold - average / max * 100);
+            var cursor = performanceRange - details.max + performanceOptimal;
+            var status = getStatus(thresholds, cursor / performanceRange * 100);
 
             storeData('performance', details, function(){
                 done(status, details);
