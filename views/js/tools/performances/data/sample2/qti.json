@@ -1,0 +1,236 @@
+{
+    "identifier": "hotspot_glasgow",
+    "serial": "item_55b643d9006fb354980707",
+    "qtiClass": "assessmentItem",
+    "attributes": {
+        "identifier": "hotspot_glasgow",
+        "title": "UK Airports (Take 1)",
+        "label": "",
+        "adaptive": false,
+        "timeDependent": false,
+        "toolName": "TAO",
+        "toolVersion": "3.1.0-sprint03"
+    },
+    "body": {
+        "serial": "container_containeritembody_55b643d9006e0985458686",
+        "body": "\n\t\t<p>The picture illustrates four of the most popular destinations for air travellers arriving\n\t\t\tin the United Kingdom: London, Manchester, Edinburgh and Glasgow.</p>\n\t\t{{interaction_hotspotinteraction_55b643d9014a0992565827}}\n\t",
+        "elements": {
+            "interaction_hotspotinteraction_55b643d9014a0992565827": {
+                "serial": "interaction_hotspotinteraction_55b643d9014a0992565827",
+                "qtiClass": "hotspotInteraction",
+                "attributes": {
+                    "responseIdentifier": "RESPONSE",
+                    "maxChoices": 1,
+                    "minChoices": 0
+                },
+                "debug": {
+                    "relatedItem": "item_55b643d9006fb354980707"
+                },
+                "choices": {
+                    "choice_hotspotchoice_55b643d901c26778398309": {
+                        "identifier": "A",
+                        "serial": "choice_hotspotchoice_55b643d901c26778398309",
+                        "qtiClass": "hotspotChoice",
+                        "attributes": {
+                            "identifier": "A",
+                            "fixed": false,
+                            "shape": "circle",
+                            "coords": "77,115,8"
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b643d9006fb354980707"
+                        }
+                    },
+                    "choice_hotspotchoice_55b643d901dcb507941421": {
+                        "identifier": "B",
+                        "serial": "choice_hotspotchoice_55b643d901dcb507941421",
+                        "qtiClass": "hotspotChoice",
+                        "attributes": {
+                            "identifier": "B",
+                            "fixed": false,
+                            "shape": "circle",
+                            "coords": "118,184,8"
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b643d9006fb354980707"
+                        }
+                    },
+                    "choice_hotspotchoice_55b643d901e3e843961073": {
+                        "identifier": "C",
+                        "serial": "choice_hotspotchoice_55b643d901e3e843961073",
+                        "qtiClass": "hotspotChoice",
+                        "attributes": {
+                            "identifier": "C",
+                            "fixed": false,
+                            "shape": "circle",
+                            "coords": "150,235,8"
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b643d9006fb354980707"
+                        }
+                    },
+                    "choice_hotspotchoice_55b643d901ea9838183187": {
+                        "identifier": "D",
+                        "serial": "choice_hotspotchoice_55b643d901ea9838183187",
+                        "qtiClass": "hotspotChoice",
+                        "attributes": {
+                            "identifier": "D",
+                            "fixed": false,
+                            "shape": "circle",
+                            "coords": "96,114,8"
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b643d9006fb354980707"
+                        }
+                    }
+                },
+                "prompt": {
+                    "serial": "container_containerstatic_55b643d901678590446252",
+                    "body": "Which one is Glasgow?",
+                    "elements": {},
+                    "debug": {
+                        "relatedItem": "item_55b643d9006fb354980707"
+                    }
+                },
+                "object": {
+                    "serial": "object_55b643d901f22757052130",
+                    "qtiClass": "object",
+                    "attributes": {
+                        "data": "images/ukair.png",
+                        "type": "image/png",
+                        "width": 206,
+                        "height": 280
+                    },
+                    "debug": {
+                        "relatedItem": ""
+                    },
+                    "_alt": "UK Map"
+                }
+            }
+        },
+        "debug": {
+            "relatedItem": "item_55b643d9006fb354980707"
+        }
+    },
+    "debug": {
+        "relatedItem": "item_55b643d9006fb354980707"
+    },
+    "namespaces": {
+        "xml": "http://www.w3.org/XML/1998/namespace",
+        "xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "": "http://www.imsglobal.org/xsd/imsqti_v2p1"
+    },
+    "stylesheets": {},
+    "outcomes": {
+        "outcomedeclaration_55b643d901039491055404": {
+            "identifier": "SCORE",
+            "serial": "outcomedeclaration_55b643d901039491055404",
+            "qtiClass": "outcomeDeclaration",
+            "attributes": {
+                "identifier": "SCORE",
+                "cardinality": "single",
+                "baseType": "float"
+            },
+            "debug": {
+                "relatedItem": "item_55b643d9006fb354980707"
+            },
+            "defaultValue": null
+        }
+    },
+    "responses": {
+        "responsedeclaration_55b643d900aa8286621223": {
+            "identifier": "RESPONSE",
+            "serial": "responsedeclaration_55b643d900aa8286621223",
+            "qtiClass": "responseDeclaration",
+            "attributes": {
+                "identifier": "RESPONSE",
+                "cardinality": "single",
+                "baseType": "identifier"
+            },
+            "debug": {
+                "relatedItem": "item_55b643d9006fb354980707"
+            },
+            "correctResponses": [
+                "A"
+            ],
+            "mapping": [
+            ],
+            "areaMapping": [
+            ],
+            "howMatch": "http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct",
+            "mappingAttributes": {
+                "defaultValue": 0
+            },
+            "feedbackRules": {}
+        }
+    },
+    "feedbacks": {},
+    "responseProcessing": {
+        "serial": "response_templatesdriven_55b643d9022f6965252300",
+        "qtiClass": "responseProcessing",
+        "attributes": [
+        ],
+        "debug": {
+            "relatedItem": "item_55b643d9006fb354980707"
+        },
+        "processingType": "templateDriven",
+        "responseRules": [
+            {
+                "qtiClass": "responseCondition",
+                "responseIf": {
+                    "qtiClass": "responseIf",
+                    "expression": {
+                        "qtiClass": "match",
+                        "expressions": [
+                            {
+                                "qtiClass": "variable",
+                                "attributes": {
+                                    "identifier": "RESPONSE"
+                                }
+                            },
+                            {
+                                "qtiClass": "correct",
+                                "attributes": {
+                                    "identifier": "RESPONSE"
+                                }
+                            }
+                        ]
+                    },
+                    "responseRules": [
+                        {
+                            "qtiClass": "setOutcomeValue",
+                            "attributes": {
+                                "identifier": "SCORE"
+                            },
+                            "expression": {
+                                "qtiClass": "baseValue",
+                                "attributes": {
+                                    "baseType": "float"
+                                },
+                                "value": "1"
+                            }
+                        }
+                    ]
+                },
+                "responseElse": {
+                    "qtiClass": "responseElse",
+                    "responseRules": [
+                        {
+                            "qtiClass": "setOutcomeValue",
+                            "attributes": {
+                                "identifier": "SCORE"
+                            },
+                            "expression": {
+                                "qtiClass": "baseValue",
+                                "attributes": {
+                                    "baseType": "float"
+                                },
+                                "value": "0"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

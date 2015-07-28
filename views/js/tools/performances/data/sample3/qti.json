@@ -1,0 +1,391 @@
+{
+    "identifier": "mediaTest",
+    "serial": "item_55b64375ac661205041663",
+    "qtiClass": "assessmentItem",
+    "attributes": {
+        "identifier": "mediaTest",
+        "title": "media playing session",
+        "label": "",
+        "xml:lang": "en-US",
+        "adaptive": false,
+        "timeDependent": false,
+        "toolName": "TAO",
+        "toolVersion": "3.1.0-sprint03"
+    },
+    "body": {
+        "serial": "container_containeritembody_55b64375ac63c869394524",
+        "body": "\n        {{interaction_mediainteraction_55b64375ad5d6593538117}}\n        {{interaction_mediainteraction_55b64375ae040733701458}}\n        {{interaction_mediainteraction_55b64375ae498950095024}}\n    ",
+        "elements": {
+            "interaction_mediainteraction_55b64375ad5d6593538117": {
+                "serial": "interaction_mediainteraction_55b64375ad5d6593538117",
+                "qtiClass": "mediaInteraction",
+                "attributes": {
+                    "responseIdentifier": "RESPONSE",
+                    "autostart": true,
+                    "minPlays": 0,
+                    "maxPlays": 2,
+                    "loop": true
+                },
+                "debug": {
+                    "relatedItem": "item_55b64375ac661205041663"
+                },
+                "choices": {},
+                "prompt": {
+                    "serial": "container_containerstatic_55b64375ad983184589142",
+                    "body": "Play it ! (mp4)",
+                    "elements": {},
+                    "debug": {
+                        "relatedItem": "item_55b64375ac661205041663"
+                    }
+                },
+                "object": {
+                    "serial": "object_55b64375adf86105732561",
+                    "qtiClass": "object",
+                    "attributes": {
+                        "data": "http://techslides.com/demos/sample-videos/small.mp4",
+                        "type": "video/mp4",
+                        "width": 320,
+                        "height": 240
+                    },
+                    "debug": {
+                        "relatedItem": ""
+                    }
+                }
+            },
+            "interaction_mediainteraction_55b64375ae040733701458": {
+                "serial": "interaction_mediainteraction_55b64375ae040733701458",
+                "qtiClass": "mediaInteraction",
+                "attributes": {
+                    "responseIdentifier": "RESPONSE1",
+                    "autostart": true,
+                    "minPlays": 0,
+                    "maxPlays": 2,
+                    "loop": true
+                },
+                "debug": {
+                    "relatedItem": "item_55b64375ac661205041663"
+                },
+                "choices": {},
+                "prompt": {
+                    "serial": "container_containerstatic_55b64375ae131757812448",
+                    "body": "Play it ! (ogv)",
+                    "elements": {},
+                    "debug": {
+                        "relatedItem": "item_55b64375ac661205041663"
+                    }
+                },
+                "object": {
+                    "serial": "object_55b64375ae3fa406572452",
+                    "qtiClass": "object",
+                    "attributes": {
+                        "data": "http://techslides.com/demos/sample-videos/small.ogv",
+                        "type": "video/ogg",
+                        "width": 320,
+                        "height": 240
+                    },
+                    "debug": {
+                        "relatedItem": ""
+                    }
+                }
+            },
+            "interaction_mediainteraction_55b64375ae498950095024": {
+                "serial": "interaction_mediainteraction_55b64375ae498950095024",
+                "qtiClass": "mediaInteraction",
+                "attributes": {
+                    "responseIdentifier": "RESPONSE2",
+                    "autostart": true,
+                    "minPlays": 0,
+                    "maxPlays": 2,
+                    "loop": true
+                },
+                "debug": {
+                    "relatedItem": "item_55b64375ac661205041663"
+                },
+                "choices": {},
+                "prompt": {
+                    "serial": "container_containerstatic_55b64375ae589027144624",
+                    "body": "Play it ! (webm)",
+                    "elements": {},
+                    "debug": {
+                        "relatedItem": "item_55b64375ac661205041663"
+                    }
+                },
+                "object": {
+                    "serial": "object_55b64375ae7df120204089",
+                    "qtiClass": "object",
+                    "attributes": {
+                        "data": "http://techslides.com/demos/sample-videos/small.webm",
+                        "type": "video/webm",
+                        "width": 320,
+                        "height": 240
+                    },
+                    "debug": {
+                        "relatedItem": ""
+                    }
+                }
+            }
+        },
+        "debug": {
+            "relatedItem": "item_55b64375ac661205041663"
+        }
+    },
+    "debug": {
+        "relatedItem": "item_55b64375ac661205041663"
+    },
+    "namespaces": {
+        "xml": "http://www.w3.org/XML/1998/namespace",
+        "xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "": "http://www.imsglobal.org/xsd/imsqti_v2p1"
+    },
+    "stylesheets": {},
+    "outcomes": {
+        "outcomedeclaration_55b64375ad114172186975": {
+            "identifier": "SCORE",
+            "serial": "outcomedeclaration_55b64375ad114172186975",
+            "qtiClass": "outcomeDeclaration",
+            "attributes": {
+                "identifier": "SCORE",
+                "cardinality": "single",
+                "baseType": "integer"
+            },
+            "debug": {
+                "relatedItem": "item_55b64375ac661205041663"
+            },
+            "defaultValue": null
+        }
+    },
+    "responses": {
+        "responsedeclaration_55b64375aca3a217586800": {
+            "identifier": "RESPONSE",
+            "serial": "responsedeclaration_55b64375aca3a217586800",
+            "qtiClass": "responseDeclaration",
+            "attributes": {
+                "identifier": "RESPONSE",
+                "cardinality": "single",
+                "baseType": "integer"
+            },
+            "debug": {
+                "relatedItem": "item_55b64375ac661205041663"
+            },
+            "correctResponses": [
+            ],
+            "mapping": [
+            ],
+            "areaMapping": [
+            ],
+            "howMatch": "http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct",
+            "mappingAttributes": {
+                "defaultValue": 0
+            },
+            "feedbackRules": {}
+        },
+        "responsedeclaration_55b64375acfba018053396": {
+            "identifier": "RESPONSE1",
+            "serial": "responsedeclaration_55b64375acfba018053396",
+            "qtiClass": "responseDeclaration",
+            "attributes": {
+                "identifier": "RESPONSE1",
+                "cardinality": "single",
+                "baseType": "integer"
+            },
+            "debug": {
+                "relatedItem": "item_55b64375ac661205041663"
+            },
+            "correctResponses": [
+            ],
+            "mapping": [
+            ],
+            "areaMapping": [
+            ],
+            "howMatch": "http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct",
+            "mappingAttributes": {
+                "defaultValue": 0
+            },
+            "feedbackRules": {}
+        },
+        "responsedeclaration_55b64375ad05f271943726": {
+            "identifier": "RESPONSE2",
+            "serial": "responsedeclaration_55b64375ad05f271943726",
+            "qtiClass": "responseDeclaration",
+            "attributes": {
+                "identifier": "RESPONSE2",
+                "cardinality": "single",
+                "baseType": "integer"
+            },
+            "debug": {
+                "relatedItem": "item_55b64375ac661205041663"
+            },
+            "correctResponses": [
+            ],
+            "mapping": [
+            ],
+            "areaMapping": [
+            ],
+            "howMatch": "http://www.imsglobal.org/question/qti_v2p1/rptemplates/match_correct",
+            "mappingAttributes": {
+                "defaultValue": 0
+            },
+            "feedbackRules": {}
+        }
+    },
+    "feedbacks": {},
+    "responseProcessing": {
+        "serial": "response_templatesdriven_55b64375aeb5b752068471",
+        "qtiClass": "responseProcessing",
+        "attributes": [
+        ],
+        "debug": {
+            "relatedItem": "item_55b64375ac661205041663"
+        },
+        "processingType": "templateDriven",
+        "responseRules": [
+            {
+                "qtiClass": "responseCondition",
+                "responseIf": {
+                    "qtiClass": "responseIf",
+                    "expression": {
+                        "qtiClass": "match",
+                        "expressions": [
+                            {
+                                "qtiClass": "variable",
+                                "attributes": {
+                                    "identifier": "RESPONSE"
+                                }
+                            },
+                            {
+                                "qtiClass": "correct",
+                                "attributes": {
+                                    "identifier": "RESPONSE"
+                                }
+                            }
+                        ]
+                    },
+                    "responseRules": [
+                        {
+                            "qtiClass": "setOutcomeValue",
+                            "attributes": {
+                                "identifier": "SCORE"
+                            },
+                            "expression": {
+                                "qtiClass": "sum",
+                                "expressions": [
+                                    {
+                                        "qtiClass": "variable",
+                                        "attributes": {
+                                            "identifier": "SCORE"
+                                        }
+                                    },
+                                    {
+                                        "qtiClass": "baseValue",
+                                        "attributes": {
+                                            "baseType": "integer"
+                                        },
+                                        "value": "1"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "qtiClass": "responseCondition",
+                "responseIf": {
+                    "qtiClass": "responseIf",
+                    "expression": {
+                        "qtiClass": "match",
+                        "expressions": [
+                            {
+                                "qtiClass": "variable",
+                                "attributes": {
+                                    "identifier": "RESPONSE1"
+                                }
+                            },
+                            {
+                                "qtiClass": "correct",
+                                "attributes": {
+                                    "identifier": "RESPONSE1"
+                                }
+                            }
+                        ]
+                    },
+                    "responseRules": [
+                        {
+                            "qtiClass": "setOutcomeValue",
+                            "attributes": {
+                                "identifier": "SCORE"
+                            },
+                            "expression": {
+                                "qtiClass": "sum",
+                                "expressions": [
+                                    {
+                                        "qtiClass": "variable",
+                                        "attributes": {
+                                            "identifier": "SCORE"
+                                        }
+                                    },
+                                    {
+                                        "qtiClass": "baseValue",
+                                        "attributes": {
+                                            "baseType": "integer"
+                                        },
+                                        "value": "1"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "qtiClass": "responseCondition",
+                "responseIf": {
+                    "qtiClass": "responseIf",
+                    "expression": {
+                        "qtiClass": "match",
+                        "expressions": [
+                            {
+                                "qtiClass": "variable",
+                                "attributes": {
+                                    "identifier": "RESPONSE2"
+                                }
+                            },
+                            {
+                                "qtiClass": "correct",
+                                "attributes": {
+                                    "identifier": "RESPONSE2"
+                                }
+                            }
+                        ]
+                    },
+                    "responseRules": [
+                        {
+                            "qtiClass": "setOutcomeValue",
+                            "attributes": {
+                                "identifier": "SCORE"
+                            },
+                            "expression": {
+                                "qtiClass": "sum",
+                                "expressions": [
+                                    {
+                                        "qtiClass": "variable",
+                                        "attributes": {
+                                            "identifier": "SCORE"
+                                        }
+                                    },
+                                    {
+                                        "qtiClass": "baseValue",
+                                        "attributes": {
+                                            "baseType": "integer"
+                                        },
+                                        "value": "1"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

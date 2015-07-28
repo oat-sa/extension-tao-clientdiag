@@ -25,8 +25,10 @@ define([
     'context',
     'helpers',
     'taoClientDiagnostic/tools/stats',
+    'taoQtiItem/qtiItem/core/Loader',
+    'taoQtiItem/qtiCommonRenderer/renderers/Renderer',
     'lib/polyfill/performance-now'
-], function($, _, async, context, helpers, stats) {
+], function($, _, async, context, helpers, stats, Loader, Renderer) {
     'use strict';
 
     /**
@@ -38,7 +40,7 @@ define([
 
     /**
      * List of descriptors defining the pages to load.
-     * - url : path of the page
+     * - url : location of the folder of the sample
      * - timeout : the timeout for the run
      * - nb : number of tests iterations
      * @type {Object}
@@ -47,88 +49,89 @@ define([
     var _samples = {
         'sample1' : {
             id : 'sample1',
-            url : 'data/sample1.html',
+            url : 'taoClientDiagnostic/tools/performances/data/sample1/',
             timeout : 30 * _second,
-            nb : 3
+            nb : 10
         },
         'sample2' : {
             id : 'sample2',
-            url : 'data/sample2.html',
+            url : 'taoClientDiagnostic/tools/performances/data/sample2/',
             timeout : 30 * _second,
-            nb : 3
+            nb : 10
         },
         'sample3' : {
             id : 'sample3',
-            url : 'data/sample3.html',
+            url : 'taoClientDiagnostic/tools/performances/data/sample3/',
             timeout : 30 * _second,
-            nb : 3
+            nb : 10
         }
     };
-
+    
     /**
-     * Loads a page inside a frame and compute the time to load
+     * Loads a page inside a div and compute the time to load
      * @param {Object} data The descriptor of the page to load
      * @param {Function} done A callback function called to provide the result
      */
-    var loadFrame = function loadFrame(data, done) {
-        var clientConfigUrl = helpers._url('config', 'ClientConfig', 'tao', {extension: 'taoQtiItem', module: 'QtiPreview', action: 'index'});
-        var url = context.root_url + '/taoClientDiagnostic/views/js/tools/performances/' + data.url + '?clientConfigUrl=' + encodeURIComponent(clientConfigUrl) + '&' + Date.now();
-        var $frame = $('<iframe name="performancesCheck" style="position: absolute; left: -100000px;" />');
-        var frameEl = $frame.get(0);
-        var frameWindow;
-        var framePerf;
-        var framePerfData;
-        var totalDuration;
-        var networkDuration;
-        var requestDuration;
-        var displayDuration;
-        var start;
-        var end;
-        var requestStart;
-        var responseEnd;
+    function loadItem(data, done){
+        
+        //perf variables
+        var totalDuration,
+            displayDuration,
+            start,
+            end,
+            result;
+        
+        //item location config
+        var loader = new Loader();
+        var renderer = new Renderer();
+        var $container = $('<div>').appendTo('body');
+        var qtiJsonFile = data.url+'qti.json';
+        var urlTokens = data.url.split('/');
+        var extension = urlTokens[0];
+        var fullpath = require.s.contexts._.config.paths[extension];
+        var baseUrl = data.url.replace(extension, fullpath);
+        renderer.getAssetManager().setData('baseUrl', baseUrl);
+        
+        require(['json!'+qtiJsonFile], function(itemData){
+            
+            loader.loadItemData(itemData, function(item){
+                renderer.load(function(){
+                    
+                    //start right before rendering
+                    start = window.performance.now();
+                    
+                    //set renderer
+                    item.setRenderer(this);
 
-        $frame.on('load', function() {
-            // use a deferred call to be sure the function is executed after load
-            setTimeout(function() {
-                end = Date.now();
-                frameWindow = frameEl.contentWindow;
-                framePerf = frameWindow && frameWindow.performance;
+                    //render markup
+                    $container.append(item.render());
 
-                framePerfData = framePerf && framePerf.timing;
-                if (framePerfData) {
-                    totalDuration = Math.round(framePerf.now());
-                    start = framePerfData.navigationStart;
-                    responseEnd = framePerfData.responseEnd;
-                    requestStart = framePerfData.requestStart;
+                    //execute javascript
+                    item.postRender();
 
-                    displayDuration = end - responseEnd;
-                    networkDuration = responseEnd - start;
-                    requestDuration = responseEnd - requestStart;
-                } else {
+                    //done
+                    end = window.performance.now();
                     totalDuration = end - start;
                     displayDuration = totalDuration;
-                    networkDuration = 0;
-                    requestDuration = 0;
-                }
 
-                done(null, {
-                    id : data.id,
-                    url : data.url,
-                    totalDuration: totalDuration,
-                    networkDuration : networkDuration,
-                    requestDuration : requestDuration,
-                    displayDuration : displayDuration,
-                    performance: framePerfData
-                });
+                    result = {
+                        id : data.id,
+                        url : data.url,
+                        totalDuration: totalDuration,
+                        displayDuration : displayDuration
+                    };
+                    
+                    //remove item
+                    $container.remove();
+                    done(null, result);
 
-                $frame.remove();
-            }, 0);
-        }).appendTo('body');
-
-        start = Date.now();
-        $frame.attr('src', url);
-    };
-
+                }, this.getLoadedClasses());
+            });
+        
+        });
+        
+    }
+    
     /**
      * Performs a browser performances test by running a heavy page
      *
@@ -143,7 +146,7 @@ define([
             start: function start(done) {
                 var tests = [];
                 _.forEach(_samples, function(data) {
-                    var cb = _.partial(loadFrame, data);
+                    var cb = _.partial(loadItem, data);
                     var iterations = data.nb || 1;
                     while (iterations --) {
                         tests.push(cb);
@@ -158,7 +161,6 @@ define([
                         //something went wrong
                         throw err;
                     }
-
                     results = stats(measures, 'displayDuration', decimals);
 
                     done(results.average, results);
