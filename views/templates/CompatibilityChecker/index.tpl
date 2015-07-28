@@ -111,17 +111,7 @@ use oat\tao\helpers\Layout;
                     </div>
                 </div>
                 <div data-result="bandwidth-0">
-                    <h2><?= __('Bandwidth with %s test takers', 20); ?></h2>
-                    <div class="small feedback">
-                        <span class="icon"></span>
-                        <span class="msg"></span>
-                    </div>
-                    <div class="quality-bar">
-                        <div class="quality-indicator"></div>
-                    </div>
-                </div>
-                <div data-result="bandwidth-1">
-                    <h2><?= __('Bandwidth with %s test takers', 30); ?></h2>
+                    <h2><?= __('Bandwidth'); ?></h2>
                     <div class="small feedback">
                         <span class="icon"></span>
                         <span class="msg"></span>

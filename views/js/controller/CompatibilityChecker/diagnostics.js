@@ -41,9 +41,8 @@ define([
      * The thresholds for optimal bandwidth. One by bar.
      * @type {Array}
      */
-    var bandwidthThresholds = [
-        20,
-        30
+    var testTakers = [
+        45
     ];
 
     /**
@@ -79,12 +78,30 @@ define([
         message: __("Very slow performance"),
         type: 'error'
     }, {
-        threshold: 25,
+        threshold: 33,
         message: __('Average performance'),
         type: 'warning'
     }, {
-        threshold: 75,
+        threshold: 66,
         message: __('Good performance'),
+        type: 'success'
+    }];
+
+    /**
+     * A list of thresholds for bandwidth
+     * @type {Array}
+     */
+    var bandwidthThresholds = [{
+        threshold: 0,
+        message: __("Low bandwidth"),
+        type: 'error'
+    }, {
+        threshold: 33,
+        message: __('Average bandwidth'),
+        type: 'warning'
+    }, {
+        threshold: 66,
+        message: __('Good bandwidth'),
         type: 'success'
     }];
 
@@ -135,8 +152,8 @@ define([
             .addClass('icon-' + status.type);
 
 
-        if (undefined !== status.number) {
-            $indicator.attr('title', status.number);
+        if (undefined !== status.label) {
+            $indicator.attr('title', status.label);
         }
 
         $bar.fadeIn(function() {
@@ -160,7 +177,7 @@ define([
         displayTestResult(name, status);
         if (score) {
             score[name] = status;
-            total = _.min(score, 'percentage');
+            total = _.omit(_.min(score, 'percentage'), 'label');
             displayTestResult('total', total);
         }
     }
@@ -218,16 +235,16 @@ define([
             storeData('bandwidth', details, function(){
                 var status = [];
 
-                _.forEach(bandwidthThresholds, function(threshold) {
+                _.forEach(testTakers, function(threshold) {
                     var max = threshold * bandwidthUnit;
-                    var st = getStatus(thresholds, details.max / max * 100);
+                    var st = getStatus(bandwidthThresholds, details.max / max * 100);
                     var nb = Math.floor(details.max / bandwidthUnit);
 
                     if (nb > maxTestTakers) {
                         nb = '>' + maxTestTakers;
                     }
 
-                    st.number = nb;
+                    st.label = nb;
                     status.push(st);
                 });
 
@@ -251,8 +268,13 @@ define([
         });
     }
 
+    /**
+     * Updates the displayed details
+     * @param {Object} information
+     */
     function displayDetails(information) {
         var $detailsTable = $('#details');
+        $('tbody', $detailsTable).empty();
         $.each(information, function(index, object) {
             var line = '<td>'+ object.message +'</td><td>'+ object.value +'</td>';
             $('tbody', $detailsTable).append('<tr>' + line + '</tr>');
@@ -281,6 +303,7 @@ define([
                     browser : {message : __('Web browser'), value:details.browser + ' ' + details.browserVersion},
                     os      : {message : __('Operating system'), value:details.os + ' ' + details.osVersion}
                 });
+                displayDetails(information);
                 updateTestResult('browser', status, scores);
             });
 
@@ -290,6 +313,7 @@ define([
                     performancesMax : {message : __('Maximum rendering time'), value:details.max + ' s'},
                     performancesAverage : {message : __('Average rendering time'), value:details.average + ' s'}
                 });
+                displayDetails(information);
                 updateTestResult('performance', status, scores);
 
                 loadingBar.stop();
@@ -309,11 +333,12 @@ define([
             checkBandwidth(function(status, details) {
                 $bandWidthBoxTitle.hide();
 
-                displayDetails({
+                _.assign(information, {
                     bandwidthMin : {message : __('Minimum bandwidth'), value:details.min + ' Mbps'},
                     bandwidthMax : {message : __('Maximum bandwidth'), value:details.max + ' Mbps'},
                     bandwidthAverage : {message : __('Average bandwidth'), value:details.average + ' Mbps'}
                 });
+                displayDetails(information);
 
                 _.forEach(status, function(st, i) {
                     updateTestResult('bandwidth-' + i, st, scores);
