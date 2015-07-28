@@ -24,7 +24,7 @@ return array(
 	'label' => 'Browser and OS diagnostic tool',
 	'description' => 'Check compatibility of the os and browser of a client',
     'license' => 'GPL-2.0',
-    'version' => '1.0.1',
+    'version' => '1.1.0',
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array('tao' => '>=2.7.8'),
 	// for compatibility
@@ -32,8 +32,7 @@ return array(
 	'managementRole' => 'http://www.tao.lu/Ontologies/generis.rdf#taoClientDiagnosticManager',
     'acl' => array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#taoClientDiagnosticManager', array('ext'=>'taoClientDiagnostic')),
-        array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext'=>'taoClientDiagnostic','mod' => 'CompatibilityChecker', 'act' => 'index')),
-        array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext'=>'taoClientDiagnostic','mod' => 'CompatibilityChecker', 'act' => 'check')),
+        array('grant', 'http://www.tao.lu/Ontologies/TAO.rdf#DeliveryRole', array('ext'=>'taoClientDiagnostic','mod' => 'CompatibilityChecker')),
     ),
     'install' => array(
         'php' => array(

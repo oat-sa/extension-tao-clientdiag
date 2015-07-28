@@ -54,15 +54,14 @@ use oat\tao\helpers\Layout;
     <?php if (($themeUrl = Layout::getThemeUrl()) !== null): ?>
         <link rel="stylesheet" href="<?= $themeUrl ?>"/>
     <?php endif; ?>
+
 </head>
 
 <body>
 <div id="requirement-check" class="feedback-error js-hide">
     <span class="icon-error"></span>
     <span id="requirement-msg-area"><?=
-        __(
-            'You must activate JavaScript in your browser to run this application.'
-        ) ?></span>
+        __('You must activate JavaScript in your browser to run this application.') ?></span>
 </div>
 <script src="<?= Template::js('layout/requirement-check.js', 'tao')?>"></script>
 
@@ -72,26 +71,24 @@ use oat\tao\helpers\Layout;
 
     <div class="diagnostics-main-area">
 
-        <h1><?= __('Diagnostics tool') ?></h1>
+        <h1><?= __('Diagnostic tool') ?></h1>
 
         <div class="intro">
             <?=
-            __(
-                'This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform. Be aware that these tests will take up to several minutes.'
-            ) ?>
+            __('This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform. Be aware that these tests will take up to several minutes.') ?>
         </div>
         <div class="clearfix">
             <button data-action="test-launcher" class="btn-info small rgt"><?= __('Begin diagnostics') ?></button>
         </div>
 
         <ul class="plain">
-            <li data-result="browser"><?= __('Operating system and browser') ?>
+            <li data-result="browser"><?= __('Operating system and web browser') ?>
                 <div class="small feedback">
                     <span class="icon"></span>
                     <span class="msg"></span>
                 </div>
             </li>
-            <li data-result="performance"><?= __('Performance') ?>
+            <li data-result="performance"><?= __('Workstation performance') ?>
                 <div>
                     <div class="small feedback">
                         <span class="icon"></span>
@@ -106,11 +103,20 @@ use oat\tao\helpers\Layout;
 
                 <div class="clearfix">
                     <button data-action="bandwidth-launcher" class="btn-info small"><?=
-                        __(
-                            'Run bandwidth test'
-                        ) ?></button>
+                        __('Run bandwidth test') ?></button>
                 </div>
-                <div data-result="bandwidth">
+                <div data-result="bandwidth-0">
+                    <div class="label"><?= __('%s test takers', 20); ?></div>
+                    <div class="small feedback">
+                        <span class="icon"></span>
+                        <span class="msg"></span>
+                    </div>
+                    <div class="quality-bar">
+                        <div class="quality-indicator"></div>
+                    </div>
+                </div>
+                <div data-result="bandwidth-1">
+                    <div class="label"><?= __('%s test takers', 30); ?></div>
                     <div class="small feedback">
                         <span class="icon"></span>
                         <span class="msg"></span>
@@ -130,6 +136,19 @@ use oat\tao\helpers\Layout;
                         <div class="quality-indicator"></div>
                     </div>
                 </div>
+                <div class="clearfix">
+                    <button data-action="display-details" class="rgt btn-info small"><?=
+                        __('Show Details') ?></button>
+                </div>
+            </li>
+            <li data-result="details"><?= __('Details') ?>
+                <div>
+                    <table class="matrix" id="details">
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
             </li>
         </ul>
 

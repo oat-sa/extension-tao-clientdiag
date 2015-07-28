@@ -17,8 +17,8 @@
 
     .quality-bar {
         height: 20px;
-       //@include linear-gradient(#CE1431 #D57915 #D5A215 #D5CB15 #36B111);
-        @include linear-gradient(#36B111  #D5A215 #CE1431 );
+       @include linear-gradient(#CE1431 #D57915 #D5A215 #D5CB15 #36B111);
+//        @include linear-gradient(#36B111  #D5A215 #CE1431 );
         opacity: .8;
         @include border-radius(2);
         margin: 5px 0 10px;
@@ -38,6 +38,10 @@
 
     [data-result], .bandwidth-box {
         display: none;
+    }
+
+    [data-action=bandwidth-launcher] {
+      margin-bottom: 10px;
     }
 
     li {

@@ -25,18 +25,23 @@ namespace oat\taoClientDiagnostic\model;
 class CompatibilityChecker
 {
 
-    private $os;
-    private $osVersion;
-    private $browser;
-    private $browserVersion;
-    private $compatibility;
+    private $os, $osVersion, $browser, $browserVersion, $compatibility, $data, $dataList;
 
-    function __construct($browser, $browserVersion, $os, $osVersion)
+    function __construct($data)
     {
-        $this->browser = $browser;
-        $this->browserVersion = $browserVersion;
-        $this->os = $os;
-        $this->osVersion = $osVersion;
+        $this->dataList = array_keys($data);
+
+        //compatibility data aren't there
+        if(!isset($data['browser']) || !isset($data['browserVersion']) || !isset($data['os']) || !isset($data['osVersion'])){
+            throw new \common_exception_MissingParameter('browser / browserVersion / os / osVersion');
+        }
+
+        $this->browser = $data['browser'];
+        $this->browserVersion = $data['browserVersion'];
+        $this->os = $data['os'];
+        $this->osVersion = $data['osVersion'];
+
+        $this->data = array_values($data);
 
         $compatibilityFile = __DIR__ . '/../include/compatibility.json';
         if (!file_exists($compatibilityFile)) {
@@ -57,7 +62,7 @@ class CompatibilityChecker
                 $validOs = true;
                 if ($rule->osVersion !== "") {
                     foreach (explode('.', $rule->osVersion) as $key => $version) {
-                        if ($osVersion[$key] !== $version) {
+                        if (!isset($osVersion[$key]) || $osVersion[$key] !== $version) {
                             $validOs = false;
                         }
                     }
@@ -70,7 +75,7 @@ class CompatibilityChecker
                 } else {
                     // it is valid if the version is in the array
                     // OR if the browser is chrome or firefox and it is a newer version than those in the array
-                    $isValid = in_array($browserVersion[0], $rule->versions) 
+                    $isValid = in_array($browserVersion[0], $rule->versions)
                         || (in_array($rule->browser, array('Chrome','Firefox')) && $browserVersion[0] > max($rule->versions));
                 }
 

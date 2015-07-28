@@ -27,76 +27,91 @@ use oat\tao\helpers\Template;
 
 class CompatibilityChecker extends \tao_actions_CommonModule{
 
-    private $ip;
-    private $os;
-    private $osVersion;
-    private $browser;
-    private $browserVersion;
-
-
-    public function login(){
-        $this->setData('clientConfigUrl',$this->getClientConfigUrl());
-        $this->setView('CompatibilityChecker/login.tpl');
-    }
-
-
-    public function whichBrowser(){
-        $this->setView('CompatibilityChecker/browserDetection.php');
-    }
-
-
     public function index(){
         $this->setData('clientConfigUrl',$this->getClientConfigUrl());
         $this->setView('CompatibilityChecker/index.tpl');
     }
 
-    /**
-     * Get browser and operating system
-     */
-    public function getBrowserOs(){
+    public function whichBrowser(){
+        $this->setView('CompatibilityChecker/browserDetection.php');
     }
 
-
-    /** legacy below this line **/
-
-
     public function check(){
-        if($this->getRequest()->hasParameter('os')){
-            $this->getData();
-            $store = new DataStorage($this->browser, $this->browserVersion, $this->ip, $this->os, $this->osVersion);
-            $checker = new CompatibilityCheckerModel($this->browser, $this->browserVersion, $this->os, $this->osVersion);
+        try{
+            $data = $this->getData(true);
+            if(!isset($_COOKIE['key'])){
+                $data['key'] = uniqid();
+                setcookie('key', $data['key']);
+            }
+            else{
+                $data['key'] = $_COOKIE['key'];
+            }
+
+            $checker = new CompatibilityCheckerModel($data);
+            $store = new DataStorage($data);
             $isCompatible = $checker->isCompatibleConfig();
-            if($store->storeData($isCompatible)){
+            if($store->setIsCompatible($isCompatible)->storeData($isCompatible)){
                 if($isCompatible){
-                    $this->returnJson(array('success' => true, 'image' => Template::img('tick.png', 'taoClientDiagnostic')));
+                    $this->returnJson(array('success' => true, 'type' => 'success', 'message' => __('Compatible')));
                     return;
                 }
             }
-
+            $this->returnJson(array('success' => true, 'type' => 'error', 'message' => __('Your system requires a compatibility update, please contact your system administrator.')));
+        }catch(\common_exception_MissingParameter $e){
+            $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $e->getUserMessage()));
         }
-
-        $this->returnJson(array('success' => false, 'image' => Template::img('cross.png', 'taoClientDiagnostic')));
     }
 
-    private function getData(){
-        if(!$this->hasRequestParameter('os')){
-            throw new \common_exception_MissingParameter('os');
+    public function storeData(){
+        $data = $this->getData();
+
+        if(!isset($_COOKIE['key'])){
+            setcookie('key', uniqid());
         }
-        if(!$this->hasRequestParameter('osVersion')){
-            throw new \common_exception_MissingParameter('osVersion');
+        $data['key'] = $_COOKIE['key'];
+
+        $store = new DataStorage($data);
+        if($store->storeData()){
+                $this->returnJson(array('success' => true, 'type' => 'success'));
+                return;
         }
-        if(!$this->hasRequestParameter('browser')){
-            throw new \common_exception_MissingParameter('browser');
-        }
-        if(!$this->hasRequestParameter('browserVersion')){
-            throw new \common_exception_MissingParameter('browserVersion');
+        $this->returnJson(array('success' => false, 'type' => 'error'));
+    }
+
+    private function getData($check = false){
+        $data = $this->getRequestParameters();
+
+        if($this->hasRequestParameter('type')){
+            $type = $this->getRequestParameter('type');
+            foreach($data as $key => $value){
+                $data[$type . '_' . $key] = $value;
+                unset($data[$key]);
+            }
+            unset($data[$type.'_type']);
         }
 
-        $this->ip = $_SERVER['REMOTE_ADDR'];
-        $this->os = $this->getRequestParameter('os');
-        $this->osVersion = preg_replace('/[^\w\.]/','',$this->getRequestParameter('osVersion'));
-        $this->browser = $this->getRequestParameter('browser');
-        $this->browserVersion = preg_replace('/[^\w\.]/','',$this->getRequestParameter('browserVersion'));
+        if($check){
+            if(!$this->hasRequestParameter('os')){
+                throw new \common_exception_MissingParameter('os');
+            }
+            if(!$this->hasRequestParameter('osVersion')){
+                throw new \common_exception_MissingParameter('osVersion');
+            }
+            if(!$this->hasRequestParameter('browser')){
+                throw new \common_exception_MissingParameter('browser');
+            }
+            if(!$this->hasRequestParameter('browserVersion')){
+                throw new \common_exception_MissingParameter('browserVersion');
+            }
+            $data['osVersion'] = preg_replace('/[^\w\.]/','',$data['osVersion']);
+            $data['browserVersion'] = preg_replace('/[^\w\.]/','',$data['browserVersion']);
+        }
+
+        $login = \common_session_SessionManager::getSession()->getUserLabel();
+        $data['login'] = $login;
+        $data['ip'] = $_SERVER['REMOTE_ADDR'];
+
+        return $data;
     }
 
 } 

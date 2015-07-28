@@ -51,6 +51,7 @@ define([
      * - file : path of the file containing the test data
      * - size : the given size of the file
      * - timeout : the timeout for the download
+     * - threshold : a bandwidth threshold above which the data set can be downloaded to evaluate a more accurate value
      * - nb : number of download iterations
      * @type {Object}
      */
@@ -60,6 +61,7 @@ define([
             file : 'data/bin10KB.data',
             size : 10 * _kilo,
             timeout : _second,
+            threshold : 0,
             nb : 10
         },
         "100KB" : {
@@ -67,6 +69,7 @@ define([
             file : 'data/bin100KB.data',
             size : 100 * _kilo,
             timeout : 2 * _second,
+            threshold : 0,
             nb : 5
         },
         "1MB" : {
@@ -74,6 +77,23 @@ define([
             file : 'data/bin1MB.data',
             size : _mega,
             timeout : 20 * _second,
+            threshold : 0,
+            nb : 3
+        },
+        "10MB" : {
+            id : '10MB',
+            file : 'data/bin10MB.data',
+            size : 10 * _mega,
+            timeout : 20 * _second,
+            threshold : 8,
+            nb : 3
+        },
+        "100MB" : {
+            id : '100MB',
+            file : 'data/bin100MB.data',
+            size : 100 * _mega,
+            timeout : 60 * _second,
+            threshold : 20,
             nb : 3
         }
     };
@@ -85,21 +105,45 @@ define([
      * This callback is also called if a timeout breaks the download;
      */
     var download = function download(data, cb) {
+        var self = this;
         var start, end;
         var timeoutId;
-        var url = context.root_url + '/taoClientDiagnostic/views/js/tools/bandwidth/' + data.file + '?' + Date.now();
-        var request = new XMLHttpRequest();
+        var url;
+        var request;
+
+        if (data.threshold && this.bandwidth < data.threshold) {
+            return cb('threshold');
+        }
+
+        url = context.root_url + '/taoClientDiagnostic/views/js/tools/bandwidth/' + data.file + '?' + Date.now();
+        request = new XMLHttpRequest();
         request.open('GET', url, true);
         request.setRequestHeader('Accept', 'application/octet-stream');
 
         request.onload = function onRequestLoad () {
+            var duration;
+            var bytes;
+            var seconds;
+            var speed;
+
             end = window.performance.now();
             clearTimeout(timeoutId);
+
+            duration = end - start;
+            bytes = data.size;
+            seconds = duration / _second;
+
+            // speed in Mbps
+            speed = ((bytes * 8) / seconds) / _mega;
+
+            self.bandwidth = Math.max(self.bandwidth, speed);
+
             return cb(null, {
                 id : data.id,
                 file : data.file,
                 size : data.size,
-                duration : end - start
+                duration : duration,
+                speed : speed
             });
         };
         request.onerror = function onRequestError (err) {
@@ -124,14 +168,17 @@ define([
              * @param {Function} done
              */
             start : function start(done){
+                var self = this;
                 var tests = [];
                 _.forEach(_downloadData, function(data) {
-                    var cb = _.partial(download, data);
+                    var cb = _.bind(download, self, data);
                     var iterations = data.nb || 1;
                     while (iterations --) {
                         tests.push(cb);
                     }
                 });
+
+                this.bandwidth = 0;
 
                 async.series(tests, function(err, measures) {
                     var duration = 0;
@@ -146,20 +193,13 @@ define([
                     }
 
                     getValue = function(value) {
-                        var bytes;
-                        var seconds;
                         var speed = 0;
 
                         if (value) {
-                            bytes = value.size;
-                            seconds = value.duration / _second;
-                            speed = bytes / seconds;
+                            duration += value.duration;
+                            size += value.size;
 
-                            duration += seconds;
-                            size += bytes;
-
-                            //Speed in Mbps
-                            speed = speed * 8 / _mega;
+                            speed = value.speed;
                             value.speed = fixedDecimals(speed, decimals);
                         }
 
@@ -168,7 +208,7 @@ define([
 
                     results = stats(measures, getValue, decimals);
 
-                    results.duration = fixedDecimals(duration, decimals);
+                    results.duration = fixedDecimals(duration / _second, decimals);
                     results.size = size;
 
                     done(results.average, results);
