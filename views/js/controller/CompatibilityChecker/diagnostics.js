@@ -153,11 +153,13 @@ define([
      */
     function checkBrowser(done) {
         var info = new WhichBrowser();
+        var browser = info.browser;
+        var os = info.os;
         var information = {
-            browser: info.browser.name,
-            browserVersion: info.browser.version.original,
-            os: info.os.name,
-            osVersion: info.os.version.alias || info.os.version.original
+            browser: browser && browser.name,
+            browserVersion: browser && browser.version && browser.version.original,
+            os: os && os.name,
+            osVersion: os && os.version && (os.version.alias || os.version.original)
         };
 
         // which browser

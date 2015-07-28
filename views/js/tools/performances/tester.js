@@ -66,21 +66,21 @@ define([
             nb : 10
         }
     };
-    
+
     /**
      * Loads a page inside a div and compute the time to load
      * @param {Object} data The descriptor of the page to load
      * @param {Function} done A callback function called to provide the result
      */
     function loadItem(data, done){
-        
+
         //perf variables
         var totalDuration,
             displayDuration,
             start,
             end,
             result;
-        
+
         //item location config
         var loader = new Loader();
         var renderer = new Renderer();
@@ -91,15 +91,15 @@ define([
         var fullpath = require.s.contexts._.config.paths[extension];
         var baseUrl = data.url.replace(extension, fullpath);
         renderer.getAssetManager().setData('baseUrl', baseUrl);
-        
+
         require(['json!'+qtiJsonFile], function(itemData){
-            
+
             loader.loadItemData(itemData, function(item){
                 renderer.load(function(){
-                    
+
                     //start right before rendering
                     start = window.performance.now();
-                    
+
                     //set renderer
                     item.setRenderer(this);
 
@@ -117,21 +117,21 @@ define([
                     result = {
                         id : data.id,
                         url : data.url,
-                        totalDuration: totalDuration,
-                        displayDuration : displayDuration
+                        totalDuration: totalDuration / _second,
+                        displayDuration : displayDuration / _second
                     };
-                    
+
                     //remove item
                     $container.remove();
                     done(null, result);
 
                 }, this.getLoadedClasses());
             });
-        
+
         });
-        
+
     }
-    
+
     /**
      * Performs a browser performances test by running a heavy page
      *
