@@ -25,11 +25,12 @@ define([
     'jquery',
     'lodash',
     'i18n',
-    'layout/loading-bar',
+    'async',
     'helpers',
+    'layout/loading-bar',
     'taoClientDiagnostic/tools/performances/tester',
-    'taoClientDiagnostic/tools/bandwidth/tester'
-], function ($, _, __, loadingBar, helpers, performancesTester, bandwidthTester) {
+    'taoClientDiagnostic/tools/bandwidth/tester',
+], function ($, _, __, async, helpers, loadingBar, performancesTester, bandwidthTester) {
     'use strict';
 
     /**
@@ -203,6 +204,11 @@ define([
             helpers._url('check', 'CompatibilityChecker', 'taoClientDiagnostic'),
             information,
             function(data){
+                if ('success' === data.type) {
+                    data.percentage = 100;
+                } else {
+                    data.percentage = 0;
+                }
                 done(data, information);
             },
             "json"
@@ -288,7 +294,6 @@ define([
     var init = function init(){
 
         var $testTriggerBtn = $('[data-action="test-launcher"]');
-        var $bandWidthTriggerBtn = $('[data-action="bandwidth-launcher"]');
         var $detailsBtn = $('[data-action="display-details"]');
         var $bandWidthBox = $('.bandwidth-box');
         var $bandWidthBoxTitle = $bandWidthBox.find('.title');
@@ -299,52 +304,46 @@ define([
             loadingBar.start();
             $testTriggerBtn.hide();
 
-            checkBrowser(function(status, details) {
-                _.assign(information, {
-                    browser : {message : __('Web browser'), value:details.browser + ' ' + details.browserVersion},
-                    os      : {message : __('Operating system'), value:details.os + ' ' + details.osVersion}
+            async.series([function(cb) {
+                checkBrowser(function(status, details) {
+                    _.assign(information, {
+                        browser: {message: __('Web browser'), value: details.browser + ' ' + details.browserVersion},
+                        os: {message: __('Operating system'), value: details.os + ' ' + details.osVersion}
+                    });
+                    displayDetails(information);
+                    updateTestResult('browser', status, scores);
+                    cb();
                 });
-                displayDetails(information);
-                updateTestResult('browser', status, scores);
-            });
-
-            checkPerformance(function(status, details) {
-                _.assign(information, {
-                    performancesMin : {message : __('Minimum rendering time'), value:details.min + ' s'},
-                    performancesMax : {message : __('Maximum rendering time'), value:details.max + ' s'},
-                    performancesAverage : {message : __('Average rendering time'), value:details.average + ' s'}
+            }, function(cb) {
+                checkPerformance(function(status, details) {
+                    _.assign(information, {
+                        performancesMin : {message : __('Minimum rendering time'), value:details.min + ' s'},
+                        performancesMax : {message : __('Maximum rendering time'), value:details.max + ' s'},
+                        performancesAverage : {message : __('Average rendering time'), value:details.average + ' s'}
+                    });
+                    displayDetails(information);
+                    updateTestResult('performance', status, scores);
+                    cb();
                 });
-                displayDetails(information);
-                updateTestResult('performance', status, scores);
+            }, function(cb) {
+                checkBandwidth(function(status, details) {
+                    $bandWidthBox.show();
+                    $bandWidthBoxTitle.hide();
 
-                loadingBar.stop();
-                $bandWidthBox.show();
-            });
-        });
+                    _.assign(information, {
+                        bandwidthMin : {message : __('Minimum bandwidth'), value:details.min + ' Mbps'},
+                        bandwidthMax : {message : __('Maximum bandwidth'), value:details.max + ' Mbps'},
+                        bandwidthAverage : {message : __('Average bandwidth'), value:details.average + ' Mbps'}
+                    });
+                    displayDetails(information);
 
+                    _.forEach(status, function(st, i) {
+                        updateTestResult('bandwidth-' + i, st, scores);
+                    });
 
-        $bandWidthTriggerBtn.on('click', function() {
-            if ($bandWidthTriggerBtn.hasClass('disabled')) {
-                return;
-            }
-
-            loadingBar.start();
-            $bandWidthTriggerBtn.addClass('disabled');
-
-            checkBandwidth(function(status, details) {
-                $bandWidthBoxTitle.hide();
-
-                _.assign(information, {
-                    bandwidthMin : {message : __('Minimum bandwidth'), value:details.min + ' Mbps'},
-                    bandwidthMax : {message : __('Maximum bandwidth'), value:details.max + ' Mbps'},
-                    bandwidthAverage : {message : __('Average bandwidth'), value:details.average + ' Mbps'}
+                    cb();
                 });
-                displayDetails(information);
-
-                _.forEach(status, function(st, i) {
-                    updateTestResult('bandwidth-' + i, st, scores);
-                });
-
+            }], function() {
                 loadingBar.stop();
             });
         });

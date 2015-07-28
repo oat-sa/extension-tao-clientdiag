@@ -104,11 +104,6 @@ use oat\tao\helpers\Layout;
             <li class="bandwidth-box">
                 <div class="title">
                     <h2><?= __('Bandwidth') ?></h2>
-
-                    <div class="clearfix">
-                        <button data-action="bandwidth-launcher" class="btn-info small"><?=
-                        __('Run bandwidth test') ?></button>
-                    </div>
                 </div>
                 <div data-result="bandwidth-0">
                     <h2><?= __('Bandwidth'); ?></h2>
