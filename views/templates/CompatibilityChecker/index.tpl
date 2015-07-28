@@ -106,9 +106,9 @@ use oat\tao\helpers\Layout;
                         __('Run bandwidth test') ?></button>
                 </div>
                 <div data-result="bandwidth-0">
+                    <div class="label"><?= __('%s test takers', 20); ?></div>
                     <div class="small feedback">
                         <span class="icon"></span>
-                        <span class="title"><?= __('%s test takers', 20); ?></span>
                         <span class="msg"></span>
                     </div>
                     <div class="quality-bar">
@@ -116,9 +116,9 @@ use oat\tao\helpers\Layout;
                     </div>
                 </div>
                 <div data-result="bandwidth-1">
+                    <div class="label"><?= __('%s test takers', 30); ?></div>
                     <div class="small feedback">
                         <span class="icon"></span>
-                        <span class="title"><?= __('%s test takers', 30); ?></span>
                         <span class="msg"></span>
                     </div>
                     <div class="quality-bar">
