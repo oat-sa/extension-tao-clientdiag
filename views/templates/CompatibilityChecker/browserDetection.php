@@ -1,2 +1,2 @@
 <?php
-include __DIR__.'/../../../lib/whichBrowser/detect.php';
+include __DIR__.'/../../../lib/whichbrowser/detect.php';
