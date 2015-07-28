@@ -593,7 +593,7 @@
                 "serial": "object_55b7367101fce927519316",
                 "qtiClass": "object",
                 "attributes": {
-                    "data": "images/postcard.png",
+                    "data": "img/earth.png",
                     "type": "image/png"
                 },
                 "debug": {
