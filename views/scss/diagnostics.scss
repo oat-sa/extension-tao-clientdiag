@@ -53,15 +53,20 @@
             content: attr(title);
             position: absolute;
             top: -36px;
-            left: -14px;
+            left: -12px;
             text-align: center;
-            width: 28px;
+            width: 24px;
             height: 24px;
             line-height: 24px;
             display: inline-block;
             background-color: $info;
             color: white(.9);
             @include border-radius(12);
+        }
+
+        &.wide[title]:before {
+            left: -16px;
+            width: 32px;
         }
     }
 
@@ -79,5 +84,10 @@
 
     .intro {
         margin-bottom: 20px;
+    }
+
+    table.matrix {
+        @include simple-border();
+        margin-top: 5px;
     }
 }

@@ -23,12 +23,13 @@
  */
 define([
     'jquery',
+    'lodash',
     'i18n',
     'layout/loading-bar',
     'helpers',
     'taoClientDiagnostic/tools/performances/tester',
     'taoClientDiagnostic/tools/bandwidth/tester'
-], function ($, __, loadingBar, helpers, performancesTester, bandwidthTester) {
+], function ($, _, __, loadingBar, helpers, performancesTester, bandwidthTester) {
     'use strict';
 
     /**
@@ -151,9 +152,9 @@ define([
             .removeClass('icon-error icon-warning icon-success')
             .addClass('icon-' + status.type);
 
-
-        if (undefined !== status.label) {
+        if (_.isNumber(status.label) || _.isString(status.label)) {
             $indicator.attr('title', status.label);
+            $indicator.toggleClass('wide', status.label.toString().length > 2);
         }
 
         $bar.fadeIn(function() {
