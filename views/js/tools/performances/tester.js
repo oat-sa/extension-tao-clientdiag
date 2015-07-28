@@ -40,7 +40,7 @@ define([
 
     /**
      * List of descriptors defining the pages to load.
-     * - url : path of the page
+     * - url : location of the folder of the sample
      * - timeout : the timeout for the run
      * - nb : number of tests iterations
      * @type {Object}
@@ -66,71 +66,12 @@ define([
             nb : 10
         }
     };
-
+    
     /**
-     * Loads a page inside a frame and compute the time to load
+     * Loads a page inside a div and compute the time to load
      * @param {Object} data The descriptor of the page to load
      * @param {Function} done A callback function called to provide the result
      */
-    var loadFrame = function loadFrame(data, done) {
-        var clientConfigUrl = helpers._url('config', 'ClientConfig', 'tao', {extension: 'taoQtiItem', module: 'QtiPreview', action: 'index'});
-        var url = context.root_url + '/taoClientDiagnostic/views/js/tools/performances/' + data.url + '?clientConfigUrl=' + encodeURIComponent(clientConfigUrl) + '&' + Date.now();
-        var $frame = $('<iframe name="performancesCheck" style="position: absolute; left: -100000px;" />');
-        var frameEl = $frame.get(0);
-        var frameWindow;
-        var framePerf;
-        var framePerfData;
-        var totalDuration;
-        var networkDuration;
-        var requestDuration;
-        var displayDuration;
-        var start;
-        var end;
-        var requestStart;
-        var responseEnd;
-
-        $frame.on('load', function() {
-            // use a deferred call to be sure the function is executed after load
-            setTimeout(function() {
-                end = Date.now();
-                frameWindow = frameEl.contentWindow;
-                framePerf = frameWindow && frameWindow.performance;
-
-                framePerfData = framePerf && framePerf.timing;
-                if (framePerfData) {
-                    totalDuration = Math.round(framePerf.now());
-                    start = framePerfData.navigationStart;
-                    responseEnd = framePerfData.responseEnd;
-                    requestStart = framePerfData.requestStart;
-
-                    displayDuration = end - responseEnd;
-                    networkDuration = responseEnd - start;
-                    requestDuration = responseEnd - requestStart;
-                } else {
-                    totalDuration = end - start;
-                    displayDuration = totalDuration;
-                    networkDuration = 0;
-                    requestDuration = 0;
-                }
-
-                done(null, {
-                    id : data.id,
-                    url : data.url,
-                    totalDuration: totalDuration,
-                    networkDuration : networkDuration,
-                    requestDuration : requestDuration,
-                    displayDuration : displayDuration,
-                    performance: framePerfData
-                });
-
-                $frame.remove();
-            }, 0);
-        }).appendTo('body');
-
-        start = Date.now();
-        $frame.attr('src', url);
-    };
-    
     function loadItem(data, done){
         
         //perf variables
@@ -143,7 +84,7 @@ define([
         //item location config
         var loader = new Loader();
         var renderer = new Renderer();
-        var $container = $('#items');
+        var $container = $('<div>').appendTo('body');
         var qtiJsonFile = data.url+'qti.json';
         var urlTokens = data.url.split('/');
         var extension = urlTokens[0];
@@ -181,8 +122,7 @@ define([
                     };
                     
                     //remove item
-                    $container.empty();
-                    console.log('loaded', result);
+                    $container.remove();
                     done(null, result);
 
                 }, this.getLoadedClasses());
@@ -221,7 +161,6 @@ define([
                         //something went wrong
                         throw err;
                     }
-                    console.log(measures);
                     results = stats(measures, 'displayDuration', decimals);
 
                     done(results.average, results);
