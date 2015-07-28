@@ -52,11 +52,11 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             $isCompatible = $checker->isCompatibleConfig();
             if($store->setIsCompatible($isCompatible)->storeData($isCompatible)){
                 if($isCompatible){
-                    $this->returnJson(array('success' => true, 'type' => 'success', 'message' => __('Conform')));
+                    $this->returnJson(array('success' => true, 'type' => 'success', 'message' => __('Compatible')));
                     return;
                 }
             }
-            $this->returnJson(array('success' => true, 'type' => 'error', 'message' => __('Requires a compliance update (please contact your academic platform)')));
+            $this->returnJson(array('success' => true, 'type' => 'error', 'message' => __('Your system requires a compatibility update, please contact your system administrator.')));
         }catch(\common_exception_MissingParameter $e){
             $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $e->getUserMessage()));
         }

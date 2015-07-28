@@ -25,10 +25,50 @@ define([
     'jquery',
     'i18n',
     'layout/loading-bar',
-    'helpers'
-
-], function ($, __, loadingBar, helpers) {
+    'helpers',
+    'taoClientDiagnostic/tools/performances/tester',
+    'taoClientDiagnostic/tools/bandwidth/tester'
+], function ($, __, loadingBar, helpers, performancesTester, bandwidthTester) {
     'use strict';
+
+    /**
+     * The typical bandwidth needed for a test taker (Mbps)
+     * @type {Number}
+     */
+    var bandwidthUnit = 0.125;
+
+    /**
+     * The thresholds for optimal bandwidth. One by bar.
+     * @type {Array}
+     */
+    var bandwidthThresholds = [
+        20,
+        30
+    ];
+
+    /**
+     * The threshold for optimal performances
+     * @type {Number}
+     */
+    var performanceThreshold = 250;
+
+    /**
+     * A list of thresholds
+     * @type {Array}
+     */
+    var thresholds = [{
+        threshold: 0,
+        message: __("Very slow performance"),
+        type: 'error'
+    }, {
+        threshold: 25,
+        message: __('Average performance'),
+        type: 'warning'
+    }, {
+        threshold: 75,
+        message: __('Good performance'),
+        type: 'success'
+    }];
 
     /**
      * Gets the correct status message for a given percentage
@@ -36,13 +76,13 @@ define([
      * @returns {String}
      */
     var getStatus = function(thresholds, percentage) {
-
         var len = thresholds.length;
         var status = thresholds[0];
         var i, step;
 
+        percentage = Math.max(0, Math.min(100, Math.round(percentage)));
+
         for(i = 1; i < len; i++) {
-            thresholds[i].percentage = percentage;
             step = thresholds[i];
             if (step && percentage >= step.threshold) {
                 status = step;
@@ -50,6 +90,9 @@ define([
                 break;
             }
         }
+
+        status = _.clone(status);
+        status.percentage = percentage;
 
         return status;
     };
@@ -62,16 +105,7 @@ define([
      */
     function displayTestResult(name, status) {
         var $bar = $('[data-result="' + name + '"]'),
-            $indicator = $bar.find('.quality-indicator'),
-            percentageTxt = (function() {
-                if(!status.percentage) {
-                    return '';
-                }
-                var tmp = Math.round(status.percentage);
-                tmp = Math.max(0, tmp);
-                tmp = Math.min(100, tmp);
-                return tmp.toString();
-            }());
+            $indicator = $bar.find('.quality-indicator');
 
         $bar.find('.feedback')
             .removeClass('feedback-error feedback-warning feedback-success')
@@ -84,7 +118,6 @@ define([
 
 
         $bar.fadeIn(function() {
-
             if($indicator.length){
                 $indicator.animate({
                     left: (status.percentage * $bar.outerWidth() / 100) - ($indicator.outerWidth() / 2)
@@ -93,50 +126,105 @@ define([
         });
     }
 
+    /**
+     * Sets a particular bar, and update the total
+     * @param {String} name
+     * @param {Object} status
+     * @param {Object} score
+     */
+    function updateTestResult(name, status, score) {
+        var total;
+
+        displayTestResult(name, status);
+        if (score) {
+            score[name] = status;
+            total = _.min(score, 'percentage');
+            displayTestResult('total', total);
+        }
+    }
 
     /**
-     *
+     * Performs a browser checks
+     * @param {Function} done
      */
-    function checkBrowser() {
+    function checkBrowser(done) {
         var info = new WhichBrowser();
-        var osVersion = info.os.version.alias;
-        if(osVersion === null){
-            osVersion = info.os.version.original;
-        }
         var information = {
             browser: info.browser.name,
             browserVersion: info.browser.version.original,
             os: info.os.name,
-            osVersion: osVersion
+            osVersion: info.os.version.alias || info.os.version.original
         };
-
 
         // which browser
         $.post(
             helpers._url('check', 'CompatibilityChecker', 'taoClientDiagnostic'),
             information,
             function(data){
-                displayTestResult('browser', data);
+                done(data, information);
             },
             "json"
         );
-
-        return {
-            browser : {message : __('Browser'), value:information.browser + ' ' + information.browserVersion},
-            os      : {message : __('Operating system'), value:information.os + ' ' + information.osVersion}
-        };
     }
 
     /**
-     *
+     * Sends the detailed stats to the server
+     * @param {String} type The type of stats
+     * @param {Object} details The stats details
+     * @param {Function} done A callback method called once server has responded
      */
-    function checkBandwidth() {
+    function storeData(type, details, done) {
+        details = _.omit(details, 'values');
+        details.type = type;
+
+        $.post(
+            helpers._url('storeData', 'CompatibilityChecker', 'taoClientDiagnostic'),
+            details,
+            done,
+            "json"
+        );
+    };
+
+    /**
+     * Performs a browser bandwidth check
+     * @param {Function} done
+     */
+    function checkBandwidth(done) {
+        bandwidthTester().start(function(average, details) {
+            storeData('bandwidth', details, function(){
+                var status = [];
+
+                _.forEach(bandwidthThresholds, function(threshold) {
+                    var max = threshold * bandwidthUnit;
+                    status.push(getStatus(thresholds, details.max / max * 100));
+                });
+
+                done(status, details);
+            });
+        });
     }
 
     /**
-     *
+     * Performs a browser performances check
+     * @param {Function} done
      */
-    function checkPerformance() {
+    function checkPerformance(done) {
+        performancesTester().start(function(average, details) {
+            var max = 100;
+            var status = getStatus(thresholds, performanceThreshold - average / max * 100);
+
+            storeData('performance', details, function(){
+                done(status, details);
+            });
+        });
+    }
+
+    function displayDetails(information) {
+        var $detailsTable = $('#details');
+        $.each(information, function(index, object) {
+            var line = '<td>'+ object.message +'</td><td>'+ object.value +'</td>';
+            $('tbody', $detailsTable).append('<tr>' + line + '</tr>');
+        });
     }
 
     /**
@@ -148,40 +236,33 @@ define([
         var $bandWidthTriggerBtn = $('[data-action="bandwidth-launcher"]');
         var $detailsBtn = $('[data-action="display-details"]');
         var $bandWidthBox = $('.bandwidth-box'),
-            status, information;
+            status, information = {};
         var $detailsTable = $('#details');
-
-        var thresholds = [{
-            threshold: 0,
-            message: __("Very bad"),
-            type: 'error'
-        }, {
-            threshold: 25,
-            message: __('Low'),
-            type: 'warning'
-        }, {
-            threshold: 75,
-            message: __('Nice!'),
-            type: 'success'
-        }];
+        var scores = {};
 
         $testTriggerBtn.on('click', function(){
             loadingBar.start();
             $testTriggerBtn.hide();
-            information = checkBrowser();
 
-            // fake simulator
-            setTimeout(function() {
-                // Browser/OS is result of async query
-                status = getStatus(thresholds, 20);
-                displayTestResult('performance', status);
+            checkBrowser(function(status, details) {
+                _.assign(information, {
+                    browser : {message : __('Web browser'), value:details.browser + ' ' + details.browserVersion},
+                    os      : {message : __('Operating system'), value:details.os + ' ' + details.osVersion}
+                });
+                updateTestResult('browser', status, scores);
+            });
 
-                status = getStatus(thresholds, 75);
-                displayTestResult('total', status);
+            checkPerformance(function(status, details) {
+                _.assign(information, {
+                    performancesMin : {message : __('Minimum rendering time'), value:details.min + ' s'},
+                    performancesMax : {message : __('Maximum rendering time'), value:details.max + ' s'},
+                    performancesAverage : {message : __('Average rendering time'), value:details.average + ' s'}
+                });
+                updateTestResult('performance', status, scores);
 
                 loadingBar.stop();
                 $bandWidthBox.show();
-            }, 3000);
+            });
         });
 
 
@@ -189,24 +270,26 @@ define([
             loadingBar.start();
             $bandWidthTriggerBtn.hide();
 
-            // fake simulator
-            setTimeout(function() {
+            checkBandwidth(function(status, details) {
+                displayDetails({
+                    bandwidthMin : {message : __('Minimum bandwidth'), value:details.min + ' Mbps'},
+                    bandwidthMax : {message : __('Maximum bandwidth'), value:details.max + ' Mbps'},
+                    bandwidthAverage : {message : __('Average bandwidth'), value:details.average + ' Mbps'}
+                });
 
-                status = getStatus(thresholds, 68);
-                displayTestResult('bandwidth', status);
+                _.forEach(status, function(st, i) {
+                    updateTestResult('bandwidth-' + i, st, scores);
+                });
+
                 loadingBar.stop();
-
-            }, 3000);
+            });
         });
 
         $detailsBtn.on('click', function() {
             loadingBar.start();
             $detailsBtn.hide();
 
-            $.each(information, function(index, object) {
-                var line = '<td>'+ object.message +'</td><td>'+ object.value +'</td>';
-                $('tbody', $detailsTable).append('<tr>' + line + '</tr>');
-            });
+            displayDetails(information);
 
             status = getStatus(thresholds, 68);
             displayTestResult('details', status);

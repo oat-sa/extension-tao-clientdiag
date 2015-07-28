@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TAO 3.1.0-sprint03\n"
-"PO-Revision-Date: 2015-07-23T12:02:32\n"
+"PO-Revision-Date: 2015-07-27T15:42:07\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-FR\n"
@@ -16,38 +16,50 @@ msgstr ""
 msgid "All rights reserved."
 msgstr ""
 
+msgid "Average bandwidth"
+msgstr "Bande passante moyenne"
+
+msgid "Average performance"
+msgstr "Performance moyenne (risque de lenteurs)"
+
+msgid "Average rendering time"
+msgstr "Temps de rendu moyen"
+
 msgid "Bandwidth"
 msgstr "Bande passante"
 
 msgid "Begin diagnostics"
 msgstr "Démarrer le diagnostic"
 
-msgid "Browser"
-msgstr "Navigateur"
-
-msgid "Conform"
+msgid "Compatible"
 msgstr "Conforme"
 
 msgid "Details"
 msgstr "Détails"
 
-msgid "Diagnostics tool"
+msgid "Diagnostic tool"
 msgstr "Outil de diagnostic"
 
-msgid "Low"
-msgstr "Performance moyenne (risque de lenteurs)"
-
-msgid "Nice!"
+msgid "Good performance"
 msgstr "Performance correcte"
+
+msgid "Maximum bandwidth"
+msgstr "Bande passante maximum"
+
+msgid "Maximum rendering time"
+msgstr "Temps de rendu maximum"
+
+msgid "Minimum bandwidth"
+msgstr "Bande passante minimum"
+
+msgid "Minimum rendering time"
+msgstr "Temps de rendu minimum"
 
 msgid "Operating system"
 msgstr "Système d'exploitation"
 
-msgid "Operating system and browser"
+msgid "Operating system and web browser"
 msgstr "Navigateur et système d’exploitation"
-
-msgid "Requires a compliance update (please contact your academic platform)"
-msgstr "Nécessite une mise en conformité (contactez votre plateforme académique)"
 
 msgid "Run bandwidth test"
 msgstr "Lancer le test de bande passante"
@@ -59,14 +71,20 @@ msgid "This tool will run a number of tests in order to establish how well your 
 msgstr "Cet outil va effectuer plusieurs tests pour vérifier la configuration de vos ordinateurs utilisés pour la passation des évaluations numériques. Ces tests peuvent prendre plusieurs minutes"
 
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
-msgid "Very bad"
+msgid "Very slow performance"
 msgstr "Performance faible (lenteurs très importantes)"
 
-msgid "Workstation Performance"
+msgid "Web browser"
+msgstr "Navigateur"
+
+msgid "Workstation performance"
 msgstr "Performance du poste de travail"
 
 msgid "You must activate JavaScript in your browser to run this application."
-msgstr "Vous devez activer JavaScript dans votre navigateur pour lancer cette application"
+msgstr ""
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr "Configuration nécessitant une mise en conformité (contactez votre plateforme académique)"
 
