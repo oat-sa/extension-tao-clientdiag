@@ -134,15 +134,10 @@ define([
     function loadFrame2(data, done){
         
         //perf variables
-        var totalDuration;
-        var networkDuration;
-        var requestDuration;
-        var displayDuration;
-        var start;
-        var end;
-        var requestStart;
-        var responseEnd;
-        var framePerfData;
+        var totalDuration,
+            displayDuration,
+            start,
+            end;
         
         //item location config
         var qtiJsonFile = data.url+'qti.json';
@@ -153,39 +148,24 @@ define([
         var baseUrl = data.url.replace(extension, fullpath);
         
         require(['json!'+qtiJsonFile], function(itemData){
-            start = Date.now();
-            console.log(itemData);
+            
+            start = window.performance.now();
+            
             renderQtiItem(itemData, $('#items'), {baseUrl : baseUrl}, function(){
                 
-                end = Date.now();
-
-                if (framePerfData) {
-                    totalDuration = Math.round(framePerf.now());
-                    start = framePerfData.navigationStart;
-                    responseEnd = framePerfData.responseEnd;
-                    requestStart = framePerfData.requestStart;
-
-                    displayDuration = end - responseEnd;
-                    networkDuration = responseEnd - start;
-                    requestDuration = responseEnd - requestStart;
-                } else {
-                    totalDuration = end - start;
-                    displayDuration = totalDuration;
-                    networkDuration = 0;
-                    requestDuration = 0;
-                }
+                end = window.performance.now();
+                totalDuration = end - start;
+                displayDuration = totalDuration;
                 
                 var result = {
                     id : data.id,
                     url : data.url,
                     totalDuration: totalDuration,
-                    networkDuration : networkDuration,
-                    requestDuration : requestDuration,
-                    displayDuration : displayDuration,
-                    performance: framePerfData
+                    displayDuration : displayDuration
                 };
                 
                 console.log('loaded', result);
+                done(null, result);
             });
         });
         
@@ -238,12 +218,11 @@ define([
             start: function start(done) {
                 var tests = [];
                 _.forEach(_samples, function(data) {
-                    var cb = _.partial(loadFrame, data);
+                    var cb = _.partial(loadFrame2, data);
                     var iterations = data.nb || 1;
                     while (iterations --) {
                         tests.push(cb);
                     }
-                    loadFrame2(data);
                 });
 
                 async.series(tests, function(err, measures) {
@@ -254,7 +233,7 @@ define([
                         //something went wrong
                         throw err;
                     }
-
+                    console.log(measures);
                     results = stats(measures, 'displayDuration', decimals);
 
                     done(results.average, results);
