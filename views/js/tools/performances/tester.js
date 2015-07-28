@@ -51,19 +51,19 @@ define([
             id : 'sample1',
             url : 'taoClientDiagnostic/tools/performances/data/sample1/',
             timeout : 30 * _second,
-            nb : 3
+            nb : 10
         },
         'sample2' : {
             id : 'sample2',
             url : 'taoClientDiagnostic/tools/performances/data/sample2/',
             timeout : 30 * _second,
-            nb : 3
+            nb : 10
         },
         'sample3' : {
             id : 'sample3',
             url : 'taoClientDiagnostic/tools/performances/data/sample3/',
             timeout : 30 * _second,
-            nb : 3
+            nb : 10
         }
     };
 
@@ -131,77 +131,65 @@ define([
         $frame.attr('src', url);
     };
     
-    function loadFrame2(data, done){
+    function loadItem(data, done){
         
         //perf variables
         var totalDuration,
             displayDuration,
             start,
-            end;
+            end,
+            result;
         
         //item location config
+        var loader = new Loader();
+        var renderer = new Renderer();
+        var $container = $('#items');
         var qtiJsonFile = data.url+'qti.json';
         var urlTokens = data.url.split('/');
         var extension = urlTokens[0];
-        var requireConfig = require.s.contexts._.config;
-        var fullpath = requireConfig.baseUrl + requireConfig.paths[extension];
+        var fullpath = require.s.contexts._.config.paths[extension];
         var baseUrl = data.url.replace(extension, fullpath);
+        renderer.getAssetManager().setData('baseUrl', baseUrl);
         
         require(['json!'+qtiJsonFile], function(itemData){
             
-            start = window.performance.now();
-            
-            renderQtiItem(itemData, $('#items'), {baseUrl : baseUrl}, function(){
-                
-                end = window.performance.now();
-                totalDuration = end - start;
-                displayDuration = totalDuration;
-                
-                var result = {
-                    id : data.id,
-                    url : data.url,
-                    totalDuration: totalDuration,
-                    displayDuration : displayDuration
-                };
-                
-                console.log('loaded', result);
-                done(null, result);
+            loader.loadItemData(itemData, function(item){
+                renderer.load(function(){
+                    
+                    //start right before rendering
+                    start = window.performance.now();
+                    
+                    //set renderer
+                    item.setRenderer(this);
+
+                    //render markup
+                    $container.append(item.render());
+
+                    //execute javascript
+                    item.postRender();
+
+                    //done
+                    end = window.performance.now();
+                    totalDuration = end - start;
+                    displayDuration = totalDuration;
+
+                    result = {
+                        id : data.id,
+                        url : data.url,
+                        totalDuration: totalDuration,
+                        displayDuration : displayDuration
+                    };
+                    
+                    //remove item
+                    $container.empty();
+                    console.log('loaded', result);
+                    done(null, result);
+
+                }, this.getLoadedClasses());
             });
+        
         });
         
-    }
-    
-    function renderQtiItem(itemData, $container, config, done){
-        
-        var loader = new Loader();
-        var renderer = new Renderer();
-        renderer.getAssetManager().setData('baseUrl', config.baseUrl);
-
-        //allow specifying the runtimeLocation (useful in debug mode)
-        if(config.runtimeLocations){
-            renderer.setOption('runtimeLocations', config.runtimeLocations);
-        }
-            
-        loader.loadItemData(itemData, function(item){
-            renderer.load(function(){
-
-                //set renderer
-                item.setRenderer(this);
-
-                //render markup
-                $container.append(item.render());
-
-                //execute javascript
-                item.postRender();
-                
-                //done
-                done();
-                
-                //remove item
-                item.getContainer().remove();
-                
-            }, this.getLoadedClasses());
-        });
     }
     
     /**
@@ -218,7 +206,7 @@ define([
             start: function start(done) {
                 var tests = [];
                 _.forEach(_samples, function(data) {
-                    var cb = _.partial(loadFrame2, data);
+                    var cb = _.partial(loadItem, data);
                     var iterations = data.nb || 1;
                     while (iterations --) {
                         tests.push(cb);
