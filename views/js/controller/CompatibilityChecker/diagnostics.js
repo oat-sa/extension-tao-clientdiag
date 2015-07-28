@@ -117,6 +117,10 @@ define([
             .addClass('icon-' + status.type);
 
 
+        if (undefined !== status.number) {
+            $indicator.attr('title', status.number);
+        }
+
         $bar.fadeIn(function() {
             if($indicator.length){
                 $indicator.animate({
@@ -196,7 +200,11 @@ define([
 
                 _.forEach(bandwidthThresholds, function(threshold) {
                     var max = threshold * bandwidthUnit;
-                    status.push(getStatus(thresholds, details.max / max * 100));
+                    var st = getStatus(thresholds, details.max / max * 100);
+                    var nb = Math.min(Math.floor(details.max / bandwidthUnit), threshold);
+
+                    st.number = nb;
+                    status.push(st);
                 });
 
                 done(status, details);
@@ -235,9 +243,9 @@ define([
         var $testTriggerBtn = $('[data-action="test-launcher"]');
         var $bandWidthTriggerBtn = $('[data-action="bandwidth-launcher"]');
         var $detailsBtn = $('[data-action="display-details"]');
-        var $bandWidthBox = $('.bandwidth-box'),
-            status, information = {};
-        var $detailsTable = $('#details');
+        var $bandWidthBox = $('.bandwidth-box');
+        var $bandWidthBoxTitle = $bandWidthBox.find('.title');
+        var status, information = {};
         var scores = {};
 
         $testTriggerBtn.on('click', function(){
@@ -267,10 +275,16 @@ define([
 
 
         $bandWidthTriggerBtn.on('click', function() {
+            if ($bandWidthTriggerBtn.hasClass('disabled')) {
+                return;
+            }
+
             loadingBar.start();
-            $bandWidthTriggerBtn.hide();
+            $bandWidthTriggerBtn.addClass('disabled');
 
             checkBandwidth(function(status, details) {
+                $bandWidthBoxTitle.hide();
+
                 displayDetails({
                     bandwidthMin : {message : __('Minimum bandwidth'), value:details.min + ' Mbps'},
                     bandwidthMax : {message : __('Maximum bandwidth'), value:details.max + ' Mbps'},

@@ -82,13 +82,15 @@ use oat\tao\helpers\Layout;
         </div>
 
         <ul class="plain">
-            <li data-result="browser"><?= __('Operating system and web browser') ?>
+            <li data-result="browser">
+                <h2><?= __('Operating system and web browser') ?></h2>
                 <div class="small feedback">
                     <span class="icon"></span>
                     <span class="msg"></span>
                 </div>
             </li>
-            <li data-result="performance"><?= __('Workstation performance') ?>
+            <li data-result="performance">
+                <h2><?= __('Workstation performance') ?></h2>
                 <div>
                     <div class="small feedback">
                         <span class="icon"></span>
@@ -99,14 +101,17 @@ use oat\tao\helpers\Layout;
                     </div>
                 </div>
             </li>
-            <li class="bandwidth-box"><?= __('Bandwidth') ?>
+            <li class="bandwidth-box">
+                <div class="title">
+                    <h2><?= __('Bandwidth') ?></h2>
 
-                <div class="clearfix">
-                    <button data-action="bandwidth-launcher" class="btn-info small"><?=
+                    <div class="clearfix">
+                        <button data-action="bandwidth-launcher" class="btn-info small"><?=
                         __('Run bandwidth test') ?></button>
+                    </div>
                 </div>
                 <div data-result="bandwidth-0">
-                    <div class="label"><?= __('%s test takers', 20); ?></div>
+                    <h2><?= __('Bandwidth with %s test takers', 20); ?></h2>
                     <div class="small feedback">
                         <span class="icon"></span>
                         <span class="msg"></span>
@@ -116,7 +121,7 @@ use oat\tao\helpers\Layout;
                     </div>
                 </div>
                 <div data-result="bandwidth-1">
-                    <div class="label"><?= __('%s test takers', 30); ?></div>
+                    <h2><?= __('Bandwidth with %s test takers', 30); ?></h2>
                     <div class="small feedback">
                         <span class="icon"></span>
                         <span class="msg"></span>
@@ -126,7 +131,8 @@ use oat\tao\helpers\Layout;
                     </div>
                 </div>
             </li>
-            <li data-result="total"><?= __('Total') ?>
+            <li data-result="total">
+                <h2><?= __('Total') ?></h2>
                 <div>
                     <div class="small feedback">
                         <span class="icon"></span>
@@ -141,7 +147,8 @@ use oat\tao\helpers\Layout;
                         __('Show Details') ?></button>
                 </div>
             </li>
-            <li data-result="details"><?= __('Details') ?>
+            <li data-result="details">
+                <h2><?= __('Details') ?></h2>
                 <div>
                     <table class="matrix" id="details">
                         <tbody>
