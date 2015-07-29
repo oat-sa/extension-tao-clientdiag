@@ -101,12 +101,10 @@ use oat\tao\helpers\Layout;
                     </div>
                 </div>
             </li>
-            <li class="bandwidth-box">
-                <div class="title">
-                    <h2><?= __('Bandwidth') ?></h2>
-                </div>
-                <div data-result="bandwidth-0">
-                    <h2><?= __('Bandwidth'); ?></h2>
+            <li data-result="bandwidth-0">
+                <h2><?= __('Bandwidth'); ?></h2>
+                <div>
+                    <div class="legend"><?= __('Number of simultaneous test takers the connection can handle'); ?></div>
                     <div class="small feedback">
                         <span class="icon"></span>
                         <span class="msg"></span>

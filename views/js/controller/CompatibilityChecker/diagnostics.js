@@ -292,11 +292,8 @@ define([
      *
      */
     var init = function init(){
-
         var $testTriggerBtn = $('[data-action="test-launcher"]');
         var $detailsBtn = $('[data-action="display-details"]');
-        var $bandWidthBox = $('.bandwidth-box');
-        var $bandWidthBoxTitle = $bandWidthBox.find('.title');
         var status, information = {};
         var scores = {};
 
@@ -327,9 +324,6 @@ define([
                 });
             }, function(cb) {
                 checkBandwidth(function(status, details) {
-                    $bandWidthBox.show();
-                    $bandWidthBoxTitle.hide();
-
                     _.assign(information, {
                         bandwidthMin : {message : __('Minimum bandwidth'), value:details.min + ' Mbps'},
                         bandwidthMax : {message : __('Maximum bandwidth'), value:details.max + ' Mbps'},
