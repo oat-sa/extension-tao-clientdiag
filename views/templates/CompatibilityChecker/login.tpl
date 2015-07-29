@@ -17,6 +17,13 @@ use oat\tao\helpers\Layout;
     <?php if (($themeUrl = Layout::getThemeUrl()) !== null): ?>
     <link rel="stylesheet" href="<?= $themeUrl ?>"/>
     <?php endif; ?>
+    <script
+            id="amd-loader"
+            src="<?= Template::js('lib/require.js', 'tao') ?>"
+            data-controller="<?= \tao_helpers_Uri::getBaseUrl() ?>views/js/controller/CompatibilityChecker/"
+            data-main="<?= \tao_helpers_Uri::getBaseUrl() ?>views/js/index"
+            data-config="<?= get_data('clientConfigUrl') ?>">
+    </script>
 </head>
 
 <body>
@@ -31,13 +38,12 @@ use oat\tao\helpers\Layout;
     <?php Template::inc('blocks/header.tpl', 'tao'); ?>
 
 
-    <div id="feedback-box"></div>
+    <div id="feedback-box" data-error="<?= get_data('errorMessage') ?>" data-message="<?= get_data('message') ?>"></div>
 
     <div id="login-box" class="entry-point entry-point-container">
         <h1><?= __('Connect to the diagnostic tool')?></h1>
         <div class='xhtml_form'>
             <form method='post' id='loginForm' name='loginForm' action='<?= \tao_helpers_Uri::url("index","CompatibilityChecker","taoClientDiagnostic") ?>' >
-                <?php if(has_data('login')):?><div class="feedback-error small"><?= get_data('login');?></div><?php endif;?>
                 <div><label class='form_desc' for='login'><?= __('Login')?></label><input type='text' name='login' id='login'  autofocus='autofocus'  value="" /></div><div class='form-toolbar' ><input type='submit' id='connect' name='connect'  value="<?= __('Log in')?>"  /></div></form>
         </div>
     </div>

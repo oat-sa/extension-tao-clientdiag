@@ -28,8 +28,9 @@ define([
     'layout/loading-bar',
     'helpers',
     'taoClientDiagnostic/tools/performances/tester',
-    'taoClientDiagnostic/tools/bandwidth/tester'
-], function ($, _, __, loadingBar, helpers, performancesTester, bandwidthTester) {
+    'taoClientDiagnostic/tools/bandwidth/tester',
+    'ui/feedback'
+], function ($, _, __, loadingBar, helpers, performancesTester, bandwidthTester, feedback) {
     'use strict';
 
     /**
@@ -294,6 +295,7 @@ define([
         var $bandWidthBoxTitle = $bandWidthBox.find('.title');
         var status, information = {};
         var scores = {};
+        var $feedbackBox = $('#feedback-box');
 
         $testTriggerBtn.on('click', function(){
             loadingBar.start();
@@ -360,6 +362,14 @@ define([
 
             loadingBar.stop();
         });
+
+
+        if(!!$feedbackBox.data('error')){
+            feedback().error($feedbackBox.data('error'));
+        }
+        if($feedbackBox.data('message')){
+            feedback().error($feedbackBox.data('message'));
+        }
     };
 
     /**

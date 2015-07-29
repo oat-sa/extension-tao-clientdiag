@@ -38,11 +38,11 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
         }
 
         if($login === ''){
-            $this->forward('login', null, null, array('error' => __('No login found')));
+            $this->forward('login', null, null, array('message' => __('No login found')));
             return;
         }
         if(!\core_kernel_users_Service::singleton()->loginExists($this->getRequestParameter('login'))){
-            $this->forward('login', null, null, array('error' => __('This login does not exist')));
+            $this->forward('login', null, null, array('errorMessage' => __('This login does not exist')));
             return;
         }
         setcookie('login', $login);
@@ -51,9 +51,13 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
     }
 
     public function login(){
-        if($this->hasRequestParameter('error')){
-            $this->setData('login', $this->getRequestParameter('error'));
+        if($this->hasRequestParameter('errorMessage')){
+            $this->setData('errorMessage', $this->getRequestParameter('errorMessage'));
         }
+        if($this->hasRequestParameter('message')){
+            $this->setData('message', $this->getRequestParameter('message'));
+        }
+        $this->setData('clientConfigUrl',$this->getClientConfigUrl());
         $this->setView('CompatibilityChecker/login.tpl');
     }
 
