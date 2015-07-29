@@ -57,13 +57,13 @@ define([
      * The threshold for optimal performances
      * @type {Number}
      */
-    var performanceOptimal = 0.02;
+    var performanceOptimal = 0.05;
 
     /**
      * The threshold for minimal performances
      * @type {Number}
      */
-    var performanceThreshold = 0.5;
+    var performanceThreshold = 0.25;
 
     /**
      * The range of performance displayed on a bar

@@ -51,7 +51,7 @@ define([
             id : 'sample1',
             url : 'taoClientDiagnostic/tools/performances/data/sample1/',
             timeout : 30 * _second,
-            nb : 10
+            nb : 11
         },
         'sample2' : {
             id : 'sample2',
@@ -74,18 +74,10 @@ define([
      */
     function loadItem(data, done){
 
-        //perf variables
-        var totalDuration,
-            displayDuration,
-            start,
-            end,
-            result;
-
         //item location config
         var loader = new Loader();
         var renderer = new Renderer();
-        var $container = $('<div>').appendTo('body');
-        var qtiJsonFile = data.url+'qti.json';
+        var qtiJsonFile = data.url + 'qti.json';
         var urlTokens = data.url.split('/');
         var extension = urlTokens[0];
         var fullpath = require.s.contexts._.config.paths[extension];
@@ -97,6 +89,13 @@ define([
             loader.loadItemData(itemData, function(item){
                 renderer.load(function(){
 
+                    var $container,
+                        totalDuration,
+                        displayDuration,
+                        start,
+                        end,
+                        result;
+
                     //start right before rendering
                     start = window.performance.now();
 
@@ -104,25 +103,28 @@ define([
                     item.setRenderer(this);
 
                     //render markup
+                    $container = $('<div>').appendTo('body');
                     $container.append(item.render());
 
                     //execute javascript
                     item.postRender();
 
+                    //remove item
+                    $container.remove();
+
                     //done
                     end = window.performance.now();
-                    totalDuration = end - start;
+
+                    totalDuration = (end - start) / _second;
                     displayDuration = totalDuration;
 
                     result = {
                         id : data.id,
                         url : data.url,
-                        totalDuration: totalDuration / _second,
-                        displayDuration : displayDuration / _second
+                        totalDuration: totalDuration,
+                        displayDuration : displayDuration
                     };
 
-                    //remove item
-                    $container.remove();
                     done(null, result);
 
                 }, this.getLoadedClasses());
@@ -161,6 +163,8 @@ define([
                         //something went wrong
                         throw err;
                     }
+
+                    measures.shift();
                     results = stats(measures, 'displayDuration', decimals);
 
                     done(results.average, results);
