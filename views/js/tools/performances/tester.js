@@ -90,7 +90,7 @@ define([
                 renderer.load(function(){
 
                     var $container,
-                        totalDuration,
+                        duration,
                         displayDuration,
                         start,
                         end,
@@ -115,14 +115,12 @@ define([
                     //done
                     end = window.performance.now();
 
-                    totalDuration = (end - start) / _second;
-                    displayDuration = totalDuration;
+                    duration = (end - start) / _second;
 
                     result = {
                         id : data.id,
                         url : data.url,
-                        totalDuration: totalDuration,
-                        displayDuration : displayDuration
+                        duration: duration
                     };
 
                     done(null, result);
@@ -165,7 +163,7 @@ define([
                     }
 
                     measures.shift();
-                    results = stats(measures, 'displayDuration', decimals);
+                    results = stats(measures, 'duration', decimals);
 
                     done(results.average, results);
                 });
