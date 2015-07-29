@@ -57,7 +57,7 @@ define([
      * The threshold for optimal performances
      * @type {Number}
      */
-    var performanceOptimal = 0.05;
+    var performanceOptimal = 0.025;
 
     /**
      * The threshold for minimal performances
@@ -266,7 +266,7 @@ define([
      */
     function checkPerformance(done) {
         performancesTester().start(function(average, details) {
-            var cursor = performanceRange - details.max + performanceOptimal;
+            var cursor = performanceRange - average + performanceOptimal;
             var status = getStatus(thresholds, cursor / performanceRange * 100);
 
             storeData('performance', details, function(){
