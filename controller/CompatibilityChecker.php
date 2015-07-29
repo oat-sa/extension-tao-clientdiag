@@ -28,8 +28,37 @@ use oat\tao\helpers\Template;
 class CompatibilityChecker extends \tao_actions_CommonModule{
 
     public function index(){
+
+        $login = '';
+        if($this->hasRequestParameter('login')){
+            $login = $this->getRequestParameter('login');
+        }
+        else if(isset($_COOKIE['login'])){
+            $login = $_COOKIE['login'];
+        }
+
+        if($login === ''){
+            $this->forward('login', null, null, array('message' => __('No login found')));
+            return;
+        }
+        if(!\core_kernel_users_Service::singleton()->loginExists($this->getRequestParameter('login'))){
+            $this->forward('login', null, null, array('errorMessage' => __('This login does not exist')));
+            return;
+        }
+        setcookie('login', $login);
         $this->setData('clientConfigUrl',$this->getClientConfigUrl());
         $this->setView('CompatibilityChecker/index.tpl');
+    }
+
+    public function login(){
+        if($this->hasRequestParameter('errorMessage')){
+            $this->setData('errorMessage', $this->getRequestParameter('errorMessage'));
+        }
+        if($this->hasRequestParameter('message')){
+            $this->setData('message', $this->getRequestParameter('message'));
+        }
+        $this->setData('clientConfigUrl',$this->getClientConfigUrl());
+        $this->setView('CompatibilityChecker/login.tpl');
     }
 
     public function whichBrowser(){
@@ -107,8 +136,12 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             $data['browserVersion'] = preg_replace('/[^\w\.]/','',$data['browserVersion']);
         }
 
-        $login = \common_session_SessionManager::getSession()->getUserLabel();
-        $data['login'] = $login;
+        if(!isset($_COOKIE['key'])){
+            $data['login'] = $_COOKIE['login'];
+        }
+        else{
+            $data['login'] = '';
+        }
         $data['ip'] = $_SERVER['REMOTE_ADDR'];
 
         return $data;
