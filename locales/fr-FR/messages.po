@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: TAO 3.1.0-sprint03\n"
-"PO-Revision-Date: 2015-07-29T16:01:26\n"
+"PO-Revision-Date: 2015-07-30T14:44:11\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-FR\n"
@@ -27,6 +27,9 @@ msgstr "Temps de rendu moyen"
 
 msgid "Bandwidth"
 msgstr "Bande passante"
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr "Ces tests peuvent prendre plusieurs minutes."
 
 msgid "Begin diagnostics"
 msgstr "Démarrer le diagnostic"
@@ -88,11 +91,11 @@ msgstr "Afficher les détails"
 msgid "This login does not exist"
 msgstr "Cet identifiant n'existe pas"
 
-msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform. Be aware that these tests will take up to several minutes."
-msgstr "Cet outil va effectuer plusieurs tests pour vérifier la configuration de vos ordinateurs utilisés pour la passation des évaluations numériques. Ces tests peuvent prendre plusieurs minutes"
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
+msgstr "Cet outil va effectuer plusieurs tests pour vérifier la configuration de vos ordinateurs utilisés pour la passation des évaluations numériques."
 
 msgid "Total"
-msgstr "Total"
+msgstr "Synthèse"
 
 msgid "Very slow performance"
 msgstr "Performance faible (lenteurs très importantes)"
@@ -104,7 +107,13 @@ msgid "Workstation performance"
 msgstr "Performance du poste de travail"
 
 msgid "You must activate JavaScript in your browser to run this application."
-msgstr ""
+msgstr "Vous devez activer JavaScript dans votre navigateur afin d'utiliser cette application."
+
+msgid "Your system is fully compliant."
+msgstr "Configuration conforme"
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr "Configuration à risque (contactez votre plateforme académique)"
 
 msgid "Your system requires a compatibility update, please contact your system administrator."
 msgstr "Configuration nécessitant une mise en conformité (contactez votre plateforme académique)"

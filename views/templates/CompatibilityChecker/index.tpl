@@ -74,8 +74,8 @@ use oat\tao\helpers\Layout;
         <h1><?= __('Diagnostic tool') ?></h1>
 
         <div class="intro">
-            <?=
-            __('This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform. Be aware that these tests will take up to several minutes.') ?>
+            <p><?= __('This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform.') ?></p>
+            <p><?= __('Be aware that these tests will take up to several minutes.') ?></p>
         </div>
         <div class="clearfix">
             <button data-action="test-launcher" class="btn-info small rgt"><?= __('Begin diagnostics') ?></button>

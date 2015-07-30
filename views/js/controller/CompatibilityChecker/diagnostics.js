@@ -78,7 +78,7 @@ define([
      */
     var thresholds = [{
         threshold: 0,
-        message: __("Very slow performance"),
+        message: __('Very slow performance'),
         type: 'error'
     }, {
         threshold: 33,
@@ -96,7 +96,7 @@ define([
      */
     var bandwidthThresholds = [{
         threshold: 0,
-        message: __("Low bandwidth"),
+        message: __('Low bandwidth'),
         type: 'error'
     }, {
         threshold: 33,
@@ -105,6 +105,24 @@ define([
     }, {
         threshold: 66,
         message: __('Good bandwidth'),
+        type: 'success'
+    }];
+
+    /**
+     * A list of thresholds for summary
+     * @type {Array}
+     */
+    var summaryThresholds = [{
+        threshold: 0,
+        message: __('Your system requires a compatibility update, please contact your system administrator.'),
+        type: 'error'
+    }, {
+        threshold: 33,
+        message: __('Your system is not optimal, please contact your system administrator.'),
+        type: 'warning'
+    }, {
+        threshold: 66,
+        message: __('Your system is fully compliant.'),
         type: 'success'
     }];
 
@@ -180,8 +198,8 @@ define([
         displayTestResult(name, status);
         if (score) {
             score[name] = status;
-            total = _.omit(_.min(score, 'percentage'), 'label');
-            displayTestResult('total', total);
+            total = _.min(score, 'percentage');
+            displayTestResult('total', getStatus(summaryThresholds, total.percentage));
         }
     }
 
