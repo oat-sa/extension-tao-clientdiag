@@ -212,10 +212,10 @@ define([
         var browser = info.browser;
         var os = info.os;
         var information = {
-            browser: browser && browser.name,
-            browserVersion: browser && browser.version && browser.version.original,
-            os: os && os.name,
-            osVersion: os && os.version && (os.version.alias || os.version.original)
+            browser: browser && browser.name || __('Unknown browser'),
+            browserVersion: browser && browser.version && browser.version.original || __('Unknown version'),
+            os: os && os.name || __('Unknown OS'),
+            osVersion: os && os.version && (os.version.alias || os.version.original) || __('Unknown version')
         };
 
         // which browser
