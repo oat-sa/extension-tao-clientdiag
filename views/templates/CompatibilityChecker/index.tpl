@@ -147,15 +147,9 @@ use oat\tao\helpers\Layout;
 </div>
 
 <footer class="dark-bar">
-    <?php
-    if (!$val = Layout::getCopyrightNotice()):
-        ?>
-        © 2013 - <?= date('Y') ?> · <span class="tao-version"><?= TAO_VERSION_NAME ?></span> ·
-        <a href="http://taotesting.com" target="_blank">Open Assessment Technologies S.A.</a>
-        · <?= __('All rights reserved.') ?>
-    <?php else: ?>
-        <?= $val ?>
-    <?php endif; ?>
+    © (Contenu de l'évaluation - SOCLE) Direction de l’évaluation, de la prospective et de la performance · <?= __('All rights reserved.') ?>
+    ·
+    © (TAO plateforme) · <a href="http://taotesting.com" target="_blank">Open Assessment Technologies S.A.</a> · <?= __('All rights reserved.') ?>
     <?php $releaseMsgData = Layout::getReleaseMsgData();
     if ($releaseMsgData['is-unstable'] || $releaseMsgData['is-sandbox']): ?>
         <span class="rgt">

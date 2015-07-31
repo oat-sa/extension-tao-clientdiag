@@ -38,7 +38,7 @@ define([
      * The typical bandwidth needed for a test taker (Mbps)
      * @type {Number}
      */
-    var bandwidthUnit = 0.125;
+    var bandwidthUnit = 0.16;
 
     /**
      * The thresholds for optimal bandwidth. One by bar.
@@ -193,14 +193,19 @@ define([
      * @param {Object} score
      */
     function updateTestResult(name, status, score) {
-        var total;
-
         displayTestResult(name, status);
         if (score) {
             score[name] = status;
-            total = _.min(score, 'percentage');
-            displayTestResult('total', getStatus(summaryThresholds, total.percentage));
         }
+    }
+
+    /**
+     * Displays the results summary
+     * @param {Object} score
+     */
+    function displaySummary(score) {
+        var total = _.min(score, 'percentage');
+        displayTestResult('total', getStatus(summaryThresholds, total.percentage));
     }
 
     /**
@@ -358,6 +363,7 @@ define([
                     cb();
                 });
             }], function() {
+                displaySummary(scores);
                 loadingBar.stop();
             });
         });
