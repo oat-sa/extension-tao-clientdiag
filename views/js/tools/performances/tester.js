@@ -75,14 +75,20 @@ define([
     function loadItem(data, done){
 
         //item location config
-        var loader = new Loader();
-        var renderer = new Renderer();
         var qtiJsonFile = data.url + 'qti.json';
         var urlTokens = data.url.split('/');
         var extension = urlTokens[0];
         var fullpath = require.s.contexts._.config.paths[extension];
         var baseUrl = data.url.replace(extension, fullpath);
-        renderer.getAssetManager().setData('baseUrl', baseUrl);
+        var loader = new Loader();
+        var renderer = new Renderer({
+            baseUrl : baseUrl       // compatibility mode for legacy installations
+        });
+
+        // check needed by compatibility mode for legacy installations
+        if (renderer.getAssetManager) {
+            renderer.getAssetManager().setData('baseUrl', baseUrl);
+        }
 
         require(['json!'+qtiJsonFile], function(itemData){
 
