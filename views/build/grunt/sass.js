@@ -7,7 +7,7 @@ module.exports = function(grunt) {
 
     sass.taoclientdiagnostic = { };
     sass.taoclientdiagnostic.files = { };
-    sass.taoclientdiagnostic.files[root + 'css/check.css'] = root + 'scss/check.scss';
+    sass.taoclientdiagnostic.files[root + 'css/diagnostics.css'] = root + 'scss/diagnostics.scss';
 
     watch.taoclientdiagnosticsass = {
         files : [root + 'views/scss/**/*.scss'],

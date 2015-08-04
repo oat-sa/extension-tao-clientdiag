@@ -26,51 +26,111 @@ use oat\taoClientDiagnostic\model\DataStorage;
 
 class DataStoringTest extends \PHPUnit_Framework_TestCase {
 
+    private $sentData, $sampleFilePath;
+
+    public function setUp(){
+        $this->sentData = array(
+            'key'               => '1234567',
+            'login'             => 'test',
+            'ip'                => '10.9.8.7',
+            'browser'           => 'Chrome',
+            'browserVersion'    => '33',
+            'os'                => 'Windows',
+            'osVersion'         => '8.1',
+        );
+
+    }
 
     public function testStoreData(){
-        $sampleFilePath = \tao_helpers_File::createTempDir() . 'stored.csv';
-        $os = 'Windows';
-        $osVersion = '8.1';
-        $browser = 'Chrome';
-        $browserVersion = '33';
-        $ip = '10.9.8.7';
 
-        $store = new DataStorage($browser, $browserVersion, $ip, $os, $osVersion);
-
+        $store = new DataStorage($this->sentData);
+        $this->sampleFilePath = \tao_helpers_File::createTempDir() . 'stored.csv';
         $ref = new \ReflectionProperty('oat\taoClientDiagnostic\model\DataStorage', 'filePath');
         $ref->setAccessible(true);
-        $ref->setValue($store, $sampleFilePath);
+        $ref->setValue($store, $this->sampleFilePath);
 
-        $store->storeData(true);
-        $store->storeData(false);
+        $store->setIsCompatible(true)->storeData();
 
-        $this->assertFileExists($sampleFilePath);
+        $this->assertFileExists($this->sampleFilePath);
 
         $row = 0;
-        if (($handle = fopen($sampleFilePath, "r")) !== FALSE) {
+        if (($handle = fopen($this->sampleFilePath, "r")) !== FALSE) {
             while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                 $num = count($data);
-                $this->assertEquals(6, $num);
                 $row ++;
+                $this->assertEquals(24, $num);
                 if($row === 2){
-                    $this->assertEquals($ip,$data[0]);
-                    $this->assertEquals($os,$data[1]);
-                    $this->assertEquals($osVersion,$data[2]);
-                    $this->assertEquals($browser,$data[3]);
-                    $this->assertEquals($browserVersion,$data[4]);
-                    $this->assertEquals(1,$data[5]);
-                }
-                if($row === 3){
-                    $this->assertEquals(0,$data[5]);
+                    $this->assertEquals($this->sentData['key'],$data[0]);
+                    $this->assertEquals($this->sentData['login'],$data[1]);
+                    $this->assertEquals($this->sentData['ip'],$data[2]);
+                    $this->assertEquals($this->sentData['browser'],$data[3]);
+                    $this->assertEquals($this->sentData['browserVersion'],$data[4]);
+                    $this->assertEquals($this->sentData['os'],$data[5]);
+                    $this->assertEquals($this->sentData['osVersion'],$data[6]);
+                    $this->assertEquals(1,$data[23]);
                 }
             }
             fclose($handle);
+            $this->assertEquals(2, $row);
         }
-        $this->assertEquals(3, $row);
 
-        unlink($sampleFilePath);
+        $store->setIsCompatible(false)->storeData();
 
+        $row = 0;
+        if (($handle = fopen($this->sampleFilePath, "r")) !== FALSE) {
+            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+                $num = count($data);
+                $row ++;
+                $this->assertEquals(24, $num);
+                if($row === 2){
+                    $this->assertEquals($this->sentData['key'],$data[0]);
+                    $this->assertEquals($this->sentData['login'],$data[1]);
+                    $this->assertEquals($this->sentData['ip'],$data[2]);
+                    $this->assertEquals($this->sentData['browser'],$data[3]);
+                    $this->assertEquals($this->sentData['browserVersion'],$data[4]);
+                    $this->assertEquals($this->sentData['os'],$data[5]);
+                    $this->assertEquals($this->sentData['osVersion'],$data[6]);
+                    $this->assertEquals(0,$data[23]);
+                }
+            }
+            fclose($handle);
+            $this->assertEquals(2, $row);
+        }
+        return $store;
+    }
 
+    /**
+     * @depends testStoreData
+     */
+    public function testGetData($store){
+
+        $data = $store->getStoredData();
+        $num = count($data);
+
+        $this->assertEquals(24, $num);
+
+        $this->assertEquals($this->sentData['browser'],$data['browser']);
+        $this->assertEquals($this->sentData['browserVersion'],$data['browserVersion']);
+        $this->assertEquals($this->sentData['ip'],$data['ip']);
+        $this->assertEquals($this->sentData['key'],$data['key']);
+        $this->assertEquals($this->sentData['login'],$data['login']);
+        $this->assertEquals($this->sentData['os'],$data['os']);
+        $this->assertEquals($this->sentData['osVersion'],$data['osVersion']);
+        $this->assertEquals(0,$data['compatible']);
+
+        return $store;
+    }
+
+    /**
+    * @depends testStoreData
+    */
+    public function testDeleteData($store){
+
+        $deleted = $store->deleteData();
+
+        $this->assertTrue($deleted);
+        $data = $store->getStoredData();
+        $this->assertEmpty($data);
     }
 
 }
