@@ -1,4 +1,5 @@
-module.exports = function(grunt) { 
+module.exports = function(grunt) {
+    'use strict';
 
     var requirejs   = grunt.config('requirejs') || {};
     var clean       = grunt.config('clean') || {};
@@ -14,16 +15,20 @@ module.exports = function(grunt) {
      * Remove bundled and bundling files
      */
     clean.taoclientdiagnosticbundle = [out];
-    
+
     /**
-     * Compile tao files into a bundle 
+     * Compile tao files into a bundle
      */
     requirejs.taoclientdiagnosticbundle = {
         options: {
             baseUrl : '../js',
             dir : out,
             mainConfigFile : './config/requirejs.build.js',
-            paths : { 'taoClientDiagnostic' : root + '/taoClientDiagnostic/views/js' },
+            paths : {
+                'taoClientDiagnostic' : root + '/taoClientDiagnostic/views/js',
+                'taoItems'            : root + '/taoItems/views/js',
+                'taoQtiItem'          : root + '/taoQtiItem/views/js'
+            },
             modules : [{
                 name: 'taoClientDiagnostic/controller/routes',
                 include : ext.getExtensionsControllers(['taoClientDiagnostic']),
