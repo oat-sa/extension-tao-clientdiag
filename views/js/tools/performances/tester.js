@@ -25,7 +25,7 @@ define([
     'context',
     'helpers',
     'taoClientDiagnostic/tools/stats',
-    'taoQtiItem/qtiItem/core/Loader',
+    'ui/themeLoader',
     'taoQtiItem/qtiCommonRenderer/renderers/Renderer',
     'lib/polyfill/performance-now'
 ], function($, _, async, context, helpers, stats, Loader, Renderer) {
