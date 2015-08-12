@@ -41,7 +41,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             $this->forward('login', null, null, array('message' => __('No login found')));
             return;
         }
-        if(!\core_kernel_users_Service::singleton()->loginExists($this->getRequestParameter('login'))){
+        if(!$this->isLoginValid($login)){
             $this->forward('login', null, null, array('errorMessage' => __('This login does not exist')));
             return;
         }
@@ -145,6 +145,21 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
         $data['ip'] = $_SERVER['REMOTE_ADDR'];
 
         return $data;
+    }
+
+    /**
+     * Check if the login is valid or not
+     * @param $login
+     * @return bool
+     */
+    private function isLoginValid($login){
+        // For now there is no simple loginExists method for RDF, redis ...
+        // We just use a regex to see if it match a pattern
+        $pattern = '/^[0-9]{7}[A-Z]$/';
+
+        return (\tao_models_classes_UserService::singleton()->loginExists($login)
+            || preg_match($pattern, $login) === 1)? true: false;
+
     }
 
 } 
