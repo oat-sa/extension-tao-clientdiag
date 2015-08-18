@@ -1,0 +1,463 @@
+{
+    "identifier": "i14044788506527107",
+    "serial": "item_55b0a66897c0f659514926",
+    "qtiClass": "assessmentItem",
+    "attributes": {
+        "identifier": "i14044788506527107",
+        "title": "Item title",
+        "label": "",
+        "xml:lang": "en-US",
+        "adaptive": false,
+        "timeDependent": false,
+        "toolName": "TAO",
+        "toolVersion": "3.1.0-sprint03"
+    },
+    "body": {
+        "serial": "container_containeritembody_55b0a66897bf4947633396",
+        "body": "\n    <div class=\"grid-row\">\n      <div class=\"col-12\">\n        <h1>CSS Examples I<\/h1>\n      <\/div>\n    <\/div>\n    <div class=\"grid-row\">\n      <div class=\"col-12\">\n        {{interaction_choiceinteraction_55b0a668b0a8d650334066}}\n      <\/div>\n    <\/div>\n    <div class=\"grid-row\">\n      <div class=\"col-12\">\n        {{interaction_orderinteraction_55b0a668c0303635075897}}\n      <\/div>\n    <\/div>\n    <div class=\"grid-row\">\n      <div class=\"col-12\">\n        {{interaction_associateinteraction_55b0a668c5ff6083045345}}\n      <\/div>\n    <\/div>\n    <div class=\"grid-row\">\n      <div class=\"col-12\">\n        {{interaction_matchinteraction_55b0a668cca37972323665}}\n      <\/div>\n    <\/div>\n  ",
+        "elements": {
+            "interaction_choiceinteraction_55b0a668b0a8d650334066": {
+                "serial": "interaction_choiceinteraction_55b0a668b0a8d650334066",
+                "qtiClass": "choiceInteraction",
+                "attributes": {
+                    "responseIdentifier": "RESPONSE_1",
+                    "shuffle": false,
+                    "maxChoices": 0,
+                    "minChoices": 0,
+                    "orientation": "vertical"
+                },
+                "debug": {
+                    "relatedItem": "item_55b0a66897c0f659514926"
+                },
+                "choices": {
+                    "choice_simplechoice_55b0a668baac7709760744": {
+                        "identifier": "choice_1",
+                        "serial": "choice_simplechoice_55b0a668baac7709760744",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "choice_1",
+                            "fixed": false,
+                            "showHide": "show"
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b0a668bcb7b299686779",
+                            "body": "choice #1",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b0a66897c0f659514926"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b0a66897c0f659514926"
+                        }
+                    },
+                    "choice_simplechoice_55b0a668bdb7a135462668": {
+                        "identifier": "choice_2",
+                        "serial": "choice_simplechoice_55b0a668bdb7a135462668",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "choice_2",
+                            "fixed": false,
+                            "showHide": "show"
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b0a668bdbd4613262084",
+                            "body": "choice #2",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b0a66897c0f659514926"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b0a66897c0f659514926"
+                        }
+                    },
+                    "choice_simplechoice_55b0a668bea3b630122185": {
+                        "identifier": "choice_3",
+                        "serial": "choice_simplechoice_55b0a668bea3b630122185",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "choice_3",
+                            "fixed": false,
+                            "showHide": "show"
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b0a668bea8b999488391",
+                            "body": "choice #3",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b0a66897c0f659514926"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b0a66897c0f659514926"
+                        }
+                    }
+                },
+                "prompt": {
+                    "serial": "container_containerstatic_55b0a668b771c200664079",
+                    "body": "Example choice interaction",
+                    "elements": {},
+                    "debug": {
+                        "relatedItem": "item_55b0a66897c0f659514926"
+                    }
+                }
+            },
+            "interaction_orderinteraction_55b0a668c0303635075897": {
+                "serial": "interaction_orderinteraction_55b0a668c0303635075897",
+                "qtiClass": "orderInteraction",
+                "attributes": {
+                    "responseIdentifier": "RESPONSE_2",
+                    "shuffle": false,
+                    "maxChoices": 0,
+                    "minChoices": 0,
+                    "orientation": "vertical"
+                },
+                "debug": {
+                    "relatedItem": "item_55b0a66897c0f659514926"
+                },
+                "choices": {
+                    "choice_simplechoice_55b0a668c2a46035345324": {
+                        "identifier": "choice_4",
+                        "serial": "choice_simplechoice_55b0a668c2a46035345324",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "choice_4",
+                            "fixed": false,
+                            "showHide": "show"
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b0a668c2a9a766048878",
+                            "body": "choice #1",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b0a66897c0f659514926"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b0a66897c0f659514926"
+                        }
+                    },
+                    "choice_simplechoice_55b0a668c3734994089814": {
+                        "identifier": "choice_5",
+                        "serial": "choice_simplechoice_55b0a668c3734994089814",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "choice_5",
+                            "fixed": false,
+                            "showHide": "show"
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b0a668c3781148192172",
+                            "body": "choice #2",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b0a66897c0f659514926"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b0a66897c0f659514926"
+                        }
+                    },
+                    "choice_simplechoice_55b0a668c4717707325910": {
+                        "identifier": "choice_6",
+                        "serial": "choice_simplechoice_55b0a668c4717707325910",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "choice_6",
+                            "fixed": false,
+                            "showHide": "show"
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b0a668c4767320659115",
+                            "body": "choice #3",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b0a66897c0f659514926"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b0a66897c0f659514926"
+                        }
+                    }
+                },
+                "prompt": {
+                    "serial": "container_containerstatic_55b0a668c1d27225827273",
+                    "body": "Example order interaction",
+                    "elements": {},
+                    "debug": {
+                        "relatedItem": "item_55b0a66897c0f659514926"
+                    }
+                }
+            },
+            "interaction_associateinteraction_55b0a668c5ff6083045345": {
+                "serial": "interaction_associateinteraction_55b0a668c5ff6083045345",
+                "qtiClass": "associateInteraction",
+                "attributes": {
+                    "responseIdentifier": "RESPONSE_3",
+                    "shuffle": false,
+                    "maxAssociations": 0,
+                    "minAssociations": 0
+                },
+                "debug": {
+                    "relatedItem": "item_55b0a66897c0f659514926"
+                },
+                "choices": {
+                    "choice_simpleassociablechoice_55b0a668c8ca1460489749": {
+                        "identifier": "choice_7",
+                        "serial": "choice_simpleassociablechoice_55b0a668c8ca1460489749",
+                        "qtiClass": "simpleAssociableChoice",
+                        "attributes": {
+                            "identifier": "choice_7",
+                            "fixed": false,
+                            "showHide": "show",
+                            "matchMax": 0,
+                            "matchMin": 0
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b0a668c9dcf395889571",
+                            "body": "choice #1",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b0a66897c0f659514926"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b0a66897c0f659514926"
+                        }
+                    },
+                    "choice_simpleassociablechoice_55b0a668caa74634718104": {
+                        "identifier": "choice_8",
+                        "serial": "choice_simpleassociablechoice_55b0a668caa74634718104",
+                        "qtiClass": "simpleAssociableChoice",
+                        "attributes": {
+                            "identifier": "choice_8",
+                            "fixed": false,
+                            "showHide": "show",
+                            "matchMax": 0,
+                            "matchMin": 0
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b0a668caaef405659324",
+                            "body": "choice #2",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b0a66897c0f659514926"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b0a66897c0f659514926"
+                        }
+                    }
+                },
+                "prompt": {
+                    "serial": "container_containerstatic_55b0a668c71b3432715355",
+                    "body": "Example associate interaction",
+                    "elements": {},
+                    "debug": {
+                        "relatedItem": "item_55b0a66897c0f659514926"
+                    }
+                }
+            },
+            "interaction_matchinteraction_55b0a668cca37972323665": {
+                "serial": "interaction_matchinteraction_55b0a668cca37972323665",
+                "qtiClass": "matchInteraction",
+                "attributes": {
+                    "responseIdentifier": "RESPONSE_4",
+                    "shuffle": false,
+                    "maxAssociations": 0,
+                    "minAssociations": 0
+                },
+                "prompt": {
+                    "serial": "container_containerstatic_55b0a668ccb35527296202",
+                    "body": "Example match interaction",
+                    "elements": {},
+                    "debug": {
+                        "relatedItem": "item_55b0a66897c0f659514926"
+                    }
+                },
+                "choices": [
+                    {
+                        "choice_simpleassociablechoice_55b0a668cda67353315629": {
+                            "identifier": "choice_9",
+                            "serial": "choice_simpleassociablechoice_55b0a668cda67353315629",
+                            "qtiClass": "simpleAssociableChoice",
+                            "attributes": {
+                                "identifier": "choice_9",
+                                "fixed": false,
+                                "showHide": "show",
+                                "matchMax": 0,
+                                "matchMin": 0
+                            },
+                            "body": {
+                                "serial": "container_containerstatic_55b0a668cdb27105906696",
+                                "body": "choice #1",
+                                "elements": {},
+                                "debug": {
+                                    "relatedItem": "item_55b0a66897c0f659514926"
+                                }
+                            },
+                            "debug": {
+                                "relatedItem": "item_55b0a66897c0f659514926"
+                            }
+                        },
+                        "choice_simpleassociablechoice_55b0a668ce768954092671": {
+                            "identifier": "choice_10",
+                            "serial": "choice_simpleassociablechoice_55b0a668ce768954092671",
+                            "qtiClass": "simpleAssociableChoice",
+                            "attributes": {
+                                "identifier": "choice_10",
+                                "fixed": false,
+                                "showHide": "show",
+                                "matchMax": 0,
+                                "matchMin": 0
+                            },
+                            "body": {
+                                "serial": "container_containerstatic_55b0a668ce7e0140709140",
+                                "body": "choice #2",
+                                "elements": {},
+                                "debug": {
+                                    "relatedItem": "item_55b0a66897c0f659514926"
+                                }
+                            },
+                            "debug": {
+                                "relatedItem": "item_55b0a66897c0f659514926"
+                            }
+                        }
+                    },
+                    {
+                        "choice_simpleassociablechoice_55b0a668cf3e1484736695": {
+                            "identifier": "choice_11",
+                            "serial": "choice_simpleassociablechoice_55b0a668cf3e1484736695",
+                            "qtiClass": "simpleAssociableChoice",
+                            "attributes": {
+                                "identifier": "choice_11",
+                                "fixed": false,
+                                "showHide": "show",
+                                "matchMax": 0,
+                                "matchMin": 0
+                            },
+                            "body": {
+                                "serial": "container_containerstatic_55b0a668cf456207475630",
+                                "body": "choice #1",
+                                "elements": {},
+                                "debug": {
+                                    "relatedItem": "item_55b0a66897c0f659514926"
+                                }
+                            },
+                            "debug": {
+                                "relatedItem": "item_55b0a66897c0f659514926"
+                            }
+                        },
+                        "choice_simpleassociablechoice_55b0a668cffe8240354930": {
+                            "identifier": "choice_12",
+                            "serial": "choice_simpleassociablechoice_55b0a668cffe8240354930",
+                            "qtiClass": "simpleAssociableChoice",
+                            "attributes": {
+                                "identifier": "choice_12",
+                                "fixed": false,
+                                "showHide": "show",
+                                "matchMax": 0,
+                                "matchMin": 0
+                            },
+                            "body": {
+                                "serial": "container_containerstatic_55b0a668d005d709639305",
+                                "body": "choice #2",
+                                "elements": {},
+                                "debug": {
+                                    "relatedItem": "item_55b0a66897c0f659514926"
+                                }
+                            },
+                            "debug": {
+                                "relatedItem": "item_55b0a66897c0f659514926"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "debug": {
+            "relatedItem": "item_55b0a66897c0f659514926"
+        }
+    },
+    "debug": {
+        "relatedItem": "item_55b0a66897c0f659514926"
+    },
+    "namespaces": {
+        "xml": "http:\/\/www.w3.org\/XML\/1998\/namespace",
+        "xsi": "http:\/\/www.w3.org\/2001\/XMLSchema-instance",
+        "": "http:\/\/www.imsglobal.org\/xsd\/imsqti_v2p1"
+    },
+    "stylesheets": {},
+    "outcomes": {
+        "outcomedeclaration_55b0a668aa4a9689359801": {
+            "identifier": "SCORE",
+            "serial": "outcomedeclaration_55b0a668aa4a9689359801",
+            "qtiClass": "outcomeDeclaration",
+            "attributes": {
+                "identifier": "SCORE",
+                "cardinality": "single",
+                "baseType": "float"
+            },
+            "debug": {
+                "relatedItem": "item_55b0a66897c0f659514926"
+            },
+            "defaultValue": null
+        }
+    },
+    "responses": {
+        "responsedeclaration_55b0a668a6eee339050625": {
+            "identifier": "RESPONSE_1",
+            "serial": "responsedeclaration_55b0a668a6eee339050625",
+            "qtiClass": "responseDeclaration",
+            "attributes": {
+                "identifier": "RESPONSE_1",
+                "cardinality": "multiple",
+                "baseType": "identifier"
+            },
+            "debug": {
+                "relatedItem": "item_55b0a66897c0f659514926"
+            }
+        },
+        "responsedeclaration_55b0a668a9d15746198489": {
+            "identifier": "RESPONSE_2",
+            "serial": "responsedeclaration_55b0a668a9d15746198489",
+            "qtiClass": "responseDeclaration",
+            "attributes": {
+                "identifier": "RESPONSE_2",
+                "cardinality": "ordered",
+                "baseType": "identifier"
+            },
+            "debug": {
+                "relatedItem": "item_55b0a66897c0f659514926"
+            }
+        },
+        "responsedeclaration_55b0a668a9dbf648686790": {
+            "identifier": "RESPONSE_3",
+            "serial": "responsedeclaration_55b0a668a9dbf648686790",
+            "qtiClass": "responseDeclaration",
+            "attributes": {
+                "identifier": "RESPONSE_3",
+                "cardinality": "multiple",
+                "baseType": "pair"
+            },
+            "debug": {
+                "relatedItem": "item_55b0a66897c0f659514926"
+            }
+        },
+        "responsedeclaration_55b0a668a9e5c747202811": {
+            "identifier": "RESPONSE_4",
+            "serial": "responsedeclaration_55b0a668a9e5c747202811",
+            "qtiClass": "responseDeclaration",
+            "attributes": {
+                "identifier": "RESPONSE_4",
+                "cardinality": "multiple",
+                "baseType": "directedPair"
+            },
+            "debug": {
+                "relatedItem": "item_55b0a66897c0f659514926"
+            }
+        }
+    },
+    "feedbacks": {}
+}

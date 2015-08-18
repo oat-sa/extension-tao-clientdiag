@@ -37,6 +37,21 @@ class Updater extends \common_ext_ExtensionUpdater
 			$currentVersion = '1.0.1';
 		}
 
+        if ($currentVersion == '1.0.1') {
+
+            $currentVersion = '1.1.0';
+        }
+
+        if ($currentVersion == '1.1.0') {
+            $accessService = \funcAcl_models_classes_AccessService::singleton();
+            $anonymous = new \core_kernel_classes_Resource('http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole');
+            $accessService->grantModuleAccess($anonymous, 'taoClientDiagnostic', 'CompatibilityChecker');
+
+            $currentVersion = '1.1.1';
+        }
+
+
+
 		return $currentVersion;
 	}
 }

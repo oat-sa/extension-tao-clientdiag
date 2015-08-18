@@ -1,0 +1,797 @@
+{
+    "identifier": "planet-moon-grid",
+    "serial": "item_55b73670e73f9658834285",
+    "qtiClass": "assessmentItem",
+    "attributes": {
+        "identifier": "planet-moon-grid",
+        "title": "Planets and moons",
+        "label": "",
+        "xml:lang": "en-US",
+        "adaptive": false,
+        "timeDependent": false,
+        "toolName": "TAO",
+        "toolVersion": "3.1.0-sprint03"
+    },
+    "body": {
+        "serial": "container_containeritembody_55b73670e73dd418255797",
+        "body": "\n        <div class=\"grid-row\">\n            <div class=\"col-12\">\n                <div>this is a sample to test the grid system</div>\n            </div>\n        </div>\n        <div class=\"grid-row\">\n            <div class=\"col-2\">\n                <p>What do you know about planet and moons of solar system?</p>\n            </div>\n            <div class=\"col-10\">\n                {{interaction_associateinteraction_55b73670e8e44194550672}}\n            </div>\n        </div>\n        {{rubricblock_55b73670e7cd5315109176}}\n        {{interaction_choiceinteraction_55b73670ee5bd397262291}}\n        <p>xhtml version</p>\n        <p>Read this postcard from your English pen-friend, Sam.</p>\n        <div>\n            {{object_55b7367101fce927519316}}\n        </div>\n    ",
+        "elements": {
+            "rubricblock_55b73670e7cd5315109176": {
+                "serial": "rubricblock_55b73670e7cd5315109176",
+                "qtiClass": "rubricBlock",
+                "attributes": {
+                    "view": [
+                        "candidate"
+                    ]
+                },
+                "body": {
+                    "serial": "container_containerstatic_55b73670e7d64523211608",
+                    "body": "\n            <h1>Guidelines</h1>\n            <div>\n                <p>\n                    {{img_55b73670e7de6968307908}}    \n                    {{img_55b73670e7f21000879804}}   \n                    <b>How to create a pair:</b>\n                </p>\n                <ul>\n                    <li>Select and element from the top list, it will become highlighted.</li>\n                    <li>Click onto one empty box (the order does not matter).</li>\n                    <li>Repeat the operation for the second one.</li>\n                </ul>\n            </div>\n        ",
+                    "elements": {
+                        "img_55b73670e7de6968307908": {
+                            "serial": "img_55b73670e7de6968307908",
+                            "qtiClass": "img",
+                            "attributes": {
+                                "src": "img/earth.png",
+                                "alt": "Earth"
+                            },
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "img_55b73670e7f21000879804": {
+                            "serial": "img_55b73670e7f21000879804",
+                            "qtiClass": "img",
+                            "attributes": {
+                                "src": "img/moon.png",
+                                "alt": "Moon"
+                            },
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        }
+                    },
+                    "debug": {
+                        "relatedItem": "item_55b73670e73f9658834285"
+                    }
+                },
+                "debug": {
+                    "relatedItem": "item_55b73670e73f9658834285"
+                }
+            },
+            "interaction_associateinteraction_55b73670e8e44194550672": {
+                "serial": "interaction_associateinteraction_55b73670e8e44194550672",
+                "qtiClass": "associateInteraction",
+                "attributes": {
+                    "responseIdentifier": "RESPONSE",
+                    "shuffle": true,
+                    "maxAssociations": 3,
+                    "minAssociations": 0
+                },
+                "debug": {
+                    "relatedItem": "item_55b73670e73f9658834285"
+                },
+                "choices": {
+                    "choice_simpleassociablechoice_55b73670e9d16582830153": {
+                        "identifier": "Ea",
+                        "serial": "choice_simpleassociablechoice_55b73670e9d16582830153",
+                        "qtiClass": "simpleAssociableChoice",
+                        "attributes": {
+                            "identifier": "Ea",
+                            "fixed": false,
+                            "matchMax": 1,
+                            "matchMin": 0
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670e9e54532174951",
+                            "body": "\n                        {{img_55b73670e9e91601600555}}\n                        <br/>\t\t\n                        Earth\n                    ",
+                            "elements": {
+                                "img_55b73670e9e91601600555": {
+                                    "serial": "img_55b73670e9e91601600555",
+                                    "qtiClass": "img",
+                                    "attributes": {
+                                        "src": "img/earth.png",
+                                        "alt": "Earth"
+                                    },
+                                    "debug": {
+                                        "relatedItem": "item_55b73670e73f9658834285"
+                                    }
+                                }
+                            },
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simpleassociablechoice_55b73670ea9eb350807638": {
+                        "identifier": "Mo",
+                        "serial": "choice_simpleassociablechoice_55b73670ea9eb350807638",
+                        "qtiClass": "simpleAssociableChoice",
+                        "attributes": {
+                            "identifier": "Mo",
+                            "fixed": false,
+                            "matchMax": 1,
+                            "matchMin": 0
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670eaa49152199622",
+                            "body": "\n                        {{img_55b73670eaa82726016561}}\n                        <br/>\n                        Moon\n                    ",
+                            "elements": {
+                                "img_55b73670eaa82726016561": {
+                                    "serial": "img_55b73670eaa82726016561",
+                                    "qtiClass": "img",
+                                    "attributes": {
+                                        "src": "img/moon.png",
+                                        "alt": "Moon"
+                                    },
+                                    "debug": {
+                                        "relatedItem": "item_55b73670e73f9658834285"
+                                    }
+                                }
+                            },
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simpleassociablechoice_55b73670eb570011748584": {
+                        "identifier": "Ju",
+                        "serial": "choice_simpleassociablechoice_55b73670eb570011748584",
+                        "qtiClass": "simpleAssociableChoice",
+                        "attributes": {
+                            "identifier": "Ju",
+                            "fixed": false,
+                            "matchMax": 1,
+                            "matchMin": 0
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670eb5d1237168686",
+                            "body": "\n                        {{img_55b73670eb609174235717}}\n                        <br/>\n                        Jupiter\n                    ",
+                            "elements": {
+                                "img_55b73670eb609174235717": {
+                                    "serial": "img_55b73670eb609174235717",
+                                    "qtiClass": "img",
+                                    "attributes": {
+                                        "src": "img/jupiter.png",
+                                        "alt": "Jupiter"
+                                    },
+                                    "debug": {
+                                        "relatedItem": "item_55b73670e73f9658834285"
+                                    }
+                                }
+                            },
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simpleassociablechoice_55b73670ec484760066183": {
+                        "identifier": "Ga",
+                        "serial": "choice_simpleassociablechoice_55b73670ec484760066183",
+                        "qtiClass": "simpleAssociableChoice",
+                        "attributes": {
+                            "identifier": "Ga",
+                            "fixed": false,
+                            "matchMax": 1,
+                            "matchMin": 0
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670ec4db962270931",
+                            "body": "\n                        {{img_55b73670ec513141955400}}\n                        <br/>\t\t\n                        Ganymede\n                    ",
+                            "elements": {
+                                "img_55b73670ec513141955400": {
+                                    "serial": "img_55b73670ec513141955400",
+                                    "qtiClass": "img",
+                                    "attributes": {
+                                        "src": "img/ganymede.png",
+                                        "alt": "Ganymede"
+                                    },
+                                    "debug": {
+                                        "relatedItem": "item_55b73670e73f9658834285"
+                                    }
+                                }
+                            },
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simpleassociablechoice_55b73670ecfa1151449578": {
+                        "identifier": "Ne",
+                        "serial": "choice_simpleassociablechoice_55b73670ecfa1151449578",
+                        "qtiClass": "simpleAssociableChoice",
+                        "attributes": {
+                            "identifier": "Ne",
+                            "fixed": false,
+                            "matchMax": 1,
+                            "matchMin": 0
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670ecff8555212969",
+                            "body": "\n                        {{img_55b73670ed02f807666061}}\n                        <br/>\t\t\n                        Neptune\n                    ",
+                            "elements": {
+                                "img_55b73670ed02f807666061": {
+                                    "serial": "img_55b73670ed02f807666061",
+                                    "qtiClass": "img",
+                                    "attributes": {
+                                        "src": "img/neptune.png",
+                                        "alt": "Neptune"
+                                    },
+                                    "debug": {
+                                        "relatedItem": "item_55b73670e73f9658834285"
+                                    }
+                                }
+                            },
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simpleassociablechoice_55b73670edaa2978804844": {
+                        "identifier": "Tr",
+                        "serial": "choice_simpleassociablechoice_55b73670edaa2978804844",
+                        "qtiClass": "simpleAssociableChoice",
+                        "attributes": {
+                            "identifier": "Tr",
+                            "fixed": false,
+                            "matchMax": 1,
+                            "matchMin": 0
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670edaf7863970474",
+                            "body": "\n                        {{img_55b73670edb2d691900593}}\n                        <br/>\n                        Triton\n                    ",
+                            "elements": {
+                                "img_55b73670edb2d691900593": {
+                                    "serial": "img_55b73670edb2d691900593",
+                                    "qtiClass": "img",
+                                    "attributes": {
+                                        "src": "img/triton.png",
+                                        "alt": "triton"
+                                    },
+                                    "debug": {
+                                        "relatedItem": "item_55b73670e73f9658834285"
+                                    }
+                                }
+                            },
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    }
+                },
+                "prompt": {
+                    "serial": "container_containerstatic_55b73670e9028913375980",
+                    "body": "\n                        <b>Make pairs.</b>\n                        <br/>Each pair is composed of a planet of the Solar System and one of it's moon.<br/>\n                        <br/>\n                    ",
+                    "elements": {},
+                    "debug": {
+                        "relatedItem": "item_55b73670e73f9658834285"
+                    }
+                }
+            },
+            "interaction_choiceinteraction_55b73670ee5bd397262291": {
+                "serial": "interaction_choiceinteraction_55b73670ee5bd397262291",
+                "qtiClass": "choiceInteraction",
+                "attributes": {
+                    "responseIdentifier": "MR01",
+                    "shuffle": true,
+                    "maxChoices": 10,
+                    "minChoices": 0
+                },
+                "debug": {
+                    "relatedItem": "item_55b73670e73f9658834285"
+                },
+                "choices": {
+                    "choice_simplechoice_55b73670eef5a626185138": {
+                        "identifier": "C01",
+                        "serial": "choice_simplechoice_55b73670eef5a626185138",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C01",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670eefa2069420835",
+                            "body": "Take a lighter",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b73670ef825382269253": {
+                        "identifier": "C02",
+                        "serial": "choice_simplechoice_55b73670ef825382269253",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C02",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670ef868913839828",
+                            "body": "Open the gas on the stove",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b73670f004b558052340": {
+                        "identifier": "C03",
+                        "serial": "choice_simplechoice_55b73670f004b558052340",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C03",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670f008d857152878",
+                            "body": "Light the gas",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b73670f085c296263763": {
+                        "identifier": "C04",
+                        "serial": "choice_simplechoice_55b73670f085c296263763",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C04",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670f089e885904304",
+                            "body": "Poor the milk in the pan",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b73670f10be545024742": {
+                        "identifier": "C05",
+                        "serial": "choice_simplechoice_55b73670f10be545024742",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C05",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670f10fe647659717",
+                            "body": "Add 2 tea spoons of cocoa into the mug",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b73670f18c4609221832": {
+                        "identifier": "C06",
+                        "serial": "choice_simplechoice_55b73670f18c4609221832",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C06",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670f1903506043245",
+                            "body": "Add 2 tea spoons of sugar into the mug",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b73670f20f6377205702": {
+                        "identifier": "C07",
+                        "serial": "choice_simplechoice_55b73670f20f6377205702",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C07",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670f2138262761689",
+                            "body": "Add 2 spoons of water into the mug",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b73670f2950647642825": {
+                        "identifier": "C08",
+                        "serial": "choice_simplechoice_55b73670f2950647642825",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C08",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670f2992947245476",
+                            "body": "Stir the water, cocoa and sugar until the\n\t\t\t\tmixture is smooth",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b73670f3155057587395": {
+                        "identifier": "C09",
+                        "serial": "choice_simplechoice_55b73670f3155057587395",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C09",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670f3194816048554",
+                            "body": "Put the pan with milk on the stove",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b73670f3935923763321": {
+                        "identifier": "C10",
+                        "serial": "choice_simplechoice_55b73670f3935923763321",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C10",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670f3975155584529",
+                            "body": "Poor the boiling milk into the mug",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b73670f411b355018671": {
+                        "identifier": "C11",
+                        "serial": "choice_simplechoice_55b73670f411b355018671",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C11",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b73670f415b622319343",
+                            "body": "Put the mug with the mixture and milk into\n\t\t\t\tthe microwave",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b73671006d3731995813": {
+                        "identifier": "C12",
+                        "serial": "choice_simplechoice_55b73671006d3731995813",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C12",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b7367100712856992974",
+                            "body": "Add milk to the mug with the smooth mixture",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b7367100edb380948559": {
+                        "identifier": "C13",
+                        "serial": "choice_simplechoice_55b7367100edb380948559",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C13",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b7367100f1b971069979",
+                            "body": "Add cold milk from the fridge into the mug\n\t\t\t\twith smooth mixture",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    },
+                    "choice_simplechoice_55b73671016c0761496277": {
+                        "identifier": "C14",
+                        "serial": "choice_simplechoice_55b73671016c0761496277",
+                        "qtiClass": "simpleChoice",
+                        "attributes": {
+                            "identifier": "C14",
+                            "fixed": false
+                        },
+                        "body": {
+                            "serial": "container_containerstatic_55b7367101700612440974",
+                            "body": "Set the microwave on 700 Watt and set the\n\t\t\t\ttimer to 2 minutes",
+                            "elements": {},
+                            "debug": {
+                                "relatedItem": "item_55b73670e73f9658834285"
+                            }
+                        },
+                        "debug": {
+                            "relatedItem": "item_55b73670e73f9658834285"
+                        }
+                    }
+                },
+                "prompt": {
+                    "serial": "container_containerstatic_55b73670ee733047566818",
+                    "body": "How to make chocolate milk. Select the combination of steps that lead to a nice\n\t\t\t\tglass of hot and steamy chocolate milk.",
+                    "elements": {},
+                    "debug": {
+                        "relatedItem": "item_55b73670e73f9658834285"
+                    }
+                }
+            },
+            "object_55b7367101fce927519316": {
+                "serial": "object_55b7367101fce927519316",
+                "qtiClass": "object",
+                "attributes": {
+                    "data": "img/earth.png",
+                    "type": "image/png"
+                },
+                "debug": {
+                    "relatedItem": "item_55b73670e73f9658834285"
+                },
+                "_alt": "\n                <blockquote class=\"postcard\">\n                    <p>Here is a postcard of my town. Please send me<br/> a postcard from your town.\n                        What size is your<br/> town? What is the nicest part of your town?<br/>\n                        Where do you go in the evenings?<br/> Sam.</p>\n                </blockquote>\n            "
+            }
+        },
+        "debug": {
+            "relatedItem": "item_55b73670e73f9658834285"
+        }
+    },
+    "debug": {
+        "relatedItem": "item_55b73670e73f9658834285"
+    },
+    "namespaces": {
+        "xml": "http://www.w3.org/XML/1998/namespace",
+        "xsi": "http://www.w3.org/2001/XMLSchema-instance",
+        "": "http://www.imsglobal.org/xsd/imsqti_v2p1"
+    },
+    "stylesheets": {},
+    "outcomes": {
+        "outcomedeclaration_55b73670e7a72891919360": {
+            "identifier": "SCORE",
+            "serial": "outcomedeclaration_55b73670e7a72891919360",
+            "qtiClass": "outcomeDeclaration",
+            "attributes": {
+                "identifier": "SCORE",
+                "cardinality": "single",
+                "baseType": "float"
+            },
+            "debug": {
+                "relatedItem": "item_55b73670e73f9658834285"
+            },
+            "defaultValue": null
+        }
+    },
+    "responses": {
+        "responsedeclaration_55b73670e77d8380612397": {
+            "identifier": "RESPONSE",
+            "serial": "responsedeclaration_55b73670e77d8380612397",
+            "qtiClass": "responseDeclaration",
+            "attributes": {
+                "identifier": "RESPONSE",
+                "cardinality": "multiple",
+                "baseType": "pair"
+            },
+            "debug": {
+                "relatedItem": "item_55b73670e73f9658834285"
+            },
+            "correctResponses": [
+                "Ea Mo",
+                "Ju Ga",
+                "Ne Tr"
+            ],
+            "mapping": {
+                "Ea Mo": "2",
+                "Ju Ga": "1",
+                "Ne Tr": "1"
+            },
+            "areaMapping": [
+            ],
+            "howMatch": "http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response",
+            "mappingAttributes": {
+                "defaultValue": 0
+            },
+            "feedbackRules": {}
+        },
+        "responsedeclaration_55b73670e79bb677413818": {
+            "identifier": "MR01",
+            "serial": "responsedeclaration_55b73670e79bb677413818",
+            "qtiClass": "responseDeclaration",
+            "attributes": {
+                "identifier": "MR01",
+                "cardinality": "multiple",
+                "baseType": "identifier"
+            },
+            "debug": {
+                "relatedItem": "item_55b73670e73f9658834285"
+            },
+            "correctResponses": [
+            ],
+            "mapping": [
+            ],
+            "areaMapping": [
+            ],
+            "howMatch": "http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response",
+            "mappingAttributes": {
+                "defaultValue": 0
+            },
+            "feedbackRules": {}
+        }
+    },
+    "feedbacks": {},
+    "responseProcessing": {
+        "serial": "response_templatesdriven_55b7367102650974337799",
+        "qtiClass": "responseProcessing",
+        "attributes": [
+        ],
+        "debug": {
+            "relatedItem": "item_55b73670e73f9658834285"
+        },
+        "processingType": "templateDriven",
+        "responseRules": [
+            {
+                "qtiClass": "responseCondition",
+                "responseIf": {
+                    "qtiClass": "responseIf",
+                    "expression": {
+                        "qtiClass": "not",
+                        "expressions": [
+                            {
+                                "qtiClass": "isNull",
+                                "expressions": [
+                                    {
+                                        "qtiClass": "variable",
+                                        "attributes": {
+                                            "identifier": "RESPONSE"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "responseRules": [
+                        {
+                            "qtiClass": "setOutcomeValue",
+                            "attributes": {
+                                "identifier": "SCORE"
+                            },
+                            "expression": {
+                                "qtiClass": "sum",
+                                "expressions": [
+                                    {
+                                        "qtiClass": "variable",
+                                        "attributes": {
+                                            "identifier": "SCORE"
+                                        }
+                                    },
+                                    {
+                                        "qtiClass": "mapResponse",
+                                        "attributes": {
+                                            "identifier": "RESPONSE"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "qtiClass": "responseCondition",
+                "responseIf": {
+                    "qtiClass": "responseIf",
+                    "expression": {
+                        "qtiClass": "not",
+                        "expressions": [
+                            {
+                                "qtiClass": "isNull",
+                                "expressions": [
+                                    {
+                                        "qtiClass": "variable",
+                                        "attributes": {
+                                            "identifier": "MR01"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "responseRules": [
+                        {
+                            "qtiClass": "setOutcomeValue",
+                            "attributes": {
+                                "identifier": "SCORE"
+                            },
+                            "expression": {
+                                "qtiClass": "sum",
+                                "expressions": [
+                                    {
+                                        "qtiClass": "variable",
+                                        "attributes": {
+                                            "identifier": "SCORE"
+                                        }
+                                    },
+                                    {
+                                        "qtiClass": "mapResponse",
+                                        "attributes": {
+                                            "identifier": "MR01"
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
