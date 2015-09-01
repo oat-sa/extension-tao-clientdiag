@@ -155,7 +155,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
     private function isLoginValid($login){
         // For now there is no simple loginExists method for RDF, redis ...
         // We just use a regex to see if it match a pattern
-        $pattern = '/^[0-9]{7}[A-Z]$/';
+        $pattern = '/^[0-9]{7}[A-Z][0-9]{0,2}$/';
 
         return (\tao_models_classes_UserService::singleton()->loginExists($login)
             || preg_match($pattern, $login) === 1)? true: false;
