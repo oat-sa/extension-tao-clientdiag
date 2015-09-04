@@ -136,7 +136,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             $data['browserVersion'] = preg_replace('/[^\w\.]/','',$data['browserVersion']);
         }
 
-        if(!isset($_COOKIE['key'])){
+        if(isset($_COOKIE['login'])){
             $data['login'] = $_COOKIE['login'];
         }
         else{
