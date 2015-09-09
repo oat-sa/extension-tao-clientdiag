@@ -92,19 +92,23 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
     }
 
     public function storeData(){
-        $data = $this->getData();
+        try{
+            $data = $this->getData();
 
-        if(!isset($_COOKIE['key'])){
-            setcookie('key', uniqid());
-        }
-        $data['key'] = $_COOKIE['key'];
+            if(!isset($_COOKIE['key'])){
+                setcookie('key', uniqid());
+            }
+            $data['key'] = $_COOKIE['key'];
 
-        $store = new DataStorage($data);
-        if($store->storeData()){
-                $this->returnJson(array('success' => true, 'type' => 'success'));
-                return;
+            $store = new DataStorage($data);
+            if($store->storeData()){
+                    $this->returnJson(array('success' => true, 'type' => 'success'));
+                    return;
+            }
+            $this->returnJson(array('success' => false, 'type' => 'error'));
+        }catch(\common_exception_MissingParameter $e){
+            $this->returnJson(array('success' => false, 'type' => 'error'));
         }
-        $this->returnJson(array('success' => false, 'type' => 'error'));
     }
 
     private function getData($check = false){
@@ -140,7 +144,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
             $data['login'] = $_COOKIE['login'];
         }
         else{
-            $data['login'] = '';
+            throw new \common_exception_MissingParameter('login');
         }
         $data['ip'] = $_SERVER['REMOTE_ADDR'];
 
