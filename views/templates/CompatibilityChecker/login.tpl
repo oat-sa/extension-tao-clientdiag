@@ -14,7 +14,7 @@ use oat\tao\helpers\Layout;
 
     <link rel='stylesheet' type='text/css' href="<?= Template::css('diagnostics.css') ?>"/>
     <?= tao_helpers_Scriptloader::render() ?>
-    <?php if (($themeUrl = Layout::getThemeUrl()) !== null): ?>
+    <?php if (($themeUrl = Layout::getThemeStylesheet('frontOffice')) !== null): ?>
     <link rel="stylesheet" href="<?= $themeUrl ?>"/>
     <?php endif; ?>
     <script
