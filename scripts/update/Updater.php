@@ -50,7 +50,14 @@ class Updater extends \common_ext_ExtensionUpdater
             $currentVersion = '1.1.1';
         }
 
+        if ($currentVersion == '1.1.1') {
+            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $extension->setConfig('clientDiag', array(
+                'footer' => '',
+            ));
 
+            $currentVersion = '1.2.0';
+        }
 
 		return $currentVersion;
 	}
