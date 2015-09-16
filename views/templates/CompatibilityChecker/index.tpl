@@ -146,22 +146,7 @@ use oat\tao\helpers\Layout;
 
 </div>
 
-<footer class="dark-bar">
-    © (Contenu de l'évaluation - SOCLE) Direction de l’évaluation, de la prospective et de la performance · <?= __('All rights reserved.') ?>
-    ·
-    © (TAO plateforme) · <a href="http://taotesting.com" target="_blank">Open Assessment Technologies S.A.</a> · <?= __('All rights reserved.') ?>
-    <?php $releaseMsgData = Layout::getReleaseMsgData();
-    if ($releaseMsgData['is-unstable'] || $releaseMsgData['is-sandbox']): ?>
-        <span class="rgt">
-            <?php if ($releaseMsgData['is-unstable']): ?>
-                <span class="icon-warning"></span>
-
-            <?php endif; ?>
-            <?= $releaseMsgData['version-type'] ?> ·
-        <a href="<?= $releaseMsgData['link'] ?>" target="_blank"><?= $releaseMsgData['msg'] ?></a></span>
-
-    <?php endif; ?>
-</footer>
+<?= Template::inc('blocks/footer.tpl'); ?>
 <div class="loading-bar"></div>
 </body>
 </html>
