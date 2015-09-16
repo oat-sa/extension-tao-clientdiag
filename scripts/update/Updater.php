@@ -59,6 +59,31 @@ class Updater extends \common_ext_ExtensionUpdater
             $currentVersion = '1.2.0';
         }
 
+        if ($currentVersion == '1.2.0') {
+            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+            $extension->setConfig('clientDiag', array_merge($config, array(
+                'performances' => array(
+                    'samples' => array(
+                        'taoClientDiagnostic/tools/performances/data/sample1/',
+                        'taoClientDiagnostic/tools/performances/data/sample2/',
+                        'taoClientDiagnostic/tools/performances/data/sample3/'
+                    ),
+                    'occurrences' => 10,
+                    'timeout' => 30,
+                    'optimal' => 0.025,
+                    'threshold' => 0.25,
+                ),
+                'bandwidth' => array(
+                    'unit' => 0.16,
+                    'ideal' => 45,
+                    'max' => 100,
+                ),
+            )));
+
+            $currentVersion = '1.3.0';
+        }
+
 		return $currentVersion;
 	}
 }
