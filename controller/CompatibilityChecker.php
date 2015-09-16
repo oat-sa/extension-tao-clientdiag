@@ -27,7 +27,14 @@ use oat\tao\helpers\Template;
 
 class CompatibilityChecker extends \tao_actions_CommonModule{
 
+    private function loadConfig() {
+        $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+        $config = $extension->getConfig('clientDiag');
+        $this->setData('clientDiagConfig', $config);
+    }
+
     public function index(){
+        $this->loadConfig();
 
         $login = '';
         if($this->hasRequestParameter('login')){
@@ -51,6 +58,8 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
     }
 
     public function login(){
+        $this->loadConfig();
+
         if($this->hasRequestParameter('errorMessage')){
             $this->setData('errorMessage', $this->getRequestParameter('errorMessage'));
         }
