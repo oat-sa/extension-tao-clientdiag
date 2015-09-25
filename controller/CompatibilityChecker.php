@@ -151,7 +151,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule{
         else{
             $data['login'] = '';
         }
-        $data['ip'] = (!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
+        $data['ip'] = (!empty($_SERVER['HTTP_X_REAL_IP'])) ? $_SERVER['HTTP_X_REAL_IP'] : ((!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : 'unknown');
 
         return $data;
     }
