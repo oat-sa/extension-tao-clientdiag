@@ -1,6 +1,7 @@
 <?php
 use oat\tao\helpers\Template;
 use oat\tao\helpers\Layout;
+use oat\tao\model\theme\Theme;
 ?>
 <!doctype html>
 <html class="no-js no-version-warning">
@@ -14,9 +15,7 @@ use oat\tao\helpers\Layout;
 
     <link rel='stylesheet' type='text/css' href="<?= Template::css('diagnostics.css') ?>"/>
     <?= tao_helpers_Scriptloader::render() ?>
-    <?php if (($themeUrl = Layout::getThemeUrl()) !== null): ?>
-    <link rel="stylesheet" href="<?= $themeUrl ?>"/>
-    <?php endif; ?>
+    <link rel="stylesheet" href="<?= Layout::getThemeStylesheet(Theme::CONTEXT_FRONTOFFICE) ?>"/>
     <script
             id="amd-loader"
             src="<?= Template::js('lib/require.js', 'tao') ?>"
@@ -49,7 +48,8 @@ use oat\tao\helpers\Layout;
     </div>
 </div>
 
-<?= Template::inc('blocks/footer.tpl'); ?>
+<?= Layout::renderThemeTemplate(Theme::CONTEXT_FRONTOFFICE, 'footer') ?>
+
 <div class="loading-bar"></div>
 </body>
 </html>

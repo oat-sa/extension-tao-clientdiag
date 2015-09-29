@@ -1,6 +1,7 @@
 <?php
 use oat\tao\helpers\Template;
 use oat\tao\helpers\Layout;
+use oat\tao\model\theme\Theme;
 $config = get_data('clientDiagConfig');
 ?>
 
@@ -51,9 +52,7 @@ $config = get_data('clientDiagConfig');
     </script>
     <link rel='stylesheet' type='text/css' href="<?= Template::css('diagnostics.css') ?>"/>
     <?= tao_helpers_Scriptloader::render() ?>
-    <?php if (($themeUrl = Layout::getThemeUrl()) !== null): ?>
-        <link rel="stylesheet" href="<?= $themeUrl ?>"/>
-    <?php endif; ?>
+    <link rel="stylesheet" href="<?= Layout::getThemeStylesheet(Theme::CONTEXT_FRONTOFFICE) ?>"/>
 
 </head>
 
@@ -146,7 +145,8 @@ $config = get_data('clientDiagConfig');
 
 </div>
 
-<?= Template::inc('blocks/footer.tpl'); ?>
+<?= Layout::renderThemeTemplate(Theme::CONTEXT_FRONTOFFICE, 'footer') ?>
+
 <div class="loading-bar"></div>
 </body>
 </html>
