@@ -20,8 +20,8 @@ use oat\tao\helpers\Layout;
     <script
             id="amd-loader"
             src="<?= Template::js('lib/require.js', 'tao') ?>"
-            data-controller="<?= \tao_helpers_Uri::getBaseUrl() ?>views/js/controller/CompatibilityChecker/"
-            data-main="<?= \tao_helpers_Uri::getBaseUrl() ?>views/js/index"
+            data-controller="<?= Template::js('controller/CompatibilityChecker/') ?>"
+            data-main="<?= Template::js('index.js') ?>"
             data-config="<?= get_data('clientConfigUrl') ?>">
     </script>
 </head>
