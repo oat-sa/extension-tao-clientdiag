@@ -2,7 +2,7 @@
 use oat\tao\helpers\Template;
 use oat\tao\helpers\Layout;
 use oat\tao\model\theme\Theme;
-
+$config = get_data('clientDiagConfig');
 ?>
 
 <!doctype html>
@@ -18,8 +18,8 @@ use oat\tao\model\theme\Theme;
     <script
         id="amd-loader"
         src="<?= Template::js('lib/require.js', 'tao') ?>"
-        data-controller="<?= \tao_helpers_Uri::getBaseUrl() ?>views/js/controller/CompatibilityChecker/"
-        data-main="<?= \tao_helpers_Uri::getBaseUrl() ?>views/js/index"
+        data-controller="<?= Template::js('controller/CompatibilityChecker/') ?>"
+        data-main="<?= Template::js('index.js') ?>"
         data-config="<?= get_data('clientConfigUrl') ?>">
     </script>
     <script>
@@ -88,7 +88,7 @@ use oat\tao\model\theme\Theme;
                     <span class="msg"></span>
                 </div>
             </li>
-            <li data-result="performance">
+            <li data-result="performance" data-config="<?= isset($config['performances']) ? _dh(json_encode($config['performances'])) : ''; ?>">
                 <h2><?= __('Workstation performance') ?></h2>
                 <div>
                     <div class="small feedback">
@@ -100,7 +100,7 @@ use oat\tao\model\theme\Theme;
                     </div>
                 </div>
             </li>
-            <li data-result="bandwidth-0">
+            <li data-result="bandwidth-0" data-config="<?= isset($config['bandwidth']) ? _dh(json_encode($config['bandwidth'])) : ''; ?>">
                 <h2><?= __('Bandwidth'); ?></h2>
                 <div>
                     <div class="legend"><?= __('Number of simultaneous test takers the connection can handle'); ?></div>
