@@ -64,7 +64,10 @@ class DataStorage {
     }
 
     public function storeData(){
+        
         if(!file_exists($this->filePath)){
+            \common_Logger::i("Store file is missing and will be created.");
+            
             $handle = fopen($this->filePath, 'w');
             fputcsv($handle, array_keys($this->dataList),';');
             fclose($handle);
@@ -75,6 +78,8 @@ class DataStorage {
         }
 
         if(!is_null($this->key)){
+            \common_Logger::i("Store file will be OPENED for data merge, key: '" . $this->key . "'.");
+            
             $data = $this->getStoredData();
             if(is_array($data)){
                 $this->data = array_merge($data, $this->data);
@@ -86,11 +91,34 @@ class DataStorage {
         }
         $handle = fopen($this->filePath, 'a');
         fputcsv($handle, $this->data ,';');
+        
+        \common_Logger::i("Store file will be OPENED for data merge, key: '" . $this->key . "'.");
+        
         return fclose($handle);
     }
 
     public function getStoredData(){
+        
+        \common_Logger::i("Store file will be OPENED for getting data, key: '" . $this->key . "'.");
+        
+        $startTime = microtime();
+        
         if (($handle = fopen($this->filePath, "r")) !== FALSE) {
+            
+            $startTime = microtime();
+            do {
+              \common_Logger::i("Store file lock REQUESTED for key: '" . $this->key . "'.");
+              
+              $canWrite = flock($handle, LOCK_EX);
+              // If lock not obtained sleep for 0 - 100 milliseconds, to avoid collision and CPU load
+              if(!$canWrite) usleep(round(rand(0, 100)*1000));
+            } while ((!$canWrite)and((microtime()-$startTime) < 1000));
+            
+            //file was locked so now we can store information
+            if (!$canWrite) {
+                \common_Logger::e("Store file lock could not be obtained.");
+            }
+            
             $line = 1;
             $index = 0;
             $keys = array();
@@ -107,16 +135,25 @@ class DataStorage {
                         $returnValue[$keys[$index]] = $value;
                     }
                     fclose($handle);
+                    
+                    \common_Logger::i("Store file will be >>closed<< after getting data, key: '" . $this->key . "'.");
+                    
                     return $returnValue;
                 }
                 $line++;
             }
+            flock($handle, LOCK_UN);    // release the lock
+            \common_Logger::i("Store file lock released for key: '" . $this->key . "'.");
             fclose($handle);
         }
+        
         return false;
     }
 
     public function deleteData(){
+        
+        \common_Logger::i("Store file will be OPENED for data deletion, key: '" . $this->key . "'.");
+        
         if (($handle = fopen($this->filePath, "r")) !== FALSE) {
             $tmpFile = \tao_helpers_File::createTempDir().'store.csv';
             $tmpHandle = fopen($tmpFile,'w');
@@ -136,8 +173,12 @@ class DataStorage {
             }
             fclose($tmpHandle);
             fclose($handle);
+            
+            \common_Logger::i("Store file will be >>closed<< after data deletion, key: '" . $this->key . "'.");
+            
             return \tao_helpers_File::copy($tmpFile, $this->filePath);
         }
+        
         return false;
     }
 
