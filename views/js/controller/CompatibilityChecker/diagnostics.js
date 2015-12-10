@@ -67,12 +67,6 @@ define([
     var performanceThreshold = 0.25;
 
     /**
-     * The range of performance displayed on a bar
-     * @type {Number}
-     */
-    var performanceRange = Math.abs(performanceOptimal - performanceThreshold);
-
-    /**
      * A list of thresholds
      * @type {Array}
      */
@@ -151,6 +145,17 @@ define([
         status.percentage = percentage;
 
         return status;
+    };
+
+    /**
+     * Gets the config related to a particular checker
+     * @param {String} name
+     * @returns {Object}
+     */
+    var getResultConfig = function(name) {
+        var $result = $('[data-result="' + name + '"]');
+        var config = $result.data('config');
+        return config || {};
     };
 
     /**
@@ -259,20 +264,32 @@ define([
 
     /**
      * Performs a browser bandwidth check
+     * @param {Object} config
+     * @param {Number} [config.unit] - The typical bandwidth needed for a test taker (Mbps)
+     * @param {Number} [config.ideal] - The ideal number of simultaneous test takers
+     * @param {Number} [config.max] - Maximum number of test takers to display on a bar
      * @param {Function} done
      */
-    function checkBandwidth(done) {
+    function checkBandwidth(config, done) {
+        var unit = config.unit || bandwidthUnit;
+        var tt = config.ideal || testTakers;
+        var maxTT = config.max || maxTestTakers;
+
+        if (!_.isArray(tt)) {
+            tt = [tt];
+        }
+
         bandwidthTester().start(function(average, details) {
             storeData('bandwidth', details, function(){
                 var status = [];
 
-                _.forEach(testTakers, function(threshold) {
-                    var max = threshold * bandwidthUnit;
+                _.forEach(tt, function(threshold) {
+                    var max = threshold * unit;
                     var st = getStatus(bandwidthThresholds, details.max / max * 100);
-                    var nb = Math.floor(details.max / bandwidthUnit);
+                    var nb = Math.floor(details.max / unit);
 
-                    if (nb > maxTestTakers) {
-                        nb = '>' + maxTestTakers;
+                    if (nb > maxTT) {
+                        nb = '>' + maxTT;
                     }
 
                     st.label = nb;
@@ -286,12 +303,21 @@ define([
 
     /**
      * Performs a browser performances check
+     * @param {Object} config
+     * @param {Array} [config.samples] - A list of samples to render in order to compute the rendering performances
+     * @param {Number} [config.occurrences] - The number of renderings by samples
+     * @param {Number} [config.timeout] - Max allowed duration for a sample rendering
+     * @param {Number} [config.optimal] - The threshold for optimal performances
+     * @param {Number} [config.threshold] - The threshold for minimal performances
      * @param {Function} done
      */
-    function checkPerformance(done) {
-        performancesTester().start(function(average, details) {
-            var cursor = performanceRange - average + performanceOptimal;
-            var status = getStatus(thresholds, cursor / performanceRange * 100);
+    function checkPerformance(config, done) {
+        var optimal = config.optimal || performanceOptimal;
+        var range = Math.abs(optimal - (config.threshold || performanceThreshold));
+
+        performancesTester(config.samples, config.occurrences, config.timeout * 1000).start(function(average, details) {
+            var cursor = range - average + optimal;
+            var status = getStatus(thresholds, cursor / range * 100);
 
             storeData('performance', details, function(){
                 done(status, details);
@@ -337,7 +363,7 @@ define([
                     cb();
                 });
             }, function(cb) {
-                checkPerformance(function(status, details) {
+                checkPerformance(getResultConfig('performance'), function(status, details) {
                     _.assign(information, {
                         performancesMin : {message : __('Minimum rendering time'), value:details.min + ' s'},
                         performancesMax : {message : __('Maximum rendering time'), value:details.max + ' s'},
@@ -348,7 +374,7 @@ define([
                     cb();
                 });
             }, function(cb) {
-                checkBandwidth(function(status, details) {
+                checkBandwidth(getResultConfig('bandwidth-0'), function(status, details) {
                     _.assign(information, {
                         bandwidthMin : {message : __('Minimum bandwidth'), value:details.min + ' Mbps'},
                         bandwidthMax : {message : __('Maximum bandwidth'), value:details.max + ' Mbps'},

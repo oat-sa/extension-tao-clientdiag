@@ -136,7 +136,7 @@ class DataStorage {
             }
             fclose($tmpHandle);
             fclose($handle);
-            return \tao_helpers_File::copy($tmpFile, $this->filePath);
+            return \tao_helpers_File::copy($tmpFile, $this->filePath) && unlink($tmpFile);
         }
         return false;
     }

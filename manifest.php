@@ -24,7 +24,7 @@ return array(
 	'label' => 'Browser and OS diagnostic tool',
 	'description' => 'Check compatibility of the os and browser of a client',
     'license' => 'GPL-2.0',
-    'version' => '1.1.1',
+    'version' => '1.3.0',
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array('tao' => '>=2.7.8', 'taoQtiItem' => '>=2.9'),
 	// for compatibility

@@ -39,33 +39,35 @@ define([
     var _second = 1000;
 
     /**
-     * List of descriptors defining the pages to load.
-     * - url : location of the folder of the sample
-     * - timeout : the timeout for the run
-     * - nb : number of tests iterations
-     * @type {Object}
+     * Default timeout duration
+     * @type {Number}
      * @private
      */
-    var _samples = {
-        'sample1' : {
-            id : 'sample1',
-            url : 'taoClientDiagnostic/tools/performances/data/sample1/',
-            timeout : 30 * _second,
-            nb : 11
-        },
-        'sample2' : {
-            id : 'sample2',
-            url : 'taoClientDiagnostic/tools/performances/data/sample2/',
-            timeout : 30 * _second,
-            nb : 10
-        },
-        'sample3' : {
-            id : 'sample3',
-            url : 'taoClientDiagnostic/tools/performances/data/sample3/',
-            timeout : 30 * _second,
-            nb : 10
-        }
-    };
+    var _defaultTimeout = 30 * _second;
+
+    /**
+     * Default number of renderings by samples
+     * @type {Number}
+     * @private
+     */
+    var _defaultOccurrencesCount = 10;
+
+    /**
+     * List of default samples
+     * @type {Array}
+     */
+    var _defaultSamples = [
+        'taoClientDiagnostic/tools/performances/data/sample1/',
+        'taoClientDiagnostic/tools/performances/data/sample2/',
+        'taoClientDiagnostic/tools/performances/data/sample3/'
+    ];
+
+    /**
+     * Base text used to build sample identifiers
+     * @type {String}
+     * @private
+     */
+    var _sampleBaseId = 'sample';
 
     /**
      * Loads a page inside a div and compute the time to load
@@ -97,7 +99,6 @@ define([
 
                     var $container,
                         duration,
-                        displayDuration,
                         start,
                         end,
                         result;
@@ -141,9 +142,26 @@ define([
     /**
      * Performs a browser performances test by running a heavy page
      *
-     * @returns {{start: Function}}
+     * @param {Array} [samples]
+     * @param {Number} [occurrences]
+     * @param {Number} [timeout]
+     * @returns {Object}
      */
-    var performancesTester = function performancesTester() {
+    var performancesTester = function performancesTester(samples, occurrences, timeout) {
+        var idx = 0;
+        var _samples = _.map(!_.isEmpty(samples) && samples || _defaultSamples, function(sample) {
+            idx ++;
+            return {
+                id : _sampleBaseId + idx,
+                url : sample,
+                timeout : timeout || _defaultTimeout,
+                nb : occurrences || _defaultOccurrencesCount
+            };
+        });
+
+        // add one occurrence on the first sample to obfuscate the time needed to load the runner
+        _samples[0].nb ++;
+
         return {
             /**
              * Performs a performances test, then call a function to provide the result
@@ -168,7 +186,9 @@ define([
                         throw err;
                     }
 
+                    // remove the first result to obfuscate the time needed to load the runner
                     measures.shift();
+
                     results = stats(measures, 'duration', decimals);
 
                     done(results.average, results);

@@ -1,7 +1,8 @@
 <?php
 use oat\tao\helpers\Template;
 use oat\tao\helpers\Layout;
-
+use oat\tao\model\theme\Theme;
+$config = get_data('clientDiagConfig');
 ?>
 
 <!doctype html>
@@ -17,8 +18,8 @@ use oat\tao\helpers\Layout;
     <script
         id="amd-loader"
         src="<?= Template::js('lib/require.js', 'tao') ?>"
-        data-controller="<?= \tao_helpers_Uri::getBaseUrl() ?>views/js/controller/CompatibilityChecker/"
-        data-main="<?= \tao_helpers_Uri::getBaseUrl() ?>views/js/index"
+        data-controller="<?= Template::js('controller/CompatibilityChecker/') ?>"
+        data-main="<?= Template::js('index.js') ?>"
         data-config="<?= get_data('clientConfigUrl') ?>">
     </script>
     <script>
@@ -51,9 +52,7 @@ use oat\tao\helpers\Layout;
     </script>
     <link rel='stylesheet' type='text/css' href="<?= Template::css('diagnostics.css') ?>"/>
     <?= tao_helpers_Scriptloader::render() ?>
-    <?php if (($themeUrl = Layout::getThemeUrl()) !== null): ?>
-        <link rel="stylesheet" href="<?= $themeUrl ?>"/>
-    <?php endif; ?>
+    <link rel="stylesheet" href="<?= Layout::getThemeStylesheet(Theme::CONTEXT_FRONTOFFICE) ?>"/>
 
 </head>
 
@@ -89,7 +88,7 @@ use oat\tao\helpers\Layout;
                     <span class="msg"></span>
                 </div>
             </li>
-            <li data-result="performance">
+            <li data-result="performance" data-config="<?= isset($config['performances']) ? _dh(json_encode($config['performances'])) : ''; ?>">
                 <h2><?= __('Workstation performance') ?></h2>
                 <div>
                     <div class="small feedback">
@@ -101,7 +100,7 @@ use oat\tao\helpers\Layout;
                     </div>
                 </div>
             </li>
-            <li data-result="bandwidth-0">
+            <li data-result="bandwidth-0" data-config="<?= isset($config['bandwidth']) ? _dh(json_encode($config['bandwidth'])) : ''; ?>">
                 <h2><?= __('Bandwidth'); ?></h2>
                 <div>
                     <div class="legend"><?= __('Number of simultaneous test takers the connection can handle'); ?></div>
@@ -146,22 +145,8 @@ use oat\tao\helpers\Layout;
 
 </div>
 
-<footer class="dark-bar">
-    © (Contenu de l'évaluation - SOCLE) Direction de l’évaluation, de la prospective et de la performance · <?= __('All rights reserved.') ?>
-    ·
-    © (TAO plateforme) · <a href="http://taotesting.com" target="_blank">Open Assessment Technologies S.A.</a> · <?= __('All rights reserved.') ?>
-    <?php $releaseMsgData = Layout::getReleaseMsgData();
-    if ($releaseMsgData['is-unstable'] || $releaseMsgData['is-sandbox']): ?>
-        <span class="rgt">
-            <?php if ($releaseMsgData['is-unstable']): ?>
-                <span class="icon-warning"></span>
+<?= Layout::renderThemeTemplate(Theme::CONTEXT_FRONTOFFICE, 'footer') ?>
 
-            <?php endif; ?>
-            <?= $releaseMsgData['version-type'] ?> ·
-        <a href="<?= $releaseMsgData['link'] ?>" target="_blank"><?= $releaseMsgData['msg'] ?></a></span>
-
-    <?php endif; ?>
-</footer>
 <div class="loading-bar"></div>
 </body>
 </html>

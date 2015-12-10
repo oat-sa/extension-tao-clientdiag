@@ -25,6 +25,7 @@
     {"os" : "Android", "osVersion" : "2.4", "browser" : "", "versions" : []},
     {"os" : "Android", "osVersion" : "4.1", "browser" : "Chrome", "versions" : [34]},
     {"os" : "Android", "osVersion" : "4.4", "browser" : "Chrome", "versions" : [34]},
-    {"os" : "Android", "osVersion" : "4.4", "browser" : "Firefox", "versions" : [28]}
+    {"os" : "Android", "osVersion" : "4.4", "browser" : "Firefox", "versions" : [28]},
+    {"os" : "Windows", "osVersion" : "Server2003", "browser" : "Firefox", "versions" : [34, 37, 40]}
 
 ]
