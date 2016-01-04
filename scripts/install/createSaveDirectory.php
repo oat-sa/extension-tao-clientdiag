@@ -19,9 +19,6 @@
  *
  */
 
-use \oat\taoMediaManager\model\fileManagement\FileManager;
-use oat\taoMediaManager\model\fileManagement\TaoFileManagement;
-
 $dataPath = FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR. 'storage' . DIRECTORY_SEPARATOR;
 if (file_exists($dataPath)) {
     helpers_File::emptyDirectory($dataPath);
