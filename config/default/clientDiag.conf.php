@@ -25,7 +25,7 @@ return array(
      * Custom footer copyright notice
      * @type string
      */
-    'footer' => '',
+    'footer'       => '',
 
     /**
      * Performances check config
@@ -36,12 +36,11 @@ return array(
          * A list of samples to render in order to compute the rendering performances
          * @type array
          */
-        'samples' => array(
+        'samples'     => array(
             'taoClientDiagnostic/tools/performances/data/sample1/',
             'taoClientDiagnostic/tools/performances/data/sample2/',
             'taoClientDiagnostic/tools/performances/data/sample3/'
         ),
-
         /**
          * The number of renderings by samples
          * @type int
@@ -52,31 +51,31 @@ return array(
          * Max allowed duration for a sample rendering
          * @type int
          */
-        'timeout' => 30,
+        'timeout'     => 30,
 
         /**
          * The threshold for optimal performances
          * @type float
          */
-        'optimal' => 0.025,
+        'optimal'     => 0.025,
 
         /**
          * The threshold for minimal performances
          * @type float
          */
-        'threshold' => 0.25,
+        'threshold'   => 0.25,
     ),
 
     /**
      * Bandwidth check config
      * @type array
      */
-    'bandwidth' => array(
+    'bandwidth'    => array(
         /**
          * The typical bandwidth needed for a test taker (Mbps)
          * @type float
          */
-        'unit' => 0.16,
+        'unit'  => 0.16,
 
         /**
          * The ideal number of simultaneous test takers
@@ -88,6 +87,6 @@ return array(
          * Maximum number of test takers to display on a bar
          * @type int
          */
-        'max' => 100,
+        'max'   => 100,
     ),
 );

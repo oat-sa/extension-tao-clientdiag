@@ -22,88 +22,90 @@
 namespace oat\taoClientDiagnostic\model;
 
 
-class DataStorage {
+class DataStorage
+{
 
     private $filePath, $key, $isCompatible, $data;
     private $dataList = array(
-        'key' => '',
-        'login' => '',
-        'ip' => '',
-        'browser' => '',
-        'browserVersion' => '',
-        'os' => '',
-        'osVersion' => '',
-        'bandwidth_min' => '',
-        'bandwidth_max' => '',
-        'bandwidth_sum' => '',
-        'bandwidth_count' => '',
-        'bandwidth_average' => '',
-        'bandwidth_median' => '',
-        'bandwidth_variance' => '',
-        'bandwidth_duration' => '',
-        'bandwidth_size' => '',
-        'performance_min' => '',
-        'performance_max' => '',
-        'performance_sum' => '',
-        'performance_count' => '',
-        'performance_average' => '',
-        'performance_median' => '',
+        'key'                  => '',
+        'login'                => '',
+        'ip'                   => '',
+        'browser'              => '',
+        'browserVersion'       => '',
+        'os'                   => '',
+        'osVersion'            => '',
+        'bandwidth_min'        => '',
+        'bandwidth_max'        => '',
+        'bandwidth_sum'        => '',
+        'bandwidth_count'      => '',
+        'bandwidth_average'    => '',
+        'bandwidth_median'     => '',
+        'bandwidth_variance'   => '',
+        'bandwidth_duration'   => '',
+        'bandwidth_size'       => '',
+        'performance_min'      => '',
+        'performance_max'      => '',
+        'performance_sum'      => '',
+        'performance_count'    => '',
+        'performance_average'  => '',
+        'performance_median'   => '',
         'performance_variance' => '',
-        'compatible' => '',
+        'compatible'           => '',
     );
 
     function __construct($data)
     {
-        if(isset($data['key'])){
+        if (isset($data['key'])) {
             $this->key = $data['key'];
         }
         $this->data = $data;
 
-        $dataPath = FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR. 'storage' . DIRECTORY_SEPARATOR;
-        $this->filePath = $dataPath.'store.csv';
+        $dataPath = FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR;
+        $this->filePath = $dataPath . 'store.csv';
     }
 
-    public function storeData(){
-        if(!file_exists($this->filePath)){
+    public function storeData()
+    {
+        if (!file_exists($this->filePath)) {
             $handle = fopen($this->filePath, 'w');
-            fputcsv($handle, array_keys($this->dataList),';');
+            fputcsv($handle, array_keys($this->dataList), ';');
             fclose($handle);
         }
 
-        if(!is_null($this->isCompatible)){
+        if (!is_null($this->isCompatible)) {
             $this->data['compatible'] = (int)$this->isCompatible;
         }
 
-        if(!is_null($this->key)){
+        if (!is_null($this->key)) {
             $data = $this->getStoredData();
-            if(is_array($data)){
+            if (is_array($data)) {
                 $this->data = array_merge($data, $this->data);
                 $this->deleteData();
-            }
-            else{
+            } else {
                 $this->data = array_merge($this->dataList, $this->data);
             }
         }
         $handle = fopen($this->filePath, 'a');
-        fputcsv($handle, $this->data ,';');
+        fputcsv($handle, $this->data, ';');
         return fclose($handle);
     }
 
-    public function getStoredData(){
-        if (($handle = fopen($this->filePath, "r")) !== FALSE) {
+    public function getStoredData()
+    {
+        if (($handle = fopen($this->filePath, "r")) !== false) {
             $line = 1;
             $index = 0;
             $keys = array();
             $returnValue = array();
-            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                if($line === 1){
+            while (($data = fgetcsv($handle, 1000, ";")) !== false) {
+                if ($line === 1) {
                     $keys = $data;
-                    if(($index = array_search('key', $keys, true)) === false){
+                    if (($index = array_search('key', $keys, true)) === false) {
                         return false;
                     }
                 }
-                if($data[$index] === $this->key){
-                    foreach($data as $index => $value){
+                if ($data[$index] === $this->key) {
+                    foreach ($data as $index => $value) {
                         $returnValue[$keys[$index]] = $value;
                     }
                     fclose($handle);
@@ -116,20 +118,21 @@ class DataStorage {
         return false;
     }
 
-    public function deleteData(){
-        if (($handle = fopen($this->filePath, "r")) !== FALSE) {
-            $tmpFile = \tao_helpers_File::createTempDir().'store.csv';
-            $tmpHandle = fopen($tmpFile,'w');
+    public function deleteData()
+    {
+        if (($handle = fopen($this->filePath, "r")) !== false) {
+            $tmpFile = \tao_helpers_File::createTempDir() . 'store.csv';
+            $tmpHandle = fopen($tmpFile, 'w');
             $line = 1;
             $index = 0;
-            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-                if($line === 1){
+            while (($data = fgetcsv($handle, 1000, ";")) !== false) {
+                if ($line === 1) {
                     $keys = $data;
-                    if(($index = array_search('key', $keys, true)) === false){
+                    if (($index = array_search('key', $keys, true)) === false) {
                         return false;
                     }
                 }
-                if($data[$index] !== $this->key){
+                if ($data[$index] !== $this->key) {
                     fputcsv($tmpHandle, $data, ';');
                 }
                 $line++;
@@ -151,7 +154,6 @@ class DataStorage {
 
         return $this;
     }
-
 
 
 }
