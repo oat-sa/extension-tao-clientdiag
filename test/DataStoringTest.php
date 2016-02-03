@@ -24,11 +24,13 @@ namespace oat\taoClientDiagnostic\test;
 
 use oat\taoClientDiagnostic\model\DataStorage;
 
-class DataStoringTest extends \PHPUnit_Framework_TestCase {
+class DataStoringTest extends \PHPUnit_Framework_TestCase
+{
 
     private $sentData, $sampleFilePath;
 
-    public function setUp(){
+    public function setUp()
+    {
         $this->sentData = array(
             'key'               => '1234567',
             'login'             => 'test',
@@ -41,7 +43,8 @@ class DataStoringTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    public function testStoreData(){
+    public function testStoreData()
+    {
 
         $store = new DataStorage($this->sentData);
         $this->sampleFilePath = \tao_helpers_File::createTempDir() . 'stored.csv';
@@ -54,20 +57,20 @@ class DataStoringTest extends \PHPUnit_Framework_TestCase {
         $this->assertFileExists($this->sampleFilePath);
 
         $row = 0;
-        if (($handle = fopen($this->sampleFilePath, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+        if (($handle = fopen($this->sampleFilePath, "r")) !== false) {
+            while (($data = fgetcsv($handle, 1000, ";")) !== false) {
                 $num = count($data);
-                $row ++;
+                $row++;
                 $this->assertEquals(24, $num);
-                if($row === 2){
-                    $this->assertEquals($this->sentData['key'],$data[0]);
-                    $this->assertEquals($this->sentData['login'],$data[1]);
-                    $this->assertEquals($this->sentData['ip'],$data[2]);
-                    $this->assertEquals($this->sentData['browser'],$data[3]);
-                    $this->assertEquals($this->sentData['browserVersion'],$data[4]);
-                    $this->assertEquals($this->sentData['os'],$data[5]);
-                    $this->assertEquals($this->sentData['osVersion'],$data[6]);
-                    $this->assertEquals(1,$data[23]);
+                if ($row === 2) {
+                    $this->assertEquals($this->sentData['key'], $data[0]);
+                    $this->assertEquals($this->sentData['login'], $data[1]);
+                    $this->assertEquals($this->sentData['ip'], $data[2]);
+                    $this->assertEquals($this->sentData['browser'], $data[3]);
+                    $this->assertEquals($this->sentData['browserVersion'], $data[4]);
+                    $this->assertEquals($this->sentData['os'], $data[5]);
+                    $this->assertEquals($this->sentData['osVersion'], $data[6]);
+                    $this->assertEquals(1, $data[23]);
                 }
             }
             fclose($handle);
@@ -77,20 +80,20 @@ class DataStoringTest extends \PHPUnit_Framework_TestCase {
         $store->setIsCompatible(false)->storeData();
 
         $row = 0;
-        if (($handle = fopen($this->sampleFilePath, "r")) !== FALSE) {
-            while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
+        if (($handle = fopen($this->sampleFilePath, "r")) !== false) {
+            while (($data = fgetcsv($handle, 1000, ";")) !== false) {
                 $num = count($data);
-                $row ++;
+                $row++;
                 $this->assertEquals(24, $num);
-                if($row === 2){
-                    $this->assertEquals($this->sentData['key'],$data[0]);
-                    $this->assertEquals($this->sentData['login'],$data[1]);
-                    $this->assertEquals($this->sentData['ip'],$data[2]);
-                    $this->assertEquals($this->sentData['browser'],$data[3]);
-                    $this->assertEquals($this->sentData['browserVersion'],$data[4]);
-                    $this->assertEquals($this->sentData['os'],$data[5]);
-                    $this->assertEquals($this->sentData['osVersion'],$data[6]);
-                    $this->assertEquals(0,$data[23]);
+                if ($row === 2) {
+                    $this->assertEquals($this->sentData['key'], $data[0]);
+                    $this->assertEquals($this->sentData['login'], $data[1]);
+                    $this->assertEquals($this->sentData['ip'], $data[2]);
+                    $this->assertEquals($this->sentData['browser'], $data[3]);
+                    $this->assertEquals($this->sentData['browserVersion'], $data[4]);
+                    $this->assertEquals($this->sentData['os'], $data[5]);
+                    $this->assertEquals($this->sentData['osVersion'], $data[6]);
+                    $this->assertEquals(0, $data[23]);
                 }
             }
             fclose($handle);
@@ -102,29 +105,31 @@ class DataStoringTest extends \PHPUnit_Framework_TestCase {
     /**
      * @depends testStoreData
      */
-    public function testGetData($store){
+    public function testGetData($store)
+    {
 
         $data = $store->getStoredData();
         $num = count($data);
 
         $this->assertEquals(24, $num);
 
-        $this->assertEquals($this->sentData['browser'],$data['browser']);
-        $this->assertEquals($this->sentData['browserVersion'],$data['browserVersion']);
-        $this->assertEquals($this->sentData['ip'],$data['ip']);
-        $this->assertEquals($this->sentData['key'],$data['key']);
-        $this->assertEquals($this->sentData['login'],$data['login']);
-        $this->assertEquals($this->sentData['os'],$data['os']);
-        $this->assertEquals($this->sentData['osVersion'],$data['osVersion']);
-        $this->assertEquals(0,$data['compatible']);
+        $this->assertEquals($this->sentData['browser'], $data['browser']);
+        $this->assertEquals($this->sentData['browserVersion'], $data['browserVersion']);
+        $this->assertEquals($this->sentData['ip'], $data['ip']);
+        $this->assertEquals($this->sentData['key'], $data['key']);
+        $this->assertEquals($this->sentData['login'], $data['login']);
+        $this->assertEquals($this->sentData['os'], $data['os']);
+        $this->assertEquals($this->sentData['osVersion'], $data['osVersion']);
+        $this->assertEquals(0, $data['compatible']);
 
         return $store;
     }
 
     /**
-    * @depends testStoreData
-    */
-    public function testDeleteData($store){
+     * @depends testStoreData
+     */
+    public function testDeleteData($store)
+    {
 
         $deleted = $store->deleteData();
 
