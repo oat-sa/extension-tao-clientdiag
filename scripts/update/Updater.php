@@ -22,20 +22,21 @@
 namespace oat\taoClientDiagnostic\scripts\update;
 
 
-class Updater extends \common_ext_ExtensionUpdater 
+class Updater extends \common_ext_ExtensionUpdater
 {
 
-	/**
-     * 
+    /**
+     *
      * @param string $currentVersion
      * @return string $versionUpdatedTo
      */
-    public function update($initialVersion) {
-        
+    public function update($initialVersion)
+    {
+
         $currentVersion = $initialVersion;
-		if ($currentVersion == '1.0') {
-			$currentVersion = '1.0.1';
-		}
+        if ($currentVersion == '1.0') {
+            $currentVersion = '1.0.1';
+        }
 
         if ($currentVersion == '1.0.1') {
 
@@ -84,6 +85,6 @@ class Updater extends \common_ext_ExtensionUpdater
             $currentVersion = '1.3.0';
         }
 
-		return $currentVersion;
-	}
+        return $currentVersion;
+    }
 }
