@@ -22,20 +22,21 @@
 namespace oat\taoClientDiagnostic\scripts\update;
 
 
-class Updater extends \common_ext_ExtensionUpdater 
+class Updater extends \common_ext_ExtensionUpdater
 {
 
-	/**
-     * 
+    /**
+     *
      * @param string $currentVersion
      * @return string $versionUpdatedTo
      */
-    public function update($initialVersion) {
-        
+    public function update($initialVersion)
+    {
+
         $currentVersion = $initialVersion;
-		if ($currentVersion == '1.0') {
-			$currentVersion = '1.0.1';
-		}
+        if ($currentVersion == '1.0') {
+            $currentVersion = '1.0.1';
+        }
 
         if ($currentVersion == '1.0.1') {
 
@@ -64,26 +65,26 @@ class Updater extends \common_ext_ExtensionUpdater
             $config = $extension->getConfig('clientDiag');
             $extension->setConfig('clientDiag', array_merge($config, array(
                 'performances' => array(
-                    'samples' => array(
+                    'samples'     => array(
                         'taoClientDiagnostic/tools/performances/data/sample1/',
                         'taoClientDiagnostic/tools/performances/data/sample2/',
                         'taoClientDiagnostic/tools/performances/data/sample3/'
                     ),
                     'occurrences' => 10,
-                    'timeout' => 30,
-                    'optimal' => 0.025,
-                    'threshold' => 0.25,
+                    'timeout'     => 30,
+                    'optimal'     => 0.025,
+                    'threshold'   => 0.25,
                 ),
-                'bandwidth' => array(
-                    'unit' => 0.16,
+                'bandwidth'    => array(
+                    'unit'  => 0.16,
                     'ideal' => 45,
-                    'max' => 100,
+                    'max'   => 100,
                 ),
             )));
 
             $currentVersion = '1.3.0';
         }
 
-		return $currentVersion;
-	}
+        return $currentVersion;
+    }
 }
