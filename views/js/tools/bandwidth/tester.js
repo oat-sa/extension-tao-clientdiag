@@ -87,14 +87,6 @@ define([
             timeout : 20 * _second,
             threshold : 8,
             nb : 3
-        },
-        "100MB" : {
-            id : '100MB',
-            file : 'data/bin100MB.data',
-            size : 100 * _mega,
-            timeout : 60 * _second,
-            threshold : 20,
-            nb : 3
         }
     };
 
