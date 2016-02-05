@@ -21,6 +21,7 @@
 
 namespace oat\taoClientDiagnostic\controller;
 
+use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\DataStorage;
 use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
 
@@ -43,24 +44,13 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     }
 
     /**
-     * Get authentication service from config file
-     * @return mixed
-     * @throws \common_ext_ExtensionException
-     */
-    private function loadAuthorization()
-    {
-        return \common_ext_ExtensionsManager::singleton()
-            ->getExtensionById('taoClientDiagnostic')
-            ->getConfig('authorization');
-    }
-
-    /**
      * If logged in, display index view with config data
      * If not, forward to login
      */
     public function index()
     {
-        $authorizationService = $this->loadAuthorization();
+        $authorizationService = $this->getServiceManager()->get(Authorization::SERVICE_ID);
+//        var_dump($authorizationService->isAuthorized()); die();
         if ($authorizationService->isAuthorized()) {
             $this->setData('clientDiagConfig', $this->loadConfig());
             $this->setData('clientConfigUrl', $this->getClientConfigUrl());

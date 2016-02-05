@@ -19,24 +19,33 @@
  *
  */
 
-namespace oat\taoClientDiagnostic\model\authentification;
-
-/**
- * Interface AnonymousAuthentificationInterface
- * @package oat\taoClientDiagnostic\model\authentification
- */
-interface Authorization
+class InvalidCallException extends \Exception
 {
     /**
-     * Check if user is allowed
-     * @return boolean
+     * Message for end user
+     * @var string
      */
-    public function isAuthorized();
+    private $userMessage = 'This method should be not be called.';
 
     /**
-     * Algorithm to valid a login attempt
-     * @param $url URL to redirect after authentification
-     * @return mixed
+     * InvalidCallException constructor.
+     * Set user message with exception message
+     * @param string $message
+     * @param int $code
+     * @param Exception $previous
      */
-    public function getAuthorizationUrl($url);
+    public function __construct($message = '', $code = 0, Exception $previous = null)
+    {
+        parent::__construct($message, $code, $previous);
+        $this->userMessage = $message;
+    }
+
+    /**
+     * Return user compliant message
+     * @return string
+     */
+    public function getUserMessage()
+    {
+        return __($this->userMessage);
+    }
 }

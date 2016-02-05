@@ -19,25 +19,35 @@
  *
  */
 
-namespace oat\taoClientDiagnostic\model\authentification;
+namespace oat\taoClientDiagnostic\exception;
 
-/**
- * Class AnonymousLogin
- * @package oat\taoClientDiagnostic\model\authentification
- */
-class Anonymous implements Authorization
+class InvalidLoginException extends \Exception
 {
     /**
-     * @inheritdoc
+     * Message for end user
+     * @var string
      */
-    public function isAuthorized()
+    private $userMessage = 'Invalid login.';
+
+    /**
+     * InvalidLoginException constructor.
+     * Set custom message with exception message
+     * @param string $message
+     * @param int $code
+     * @param Exception $previous
+     */
+    public function __construct($message = '', $code = 0, Exception $previous = null)
     {
-        return true;
+        parent::__construct($message, $code, $previous);
+        $this->userMessage = $message;
     }
 
     /**
-     * @inheritdoc
+     * Return user compliant message
+     * @return string
      */
-    public function getAuthorizationUrl($url) {
+    public function getUserMessage()
+    {
+        return __($this->userMessage);
     }
 }

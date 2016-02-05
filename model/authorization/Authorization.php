@@ -19,30 +19,33 @@
  *
  */
 
-namespace oat\taoClientDiagnostic\model\authentification;
+namespace oat\taoClientDiagnostic\model\authorization;
 
 /**
- * Class RequireAnonymousLogin
- * @package oat\taoClientDiagnostic\model\authentification
+ * Interface AnonymousAuthentificationInterface
+ * @package oat\taoClientDiagnostic\model\authorization
  */
-class RequireUsername implements Authorization
+interface Authorization
 {
-    /**
-     * Check if login cookie is set
-     * @return bool
-     */
-    public function isAuthorized()
-    {
-        return empty($_COOKIE['login']) ? false : true;
-    }
+    const SERVICE_ID = 'taoClientDiagnostic/authorization';
 
     /**
-     * Redirect to authentifier controller to process login
-     * @param URL $url
-     * @return url to oat\taoClientDiagnostic\controller\Authenticator:login
+     * Check if user is allowed
+     * @return boolean
      */
-    public function getAuthorizationUrl($url)
-    {
-        return _url('login', 'Authenticator', 'taoClientDiagnostic', array('successCallback' => $url));
-    }
+    public function isAuthorized();
+
+    /**
+     * Algorithm to redirect to login process
+     * @param $url URL to redirect after authorization
+     * @return mixed
+     */
+    public function getAuthorizationUrl($url);
+
+    /**
+     * Validate login
+     * @throws inva
+     * @return mixed
+     */
+    public function validateLogin($login);
 }
