@@ -70,10 +70,10 @@ $config = get_data('clientDiagConfig');
 
     <div class="diagnostics-main-area">
 
-        <h1><?= __('Diagnostic tool') ?></h1>
+        <h1><?= __('Diagnostic Tool') ?></h1>
 
         <div class="intro">
-            <p><?= __('This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform.') ?></p>
+            <p><?= __($config['diagHeader']) ?></p>
             <p><?= __('Be aware that these tests will take up to several minutes.') ?></p>
         </div>
         <div class="clearfix">

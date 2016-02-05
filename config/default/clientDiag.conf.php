@@ -22,6 +22,12 @@
  */
 return array(
     /**
+     * Custom text for diagnostic header
+     * @string
+     */
+    'diagHeader' => 'This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform.',
+
+    /**
      * Custom footer copyright notice
      * @type string
      */

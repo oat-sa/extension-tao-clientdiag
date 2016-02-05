@@ -85,6 +85,16 @@ class Updater extends \common_ext_ExtensionUpdater
             $currentVersion = '1.3.0';
         }
 
-        return $currentVersion;
+        $this->setVersion($currentVersion);
+
+        if($this->isVersion('1.3.0')) {
+            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+            $extension->setConfig('clientDiag', array_merge($config, array(
+                'diagHeader' => 'This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform.',
+            )));
+
+            $this->setVersion('1.3.1');
+        }
     }
 }
