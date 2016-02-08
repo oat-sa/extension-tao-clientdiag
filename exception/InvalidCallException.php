@@ -19,13 +19,15 @@
  *
  */
 
+namespace oat\taoClientDiagnostic\exception;
+
 class InvalidCallException extends \Exception implements common_exception_UserReadableException
 {
     /**
      * Message for end user
      * @var string
      */
-    private $userMessage = 'Internal server error, please retry your authentication';
+    private $userMessage = 'Internal server error';
 
     /**
      * InvalidCallException constructor.
