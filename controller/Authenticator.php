@@ -47,7 +47,7 @@ class Authenticator extends \tao_actions_CommonModule
             if ($this->isRequestPost()) {
                 $authorizationService = $this->getServiceManager()->get(Authorization::SERVICE_ID);
                 if ($authorizationService->validateLogin($this->getRequestParameter('login'))) {
-                    $this->setCookie('login', $this->getRequestParameter('login'), null, '/package-tao/taoClientDiagnostic');
+                    $this->setCookie('login', $this->getRequestParameter('login'), null, 'taoClientDiagnostic');
                     $this->redirect($this->getRequestParameter('successCallback'));
                 }
             }
