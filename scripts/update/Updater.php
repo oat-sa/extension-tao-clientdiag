@@ -96,5 +96,19 @@ class Updater extends \common_ext_ExtensionUpdater
 
             $this->setVersion('1.3.1');
         }
+
+        if($this->isVersion('1.3.1')) {
+            $accessService = \funcAcl_models_classes_AccessService::singleton();
+            $anonymous = new \core_kernel_classes_Resource('http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole');
+            $accessService->grantModuleAccess($anonymous, 'taoClientDiagnostic', 'Authenticator');
+
+            if (!$this->getServiceManager()->has(Authorization::SERVICE_ID)) {
+                $service = new RequireUsername();
+                $service->setServiceManager($this->getServiceManager());
+                $this->getServiceManager()->register(Authorization::SERVICE_ID, $service);
+            }
+
+            $this->setVersion('1.4.0');
+        }
     }
 }

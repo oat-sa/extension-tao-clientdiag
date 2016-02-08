@@ -21,58 +21,42 @@
 
 namespace oat\taoClientDiagnostic\controller;
 
+use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\DataStorage;
-use \oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
-use oat\tao\helpers\Template;
+use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
 
+/**
+ * Class CompatibilityChecker
+ * @package oat\taoClientDiagnostic\controller
+ */
 class CompatibilityChecker extends \tao_actions_CommonModule
 {
-
+    /**
+     * Get config parameters for compatibility check
+     * @return mixed
+     * @throws \common_ext_ExtensionException
+     */
     private function loadConfig()
     {
-        $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
-        $config = $extension->getConfig('clientDiag');
-        $this->setData('clientDiagConfig', $config);
+        return \common_ext_ExtensionsManager::singleton()
+            ->getExtensionById('taoClientDiagnostic')
+            ->getConfig('clientDiag');
     }
 
+    /**
+     * If logged in, display index view with config data
+     * If not, forward to login
+     */
     public function index()
     {
-        $this->loadConfig();
-
-        $login = '';
-        if ($this->hasRequestParameter('login')) {
-            $login = $this->getRequestParameter('login');
+        $authorizationService = $this->getServiceManager()->get(Authorization::SERVICE_ID);
+        if ($authorizationService->isAuthorized()) {
+            $this->setData('clientDiagConfig', $this->loadConfig());
+            $this->setData('clientConfigUrl', $this->getClientConfigUrl());
+            $this->setView('CompatibilityChecker/index.tpl');
         } else {
-            if (isset($_COOKIE['login'])) {
-                $login = $_COOKIE['login'];
-            }
+            $this->redirect($authorizationService->getAuthorizationUrl(_url('index')));
         }
-
-        if ($login === '') {
-            $this->forward('login', null, null, array('message' => __('No login found')));
-            return;
-        }
-        if (!$this->isLoginValid($login)) {
-            $this->forward('login', null, null, array('errorMessage' => __('This login does not exist')));
-            return;
-        }
-        setcookie('login', $login);
-        $this->setData('clientConfigUrl', $this->getClientConfigUrl());
-        $this->setView('CompatibilityChecker/index.tpl');
-    }
-
-    public function login()
-    {
-        $this->loadConfig();
-
-        if ($this->hasRequestParameter('errorMessage')) {
-            $this->setData('errorMessage', $this->getRequestParameter('errorMessage'));
-        }
-        if ($this->hasRequestParameter('message')) {
-            $this->setData('message', $this->getRequestParameter('message'));
-        }
-        $this->setData('clientConfigUrl', $this->getClientConfigUrl());
-        $this->setView('CompatibilityChecker/login.tpl');
     }
 
     public function whichBrowser()
@@ -90,7 +74,6 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             } else {
                 $data['key'] = $_COOKIE['key'];
             }
-
             $checker = new CompatibilityCheckerModel($data);
             $store = new DataStorage($data);
             $isCompatible = $checker->isCompatibleConfig();
@@ -100,8 +83,12 @@ class CompatibilityChecker extends \tao_actions_CommonModule
                     return;
                 }
             }
-            $this->returnJson(array('success' => true, 'type' => 'error', 'message' => __('Your system requires a compatibility update, please contact your system administrator.')));
-        }catch(\common_exception_MissingParameter $e){
+            $this->returnJson(array(
+                'success' => true,
+                'type'    => 'error',
+                'message' => __('Your system requires a compatibility update, please contact your system administrator.')
+            ));
+        } catch (\common_exception_MissingParameter $e) {
             $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $e->getUserMessage()));
         }
     }
@@ -109,12 +96,10 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     public function storeData()
     {
         $data = $this->getData();
-
         if (!isset($_COOKIE['key'])) {
             setcookie('key', uniqid());
         }
         $data['key'] = $_COOKIE['key'];
-
         $store = new DataStorage($data);
         if ($store->storeData()) {
             $this->returnJson(array('success' => true, 'type' => 'success'));
@@ -126,7 +111,6 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     private function getData($check = false)
     {
         $data = $this->getRequestParameters();
-
         if ($this->hasRequestParameter('type')) {
             $type = $this->getRequestParameter('type');
             foreach ($data as $key => $value) {
@@ -135,8 +119,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             }
             unset($data[$type . '_type']);
         }
-
-        if($check){
+        if ($check) {
             if (!$this->hasRequestParameter('os')) {
                 throw new \common_exception_MissingParameter('os');
             }
@@ -152,31 +135,12 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $data['osVersion'] = preg_replace('/[^\w\.]/', '', $data['osVersion']);
             $data['browserVersion'] = preg_replace('/[^\w\.]/', '', $data['browserVersion']);
         }
-
         if (isset($_COOKIE['login'])) {
             $data['login'] = $_COOKIE['login'];
         } else {
             $data['login'] = '';
         }
         $data['ip'] = (!empty($_SERVER['HTTP_X_REAL_IP'])) ? $_SERVER['HTTP_X_REAL_IP'] : ((!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : 'unknown');
-
         return $data;
     }
-
-    /**
-     * Check if the login is valid or not
-     * @param $login
-     * @return bool
-     */
-    private function isLoginValid($login)
-    {
-        // For now there is no simple loginExists method for RDF, redis ...
-        // We just use a regex to see if it match a pattern
-        $pattern = '/^[0-9]{7}[A-Z]$/';
-
-        return (\tao_models_classes_UserService::singleton()->loginExists($login)
-            || preg_match($pattern, $login) === 1) ? true : false;
-
-    }
-
-} 
+}
