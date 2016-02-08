@@ -50,7 +50,6 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     public function index()
     {
         $authorizationService = $this->getServiceManager()->get(Authorization::SERVICE_ID);
-//        var_dump($authorizationService->isAuthorized()); die();
         if ($authorizationService->isAuthorized()) {
             $this->setData('clientDiagConfig', $this->loadConfig());
             $this->setData('clientConfigUrl', $this->getClientConfigUrl());
