@@ -43,7 +43,7 @@ class Anonymous extends ConfigurableService implements Authorization
      */
     public function getAuthorizationUrl($url)
     {
-        throw new InvalidCallException(__FUNCTION__.' should never be called');
+        throw new InvalidCallException();
     }
 
     /**
@@ -51,7 +51,7 @@ class Anonymous extends ConfigurableService implements Authorization
      */
     public function validateLogin($login)
     {
-        throw new InvalidCallException(__FUNCTION__.' should never be called');
+        throw new InvalidCallException();
     }
 
 }

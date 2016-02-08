@@ -39,7 +39,9 @@ class InvalidLoginException extends \Exception implements common_exception_UserR
     public function __construct($message = '', $code = 0, Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
-        $this->userMessage = $message;
+        if (!empty($message)) {
+            $this->userMessage = $message;
+        }
     }
 
     /**

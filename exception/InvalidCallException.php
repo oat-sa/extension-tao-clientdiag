@@ -25,7 +25,7 @@ class InvalidCallException extends \Exception implements common_exception_UserRe
      * Message for end user
      * @var string
      */
-    private $userMessage = 'This method should be not be called.';
+    private $userMessage = 'Internal server error, please retry your authentication';
 
     /**
      * InvalidCallException constructor.
@@ -37,7 +37,9 @@ class InvalidCallException extends \Exception implements common_exception_UserRe
     public function __construct($message = '', $code = 0, Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
-        $this->userMessage = $message;
+        if (!empty($message)) {
+            $this->userMessage = $message;
+        }
     }
 
     /**
