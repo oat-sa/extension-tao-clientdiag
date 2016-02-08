@@ -24,6 +24,7 @@ namespace oat\taoClientDiagnostic\controller;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\DataStorage;
 use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
+use oat\taoClientDiagnostic\model\storage\Storage;
 
 /**
  * Class CompatibilityChecker
@@ -68,26 +69,37 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     {
         try {
             $data = $this->getData(true);
-            if (!isset($_COOKIE['key'])) {
-                $data['key'] = uniqid();
-                setcookie('key', $data['key']);
-            } else {
-                $data['key'] = $_COOKIE['key'];
+
+            $checker            = new CompatibilityCheckerModel($data);
+            $isCompatible       = (int) $checker->isCompatibleConfig();
+            $data['compatible'] = $isCompatible;
+
+            try {
+                $storageService = $this->getServiceManager()->get(Storage::SERVICE_ID);
+                $storageService->setData($data);
+                $storageService->store();
+            } catch (\Exception $e) {
+                \common_Logger::w($e->getMessage());
             }
-            $checker = new CompatibilityCheckerModel($data);
-            $store = new DataStorage($data);
-            $isCompatible = $checker->isCompatibleConfig();
-            if ($store->setIsCompatible($isCompatible)->storeData($isCompatible)) {
-                if ($isCompatible) {
-                    $this->returnJson(array('success' => true, 'type' => 'success', 'message' => __('Compatible')));
-                    return;
-                }
-            }
-            $this->returnJson(array(
-                'success' => true,
-                'type'    => 'error',
-                'message' => __('Your system requires a compatibility update, please contact your system administrator.')
-            ));
+
+            $compatibilityMessage = [
+                //Not compatible
+                '0' => [
+                    'success' => true,
+                    'type'    => 'error',
+                    'message' => __('Your system requires a compatibility update, please contact your system administrator.')
+                ],
+                //Compatible
+                '1' => [
+                    'success' => true,
+                    'type'    => 'success',
+                    'message' => __('Compatible')
+                ],
+                //Not tested
+            ];
+
+            $this->returnJson($compatibilityMessage[$isCompatible]);
+
         } catch (\common_exception_MissingParameter $e) {
             $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $e->getUserMessage()));
         }
@@ -96,21 +108,22 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     public function storeData()
     {
         $data = $this->getData();
-        if (!isset($_COOKIE['key'])) {
-            setcookie('key', uniqid());
-        }
-        $data['key'] = $_COOKIE['key'];
-        $store = new DataStorage($data);
-        if ($store->storeData()) {
+
+        try {
+            $storageService = $this->getServiceManager()->get(Storage::SERVICE_ID);
+            $storageService->setData($data);
+            $storageService->store();
             $this->returnJson(array('success' => true, 'type' => 'success'));
-            return;
+        } catch (\Exception $e) {
+            \common_Logger::w($e->getMessage());
+            $this->returnJson(array('success' => false, 'type' => 'error'));
         }
-        $this->returnJson(array('success' => false, 'type' => 'error'));
     }
 
     private function getData($check = false)
     {
         $data = $this->getRequestParameters();
+
         if ($this->hasRequestParameter('type')) {
             $type = $this->getRequestParameter('type');
             foreach ($data as $key => $value) {
@@ -119,6 +132,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             }
             unset($data[$type . '_type']);
         }
+
         if ($check) {
             if (!$this->hasRequestParameter('os')) {
                 throw new \common_exception_MissingParameter('os');
@@ -135,11 +149,20 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $data['osVersion'] = preg_replace('/[^\w\.]/', '', $data['osVersion']);
             $data['browserVersion'] = preg_replace('/[^\w\.]/', '', $data['browserVersion']);
         }
+
         if (isset($_COOKIE['login'])) {
             $data['login'] = $_COOKIE['login'];
         } else {
-            $data['login'] = '';
+            $data['login'] = 'Anonymous';
         }
+
+        if (!isset($_COOKIE['id'])) {
+            $data['id'] = uniqid();
+            setcookie('id', $data['id']);
+        } else {
+            $data['id'] = $_COOKIE['id'];
+        }
+
         $data['ip'] = (!empty($_SERVER['HTTP_X_REAL_IP'])) ? $_SERVER['HTTP_X_REAL_IP'] : ((!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : 'unknown');
         return $data;
     }
