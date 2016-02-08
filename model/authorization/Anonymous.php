@@ -21,13 +21,14 @@
 
 namespace oat\taoClientDiagnostic\model\authorization;
 
+use oat\oatbox\service\ConfigurableService;
 use oat\taoClientDiagnostic\exception\InvalidCallException;
 
 /**
  * Class AnonymousLogin
  * @package oat\taoClientDiagnostic\model\authorization
  */
-class Anonymous implements Authorization
+class Anonymous extends ConfigurableService implements Authorization
 {
     /**
      * @inheritdoc

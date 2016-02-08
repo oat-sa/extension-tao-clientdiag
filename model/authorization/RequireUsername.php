@@ -21,13 +21,14 @@
 
 namespace oat\taoClientDiagnostic\model\authorization;
 
+use oat\oatbox\service\ConfigurableService;
 use oat\taoClientDiagnostic\exception\InvalidLoginException;
 
 /**
  * Class RequireAnonymousLogin
  * @package oat\taoClientDiagnostic\model\authorization
  */
-class RequireUsername implements Authorization
+class RequireUsername extends ConfigurableService implements Authorization
 {
     /**
      * Check if login cookie is set
