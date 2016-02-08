@@ -19,7 +19,7 @@
  *
  */
 
-class InvalidCallException extends \Exception
+class InvalidCallException extends \Exception implements common_exception_UserReadableException
 {
     /**
      * Message for end user

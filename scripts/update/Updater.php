@@ -108,9 +108,6 @@ class Updater extends \common_ext_ExtensionUpdater
                 $this->getServiceManager()->register(Authorization::SERVICE_ID, $service);
             }
 
-            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
-            $extension->setConfig('authorization', new \oat\taoClientDiagnostic\model\authorization\RequireUsername());
-
             $this->setVersion('1.4.0');
         }
     }
