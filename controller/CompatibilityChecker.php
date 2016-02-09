@@ -21,9 +21,11 @@
 
 namespace oat\taoClientDiagnostic\controller;
 
+use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\DataStorage;
 use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
+use oat\taoClientDiagnostic\model\entity\DiagnosticReport;
 use oat\taoClientDiagnostic\model\storage\Storage;
 
 /**
@@ -39,9 +41,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     private function loadConfig()
     {
-        return \common_ext_ExtensionsManager::singleton()
-            ->getExtensionById('taoClientDiagnostic')
-            ->getConfig('clientDiag');
+        return \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
     }
 
     /**
@@ -60,25 +60,34 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         }
     }
 
+    /**
+     * Render browser detection view
+     */
     public function whichBrowser()
     {
         $this->setView('CompatibilityChecker/browserDetection.php');
     }
 
+    /**
+     * Check if requester is compatible (os+browser)
+     * Register compatibility
+     * return json message
+     */
     public function check()
     {
         try {
             $data = $this->getData(true);
+            $id   = $this->getId();
 
             $checker            = new CompatibilityCheckerModel($data);
-            $isCompatible       = (int) $checker->isCompatibleConfig();
+            $isCompatible       = (int)$checker->isCompatibleConfig();
             $data['compatible'] = $isCompatible;
 
             try {
+                $diagnostic = new DiagnosticReport($id, $data);
                 $storageService = $this->getServiceManager()->get(Storage::SERVICE_ID);
-                $storageService->setData($data);
-                $storageService->store();
-            } catch (\Exception $e) {
+                $storageService->store($diagnostic);
+            } catch (StorageException $e) {
                 \common_Logger::w($e->getMessage());
             }
 
@@ -105,21 +114,35 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         }
     }
 
+    /**
+     * Register data from the front end
+     */
     public function storeData()
     {
         $data = $this->getData();
+        $id   = $this->getId();
 
         try {
+            $diagnostic     = new DiagnosticReport($id, $data);
             $storageService = $this->getServiceManager()->get(Storage::SERVICE_ID);
-            $storageService->setData($data);
-            $storageService->store();
+            $storageService->store($diagnostic);
             $this->returnJson(array('success' => true, 'type' => 'success'));
-        } catch (\Exception $e) {
+        } catch (StorageException $e) {
             \common_Logger::w($e->getMessage());
             $this->returnJson(array('success' => false, 'type' => 'error'));
         }
     }
 
+    /**
+     * Fetch POST data
+     * Get login by cookie
+     * Get Ip
+     * If check parameters is true, check mandatory parameters
+     *
+     * @param bool $check
+     * @return array
+     * @throws \common_exception_MissingParameter
+     */
     private function getData($check = false)
     {
         $data = $this->getRequestParameters();
@@ -156,14 +179,22 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $data['login'] = 'Anonymous';
         }
 
-        if (!isset($_COOKIE['id'])) {
-            $data['id'] = uniqid();
-            setcookie('id', $data['id']);
-        } else {
-            $data['id'] = $_COOKIE['id'];
-        }
-
         $data['ip'] = (!empty($_SERVER['HTTP_X_REAL_IP'])) ? $_SERVER['HTTP_X_REAL_IP'] : ((!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : 'unknown');
         return $data;
+    }
+
+    /**
+     * Get cookie id OR create it if doesnt exist
+     * @return string
+     */
+    private function getId()
+    {
+        if (!isset($_COOKIE['id'])) {
+            $id = uniqid();
+            setcookie('id', $id);
+        } else {
+            $id = $_COOKIE['id'];
+        }
+        return $id;
     }
 }

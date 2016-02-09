@@ -21,66 +21,95 @@
 
 namespace oat\taoClientDiagnostic\model\storage;
 
+use oat\oatbox\service\ConfigurableService;
+use oat\taoClientDiagnostic\exception\StorageException;
+use oat\taoClientDiagnostic\model\entity\Entity;
 
-class Sql extends Storage
+/**
+ * Class Sql
+ * @package oat\taoClientDiagnostic\model\storage
+ */
+class Sql extends ConfigurableService implements Storage
 {
-    const TABLE_DIAGNOSTIC = "performance_diagnostic";
-
+    /**
+     * @var string
+     */
+    private $tableName;
+    /**
+     * @var \common_persistence_Persistence
+     */
     private $persistence;
 
+    /**
+     * Sql constructor, set the persistence object
+     */
     public function __construct()
     {
         $this->persistence = \common_persistence_Manager::getPersistence('default');
     }
 
-    public function store()
+    /**
+     * If id already exists, update it by new values
+     * Else insert new entry
+     * @param Entity $entity
+     * @return bool
+     * @throws StorageException
+     */
+    public function store(Entity $entity)
     {
-        $id = $this->data['id'];
+        $this->tableName = $entity->getName();
+        $id = $entity->getId();
 
-        if (!is_null($id)) {
-            $isCreated = $this->get($id);
+        try {
+            $isCreated = $this->exists($id);
             if (empty($isCreated)) {
-                $this->insert();
+                $this->insert($entity);
             } else {
-                unset($this->data['id']);
-                $this->update($id);
+                $this->update($entity);
             }
-          //  \common_Logger::i($this->data);
+        } catch (\PDOException $e) {
+            throw new StorageException($e->getMessage());
         }
         return true;
     }
 
-    public function setData(array $data)
+    /**
+     * Check if id is already in database
+     * @param $id
+     * @return bool
+     */
+    private function exists($id)
     {
-        if(count(array_intersect(array_keys($this->columns), array_keys($data))) != count($data)){
-            throw new \Exception('Data keys are not correctly set');
-        }
-        $this->data = $data;
-    }
-
-    private function get($id)
-    {
-        $query = "SELECT * FROM " . self::TABLE_DIAGNOSTIC . " WHERE id = ?";
+        $query = "SELECT id FROM " . $this->tableName . " WHERE id = ?";
         $statement = $this->persistence->query($query, array($id));
-        return $statement->fetch(\PDO::FETCH_ASSOC);
+        return (boolean)$statement->rowCount();
     }
 
-    private function insert() {
-        $query = 'INSERT INTO ' . self::TABLE_DIAGNOSTIC . '(' . implode(' , ', array_keys($this->data)) . ')' .
-                 ' VALUES (' . str_repeat("?,", count($this->data)-1) . '? )';
-        $result = $this->persistence->exec($query, array_values($this->data));
-        return $result;
+    /**
+     * Create new entry in SQL table
+     * @param $entity
+     * @return mixed
+     */
+    private function insert($entity)
+    {
+        $columns = array_merge($entity->getPopulatedColumns(), array('id' => $entity->getId()));
+        $query = 'INSERT INTO ' . $this->tableName . '(' . implode(', ', array_keys($columns)) . ')' .
+                 ' VALUES (' . str_repeat("?,", count($columns) - 1) . '? )';
+        return $this->persistence->exec($query, array_values($columns));
     }
 
-    private function update($id) {
-        foreach ($this->data as $key => $value) {
+    /**
+     * Update entity in SQL table
+     * @param $entity
+     * @return mixed
+     */
+    private function update($entity)
+    {
+        $columns = $entity->getPopulatedColumns();
+        foreach ($columns as $key => $value) {
             $fields[] = $key . ' = ?';
         }
-        $this->data['id'] = $id;
-        $query = 'UPDATE ' . self::TABLE_DIAGNOSTIC .
-                 ' SET ' . implode(', ', $fields) .
-                 ' WHERE id = ?';
-        $result = $this->persistence->exec($query, array_values($this->data));
-        return $result;
+        $query = 'UPDATE ' . $this->tableName . ' SET ' . implode(', ', $fields) . ' WHERE id = ?';
+        return $this->persistence->exec($query, array_merge(array_values($columns), array($entity->getId())));
     }
 }

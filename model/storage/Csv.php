@@ -22,12 +22,15 @@
 namespace oat\taoClientDiagnostic\model\storage;
 
 use oat\oatbox\service\ConfigurableService;
+use oat\taoClientDiagnostic\exception\StorageException;
+use oat\taoClientDiagnostic\model\entity\Entity;
+use oat\taoClientDiagnostic\model\Entity\DiagnosticReport;
 
 /**
  * Class Csv
  * @package oat\taoClientDiagnostic\model\storage
  */
-class Csv extends Storage
+class Csv extends ConfigurableService implements Storage
 {
     /**
      * Path to csv file
@@ -36,51 +39,53 @@ class Csv extends Storage
     private $filePath;
 
     /**
-     * Csv constructor.
-     * Create csv file if not exists
+     * Check if csv file exists
+     * If id already exists, merge old data to current & remove old one
+     * Create new entry in csv file
+     *
+     * @param Entity $entity
+     * @return $this
      */
-    public function __construct()
+    public function store(Entity $entity)
     {
-        $this->filePath = FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'store.csv';
-        if (!file_exists($this->filePath)) {
-            $handle = fopen($this->filePath, 'w');
-            fputcsv($handle, array_keys($this->columns), ';');
-            fclose($handle);
+        $this->filePath = $this->getCsvPath($entity);
+
+        $id         = $entity->getId();
+        $data       = array_merge(['id' => $id], $entity->getPopulatedColumns());
+        $csvContent = $this->get($id);
+
+        if (is_array($csvContent)) {
+            $data = array_merge($csvContent, $data);
+            $this->delete($id);
         }
+
+        $handle = fopen($this->filePath, 'a');
+        fputcsv($handle, $data, ';');
+        fclose($handle);
+
         return $this;
     }
 
     /**
-     * Store data into CSV file
-     * - Insert column & data line
-     * - OR Update line referenced by key
-     * @return bool
-     * @throws \Exception
+     * Get csv file path, create it if not exists (with column name)
+     * @param $entity
+     * @return string
      */
-    public function store()
+    private function getCsvPath($entity)
     {
-        if (!is_readable($this->filePath)) {
-            throw new \Exception('Unable to read csv file located at: ' . $this->filePath);
-        }
+        $name = $entity->getName();
+        $file = FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR  . $name . '.csv';
 
-        $id = $this->data['id'];
-        if (!is_null($id)) {
-            $data = $this->get($id);
-            if (is_array($data)) {
-                $this->data = array_merge($data, $this->data);
-                $this->delete($id);
-            } else {
-                $this->data = array_merge($this->columns, $this->data);
-            }
+        if(!file_exists($file)){
+            $handle = fopen($file, 'w');
+            fputcsv($handle, array_merge(['id'], $entity->getColumnsName()),';');
+            fclose($handle);
         }
-
-        $handle = fopen($this->filePath, 'a');
-        fputcsv($handle, $this->data, ';');
-        return fclose($handle);
+        return $file;
     }
 
     /**
-     * Get data line refernced by the $id
+     * Get data line referenced by the $id
      * @param $id
      * @return array|bool
      */
@@ -94,7 +99,7 @@ class Csv extends Storage
             while (($data = fgetcsv($handle, 1000, ";")) !== false) {
                 if ($line === 1) {
                     $keys = $data;
-                    if (($index = array_search('key', $keys, true)) === false) {
+                    if (($index = array_search('id', $keys, true)) === false) {
                         return false;
                     }
                 }
@@ -127,7 +132,7 @@ class Csv extends Storage
             while (($data = fgetcsv($handle, 1000, ";")) !== false) {
                 if ($line === 1) {
                     $keys = $data;
-                    if (($index = array_search('key', $keys, true)) === false) {
+                    if (($index = array_search('id', $keys, true)) === false) {
                         return false;
                     }
                 }
