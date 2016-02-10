@@ -33,10 +33,10 @@ use oat\taoClientDiagnostic\model\Entity\DiagnosticReport;
 class Csv extends ConfigurableService implements Storage
 {
     /**
-     * Path to csv file
-     * @var string
+     * Csv file handle
+     * @var stream
      */
-    private $filePath;
+    private $handle;
 
     /**
      * Check if csv file exists
@@ -48,104 +48,80 @@ class Csv extends ConfigurableService implements Storage
      */
     public function store(Entity $entity)
     {
-        $this->filePath = $this->getCsvPath($entity);
+        $id      = $entity->getId();
+        $columns = array_merge(['id'], $entity->getColumnsName());
+        $data    = array_merge(['id' => $id], $entity->toArray());
 
-        $id         = $entity->getId();
-        $data       = array_merge(['id' => $id], $entity->getPopulatedColumns());
-        $csvContent = $this->get($id);
-
-        if (is_array($csvContent)) {
-            $data = array_merge($csvContent, $data);
-            $this->delete($id);
-        }
-
-        $handle = fopen($this->filePath, 'a');
-        fputcsv($handle, $data, ';');
-        fclose($handle);
+        $this->openFile($columns);
+        $this->update($id, $data);
 
         return $this;
     }
 
     /**
-     * Get csv file path, create it if not exists (with column name)
-     * @param $entity
+     * Handle csv file, create it if not exists (with column name)
+     * @param array $columns
+     * @throws StorageException
      * @return string
      */
-    private function getCsvPath($entity)
+    private function openFile($columns = array())
     {
-        $name = $entity->getName();
-        $file = FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR  . $name . '.csv';
-
-        if(!file_exists($file)){
-            $handle = fopen($file, 'w');
-            fputcsv($handle, array_merge(['id'], $entity->getColumnsName()),';');
-            fclose($handle);
+        $file = $this->getOption('filename');
+        $fileExists = file_exists($file);
+        if (($this->handle = fopen($file, 'a+')) !== false) {
+            if (!$fileExists) {
+                fputcsv($this->handle, $columns,';');
+                fseek($this->handle, 0);
+            }
+            return;
         }
-        return $file;
+        throw new StorageException('Unable to read csv file');
     }
 
     /**
-     * Get data line referenced by the $id
+     * Copy csv data into tmp file with updated line referenced by $id
+     * Copy tmp file to csv && remove tmp file
      * @param $id
-     * @return array|bool
+     * @param $entityData
+     * @return bool|string|void
+     * @throws StorageException
      */
-    private function get($id)
-    {
-        if (($handle = fopen($this->filePath, "r")) !== false) {
-            $line = 1;
-            $index = 0;
-            $keys = array();
-            $returnValue = array();
-            while (($data = fgetcsv($handle, 1000, ";")) !== false) {
-                if ($line === 1) {
-                    $keys = $data;
-                    if (($index = array_search('id', $keys, true)) === false) {
-                        return false;
-                    }
-                }
-                if ($data[$index] === $id) {
-                    foreach ($data as $index => $value) {
-                        $returnValue[$keys[$index]] = $value;
-                    }
-                    fclose($handle);
-                    return $returnValue;
-                }
-                $line++;
-            }
-            fclose($handle);
-        }
-        return false;
-    }
+    private function update($id, $entityData) {
 
-    /**
-     * Delete line referenced by the $id
-     * @param $id
-     * @return bool
-     */
-    private function delete($id)
-    {
-        if (($handle = fopen($this->filePath, "r")) !== false) {
-            $tmpFile = \tao_helpers_File::createTempDir() . 'store.csv';
-            $tmpHandle = fopen($tmpFile, 'w');
-            $line = 1;
-            $index = 0;
-            while (($data = fgetcsv($handle, 1000, ";")) !== false) {
-                if ($line === 1) {
-                    $keys = $data;
-                    if (($index = array_search('id', $keys, true)) === false) {
-                        return false;
+        $tmpFile = \tao_helpers_File::createTempDir() . 'store.csv';
+        $tmpHandle = fopen($tmpFile, 'w');
+        $line = 1;
+        $index = 0;
+
+        while (($data = fgetcsv($this->handle, 1000, ";")) !== false) {
+
+            if ($line === 1) {
+                $keys = $data;
+                if (($index = array_search('id', $keys, true)) === false) {
+                    return false;
+                }
+            }
+
+            if ($data[$index] == $id) {
+                foreach($data as $index => $value){
+                    if (!empty($value)) {
+                        $entityData[$keys[$index]] = $value;
+                    } elseif (!empty($entityData[$keys[$index]])) {
+                        continue;
+                    } else {
+                        $entityData[$keys[$index]] = '';
                     }
                 }
-                if ($data[$index] !== $id) {
-                    fputcsv($tmpHandle, $data, ';');
-                }
-                $line++;
             }
-            fclose($tmpHandle);
-            fclose($handle);
-            return \tao_helpers_File::copy($tmpFile, $this->filePath) && unlink($tmpFile);
+            else {
+                fputcsv($tmpHandle, $data, ';');
+            }
+            $line++;
         }
-        return false;
+        fputcsv($tmpHandle, $entityData, ';');
+        fclose($tmpHandle);
+        fclose($this->handle);
+        \tao_helpers_File::copy($tmpFile, $this->getOption('filename')) && unlink($tmpFile);
+        return;
     }
-
 }

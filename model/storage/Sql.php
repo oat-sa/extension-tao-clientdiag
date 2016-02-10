@@ -31,10 +31,9 @@ use oat\taoClientDiagnostic\model\entity\Entity;
  */
 class Sql extends ConfigurableService implements Storage
 {
-    /**
-     * @var string
-     */
-    private $tableName;
+
+    const STORAGE_TABLE = "diagnosticreport";
+
     /**
      * @var \common_persistence_Persistence
      */
@@ -57,12 +56,11 @@ class Sql extends ConfigurableService implements Storage
      */
     public function store(Entity $entity)
     {
-        $this->tableName = $entity->getName();
         $id = $entity->getId();
 
         try {
-            $isCreated = $this->exists($id);
-            if (empty($isCreated)) {
+            $exists = $this->exists($id);
+            if (empty($exists)) {
                 $this->insert($entity);
             } else {
                 $this->update($entity);
@@ -80,7 +78,7 @@ class Sql extends ConfigurableService implements Storage
      */
     private function exists($id)
     {
-        $query = "SELECT id FROM " . $this->tableName . " WHERE id = ?";
+        $query = "SELECT id FROM " . self::STORAGE_TABLE . " WHERE id = ?";
         $statement = $this->persistence->query($query, array($id));
         return (boolean)$statement->rowCount();
     }
@@ -93,7 +91,7 @@ class Sql extends ConfigurableService implements Storage
     private function insert($entity)
     {
         $columns = array_merge($entity->getPopulatedColumns(), array('id' => $entity->getId()));
-        $query = 'INSERT INTO ' . $this->tableName . '(' . implode(', ', array_keys($columns)) . ')' .
+        $query = 'INSERT INTO ' . self::STORAGE_TABLE . '(' . implode(', ', array_keys($columns)) . ')' .
                  ' VALUES (' . str_repeat("?,", count($columns) - 1) . '? )';
         return $this->persistence->exec($query, array_values($columns));
     }
@@ -109,7 +107,7 @@ class Sql extends ConfigurableService implements Storage
         foreach ($columns as $key => $value) {
             $fields[] = $key . ' = ?';
         }
-        $query = 'UPDATE ' . $this->tableName . ' SET ' . implode(', ', $fields) . ' WHERE id = ?';
+        $query = 'UPDATE ' . self::STORAGE_TABLE . ' SET ' . implode(', ', $fields) . ' WHERE id = ?';
         return $this->persistence->exec($query, array_merge(array_values($columns), array($entity->getId())));
     }
 }

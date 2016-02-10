@@ -78,6 +78,15 @@ abstract class Entity
         return $columns;
     }
 
+    public function toArray()
+    {
+        $columns = [];
+        foreach (get_object_vars($this) as $property => $value) {
+            $columns[$property] = $value;
+        }
+        return $columns;
+    }
+
     /**
      * Get all properties name as array
      * @return array
