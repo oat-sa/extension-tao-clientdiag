@@ -103,7 +103,9 @@ class Updater extends \common_ext_ExtensionUpdater
             $accessService->grantModuleAccess($anonymous, 'taoClientDiagnostic', 'Authenticator');
 
             if (!$this->getServiceManager()->has(Authorization::SERVICE_ID)) {
-                $service = new RequireUsername();
+                $service = new RequireUsername(array(
+                    'regexValidator' => '/^[0-9]{7}[A-Z]$/'
+                ));
                 $service->setServiceManager($this->getServiceManager());
                 $this->getServiceManager()->register(Authorization::SERVICE_ID, $service);
             }
