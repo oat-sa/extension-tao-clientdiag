@@ -21,14 +21,6 @@
 
 namespace oat\taoClientDiagnostic\exception;
 
-class InvalidCallException extends \Exception implements \common_exception_UserReadableException
+class InvalidCallException extends \Exception
 {
-    /**
-     * Return user compliant message
-     * @return string
-     */
-    public function getUserMessage()
-    {
-        return __('Internal server error');
-    }
 }
