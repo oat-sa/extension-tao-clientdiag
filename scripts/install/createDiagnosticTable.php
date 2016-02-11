@@ -18,8 +18,8 @@
  *
  *
  */
-require __DIR__ . '/../../../vendor/autoload.php';
-//namespace oat\taoClientDiagnostic\scripts\install;
+
+namespace oat\taoClientDiagnostic\scripts\install;
 
 use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\oatbox\action\Action;
