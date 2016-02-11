@@ -36,10 +36,10 @@ class CompatibilityChecker
             throw new \common_exception_MissingParameter('browser / browserVersion / os / osVersion');
         }
 
-        $this->browser = $data['browser'];
+        $this->browser        = $data['browser'];
         $this->browserVersion = $data['browserVersion'];
-        $this->os = $data['os'];
-        $this->osVersion = $data['osVersion'];
+        $this->os             = $data['os'];
+        $this->osVersion      = $data['osVersion'];
 
         $this->data = array_values($data);
 
