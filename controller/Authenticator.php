@@ -48,10 +48,11 @@ class Authenticator extends \tao_actions_CommonModule
 
             if ($this->isRequestPost()) {
                 $authorizationService = $this->getServiceManager()->get(Authorization::SERVICE_ID);
+
                 if (!$authorizationService instanceof RequireUsername) {
                     throw new InvalidCallException('Authenticator need to be call by requireusername');
                 }
-                //if not require username throw exception
+
                 if ($authorizationService->validateLogin($this->getRequestParameter('login'))) {
                     $domainPath = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConstant('BASE_URL');
                     $domainPath = str_replace('http://' . $_SERVER['HTTP_HOST'], '', $domainPath);
