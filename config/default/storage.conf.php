@@ -1,3 +1,3 @@
 <?php
 
-return new oat\taoClientDiagnostic\model\storage\Csv();
+return new oat\taoClientDiagnostic\model\storage\Sql();

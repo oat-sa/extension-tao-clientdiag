@@ -21,26 +21,19 @@
 
 namespace oat\taoClientDiagnostic\scripts\install;
 
-use oat\oatbox\action\Action;
 use oat\taoClientDiagnostic\model\storage\Sql;
 
 class createDiagnosticTable extends \common_ext_action_InstallAction
 {
     public function __invoke($params)
     {
-        \common_Logger::t('t');
-        \common_Logger::d('d');
-        \common_Logger::i('i');
-        \common_Logger::w('w');
-        \common_Logger::e('e');
-        \common_Logger::f('f');
         $persistence = \common_persistence_Manager::getPersistence('default');
         $schemaManager = $persistence->getSchemaManager();
         $schema = $schemaManager->createSchema();
         $fromSchema = clone $schema;
 
         try {
-            $tableDiagnosticReport = $schema->createtable(Sql::STORAGE_TABLE);
+            $tableDiagnosticReport = $schema->createTable(Sql::STORAGE_TABLE);
             $tableDiagnosticReport->addOption('engine', 'MyISAM');
 
             $tableDiagnosticReport->addColumn('id', 'string', array('length' => 16));
@@ -71,7 +64,7 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             $tableDiagnosticReport->addColumn('performance_median', 'float');
             $tableDiagnosticReport->addColumn('performance_variance', 'float');
 
-            $tableDiagnosticReport->addColumn('created_at', 'time', array('default' => 'CURRENT_TIMESTAMP'));
+            $tableDiagnosticReport->addColumn('created_at', 'datetime', array('default' => 'CURRENT_TIMESTAMP'));
 
             $tableDiagnosticReport->setPrimaryKey(array('id'));
             $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
@@ -79,11 +72,9 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
                 $persistence->exec($query);
             }
         } catch (SchemaException $e) {
-            \common_Logger::i('Database Schema already up to date.');
+            \common_Logger::w('Database Schema already up to date.');
         }
 
-
-        \common_Logger::i('----------------------------');
         return new \common_report_Report(\common_report_Report::TYPE_SUCCESS, 'all ok');
     }
 }

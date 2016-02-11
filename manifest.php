@@ -38,7 +38,7 @@ return array(
     'install' => array(
         'php' => array(
             dirname(__FILE__) . '/scripts/install/createSaveDirectory.php',
-            dirname(__FILE__) . '/scripts/install/createDiagnosticTable.php',
+			'oat\taoClientDiagnostic\scripts\install\createDiagnosticTable',
         )
     ),
     'uninstall' => array(
