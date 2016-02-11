@@ -27,6 +27,9 @@ use oat\taoClientDiagnostic\model\storage\Csv;
 use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\taoClientDiagnostic\model\storage\Storage;
 
+use oat\taoClientDiagnostic\model\authorization\Authorization;
+use oat\taoClientDiagnostic\model\authorization\RequireUsername;
+
 class Updater extends \common_ext_ExtensionUpdater
 {
 
