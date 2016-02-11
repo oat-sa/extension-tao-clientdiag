@@ -21,7 +21,7 @@
 
 namespace oat\taoClientDiagnostic\exception;
 
-class InvalidCallException extends \Exception implements common_exception_UserReadableException
+class InvalidCallException extends \Exception implements \common_exception_UserReadableException
 {
     /**
      * Message for end user
@@ -36,7 +36,7 @@ class InvalidCallException extends \Exception implements common_exception_UserRe
      * @param int $code
      * @param Exception $previous
      */
-    public function __construct($message = '', $code = 0, Exception $previous = null)
+    public function __construct($message = '', $code = 0, \Exception $previous = null)
     {
         parent::__construct($message, $code, $previous);
         if (!empty($message)) {
