@@ -23,6 +23,7 @@ namespace oat\taoClientDiagnostic\scripts\update;
 
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\authorization\RequireUsername;
+use oat\taoClientDiagnostic\model\storage\Csv;
 use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\taoClientDiagnostic\model\storage\Storage;
 
@@ -118,7 +119,9 @@ class Updater extends \common_ext_ExtensionUpdater
         if($this->isVersion('1.4.0')) {
 
             if (!$this->getServiceManager()->has(Storage::SERVICE_ID)) {
-                $service = new Csv();
+                $service = new Csv(array(
+                    'filename' => FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'store.csv'
+                ));
                 $service->setServiceManager($this->getServiceManager());
                 $this->getServiceManager()->register(Storage::SERVICE_ID, $service);
             }
