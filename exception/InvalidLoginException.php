@@ -21,7 +21,7 @@
 
 namespace oat\taoClientDiagnostic\exception;
 
-class InvalidLoginException extends \Exception implements common_exception_UserReadableException
+class InvalidLoginException extends \Exception implements \common_exception_UserReadableException
 {
     /**
      * Return user compliant message

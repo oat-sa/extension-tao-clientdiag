@@ -21,7 +21,7 @@
 
 namespace oat\taoClientDiagnostic\exception;
 
-class InvalidCallException extends \Exception implements common_exception_UserReadableException
+class InvalidCallException extends \Exception implements \common_exception_UserReadableException
 {
     /**
      * Return user compliant message

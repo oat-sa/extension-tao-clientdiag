@@ -22,6 +22,9 @@
 namespace oat\taoClientDiagnostic\scripts\update;
 
 
+use oat\taoClientDiagnostic\model\authorization\Authorization;
+use oat\taoClientDiagnostic\model\authorization\RequireUsername;
+
 class Updater extends \common_ext_ExtensionUpdater
 {
 
