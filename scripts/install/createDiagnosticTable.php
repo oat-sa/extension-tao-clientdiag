@@ -21,25 +21,21 @@
 
 namespace oat\taoClientDiagnostic\scripts\install;
 
-use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\oatbox\action\Action;
+use oat\taoClientDiagnostic\model\storage\Sql;
 
-class createDiagnosticTable implements Action
+class createDiagnosticTable extends \common_ext_action_InstallAction
 {
     public function __invoke($params)
     {
-        // create Table now
-        self::createTable();
-        // and after every newly installed extension
-        $this->registerEvent('common_ext_event_ExtensionInstalled', array(__CLASS__, 'createTable'));
-    }
-
-    public static function createTable()
-    {
-
+        \common_Logger::t('t');
+        \common_Logger::d('d');
+        \common_Logger::i('i');
+        \common_Logger::w('w');
+        \common_Logger::e('e');
+        \common_Logger::f('f');
         $persistence = \common_persistence_Manager::getPersistence('default');
-
-        $schemaManager = $persistence->getDriver()->getSchemaManager();
+        $schemaManager = $persistence->getSchemaManager();
         $schema = $schemaManager->createSchema();
         $fromSchema = clone $schema;
 
@@ -78,17 +74,16 @@ class createDiagnosticTable implements Action
             $tableDiagnosticReport->addColumn('created_at', 'time', array('default' => 'CURRENT_TIMESTAMP'));
 
             $tableDiagnosticReport->setPrimaryKey(array('id'));
-
+            $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+            foreach ($queries as $query) {
+                $persistence->exec($query);
+            }
         } catch (SchemaException $e) {
             \common_Logger::i('Database Schema already up to date.');
         }
 
-        $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
-        foreach ($queries as $query) {
-            $persistence->exec($query);
-        }
+
+        \common_Logger::i('----------------------------');
+        return new \common_report_Report(\common_report_Report::TYPE_SUCCESS, 'all ok');
     }
 }
-
-$test = new createDiagnosticTable();
-$test(array());
