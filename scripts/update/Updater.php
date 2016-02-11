@@ -106,6 +106,17 @@ class Updater extends \common_ext_ExtensionUpdater
             $accessService->grantModuleAccess($anonymous, 'taoClientDiagnostic', 'Authenticator');
 
             if (!$this->getServiceManager()->has(Authorization::SERVICE_ID)) {
+                $service = new RequireUsername();
+                $service->setServiceManager($this->getServiceManager());
+                $this->getServiceManager()->register(Authorization::SERVICE_ID, $service);
+            }
+
+            $this->setVersion('1.4.0');
+        }
+
+        if($this->isVersion('1.4.0')) {
+            $service = $this->getServiceManager()->get(Authorization::SERVICE_ID);
+            if ($service instanceof RequireUsername) {
                 $service = new RequireUsername(array(
                     'regexValidator' => '/^[0-9]{7}[A-Z]$/'
                 ));
@@ -113,7 +124,7 @@ class Updater extends \common_ext_ExtensionUpdater
                 $this->getServiceManager()->register(Authorization::SERVICE_ID, $service);
             }
 
-            $this->setVersion('1.4.0');
+            $this->setVersion('1.4.1');
         }
     }
 }
