@@ -41,11 +41,4 @@ interface Authorization
      * @return mixed
      */
     public function getAuthorizationUrl($url);
-
-    /**
-     * Validate login
-     * @throws inva
-     * @return mixed
-     */
-    public function validateLogin($login);
 }

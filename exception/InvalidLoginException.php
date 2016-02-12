@@ -24,32 +24,11 @@ namespace oat\taoClientDiagnostic\exception;
 class InvalidLoginException extends \Exception implements \common_exception_UserReadableException
 {
     /**
-     * Message for end user
-     * @var string
-     */
-    private $userMessage = 'Invalid login.';
-
-    /**
-     * InvalidLoginException constructor.
-     * Set custom message with exception message
-     * @param string $message
-     * @param int $code
-     * @param Exception $previous
-     */
-    public function __construct($message = '', $code = 0, \Exception $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-        if (!empty($message)) {
-            $this->userMessage = $message;
-        }
-    }
-
-    /**
      * Return user compliant message
      * @return string
      */
     public function getUserMessage()
     {
-        return __($this->userMessage);
+        return __('Invalid login');
     }
 }

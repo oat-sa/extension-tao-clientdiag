@@ -21,35 +21,6 @@
 
 namespace oat\taoClientDiagnostic\exception;
 
-class InvalidCallException extends \Exception implements \common_exception_UserReadableException
+class InvalidCallException extends \Exception
 {
-    /**
-     * Message for end user
-     * @var string
-     */
-    private $userMessage = 'Internal server error';
-
-    /**
-     * InvalidCallException constructor.
-     * Set user message with exception message
-     * @param string $message
-     * @param int $code
-     * @param Exception $previous
-     */
-    public function __construct($message = '', $code = 0, \Exception $previous = null)
-    {
-        parent::__construct($message, $code, $previous);
-        if (!empty($message)) {
-            $this->userMessage = $message;
-        }
-    }
-
-    /**
-     * Return user compliant message
-     * @return string
-     */
-    public function getUserMessage()
-    {
-        return __($this->userMessage);
-    }
 }

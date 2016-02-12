@@ -113,5 +113,18 @@ class Updater extends \common_ext_ExtensionUpdater
 
             $this->setVersion('1.4.0');
         }
+
+        if($this->isVersion('1.4.0')) {
+            $service = $this->getServiceManager()->get(Authorization::SERVICE_ID);
+            if ($service instanceof RequireUsername) {
+                $service = new RequireUsername(array(
+                    'regexValidator' => '/^[0-9]{7}[A-Z]$/'
+                ));
+                $service->setServiceManager($this->getServiceManager());
+                $this->getServiceManager()->register(Authorization::SERVICE_ID, $service);
+            }
+
+            $this->setVersion('1.4.1');
+        }
     }
 }
