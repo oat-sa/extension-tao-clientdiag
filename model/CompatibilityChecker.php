@@ -32,7 +32,7 @@ class CompatibilityChecker
         $this->dataList = array_keys($data);
 
         //compatibility data aren't there
-        if(!isset($data['browser']) || !isset($data['browserVersion']) || !isset($data['os']) || !isset($data['osVersion'])){
+        if (!isset($data['browser']) || !isset($data['browserVersion']) || !isset($data['os']) || !isset($data['osVersion'])) {
             throw new \common_exception_MissingParameter('browser / browserVersion / os / osVersion');
         }
 
@@ -76,11 +76,12 @@ class CompatibilityChecker
                     // it is valid if the version is in the array
                     // OR if the browser is chrome or firefox and it is a newer version than those in the array
                     $isValid = in_array($browserVersion[0], $rule->versions)
-                        || (in_array($rule->browser, array('Chrome','Firefox')) && $browserVersion[0] > max($rule->versions));
+                        || (in_array($rule->browser,
+                                array('Chrome', 'Firefox')) && $browserVersion[0] > max($rule->versions));
                 }
 
                 if ($validOs && ($rule->browser === ""
-                    || $rule->browser === $this->browser && $isValid)
+                        || $rule->browser === $this->browser && $isValid)
                 ) {
                     return true;
                 }

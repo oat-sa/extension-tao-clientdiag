@@ -22,20 +22,24 @@
 namespace oat\taoClientDiagnostic\scripts\update;
 
 
-class Updater extends \common_ext_ExtensionUpdater 
+use oat\taoClientDiagnostic\model\authorization\Authorization;
+use oat\taoClientDiagnostic\model\authorization\RequireUsername;
+
+class Updater extends \common_ext_ExtensionUpdater
 {
 
-	/**
-     * 
+    /**
+     *
      * @param string $currentVersion
      * @return string $versionUpdatedTo
      */
-    public function update($initialVersion) {
-        
+    public function update($initialVersion)
+    {
+
         $currentVersion = $initialVersion;
-		if ($currentVersion == '1.0') {
-			$currentVersion = '1.0.1';
-		}
+        if ($currentVersion == '1.0') {
+            $currentVersion = '1.0.1';
+        }
 
         if ($currentVersion == '1.0.1') {
 
@@ -84,6 +88,43 @@ class Updater extends \common_ext_ExtensionUpdater
             $currentVersion = '1.3.0';
         }
 
-		return $currentVersion;
-	}
+        $this->setVersion($currentVersion);
+
+        if($this->isVersion('1.3.0')) {
+            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+            $extension->setConfig('clientDiag', array_merge($config, array(
+                'diagHeader' => 'This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform.',
+            )));
+
+            $this->setVersion('1.3.1');
+        }
+
+        if($this->isVersion('1.3.1')) {
+            $accessService = \funcAcl_models_classes_AccessService::singleton();
+            $anonymous = new \core_kernel_classes_Resource('http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole');
+            $accessService->grantModuleAccess($anonymous, 'taoClientDiagnostic', 'Authenticator');
+
+            if (!$this->getServiceManager()->has(Authorization::SERVICE_ID)) {
+                $service = new RequireUsername();
+                $service->setServiceManager($this->getServiceManager());
+                $this->getServiceManager()->register(Authorization::SERVICE_ID, $service);
+            }
+
+            $this->setVersion('1.4.0');
+        }
+
+        if($this->isVersion('1.4.0')) {
+            $service = $this->getServiceManager()->get(Authorization::SERVICE_ID);
+            if ($service instanceof RequireUsername) {
+                $service = new RequireUsername(array(
+                    'regexValidator' => '/^[0-9]{7}[A-Z]$/'
+                ));
+                $service->setServiceManager($this->getServiceManager());
+                $this->getServiceManager()->register(Authorization::SERVICE_ID, $service);
+            }
+
+            $this->setVersion('1.4.1');
+        }
+    }
 }
