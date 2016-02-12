@@ -21,60 +21,37 @@
 
 namespace oat\taoClientDiagnostic\scripts\install;
 
-use oat\taoClientDiagnostic\model\storage\Sql;
-
-class createDiagnosticTable extends \common_ext_action_InstallAction
+class createDiagnosticTable
 {
-    public function __invoke($params)
+    public function __construct(array $params)
     {
+        $persistenceName = $params['persistence'];
+        $tables          = $params['tables'];
+
         $persistence = \common_persistence_Manager::getPersistence('default');
-        $schemaManager = $persistence->getSchemaManager();
-        $schema = $schemaManager->createSchema();
-        $fromSchema = clone $schema;
-
-        try {
-            $tableDiagnosticReport = $schema->createTable(Sql::STORAGE_TABLE);
-            $tableDiagnosticReport->addOption('engine', 'MyISAM');
-
-            $tableDiagnosticReport->addColumn('id', 'string', array('length' => 16));
-            $tableDiagnosticReport->addColumn('login', 'string', array('length' => 32));
-            $tableDiagnosticReport->addColumn('ip', 'string', array('length' => 32));
-            $tableDiagnosticReport->addColumn('browser', 'string', array('length' => 32));
-            $tableDiagnosticReport->addColumn('browserVersion', 'float');
-            $tableDiagnosticReport->addColumn('os', 'string', array('length' => 32));
-            $tableDiagnosticReport->addColumn('osVersion', 'float');
-            $tableDiagnosticReport->addColumn('compatible', 'boolean');
-            $tableDiagnosticReport->addColumn('version', 'float');
-
-            $tableDiagnosticReport->addColumn('bandwidth_min', 'float');
-            $tableDiagnosticReport->addColumn('bandwidth_max', 'float');
-            $tableDiagnosticReport->addColumn('bandwidth_sum', 'float');
-            $tableDiagnosticReport->addColumn('bandwidth_count', 'integer', array('length' => 16));
-            $tableDiagnosticReport->addColumn('bandwidth_average', 'float');
-            $tableDiagnosticReport->addColumn('bandwidth_median', 'float');
-            $tableDiagnosticReport->addColumn('bandwidth_variance', 'float');
-            $tableDiagnosticReport->addColumn('bandwidth_duration', 'float');
-            $tableDiagnosticReport->addColumn('bandwidth_size', 'integer', array('length' => 16));
-
-            $tableDiagnosticReport->addColumn('performance_min', 'float');
-            $tableDiagnosticReport->addColumn('performance_max', 'float');
-            $tableDiagnosticReport->addColumn('performance_sum', 'float');
-            $tableDiagnosticReport->addColumn('performance_count', 'integer', array('length' => 16));
-            $tableDiagnosticReport->addColumn('performance_average', 'float');
-            $tableDiagnosticReport->addColumn('performance_median', 'float');
-            $tableDiagnosticReport->addColumn('performance_variance', 'float');
-
-            $tableDiagnosticReport->addColumn('created_at', 'datetime', array('default' => 'CURRENT_TIMESTAMP'));
-
-            $tableDiagnosticReport->setPrimaryKey(array('id'));
-            $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
-            foreach ($queries as $query) {
-                $persistence->exec($query);
-            }
-        } catch (SchemaException $e) {
-            \common_Logger::w('Database Schema already up to date.');
-        }
-
-        return new \common_report_Report(\common_report_Report::TYPE_SUCCESS, 'all ok');
+//        $schemaManager = $persistence->getSchemaManager();
+//        $schema = $schemaManager->createSchema();
+//        $fromSchema = clone $schema;
+//
+//        try {
+//            foreach ($tables as $table) {
+//                $tableSchema = $schema->createTable($table['name']);
+//                $tableSchema->addOption('engine', 'MyISAM');
+//                foreach($table['columns'] as $column) {
+//                    if (empty($columns['options'])) {
+//                        $tableSchema->addColumn($column['name'], $column['type']);
+//                    } else {
+//                        $tableSchema->addColumn($column['name'], $column['type'], $columns['options']);
+//                    }
+//                }
+//                $tableSchema->setPrimaryKey($table['primaryKeys']);
+//            }
+//            $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+//            foreach ($queries as $query) {
+//                $persistence->exec($query);
+//            }
+//        } catch (SchemaException $e) {
+//            \common_Logger::w('Database Schema already up to date.');
+//        }
     }
 }

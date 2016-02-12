@@ -54,7 +54,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         if ($authorizationService->isAuthorized()) {
             $this->setData('clientDiagConfig', $this->loadConfig());
             $this->setData('clientConfigUrl', $this->getClientConfigUrl());
-            $this->setView('CompatibilityChecker/index.tpl');
+            $this->setView('CompatibilityChecker' . DIRECTORY_SEPARATOR . 'index.tpl');
         } else {
             $this->redirect($authorizationService->getAuthorizationUrl(_url('index')));
         }
@@ -65,7 +65,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     public function whichBrowser()
     {
-        $this->setView('CompatibilityChecker/browserDetection.php');
+        $this->setView('CompatibilityChecker' . DIRECTORY_SEPARATOR . 'browserDetection.php');
     }
 
     /**
@@ -105,9 +105,14 @@ class CompatibilityChecker extends \tao_actions_CommonModule
                     'message' => __('Compatible')
                 ],
                 //Not tested
+                '2' => [
+                    'success' => true,
+                    'type'    => 'warning',
+                    'message' => __('Ce navigateur n\'est pas testé.')
+                ],
             ];
 
-            $this->returnJson($compatibilityMessage[$isCompatible]);
+            $this->returnJson($compatibilityMessage[2]);
 
         } catch (\common_exception_MissingParameter $e) {
             $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $e->getUserMessage()));

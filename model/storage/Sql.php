@@ -31,22 +31,28 @@ use oat\taoClientDiagnostic\model\entity\Entity;
  */
 class Sql extends ConfigurableService implements Storage
 {
-
-    const STORAGE_TABLE = "diagnosticreport";
-
     /**
      * @var \common_persistence_Persistence
      */
     private $persistence;
+    private $tables;
+    private $table;
 
     /**
      * Sql constructor, set the persistence object
      */
     public function __construct()
     {
-        $this->persistence = \common_persistence_Manager::getPersistence('default');
+        $this->tables      = $this->getOption('tables');
+        $this->persistence = \common_persistence_Manager::getPersistence($this->getOption('persistence'));
     }
 
+    private function setTable(Entity $entity)
+    {
+        $this->table = $this->tables[$entity->getName()];
+        \common_Logger::i(print_r($this->tableName, true));
+        return $this;
+    }
     /**
      * If id already exists, update it by new values
      * Else insert new entry
@@ -56,6 +62,8 @@ class Sql extends ConfigurableService implements Storage
      */
     public function store(Entity $entity)
     {
+        $this->setTable($entity);
+
         $id = $entity->getId();
 
         try {
@@ -78,7 +86,7 @@ class Sql extends ConfigurableService implements Storage
      */
     private function exists($id)
     {
-        $query = "SELECT id FROM " . self::STORAGE_TABLE . " WHERE id = ?";
+        $query = "SELECT id FROM " . $this->table . " WHERE id = ?";
         $statement = $this->persistence->query($query, array($id));
         return (boolean)$statement->rowCount();
     }
