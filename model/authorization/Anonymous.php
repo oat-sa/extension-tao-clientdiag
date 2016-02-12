@@ -45,13 +45,4 @@ class Anonymous extends ConfigurableService implements Authorization
     {
         throw new InvalidCallException();
     }
-
-    /**
-     * @inheritdoc
-     */
-    public function validateLogin($login)
-    {
-        throw new InvalidCallException();
-    }
-
 }

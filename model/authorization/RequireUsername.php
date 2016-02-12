@@ -53,7 +53,7 @@ class RequireUsername extends ConfigurableService implements Authorization
      * Check if login is valid
      *  - not empty
      *  - exists in TAO ACL -OR- match with regex
-     * @throws \Exception
+     * @throws InvalidLoginException
      */
     public function validateLogin($login = null)
     {
@@ -62,7 +62,7 @@ class RequireUsername extends ConfigurableService implements Authorization
         }
 
         if (\tao_models_classes_UserService::singleton()->loginExists($login)
-            || preg_match('/^[0-9]{7}[A-Z]$/', $login) === 1
+            || ($this->hasOption('regexValidator') &&  preg_match($this->getOption('regexValidator'), $login) === 1)
         ) {
             return true;
         }
