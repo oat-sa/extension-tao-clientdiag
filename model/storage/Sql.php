@@ -23,7 +23,6 @@ namespace oat\taoClientDiagnostic\model\storage;
 
 use oat\oatbox\service\ConfigurableService;
 use oat\taoClientDiagnostic\exception\StorageException;
-use oat\taoClientDiagnostic\model\entity\Entity;
 
 /**
  * Class Sql
@@ -32,90 +31,125 @@ use oat\taoClientDiagnostic\model\entity\Entity;
 class Sql extends ConfigurableService implements Storage
 {
     /**
+     * Constant for diagnostic table name
+     */
+    const DIAGNOSTIC_TABLE = 'diagnostic_report';
+
+    /**
+     * Constant for persistence option
+     */
+    const DIAGNOSTIC_PERSISTENCE = 'persistence';
+
+    /**
      * @var \common_persistence_Persistence
      */
     private $persistence;
-    private $tables;
-    private $table;
 
     /**
-     * Sql constructor, set the persistence object
+     * Get persistence with configurable driver option of Sql Storage
+     * Get default driver if option is not set
+     * @return \common_persistence_Persistence
      */
-    public function __construct()
+    public function getPersistence()
     {
-        $this->tables      = $this->getOption('tables');
-        $this->persistence = \common_persistence_Manager::getPersistence($this->getOption('persistence'));
+        $persistenceOption = $this->getOption(self::DIAGNOSTIC_PERSISTENCE);
+        $persistence = (!empty($persistenceOption)) ? $persistenceOption : 'default';
+        return \common_persistence_Manager::getPersistence($persistence);
     }
 
-    private function setTable(Entity $entity)
-    {
-        $this->table = $this->tables[$entity->getName()];
-        \common_Logger::i(print_r($this->tableName, true));
-        return $this;
-    }
+
     /**
-     * If id already exists, update it by new values
+     * If record already exists, update it by new values
      * Else insert new entry
-     * @param Entity $entity
-     * @return bool
+     * @param $id
+     * @param array $data
+     * @return mixed
      * @throws StorageException
      */
-    public function store(Entity $entity)
+    public function store($id, $data = array())
     {
-        $this->setTable($entity);
-
-        $id = $entity->getId();
-
         try {
-            $exists = $this->exists($id);
-            if (empty($exists)) {
-                $this->insert($entity);
-            } else {
-                $this->update($entity);
+
+            if (empty($id)) {
+                throw new StorageException('Invalid id parameter.');
             }
+            $this->persistence = $this->getPersistence();
+
+            $data = $this->cleanInputData($data);
+            if (!$this->exists($id)) {
+                $this->insert($id, $data);
+            } else {
+                $this->update($id, $data);
+            }
+            return true;
+
         } catch (\PDOException $e) {
             throw new StorageException($e->getMessage());
         }
-        return true;
     }
 
     /**
-     * Check if id is already in database
+     * Check if $input keys are constants of Storage
+     * @param array $input
+     * @return array
+     * @throws StorageException
+     */
+    protected function cleanInputData(array $input)
+    {
+        foreach ($input as $key => $value) {
+            $const = 'self::DIAGNOSTIC_' . strtoupper($key);
+            if (defined($const)) {
+                $data[constant($const)] = $value;
+            }
+        }
+        if (empty($data)) {
+            throw new StorageException('No data to insert into storage');
+        }
+
+        return $data;
+    }
+
+    /**
+     * Check if record is already in database by $this->id
      * @param $id
      * @return bool
      */
     private function exists($id)
     {
-        $query = "SELECT id FROM " . $this->table . " WHERE id = ?";
+        $query = 'SELECT ' . self::DIAGNOSTIC_ID . ' FROM ' . self::DIAGNOSTIC_TABLE . ' WHERE ' . self::DIAGNOSTIC_ID . ' = ?';
         $statement = $this->persistence->query($query, array($id));
         return (boolean)$statement->rowCount();
     }
 
+
     /**
-     * Create new entry in SQL table
-     * @param $entity
+     * Create new record in SQL table with $data & $this->id
+     * @param $id
+     * @param $data
      * @return mixed
      */
-    private function insert($entity)
+    private function insert($id, $data)
     {
-        $columns = array_merge($entity->getPopulatedColumns(), array('id' => $entity->getId()));
-        $query = 'INSERT INTO ' . self::STORAGE_TABLE . '(' . implode(', ', array_keys($columns)) . ')' .
+        $columns = array_merge(array(self::DIAGNOSTIC_ID => $id), $data);
+        $query = 'INSERT INTO ' . self::DIAGNOSTIC_TABLE . '(' . implode(', ', array_keys($columns)) . ')' .
                  ' VALUES (' . str_repeat("?,", count($columns) - 1) . '? )';
         return $this->persistence->exec($query, array_values($columns));
     }
 
+
     /**
-     * Update entity in SQL table
-     * @param $entity
+     * Update record in SQL table with $data by $this->id
+     * @param $id
+     * @param $data
      * @return mixed
      */
-    private function update($entity)
+    private function update($id, $data)
     {
-        $columns = $entity->getPopulatedColumns();
-        foreach ($columns as $key => $value) {
+        foreach ($data as $key => $value) {
             $fields[] = $key . ' = ?';
         }
-        $query = 'UPDATE ' . self::STORAGE_TABLE . ' SET ' . implode(', ', $fields) . ' WHERE id = ?';
-        return $this->persistence->exec($query, array_merge(array_values($columns), array($entity->getId())));
+        $query = 'UPDATE ' . self::DIAGNOSTIC_TABLE . ' SET ' . implode(', ', $fields) .
+                 ' WHERE ' . self::DIAGNOSTIC_ID . ' = ?';
+        return $this->persistence->exec($query, array_merge(array_values($data), array($id)));
     }
 }

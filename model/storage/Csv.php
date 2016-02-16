@@ -23,8 +23,6 @@ namespace oat\taoClientDiagnostic\model\storage;
 
 use oat\oatbox\service\ConfigurableService;
 use oat\taoClientDiagnostic\exception\StorageException;
-use oat\taoClientDiagnostic\model\entity\Entity;
-use oat\taoClientDiagnostic\model\Entity\DiagnosticReport;
 
 /**
  * Class Csv
@@ -39,43 +37,83 @@ class Csv extends ConfigurableService implements Storage
     private $handle;
 
     /**
-     * Check if csv file exists
-     * If id already exists, merge old data to current & remove old one
-     * Create new entry in csv file
-     *
-     * @param Entity $entity
+     * Merge id and data array
+     * Clean input data by adding empty column
+     * Open csv and create new entry
+     * @param $id
+     * @param $data
      * @return $this
      */
-    public function store(Entity $entity)
+    public function store($id, $data = array())
     {
-        $id      = $entity->getId();
-        $columns = array_merge(['id'], $entity->getColumnsName());
-        $data    = array_merge(['id' => $id], $entity->toArray());
+        $data = array_merge(
+            [self::DIAGNOSTIC_ID => $id],
+            $data
+        );
 
-        $this->openFile($columns);
+        $data = $this->cleanInputData($data);
+
+        $this->openFile();
         $this->update($id, $data);
 
         return $this;
     }
 
     /**
+     * Check if $input keys are constants of Storage
+     * Set input keys as empty value if not exists
+     * @param array $input
+     * @return array
+     */
+    protected function cleanInputData(array $input)
+    {
+        $columns = $this->getColumns();
+        foreach ($columns as $column) {
+            if (!isset($input[$column])) {
+                $input[$column] = '';
+            }
+        }
+        return $input;
+    }
+
+    /**
      * Handle csv file, create it if not exists (with column name)
-     * @param array $columns
      * @throws StorageException
      * @return string
      */
-    private function openFile($columns = array())
+    private function openFile()
     {
         $file = $this->getOption('filename');
         $fileExists = file_exists($file);
         if (($this->handle = fopen($file, 'a+')) !== false) {
             if (!$fileExists) {
-                fputcsv($this->handle, $columns,';');
+                fputcsv($this->handle, $this->getColumns(),';');
                 fseek($this->handle, 0);
             }
             return;
         }
-        throw new StorageException('Unable to read csv file');
+        throw new StorageException('Unable to open csv file');
+    }
+
+    /**
+     * Return an array of Storage constant var
+     * @return array
+     * @throws StorageException
+     */
+    private function getColumns()
+    {
+        $class = new \ReflectionClass(__CLASS__);
+        $constants = $class->getConstants();
+        $columns = [];
+        foreach ($constants as $constant => $value) {
+            if (strpos($constant, 'DIAGNOSTIC_') === 0) {
+                array_push($columns, $value);
+            }
+        }
+        if (empty($columns)) {
+            throw new StorageException('No column to fill into CSV storage');
+        }
+        return $columns;
     }
 
     /**
@@ -86,8 +124,7 @@ class Csv extends ConfigurableService implements Storage
      * @return bool|string|void
      * @throws StorageException
      */
-    private function update($id, $entityData) {
-
+    private function update($id, $entityData = []) {
         $tmpFile = \tao_helpers_File::createTempDir() . 'store.csv';
         $tmpHandle = fopen($tmpFile, 'w');
         $line = 1;
@@ -104,12 +141,8 @@ class Csv extends ConfigurableService implements Storage
 
             if ($data[$index] == $id) {
                 foreach($data as $index => $value){
-                    if (!empty($value)) {
+                    if (empty($entityData[$keys[$index]])) {
                         $entityData[$keys[$index]] = $value;
-                    } elseif (!empty($entityData[$keys[$index]])) {
-                        continue;
-                    } else {
-                        $entityData[$keys[$index]] = '';
                     }
                 }
             }
@@ -118,6 +151,7 @@ class Csv extends ConfigurableService implements Storage
             }
             $line++;
         }
+        $entityData = array_merge(array_flip($keys), $entityData);
         fputcsv($tmpHandle, $entityData, ';');
         fclose($tmpHandle);
         fclose($this->handle);

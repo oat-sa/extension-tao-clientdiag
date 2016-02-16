@@ -84,11 +84,10 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $data['compatible'] = $isCompatible;
 
             try {
-                $diagnostic = new DiagnosticReport($id, $data);
                 $storageService = $this->getServiceManager()->get(Storage::SERVICE_ID);
-                $storageService->store($diagnostic);
+                $storageService->store($id, $data);
             } catch (StorageException $e) {
-                \common_Logger::w($e->getMessage());
+                \common_Logger::i($e->getMessage());
             }
 
             $compatibilityMessage = [
@@ -128,12 +127,11 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         $id   = $this->getId();
 
         try {
-            $diagnostic     = new DiagnosticReport($id, $data);
             $storageService = $this->getServiceManager()->get(Storage::SERVICE_ID);
-            $storageService->store($diagnostic);
+            $storageService->store($id, $data);
             $this->returnJson(array('success' => true, 'type' => 'success'));
         } catch (StorageException $e) {
-            \common_Logger::w($e->getMessage());
+            \common_Logger::i($e->getMessage());
             $this->returnJson(array('success' => false, 'type' => 'error'));
         }
     }
@@ -183,6 +181,8 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         } else {
             $data['login'] = 'Anonymous';
         }
+
+        $data['version'] = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getVersion();
 
         $data['ip'] = (!empty($_SERVER['HTTP_X_REAL_IP'])) ? $_SERVER['HTTP_X_REAL_IP'] : ((!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : 'unknown');
         return $data;
