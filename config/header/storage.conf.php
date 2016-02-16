@@ -7,7 +7,7 @@
  *
  * By default, the storage is Sql. It accepts one optional parameter: the persistence driver
  *     return new oat\taoClientDiagnostic\model\storage\Sql(array(
-            'persistence' => 'default'
+ *          'persistence' => 'default'
  *     ));
  *
  * WARNING: in case of update from CSV to SQL you need to update manifest in install section:

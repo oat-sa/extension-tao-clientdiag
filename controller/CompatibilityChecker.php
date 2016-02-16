@@ -23,9 +23,7 @@ namespace oat\taoClientDiagnostic\controller;
 
 use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
-use oat\taoClientDiagnostic\model\DataStorage;
 use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
-use oat\taoClientDiagnostic\model\entity\DiagnosticReport;
 use oat\taoClientDiagnostic\model\storage\Storage;
 
 /**
