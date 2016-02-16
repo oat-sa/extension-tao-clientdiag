@@ -105,7 +105,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
                 '2' => [
                     'success' => true,
                     'type'    => 'warning',
-                    'message' => __('Ce navigateur n\'est pas testé.')
+                    'message' => __('This browser is not tested.')
                 ],
             ];
 

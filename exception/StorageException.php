@@ -21,14 +21,6 @@
 
 namespace oat\taoClientDiagnostic\exception;
 
-class StorageException extends \Exception implements \common_exception_UserReadableException
+class StorageException extends \Exception
 {
-    /**
-     * Return user compliant message
-     * @return string
-     */
-    public function getUserMessage()
-    {
-        return __('Internal server error');
-    }
 }

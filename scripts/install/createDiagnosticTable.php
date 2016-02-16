@@ -2,15 +2,18 @@
 
 namespace oat\taoClientDiagnostic\scripts\install;
 
+use oat\oatbox\service\ServiceManager;
 use oat\taoClientDiagnostic\model\storage\Sql;
 use Doctrine\DBAL\Schema\SchemaException;
+use oat\taoClientDiagnostic\model\storage\Storage;
 
 class createDiagnosticTable extends \common_ext_action_InstallAction
 {
     public function __invoke($params)
     {
-        $SqlService = new Sql();
-        $persistence = $SqlService->getPersistence();
+        $persistence = ServiceManager::getServiceManager()
+            ->get(Storage::SERVICE_ID)
+            ->getPersistence();
 
         $schemaManager = $persistence->getDriver()->getSchemaManager();
         $schema = $schemaManager->createSchema();
