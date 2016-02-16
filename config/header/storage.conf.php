@@ -10,7 +10,7 @@
  *          'persistence' => 'default'
  *     ));
  *
- * WARNING: in case of update from CSV to SQL you need to update manifest in install section:
+ * WARNING: in case of install to SQL you need to update manifest in install section:
  * [...]
  *      'install' => array(
  *          'php' => array(
@@ -19,6 +19,7 @@
  *          )
  *      ),
  * [...]
+ * For update, add this script to updater
  *
  *
  *
@@ -30,7 +31,7 @@
  *          'filename' => FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'store.csv'
  *     ))
  *
- * WARNING: in case of update from CSV to SQL you need to update manifest in install section:
+ * WARNING: in case of install to CSV you need to update manifest in install section:
  * [...]
  *      'install' => array(
  *          'php' => array(
@@ -39,4 +40,5 @@
  *          )
  *      ),
  * [...]
+ * For update, add this script to updater
  */

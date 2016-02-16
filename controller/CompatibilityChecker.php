@@ -109,7 +109,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
                 ],
             ];
 
-            $this->returnJson($compatibilityMessage[2]);
+            $this->returnJson($compatibilityMessage[$isCompatible]);
 
         } catch (\common_exception_MissingParameter $e) {
             $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $e->getUserMessage()));
