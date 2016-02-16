@@ -9,14 +9,15 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
 {
     public function __invoke($params)
     {
-        $persistence = common_persistence_Manager::getPersistence(Sql::DIAGNOSTIC_PERSISTENCE);
+        $SqlService = new Sql();
+        $persistence = $SqlService->getPersistence();
 
         $schemaManager = $persistence->getDriver()->getSchemaManager();
         $schema = $schemaManager->createSchema();
         $fromSchema = clone $schema;
 
         try {
-            $tableResults = $schema->createtable(Sql::RESULTS_TABLENAME);
+            $tableResults = $schema->createtable(Sql::DIAGNOSTIC_TABLE);
             $tableResults->addOption('engine', 'MyISAM');
 
             $tableResults->addColumn(Sql::DIAGNOSTIC_ID, 'string', ['length' => 16]);
@@ -54,7 +55,7 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             }
 
         } catch(SchemaException $e) {
-            common_Logger::i('Database Schema already up to date.');
+            \common_Logger::i('Database Schema already up to date.');
         }
         return new \common_report_Report(\common_report_Report::TYPE_SUCCESS, 'Diagnostic successfully created');
     }

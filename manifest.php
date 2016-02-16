@@ -24,7 +24,7 @@ return array(
 	'label' => 'Browser and OS diagnostic tool',
 	'description' => 'Check compatibility of the os and browser of a client',
     'license' => 'GPL-2.0',
-    'version' => '1.5.0',
+    'version' => '1.6.0',
 	'author' => 'Open Assessment Technologies SA',
 	'requires' => array('tao' => '>=2.7.8', 'taoQtiItem' => '>=2.9'),
 	// for compatibility
@@ -37,7 +37,6 @@ return array(
     ),
     'install' => array(
         'php' => array(
-            dirname(__FILE__) . '/scripts/install/createSaveDirectory.php',
 			'oat\taoClientDiagnostic\scripts\install\createDiagnosticTable',
         )
     ),
