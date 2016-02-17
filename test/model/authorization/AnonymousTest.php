@@ -50,10 +50,4 @@ class AnonymousTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException('oat\taoClientDiagnostic\exception\InvalidCallException');
         $this->instance->getAuthorizationUrl('urlFixture');
     }
-
-    public function testValidateLogin()
-    {
-        $this->setExpectedException('oat\taoClientDiagnostic\exception\InvalidCallException');
-        $this->instance->validateLogin('loginFixture');
-    }
 }
