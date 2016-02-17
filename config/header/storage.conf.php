@@ -19,7 +19,9 @@
  *          )
  *      ),
  * [...]
- * For update, add this script to updater
+ * For update, add this script to updater:
+ *     $script = new oat\taoClientDiagnostic\scripts\install\createDiagnosticTable();
+ *     $script();
  *
  *
  *
