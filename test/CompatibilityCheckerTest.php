@@ -18,22 +18,21 @@ class CompatibilityCheckerTest extends \PHPUnit_Framework_TestCase
         $checker = new CompatibilityChecker($sentData);
 
 
-        $compatibility = json_decode(json_encode(array(
-            array("os" => "Windows", "osVersion" => "8.1", "browser" => "Chrome", "versions" => array(33, 34, 35))
-        )));
+        $compatibility = array(
+            array("compatible" => 1, "os" => "Windows", "osVersion" => "8.1", "browser" => "Chrome", "versions" => array(33, 34, 35))
+        );
         $ref = new \ReflectionProperty('oat\taoClientDiagnostic\model\CompatibilityChecker', 'compatibility');
         $ref->setAccessible(true);
         $ref->setValue($checker, $compatibility);
 
         $return = $checker->isCompatibleConfig();
 
-        $this->assertTrue($return);
+        $this->assertEquals($return, 1);
 
     }
 
-    public function testCompatibleConfigFalse()
+    public function testNotTestedCompatibleConfig()
     {
-
         $sentData = array(
             'os'                => 'Windows',
             'osVersion'         => '8.1',
@@ -43,18 +42,39 @@ class CompatibilityCheckerTest extends \PHPUnit_Framework_TestCase
 
         $checker = new CompatibilityChecker($sentData);
 
-        $compatibility = json_decode(json_encode(array(
-            array("os" => "Windows", "osVersion" => "8.1", "browser" => "Chrome", "versions" => array(33, 34, 35))
-        )));
+        $compatibility = array(
+            array("compatible" => 1, "os" => "Windows", "osVersion" => "8.1", "browser" => "Chrome", "versions" => array(33, 34, 35))
+        );
         $ref = new \ReflectionProperty('oat\taoClientDiagnostic\model\CompatibilityChecker', 'compatibility');
         $ref->setAccessible(true);
         $ref->setValue($checker, $compatibility);
 
         $return = $checker->isCompatibleConfig();
 
-        $this->assertFalse($return);
+        $this->assertEquals($return, 2);
+    }
 
+    public function testNotCompatibleConfig()
+    {
+        $sentData = array(
+            'os'                => 'Windows',
+            'osVersion'         => '7',
+            'browser'           => 'Internet Explorer',
+            'browserVersion'    => '9'
+        );
 
+        $checker = new CompatibilityChecker($sentData);
+
+        $compatibility = array(
+            array("compatible" => 0, "os" => "Windows", "osVersion" => "7", "browser" => "Internet Explorer", "versions" => array(9))
+        );
+        $ref = new \ReflectionProperty('oat\taoClientDiagnostic\model\CompatibilityChecker', 'compatibility');
+        $ref->setAccessible(true);
+        $ref->setValue($checker, $compatibility);
+
+        $return = $checker->isCompatibleConfig();
+
+        $this->assertEquals($return, 0);
     }
 
 }

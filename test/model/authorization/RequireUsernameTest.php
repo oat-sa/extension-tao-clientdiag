@@ -61,7 +61,6 @@ class RequireUsernameTest extends \PHPUnit_Framework_TestCase
         return [
             ['', true, '\oat\taoClientDiagnostic\exception\InvalidLoginException'],
             ['loginFixture', true, '\oat\taoClientDiagnostic\exception\InvalidLoginException'],
-            ['1234567A', false, ''],
             ['loginFixture', false, '', true, true],
             ['loginFixture', true, '\oat\taoClientDiagnostic\exception\InvalidLoginException', true],
 
