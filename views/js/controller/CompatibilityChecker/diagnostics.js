@@ -30,8 +30,9 @@ define([
     'layout/loading-bar',
     'taoClientDiagnostic/tools/performances/tester',
     'taoClientDiagnostic/tools/bandwidth/tester',
+    'taoClientDiagnostic/tools/browser/tester',
     'ui/feedback'
-], function ($, _, __, async, helpers, loadingBar, performancesTester, bandwidthTester, feedback) {
+], function ($, _, __, async, helpers, loadingBar, performancesTester, bandwidthTester, browserTester, feedback) {
     'use strict';
 
     /**
@@ -214,37 +215,6 @@ define([
     }
 
     /**
-     * Performs a browser checks
-     * @param {Function} done
-     */
-    function checkBrowser(done) {
-        var info = new WhichBrowser();
-        var browser = info.browser;
-        var os = info.os;
-        var information = {
-            browser: browser && browser.name || __('Unknown browser'),
-            browserVersion: browser && browser.version && browser.version.original || __('Unknown version'),
-            os: os && os.name || __('Unknown OS'),
-            osVersion: os && os.version && (os.version.alias || os.version.original) || __('Unknown version')
-        };
-
-        // which browser
-        $.post(
-            helpers._url('check', 'CompatibilityChecker', 'taoClientDiagnostic'),
-            information,
-            function(data){
-                if ('success' === data.type) {
-                    data.percentage = 100;
-                } else {
-                    data.percentage = 0;
-                }
-                done(data, information);
-            },
-            "json"
-        );
-    }
-
-    /**
      * Sends the detailed stats to the server
      * @param {String} type The type of stats
      * @param {Object} details The stats details
@@ -260,7 +230,31 @@ define([
             done,
             "json"
         );
-    };
+    }
+
+    /**
+     * Performs a browser checks
+     * @param {Object} config
+     * @param {Function} done
+     */
+    function checkBrowser(config, done) {
+        browserTester(window, config).start(function(information) {
+            // which browser
+            $.post(
+                helpers._url('check', 'CompatibilityChecker', 'taoClientDiagnostic'),
+                information,
+                function (data) {
+                    if ('success' === data.type) {
+                        data.percentage = 100;
+                    } else {
+                        data.percentage = 0;
+                    }
+                    done(data, information);
+                },
+                'json'
+            );
+        });
+    }
 
     /**
      * Performs a browser bandwidth check
@@ -353,7 +347,7 @@ define([
             $testTriggerBtn.hide();
 
             async.series([function(cb) {
-                checkBrowser(function(status, details) {
+                checkBrowser(getResultConfig('browser'), function(status, details) {
                     _.assign(information, {
                         browser: {message: __('Web browser'), value: details.browser + ' ' + details.browserVersion},
                         os: {message: __('Operating system'), value: details.os + ' ' + details.osVersion}
