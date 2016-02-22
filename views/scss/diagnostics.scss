@@ -29,6 +29,10 @@
         @include font-size(12);
     }
 
+    .status, .details h2 {
+        margin: 1rem;
+    }
+
     .legend {
         font-style: italic;
         font-weight: normal;

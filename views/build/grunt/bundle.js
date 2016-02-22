@@ -4,12 +4,12 @@ module.exports = function(grunt) {
     var requirejs   = grunt.config('requirejs') || {};
     var clean       = grunt.config('clean') || {};
     var copy        = grunt.config('copy') || {};
+    var uglify      = grunt.config('uglify') || {};
 
     var root        = grunt.option('root');
     var libs        = grunt.option('mainlibs');
     var ext         = require(root + '/tao/views/build/tasks/helpers/extensions')(grunt, root);
     var out         = 'output';
-
 
     /**
      * Remove bundled and bundling files
@@ -37,6 +37,15 @@ module.exports = function(grunt) {
         }
     };
 
+    uglify.taoclientdiagnosticloader = {
+        options : {
+            force : true
+        },
+        files : [
+            { dest : root + '/taoClientDiagnostic/views/js/loader/bootstrap.min.js', src : ['../js/lib/require.js', root + '/taoClientDiagnostic/views/js/loader/bootstrap.js'] }
+        ]
+    };
+
     /**
      * copy the bundles to the right place
      */
@@ -49,8 +58,9 @@ module.exports = function(grunt) {
 
     grunt.config('clean', clean);
     grunt.config('requirejs', requirejs);
+    grunt.config('uglify', uglify);
     grunt.config('copy', copy);
 
     // bundle task
-    grunt.registerTask('taoclientdiagnosticbundle', ['clean:taoclientdiagnosticbundle', 'requirejs:taoclientdiagnosticbundle', 'copy:taoclientdiagnosticbundle']);
+    grunt.registerTask('taoclientdiagnosticbundle', ['clean:taoclientdiagnosticbundle', 'requirejs:taoclientdiagnosticbundle', 'uglify:taoclientdiagnosticloader', 'copy:taoclientdiagnosticbundle']);
 };

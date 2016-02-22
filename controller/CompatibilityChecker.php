@@ -50,8 +50,17 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     {
         $authorizationService = $this->getServiceManager()->get(Authorization::SERVICE_ID);
         if ($authorizationService->isAuthorized()) {
-            $this->setData('clientDiagConfig', $this->loadConfig());
-            $this->setData('clientConfigUrl', $this->getClientConfigUrl());
+
+            $config = $this->loadConfig();
+            if (isset($config['diagHeader'])) {
+                $config['header'] = $config['diagHeader'];
+                unset($config['diagHeader']);
+            }
+
+            $this->setData('client-config-url', $this->getClientConfigUrl());
+            $this->setData('content-config', $config);
+            $this->setData('content-controller', 'taoClientDiagnostic/controller/CompatibilityChecker/diagnostics');
+            $this->setData('content-template', 'CompatibilityChecker' . DIRECTORY_SEPARATOR . 'diagnostics.tpl');
             $this->setView('CompatibilityChecker' . DIRECTORY_SEPARATOR . 'index.tpl');
         } else {
             $this->redirect($authorizationService->getAuthorizationUrl(_url('index')));

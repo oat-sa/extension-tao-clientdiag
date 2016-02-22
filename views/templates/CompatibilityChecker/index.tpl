@@ -2,7 +2,6 @@
 use oat\tao\helpers\Template;
 use oat\tao\helpers\Layout;
 use oat\tao\model\theme\Theme;
-$config = get_data('clientDiagConfig');
 ?>
 
 <!doctype html>
@@ -15,13 +14,19 @@ $config = get_data('clientDiagConfig');
     <title><?= Layout::getTitle() ?></title>
     <link rel="shortcut icon" href="<?= Template::img('img/favicon.ico') ?>"/>
 
-    <script
-        id="amd-loader"
-        src="<?= Template::js('lib/require.js', 'tao') ?>"
-        data-controller="<?= Template::js('controller/CompatibilityChecker/') ?>"
-        data-main="<?= Template::js('index.js') ?>"
-        data-config="<?= get_data('clientConfigUrl') ?>">
-    </script>
+    <script id="amd-loader"
+        <?php if(\tao_helpers_Mode::is('production')): ?>
+            src="<?= Template::js('loader/bootstrap.min.js', 'taoClientDiagnostic') ?>"
+            data-bundle="taoClientDiagnostic/controllers.min"
+        <?php else : ?>
+            src="<?= Template::js('lib/require.js', 'tao') ?>"
+            data-main="<?= Template::js('loader/bootstrap.js', 'taoClientDiagnostic'); ?>"
+        <?php endif ?>
+            data-config="<?= get_data('client-config-url') ?>"
+            data-controller="<?= get_data('content-controller') ?>"
+            data-params="<?= _dh(json_encode(get_data('content-config'))); ?>"
+    ></script>
+
     <link rel='stylesheet' type='text/css' href="<?= Template::css('diagnostics.css') ?>"/>
     <?= tao_helpers_Scriptloader::render() ?>
     <link rel="stylesheet" href="<?= Layout::getThemeStylesheet(Theme::CONTEXT_FRONTOFFICE) ?>"/>
@@ -40,80 +45,9 @@ $config = get_data('clientDiagConfig');
 
     <?php Template::inc('blocks/header.tpl', 'tao'); ?>
 
-    <div class="diagnostics-main-area">
+    <div id="feedback-box" data-error="<?= get_data('errorMessage') ?>" data-message="<?= get_data('message') ?>"></div>
 
-        <h1><?= __('Diagnostic Tool') ?></h1>
-
-        <div class="intro">
-            <p><?= __($config['diagHeader']) ?></p>
-            <p><?= __('Be aware that these tests will take up to several minutes.') ?></p>
-        </div>
-        <div class="clearfix">
-            <button data-action="test-launcher" class="btn-info small rgt"><?= __('Begin diagnostics') ?></button>
-        </div>
-
-        <ul class="plain">
-            <li data-result="browser">
-                <h2><?= __('Operating system and web browser') ?></h2>
-                <div class="small feedback">
-                    <span class="icon"></span>
-                    <span class="msg"></span>
-                </div>
-            </li>
-            <li data-result="performance" data-config="<?= isset($config['performances']) ? _dh(json_encode($config['performances'])) : ''; ?>">
-                <h2><?= __('Workstation performance') ?></h2>
-                <div>
-                    <div class="small feedback">
-                        <span class="icon"></span>
-                        <span class="msg"></span>
-                    </div>
-                    <div class="quality-bar">
-                        <div class="quality-indicator"></div>
-                    </div>
-                </div>
-            </li>
-            <li data-result="bandwidth-0" data-config="<?= isset($config['bandwidth']) ? _dh(json_encode($config['bandwidth'])) : ''; ?>">
-                <h2><?= __('Bandwidth'); ?></h2>
-                <div>
-                    <div class="legend"><?= __('Number of simultaneous test takers the connection can handle'); ?></div>
-                    <div class="small feedback">
-                        <span class="icon"></span>
-                        <span class="msg"></span>
-                    </div>
-                    <div class="quality-bar">
-                        <div class="quality-indicator"></div>
-                    </div>
-                </div>
-            </li>
-            <li data-result="total">
-                <h2><?= __('Total') ?></h2>
-                <div>
-                    <div class="small feedback">
-                        <span class="icon"></span>
-                        <span class="msg"></span>
-                    </div>
-                    <div class="quality-bar" data-result="total">
-                        <div class="quality-indicator"></div>
-                    </div>
-                </div>
-                <div class="clearfix">
-                    <button data-action="display-details" class="rgt btn-info small"><?=
-                        __('Show Details') ?></button>
-                </div>
-            </li>
-            <li data-result="details">
-                <h2><?= __('Details') ?></h2>
-                <div>
-                    <table class="matrix" id="details">
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
-
-            </li>
-        </ul>
-
-    </div>
+    <?php Template::inc(get_data('content-template')); ?>
 
 </div>
 
