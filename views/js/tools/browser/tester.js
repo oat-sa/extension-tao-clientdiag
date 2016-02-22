@@ -20,16 +20,31 @@
  */
 define([
     'i18n',
-    'helpers'
-], function (__, helpers) {
+    'helpers',
+    'taoClientDiagnostic/tools/getconfig'
+], function (__, helpers, getConfig) {
     'use strict';
 
     /**
+     * Some default values
+     * @type {Object}
+     * @private
+     */
+    var _defaults = {
+        action: 'whichBrowser',
+        controller: 'CompatibilityChecker',
+        extension: 'taoClientDiagnostic'
+    };
+
+    /**
      * Gets the URL of the browser tester
-     * @param window
+     * @param {Window} window - Need an access to the window object
+     * @param {String} action - The name of the action to call to get the browser checker
+     * @param {String} controller - The name of the controller to call to get the browser checker
+     * @param {String} extension - The name of the extension containing the controller to call to get the browser checker
      * @returns {String}
      */
-    function getTesterUrl(window) {
+    function getTesterUrl(window, action, controller, extension) {
         var document = window.document;
         var navigator = window.navigator;
         var screen = window.screen;
@@ -66,24 +81,29 @@ define([
         params.w = screen.width;
         params.h = screen.height;
 
-        return helpers._url('whichBrowser', 'CompatibilityChecker', 'taoClientDiagnostic', params);
+        return helpers._url(action, controller, extension, params);
     }
 
     /**
      * Performs a browser support test
      *
-     * @param {Window} window
-     * @param {Object} config
+     * @param {Window} window - Need an access to the window object
+     * @param {Object} [config] - Some optional configs
+     * @param {String} [config.action] - The name of the action to call to get the browser checker
+     * @param {String} [config.controller] - The name of the controller to call to get the browser checker
+     * @param {String} [config.extension] - The name of the extension containing the controller to call to get the browser checker
      * @returns {Object}
      */
     function browserTester(window, config) {
+        var initConfig = getConfig(config || {}, _defaults);
+
         return {
             /**
              * Performs a browser support test, then call a function to provide the result
              * @param {Function} done
              */
             start: function start(done) {
-                var url = getTesterUrl(window);
+                var url = getTesterUrl(window, initConfig.action, initConfig.controller, initConfig.extension);
                 require([url], function () {
                     // the WhichBrowser class is provided by the loaded resource as a global variable
                     // this is ugly but this is the way this lib works...
