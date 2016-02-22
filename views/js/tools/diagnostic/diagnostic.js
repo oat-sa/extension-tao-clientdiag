@@ -555,7 +555,7 @@ define([
                 // get access to all needed placeholders
                 this.controls = {
                     $start: this.$component.find('[data-action="test-launcher"]'),
-                    $status: this.$component.find('.status'),
+                    $status: this.$component.find('.status h2'),
                     $results: this.$component.find('.results')
                 };
 

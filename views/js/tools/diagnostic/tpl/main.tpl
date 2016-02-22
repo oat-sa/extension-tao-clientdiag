@@ -9,9 +9,12 @@
 
     <div class="clearfix">
         <button data-action="test-launcher" class="btn-info small rgt">{{button}}</button>
-        <div class="status"></div>
     </div>
 
     <ul class="plain results"></ul>
+
+    <div class="status">
+        <h2></h2>
+    </div>
 
 </div>
