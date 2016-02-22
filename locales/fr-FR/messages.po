@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.1.0-sprint15\n"
-"PO-Revision-Date: 2015-12-23T13:51:38\n"
+"Project-Id-Version: TAO 3.1.0-sprint19\n"
+"PO-Revision-Date: 2016-02-17T14:44:24\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-FR\n"
@@ -43,7 +43,7 @@ msgstr "Accéder à l'outil de diagnostic"
 msgid "Details"
 msgstr "Détails"
 
-msgid "Diagnostic tool"
+msgid "Diagnostic Tool"
 msgstr "Outil de diagnostic"
 
 msgid "Good bandwidth"
@@ -73,11 +73,11 @@ msgstr "Bande passante minimum"
 msgid "Minimum rendering time"
 msgstr "Temps de rendu minimum"
 
-msgid "No login found"
-msgstr "Aucun identifiant trouvé"
-
 msgid "Number of simultaneous test takers the connection can handle"
 msgstr "Nombre d’élèves pouvant passer l’évaluation en simultané"
+
+msgid "No login found"
+msgstr "Pas de login trouvé"
 
 msgid "Operating system"
 msgstr "Système d'exploitation"
@@ -88,14 +88,17 @@ msgstr "Navigateur et système d’exploitation"
 msgid "Show Details"
 msgstr "Afficher les détails"
 
-msgid "This login does not exist"
-msgstr "Cet identifiant n'existe pas"
-
-msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
-msgstr "Cet outil va effectuer plusieurs tests pour vérifier la configuration de vos ordinateurs utilisés pour la passation des évaluations numériques."
+msgid "This browser is not tested."
+msgstr "Ce navigateur n'est pas testé."
 
 msgid "Total"
 msgstr "Synthèse"
+
+msgid "This login does not exist"
+msgstr "Ce login n'existe pas"
+
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
+msgstr "Cet outil va effectuer plusieurs tests pour vérifier la configuration de vos ordinateurs utilisés pour la passation des évaluations numériques."
 
 msgid "Unknown browser"
 msgstr "Navigateur non supporté"

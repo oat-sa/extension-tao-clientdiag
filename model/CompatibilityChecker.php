@@ -27,6 +27,14 @@ class CompatibilityChecker
 
     private $os, $osVersion, $browser, $browserVersion, $compatibility, $data, $dataList;
 
+    /**
+     * CompatibilityChecker constructor
+     * Check parameter required
+     * Extract compatibility file
+     * @param $data
+     * @throws \common_exception_MissingParameter
+     * @throws \tao_models_classes_FileNotFoundException
+     */
     function __construct($data)
     {
         $this->dataList = array_keys($data);
@@ -36,10 +44,10 @@ class CompatibilityChecker
             throw new \common_exception_MissingParameter('browser / browserVersion / os / osVersion');
         }
 
-        $this->browser = $data['browser'];
+        $this->browser        = $data['browser'];
         $this->browserVersion = $data['browserVersion'];
-        $this->os = $data['os'];
-        $this->osVersion = $data['osVersion'];
+        $this->os             = $data['os'];
+        $this->osVersion      = $data['osVersion'];
 
         $this->data = array_values($data);
 
@@ -50,6 +58,14 @@ class CompatibilityChecker
         $this->compatibility = json_decode(file_get_contents($compatibilityFile));
     }
 
+    /**
+     * Check if couple of client os & browser are compatible
+     * Based on json file
+     * If couple is found on file:
+     *  - return compatibility key (1=ok, 0=not ok)
+     *  - return 2 if not tested
+     * @return int
+     */
     public function isCompatibleConfig()
     {
         $browserVersion = explode('.', $this->browserVersion);
@@ -83,13 +99,10 @@ class CompatibilityChecker
                 if ($validOs && ($rule->browser === ""
                         || $rule->browser === $this->browser && $isValid)
                 ) {
-                    return true;
+                    return $rule->compatible;
                 }
             }
         }
-
-        return false;
+        return 2;
     }
-
-
-} 
+}

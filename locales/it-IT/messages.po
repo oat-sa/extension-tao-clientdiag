@@ -1,0 +1,123 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.1.0-sprint15\n"
+"PO-Revision-Date: 2016-02-19T18:26:14\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: it-IT\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: it-IT\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "All rights reserved."
+msgstr "Diritti riservati"
+
+msgid "Average bandwidth"
+msgstr "Media della larghezza della banda"
+
+msgid "Average performance"
+msgstr "Media della performance "
+
+msgid "Average rendering time"
+msgstr "Media del tempo di rendering"
+
+msgid "Bandwidth"
+msgstr "Larghezza banda"
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr "Prendete visione che questi test necessita di alcuni minuti"
+
+msgid "Begin diagnostics"
+msgstr "Inizi diagnostica"
+
+msgid "Compatible"
+msgstr "Compatibile"
+
+msgid "Connect to the diagnostic tool"
+msgstr "Connetto allo strumento di diagnostica"
+
+msgid "Details"
+msgstr "Dettagli"
+
+msgid "Diagnostic Tool"
+msgstr ""
+
+msgid "Good bandwidth"
+msgstr "Larghezza banda buona"
+
+msgid "Good performance"
+msgstr "Buone performance"
+
+msgid "Log in"
+msgstr "Accesso"
+
+msgid "Login"
+msgstr "Accesso"
+
+msgid "Low bandwidth"
+msgstr "Larghezza banda scarsa"
+
+msgid "Maximum bandwidth"
+msgstr "Massima larghezza banda"
+
+msgid "Maximum rendering time"
+msgstr "Tempo massimo di rendering"
+
+msgid "Minimum bandwidth"
+msgstr "Larghezza di banda minima"
+
+msgid "Minimum rendering time"
+msgstr "Tempo di esecuzione minimo"
+
+msgid "Number of simultaneous test takers the connection can handle"
+msgstr "Numero di partecipanti simultaneo che la connessione può gestire."
+
+msgid "Operating system"
+msgstr "Sistema operativo"
+
+msgid "Operating system and web browser"
+msgstr "Sistema operativo e web browser"
+
+msgid "Show Details"
+msgstr "Mostra dettagli"
+
+msgid "This browser is not tested."
+msgstr ""
+
+msgid "Total"
+msgstr "Totale"
+
+msgid "Unknown browser"
+msgstr "Browser sconosciuto"
+
+msgid "Unknown OS"
+msgstr "Sistema operativo sconosciuto"
+
+msgid "Unknown version"
+msgstr "Versione sconosciuta"
+
+msgid "Very slow performance"
+msgstr "Performance veramente basse"
+
+msgid "Web browser"
+msgstr "Browser web"
+
+msgid "Workstation performance"
+msgstr "Performance della postazione di lavoro"
+
+msgid "You must activate JavaScript in your browser to run this application."
+msgstr "Devi attivare JavaScript nel tuo browser per eseguire questa applicazione"
+
+msgid "Your system is fully compliant."
+msgstr "Il tuo sistema è completamente adeguato"
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr "Il tuo sistema non è ottimale, si prega di contattare il proprio amministratore di sistema"
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr "Il tuo sistema richiede un aggiornamento, prego contatta il tuo amministratore di sistema"
+
