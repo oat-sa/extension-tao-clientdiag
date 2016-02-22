@@ -25,9 +25,10 @@ module.exports = function(grunt) {
             dir : out,
             mainConfigFile : './config/requirejs.build.js',
             paths : {
-                'taoClientDiagnostic' : root + '/taoClientDiagnostic/views/js',
-                'taoItems'            : root + '/taoItems/views/js',
-                'taoQtiItem'          : root + '/taoQtiItem/views/js'
+                'taoClientDiagnostic'    : root + '/taoClientDiagnostic/views/js',
+                'taoClientDiagnosticCss' : root + '/taoClientDiagnostic/views/css',
+                'taoItems'               : root + '/taoItems/views/js',
+                'taoQtiItem'             : root + '/taoQtiItem/views/js'
             },
             modules : [{
                 name: 'taoClientDiagnostic/controller/routes',
