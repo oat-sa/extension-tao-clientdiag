@@ -61,7 +61,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $this->setData('content-config', $config);
             $this->setData('content-controller', 'taoClientDiagnostic/controller/CompatibilityChecker/diagnostics');
             $this->setData('content-template', 'CompatibilityChecker' . DIRECTORY_SEPARATOR . 'diagnostics.tpl');
-            $this->setView('CompatibilityChecker' . DIRECTORY_SEPARATOR . 'index.tpl');
+            $this->setView('index.tpl');
         } else {
             $this->redirect($authorizationService->getAuthorizationUrl(_url('index')));
         }

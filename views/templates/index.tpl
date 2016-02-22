@@ -15,7 +15,7 @@ use oat\tao\model\theme\Theme;
     <link rel="shortcut icon" href="<?= Template::img('img/favicon.ico') ?>"/>
 
     <script id="amd-loader"
-        <?php if(\tao_helpers_Mode::is('production')): ?>
+        <?php if (\tao_helpers_Mode::is('production')): ?>
             src="<?= Template::js('loader/bootstrap.min.js', 'taoClientDiagnostic') ?>"
             data-bundle="taoClientDiagnostic/controllers.min"
         <?php else : ?>
@@ -24,10 +24,11 @@ use oat\tao\model\theme\Theme;
         <?php endif ?>
             data-config="<?= get_data('client-config-url') ?>"
             data-controller="<?= get_data('content-controller') ?>"
+        <?php if (has_data('content-config')): ?>
             data-params="<?= _dh(json_encode(get_data('content-config'))); ?>"
+        <?php endif ?>
     ></script>
 
-    <link rel='stylesheet' type='text/css' href="<?= Template::css('diagnostics.css') ?>"/>
     <?= tao_helpers_Scriptloader::render() ?>
     <link rel="stylesheet" href="<?= Layout::getThemeStylesheet(Theme::CONTEXT_FRONTOFFICE) ?>"/>
 

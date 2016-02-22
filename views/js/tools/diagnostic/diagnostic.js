@@ -32,7 +32,8 @@ define([
     'taoClientDiagnostic/tools/browser/tester',
     'taoClientDiagnostic/tools/getconfig',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/main',
-    'tpl!taoClientDiagnostic/tools/diagnostic/tpl/result'
+    'tpl!taoClientDiagnostic/tools/diagnostic/tpl/result',
+    'css!taoClientDiagnosticCss/diagnostics'
 ], function ($, _, __, async, helpers, feedback, component, performancesTester, bandwidthTester, browserTester,getConfig,  mainTpl, resultTpl) {
     'use strict';
 

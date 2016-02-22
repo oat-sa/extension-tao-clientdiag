@@ -13,37 +13,33 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
  *
  */
 
 /**
  *
- * @author dieter <camille@taotesting.com>
+ * @author Camille Moyon <camille@taotesting.com>
  */
 define([
     'jquery',
-    'lodash',
-    'i18n',
-    'async',
-    'helpers',
     'ui/feedback'
-], function ($, _, __, async, helpers, feedback) {
+], function ($, feedback) {
     'use strict';
-
-    var init = function init(){
-        var $feedbackBox = $('#feedback-box');
-
-        if(!!$feedbackBox.data('error')){
-            feedback().error($feedbackBox.data('error'));
-        }
-        if($feedbackBox.data('message')){
-            feedback().error($feedbackBox.data('message'));
-        }
-    };
 
     /**
      * @exports
      */
-    return init();
+    return {
+        start: function() {
+            var $feedbackBox = $('#feedback-box');
+
+            if(!!$feedbackBox.data('error')){
+                feedback().error($feedbackBox.data('error'));
+            }
+            if($feedbackBox.data('message')){
+                feedback().error($feedbackBox.data('message'));
+            }
+        }
+    };
 });
