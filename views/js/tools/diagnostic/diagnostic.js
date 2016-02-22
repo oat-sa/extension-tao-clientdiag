@@ -80,11 +80,11 @@ define([
     };
 
     /**
-     * Default values for the performance tester
+     * Default values for the performances tester
      * @type {Object}
      * @private
      */
-    var _defaultsPerformance = {
+    var _defaultsPerformances = {
         // The threshold for optimal performances
         optimal: 0.025,
 
@@ -96,7 +96,7 @@ define([
      * A list of thresholds for performances check
      * @type {Array}
      */
-    var performanceThresholds = [{
+    var performancesThresholds = [{
         threshold: 0,
         message: __('Very slow performance'),
         type: 'error'
@@ -229,16 +229,16 @@ define([
          * Performs a browser performances check
          * @param {Function} done
          */
-        checkPerformance: function checkPerformance(done) {
+        checkPerformances: function checkPerformances(done) {
             var self = this;
-            var config = getConfig(this.config.performance, _defaultsPerformance);
+            var config = getConfig(this.config.performances, _defaultsPerformances);
             var optimal = config.optimal;
             var range = Math.abs(optimal - (config.threshold));
 
             this.changeStatus(__('Checking the performances...'));
             performancesTester(config.samples, config.occurrences, config.timeout * 1000).start(function (average, details) {
                 var cursor = range - average + optimal;
-                var status = getStatus(cursor / range * 100, performanceThresholds);
+                var status = getStatus(cursor / range * 100, performancesThresholds);
                 var summary = {
                     performancesMin: {message: __('Minimum rendering time'), value: details.min + ' s'},
                     performancesMax: {message: __('Maximum rendering time'), value: details.max + ' s'},
@@ -443,7 +443,7 @@ define([
                 async.series([function (cb) {
                     doCheck('checkBrowser', cb);
                 }, function (cb) {
-                    doCheck('checkPerformance', cb);
+                    doCheck('checkPerformances', cb);
                 }, function (cb) {
                     doCheck('checkBandwidth', cb);
                 }], function () {
@@ -531,11 +531,11 @@ define([
      * @param {Array} [config.bandwidth.ideal] - The thresholds for optimal bandwidth, one by bar
      * @param {Number} [config.bandwidth.max] - Maximum number of test takers to display
      *
-     * @param {Array} [config.performance.samples] - A list of samples to render in order to compute the rendering performances
-     * @param {Number} [config.performance.occurrences] - The number of renderings by samples
-     * @param {Number} [config.performance.timeout] - Max allowed duration for a sample rendering
-     * @param {Number} [config.performance.optimal] - The threshold for optimal performances
-     * @param {Number} [config.performance.threshold] - The threshold for minimal performances
+     * @param {Array} [config.performances.samples] - A list of samples to render in order to compute the rendering performances
+     * @param {Number} [config.performances.occurrences] - The number of renderings by samples
+     * @param {Number} [config.performances.timeout] - Max allowed duration for a sample rendering
+     * @param {Number} [config.performances.optimal] - The threshold for optimal performances
+     * @param {Number} [config.performances.threshold] - The threshold for minimal performances
      * @returns {diagnostic}
      */
     function diagnosticFactory(config) {
