@@ -195,7 +195,7 @@ define([
 
                 self.store('performance', details, function () {
                     status.id = 'performance';
-                    status.title = __('Workstation performance');
+                    status.title = __('Workstation performances');
 
                     self.addResult(status);
 

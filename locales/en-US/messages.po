@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.1.0-sprint15\n"
-"PO-Revision-Date: 2015-12-23T13:51:38\n"
+"Project-Id-Version: TAO 3.1.0-sprint20\n"
+"PO-Revision-Date: 2016-02-23T13:37:56\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: en-US\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Average bandwidth"
 msgstr ""
 
-msgid "Average performance"
+msgid "Average performances"
 msgstr ""
 
 msgid "Average rendering time"
@@ -34,6 +34,15 @@ msgstr ""
 msgid "Begin diagnostics"
 msgstr ""
 
+msgid "Checking the bandwidth..."
+msgstr ""
+
+msgid "Checking the browser..."
+msgstr ""
+
+msgid "Checking the performances..."
+msgstr ""
+
 msgid "Compatible"
 msgstr ""
 
@@ -43,13 +52,19 @@ msgstr ""
 msgid "Details"
 msgstr ""
 
-msgid "Diagnostic tool"
+msgid "Diagnostic Tool"
+msgstr ""
+
+msgid "Done!"
 msgstr ""
 
 msgid "Good bandwidth"
 msgstr ""
 
-msgid "Good performance"
+msgid "Good performances"
+msgstr ""
+
+msgid "Hide Details"
 msgstr ""
 
 msgid "Log in"
@@ -73,9 +88,6 @@ msgstr ""
 msgid "Minimum rendering time"
 msgstr ""
 
-msgid "No login found"
-msgstr ""
-
 msgid "Number of simultaneous test takers the connection can handle"
 msgstr ""
 
@@ -88,7 +100,10 @@ msgstr ""
 msgid "Show Details"
 msgstr ""
 
-msgid "This login does not exist"
+msgid "Starting..."
+msgstr ""
+
+msgid "This browser is not tested."
 msgstr ""
 
 msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
@@ -106,13 +121,13 @@ msgstr ""
 msgid "Unknown version"
 msgstr ""
 
-msgid "Very slow performance"
+msgid "Very slow performances"
 msgstr ""
 
 msgid "Web browser"
 msgstr ""
 
-msgid "Workstation performance"
+msgid "Workstation performances"
 msgstr ""
 
 msgid "You must activate JavaScript in your browser to run this application."

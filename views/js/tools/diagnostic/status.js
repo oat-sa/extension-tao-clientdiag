@@ -32,15 +32,15 @@ define([
      */
     var performancesThresholds = [{
         threshold: 0,
-        message: __('Very slow performance'),
+        message: __('Very slow performances'),
         type: 'error'
     }, {
         threshold: 33,
-        message: __('Average performance'),
+        message: __('Average performances'),
         type: 'warning'
     }, {
         threshold: 66,
-        message: __('Good performance'),
+        message: __('Good performances'),
         type: 'success'
     }];
 
