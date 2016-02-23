@@ -27,6 +27,7 @@ define([
     'helpers',
     'ui/feedback',
     'ui/component',
+    'taoClientDiagnostic/tools/diagnostic/status',
     'taoClientDiagnostic/tools/performances/tester',
     'taoClientDiagnostic/tools/bandwidth/tester',
     'taoClientDiagnostic/tools/browser/tester',
@@ -34,7 +35,7 @@ define([
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/main',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/result',
     'css!taoClientDiagnosticCss/diagnostics'
-], function ($, _, __, async, helpers, feedback, component, performancesTester, bandwidthTester, browserTester,getConfig,  mainTpl, resultTpl) {
+], function ($, _, __, async, helpers, feedback, component, statusFactory, performancesTester, bandwidthTester, browserTester,getConfig,  mainTpl, resultTpl) {
     'use strict';
 
     /**
@@ -94,60 +95,6 @@ define([
     };
 
     /**
-     * A list of thresholds for performances check
-     * @type {Array}
-     */
-    var performancesThresholds = [{
-        threshold: 0,
-        message: __('Very slow performance'),
-        type: 'error'
-    }, {
-        threshold: 33,
-        message: __('Average performance'),
-        type: 'warning'
-    }, {
-        threshold: 66,
-        message: __('Good performance'),
-        type: 'success'
-    }];
-
-    /**
-     * A list of thresholds for bandwidth check
-     * @type {Array}
-     */
-    var bandwidthThresholds = [{
-        threshold: 0,
-        message: __('Low bandwidth'),
-        type: 'error'
-    }, {
-        threshold: 33,
-        message: __('Average bandwidth'),
-        type: 'warning'
-    }, {
-        threshold: 66,
-        message: __('Good bandwidth'),
-        type: 'success'
-    }];
-
-    /**
-     * A list of thresholds for summary
-     * @type {Array}
-     */
-    var summaryThresholds = [{
-        threshold: 0,
-        message: __('Your system requires a compatibility update, please contact your system administrator.'),
-        type: 'error'
-    }, {
-        threshold: 33,
-        message: __('Your system is not optimal, please contact your system administrator.'),
-        type: 'warning'
-    }, {
-        threshold: 66,
-        message: __('Your system is fully compliant.'),
-        type: 'success'
-    }];
-
-    /**
      * Defines a diagnostic tool
      * @type {Object}
      */
@@ -202,7 +149,7 @@ define([
                     information,
                     function (data) {
                         var percentage = 'success' === data.type ? 100 : 0;
-                        var status = getStatus(percentage, data);
+                        var status = self.status.getStatus(percentage, data);
                         var summary = {
                             browser: {
                                 message: __('Web browser'),
@@ -239,7 +186,7 @@ define([
             this.changeStatus(__('Checking the performances...'));
             performancesTester(config.samples, config.occurrences, config.timeout * 1000).start(function (average, details) {
                 var cursor = range - average + optimal;
-                var status = getStatus(cursor / range * 100, performancesThresholds);
+                var status = self.status.getStatus(cursor / range * 100, 'performances');
                 var summary = {
                     performancesMin: {message: __('Minimum rendering time'), value: details.min + ' s'},
                     performancesMax: {message: __('Maximum rendering time'), value: details.max + ' s'},
@@ -286,7 +233,7 @@ define([
 
                     _.forEach(testTakers, function (threshold, i) {
                         var max = threshold * bandwidthUnit;
-                        var st = getStatus(details.max / max * 100, bandwidthThresholds);
+                        var st = self.status.getStatus(details.max / max * 100, 'bandwidth');
                         var nb = Math.floor(details.max / bandwidthUnit);
 
                         if (nb > maxTestTakers) {
@@ -452,7 +399,7 @@ define([
                     var total = _.min(scores, 'percentage');
 
                     // get a status according to the main score
-                    var status = getStatus(total.percentage, summaryThresholds);
+                    var status = self.status.getStatus(total.percentage, 'summary');
 
                     // display the result
                     status.title = __('Total');
@@ -468,49 +415,6 @@ define([
             return this;
         }
     };
-
-    /**
-     * Gets the correct status message for a given percentage
-     * @param {Number} percentage
-     * @param {Array} thresholds
-     * @returns {Object}
-     */
-    function getStatus(percentage, thresholds) {
-        var len, feedback, i, step, status;
-
-        // the percentage is between 0 and 100 and obviously must be a number
-        percentage = Math.max(0, Math.min(100, Math.round(parseInt(percentage, 10))));
-
-        // grab a feedback related to the percentage in the thresholds list
-        if (thresholds) {
-            if (!_.isArray(thresholds)) {
-                thresholds = [thresholds];
-            }
-
-            len = thresholds.length;
-            feedback = thresholds[0];
-            for (i = 1; i < len; i++) {
-                step = thresholds[i];
-                if (step && percentage >= step.threshold) {
-                    feedback = step;
-                } else {
-                    break;
-                }
-            }
-        }
-
-        // need a structure compatible with the handlebars template
-        status = {
-            percentage: percentage,
-            quality: {}
-        };
-
-        if (feedback) {
-            status.feedback = _.clone(feedback);
-        }
-
-        return status;
-    }
 
     /**
      * Builds an instance of the diagnostic tool
@@ -546,11 +450,15 @@ define([
             // uninstalls the component
             .on('destroy', function () {
                 this.controls = null;
+                this.status = null;
             })
 
             // renders the component
             .on('render', function () {
                 var self = this;
+
+                // use an external component to handle the thresholds and status
+                this.status = statusFactory();
 
                 // get access to all needed placeholders
                 this.controls = {
