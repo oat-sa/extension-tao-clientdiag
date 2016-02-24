@@ -25,9 +25,10 @@
 define([
     'jquery',
     'layout/loading-bar',
-    'taoClientDiagnostic/tools/diagnostic/diagnostic',
-    'ui/feedback'
-], function ($, loadingBar, diagnosticFactory, feedback) {
+    'ui/feedback',
+    'taoClientDiagnostic/tools/message',
+    'taoClientDiagnostic/tools/diagnostic/diagnostic'
+], function ($, loadingBar, feedback, showMessage, diagnosticFactory) {
     'use strict';
 
     /**
@@ -35,15 +36,9 @@ define([
      */
     return {
         start: function(config) {
-            var $feedbackBox = $('#feedback-box');
             var $contentArea = $('.content');
 
-            if(!!$feedbackBox.data('error')){
-                feedback().error($feedbackBox.data('error'));
-            }
-            if($feedbackBox.data('message')){
-                feedback().error($feedbackBox.data('message'));
-            }
+            showMessage('#feedback-box');
 
             diagnosticFactory(config)
                 .on('start', function() {

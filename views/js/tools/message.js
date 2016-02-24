@@ -20,19 +20,31 @@
 /**
  *
  * @author Camille Moyon <camille@taotesting.com>
+ * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
 define([
     'jquery',
-    'taoClientDiagnostic/tools/message'
-], function ($, showMessage) {
+    'ui/feedback'
+], function ($, feedback) {
     'use strict';
+
+    /**
+     * Displays the messages set into a markup
+     * @param {String|jQuery|HTMLElement} container
+     */
+    function showMessages(container) {
+        var $feedbackBox = $(container);
+
+        if ($feedbackBox.data('error')) {
+            feedback().error($feedbackBox.data('error'));
+        }
+        if ($feedbackBox.data('message')) {
+            feedback().error($feedbackBox.data('message'));
+        }
+    }
 
     /**
      * @exports
      */
-    return {
-        start: function() {
-            showMessage('#feedback-box');
-        }
-    };
+    return showMessages;
 });
