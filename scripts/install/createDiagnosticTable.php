@@ -16,8 +16,6 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             ->getPersistence();
 
         $schemaManager = $persistence->getDriver()->getSchemaManager();
-        $plateform = $persistence->getPlatForm();
-        var_dump($plateform->getNowExpression());
         $schema = $schemaManager->createSchema();
         $fromSchema = clone $schema;
 
