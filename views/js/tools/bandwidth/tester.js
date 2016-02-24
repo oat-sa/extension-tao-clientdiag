@@ -151,7 +151,7 @@ define([
     /**
      * Performs a bandwidth test by downloading a bunch of data sets with different sizes
      *
-     * @returns {{start: Function}}
+     * @returns {Object}
      */
     var bandwidthTester = function bandwidthTester (){
         return {

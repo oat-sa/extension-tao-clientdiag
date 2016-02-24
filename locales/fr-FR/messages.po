@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.1.0-sprint19\n"
-"PO-Revision-Date: 2016-02-17T14:44:24\n"
+"Project-Id-Version: TAO 3.1.0-sprint20\n"
+"PO-Revision-Date: 2016-02-23T13:37:56\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-FR\n"
@@ -19,7 +19,7 @@ msgstr ""
 msgid "Average bandwidth"
 msgstr "Bande passante moyenne"
 
-msgid "Average performance"
+msgid "Average performances"
 msgstr "Performance moyenne (risque de lenteurs)"
 
 msgid "Average rendering time"
@@ -34,6 +34,15 @@ msgstr "Ces tests peuvent prendre plusieurs minutes."
 msgid "Begin diagnostics"
 msgstr "Démarrer le diagnostic"
 
+msgid "Checking the bandwidth..."
+msgstr "Test de bande passante..."
+
+msgid "Checking the browser..."
+msgstr "Test du navigateur..."
+
+msgid "Checking the performances..."
+msgstr "Test des performances..."
+
 msgid "Compatible"
 msgstr "Conforme"
 
@@ -46,11 +55,17 @@ msgstr "Détails"
 msgid "Diagnostic Tool"
 msgstr "Outil de diagnostic"
 
+msgid "Done!"
+msgstr "Terminé"
+
 msgid "Good bandwidth"
 msgstr "Bande passante correcte"
 
-msgid "Good performance"
+msgid "Good performances"
 msgstr "Performance correcte"
+
+msgid "Hide Details"
+msgstr "Masquer les détails"
 
 msgid "Log in"
 msgstr ""
@@ -76,9 +91,6 @@ msgstr "Temps de rendu minimum"
 msgid "Number of simultaneous test takers the connection can handle"
 msgstr "Nombre d’élèves pouvant passer l’évaluation en simultané"
 
-msgid "No login found"
-msgstr "Pas de login trouvé"
-
 msgid "Operating system"
 msgstr "Système d'exploitation"
 
@@ -88,17 +100,17 @@ msgstr "Navigateur et système d’exploitation"
 msgid "Show Details"
 msgstr "Afficher les détails"
 
+msgid "Starting..."
+msgstr "Démarrage..."
+
 msgid "This browser is not tested."
 msgstr "Ce navigateur n'est pas testé."
 
-msgid "Total"
-msgstr "Synthèse"
-
-msgid "This login does not exist"
-msgstr "Ce login n'existe pas"
-
 msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
 msgstr "Cet outil va effectuer plusieurs tests pour vérifier la configuration de vos ordinateurs utilisés pour la passation des évaluations numériques."
+
+msgid "Total"
+msgstr "Synthèse"
 
 msgid "Unknown browser"
 msgstr "Navigateur non supporté"
@@ -109,13 +121,13 @@ msgstr "Système d'exploitation non supporté"
 msgid "Unknown version"
 msgstr "Version non supportée"
 
-msgid "Very slow performance"
+msgid "Very slow performances"
 msgstr "Performance faible (lenteurs très importantes)"
 
 msgid "Web browser"
 msgstr "Navigateur"
 
-msgid "Workstation performance"
+msgid "Workstation performances"
 msgstr "Performance du poste de travail"
 
 msgid "You must activate JavaScript in your browser to run this application."
