@@ -19,35 +19,8 @@
  *
  */
 
-namespace oat\taoClientDiagnostic\test\model\authorization;
+namespace oat\taoClientDiagnostic\exception;
 
-use oat\taoClientDiagnostic\model\authorization\Anonymous;
-
-class AnonymousTest extends \PHPUnit_Framework_TestCase
+class StorageException extends \Exception
 {
-    /**
-     * @var oat\taoClientDiagnostic\model\authorization\Anonymous
-     */
-    private $instance;
-
-    public function setUp()
-    {
-           $this->instance = new Anonymous();
-    }
-
-    public function tearDown()
-    {
-        $this->instance = null;
-    }
-
-    public function testIsAuthorized()
-    {
-        $this->assertTrue($this->instance->isAuthorized());
-    }
-
-    public function testGetAuthorizationUrl()
-    {
-        $this->setExpectedException('oat\taoClientDiagnostic\exception\InvalidCallException');
-        $this->instance->getAuthorizationUrl('urlFixture');
-    }
 }

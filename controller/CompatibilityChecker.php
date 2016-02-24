@@ -21,9 +21,10 @@
 
 namespace oat\taoClientDiagnostic\controller;
 
+use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
-use oat\taoClientDiagnostic\model\DataStorage;
 use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
+use oat\taoClientDiagnostic\model\storage\Storage;
 
 /**
  * Class CompatibilityChecker
@@ -38,9 +39,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     private function loadConfig()
     {
-        return \common_ext_ExtensionsManager::singleton()
-            ->getExtensionById('taoClientDiagnostic')
-            ->getConfig('clientDiag');
+        return \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
     }
 
     /**
@@ -53,64 +52,102 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         if ($authorizationService->isAuthorized()) {
             $this->setData('clientDiagConfig', $this->loadConfig());
             $this->setData('clientConfigUrl', $this->getClientConfigUrl());
-            $this->setView('CompatibilityChecker/index.tpl');
+            $this->setView('CompatibilityChecker' . DIRECTORY_SEPARATOR . 'index.tpl');
         } else {
             $this->redirect($authorizationService->getAuthorizationUrl(_url('index')));
         }
     }
 
+    /**
+     * Render browser detection view
+     */
     public function whichBrowser()
     {
-        $this->setView('CompatibilityChecker/browserDetection.php');
+        $this->setView('CompatibilityChecker' . DIRECTORY_SEPARATOR . 'browserDetection.php');
     }
 
+    /**
+     * Check if requester is compatible (os+browser)
+     * Register compatibility
+     * return json message
+     */
     public function check()
     {
         try {
             $data = $this->getData(true);
-            if (!isset($_COOKIE['key'])) {
-                $data['key'] = uniqid();
-                setcookie('key', $data['key']);
-            } else {
-                $data['key'] = $_COOKIE['key'];
+            $id   = $this->getId();
+
+            $checker            = new CompatibilityCheckerModel($data);
+            $isCompatible       = (int)$checker->isCompatibleConfig();
+            $data['compatible'] = $isCompatible;
+
+            try {
+                $storageService = $this->getServiceManager()->get(Storage::SERVICE_ID);
+                $storageService->store($id, $data);
+            } catch (StorageException $e) {
+                \common_Logger::i($e->getMessage());
             }
-            $checker = new CompatibilityCheckerModel($data);
-            $store = new DataStorage($data);
-            $isCompatible = $checker->isCompatibleConfig();
-            if ($store->setIsCompatible($isCompatible)->storeData($isCompatible)) {
-                if ($isCompatible) {
-                    $this->returnJson(array('success' => true, 'type' => 'success', 'message' => __('Compatible')));
-                    return;
-                }
-            }
-            $this->returnJson(array(
-                'success' => true,
-                'type'    => 'error',
-                'message' => __('Your system requires a compatibility update, please contact your system administrator.')
-            ));
+
+            $compatibilityMessage = [
+                //Not compatible
+                '0' => [
+                    'success' => true,
+                    'type'    => 'error',
+                    'message' => __('Your system requires a compatibility update, please contact your system administrator.')
+                ],
+                //Compatible
+                '1' => [
+                    'success' => true,
+                    'type'    => 'success',
+                    'message' => __('Compatible')
+                ],
+                //Not tested
+                '2' => [
+                    'success' => true,
+                    'type'    => 'warning',
+                    'message' => __('This browser is not tested.')
+                ],
+            ];
+
+            $this->returnJson($compatibilityMessage[$isCompatible]);
+
         } catch (\common_exception_MissingParameter $e) {
             $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $e->getUserMessage()));
         }
     }
 
+    /**
+     * Register data from the front end
+     */
     public function storeData()
     {
         $data = $this->getData();
-        if (!isset($_COOKIE['key'])) {
-            setcookie('key', uniqid());
-        }
-        $data['key'] = $_COOKIE['key'];
-        $store = new DataStorage($data);
-        if ($store->storeData()) {
+        $id   = $this->getId();
+
+        try {
+            $storageService = $this->getServiceManager()->get(Storage::SERVICE_ID);
+            $storageService->store($id, $data);
             $this->returnJson(array('success' => true, 'type' => 'success'));
-            return;
+        } catch (StorageException $e) {
+            \common_Logger::i($e->getMessage());
+            $this->returnJson(array('success' => false, 'type' => 'error'));
         }
-        $this->returnJson(array('success' => false, 'type' => 'error'));
     }
 
+    /**
+     * Fetch POST data
+     * Get login by cookie
+     * Get Ip
+     * If check parameters is true, check mandatory parameters
+     *
+     * @param bool $check
+     * @return array
+     * @throws \common_exception_MissingParameter
+     */
     private function getData($check = false)
     {
         $data = $this->getRequestParameters();
+
         if ($this->hasRequestParameter('type')) {
             $type = $this->getRequestParameter('type');
             foreach ($data as $key => $value) {
@@ -119,6 +156,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             }
             unset($data[$type . '_type']);
         }
+
         if ($check) {
             if (!$this->hasRequestParameter('os')) {
                 throw new \common_exception_MissingParameter('os');
@@ -135,12 +173,31 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $data['osVersion'] = preg_replace('/[^\w\.]/', '', $data['osVersion']);
             $data['browserVersion'] = preg_replace('/[^\w\.]/', '', $data['browserVersion']);
         }
+
         if (isset($_COOKIE['login'])) {
             $data['login'] = $_COOKIE['login'];
         } else {
-            $data['login'] = '';
+            $data['login'] = 'Anonymous';
         }
+
+        $data['version'] = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getVersion();
+
         $data['ip'] = (!empty($_SERVER['HTTP_X_REAL_IP'])) ? $_SERVER['HTTP_X_REAL_IP'] : ((!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : 'unknown');
         return $data;
+    }
+
+    /**
+     * Get cookie id OR create it if doesnt exist
+     * @return string
+     */
+    private function getId()
+    {
+        if (!isset($_COOKIE['id'])) {
+            $id = uniqid();
+            setcookie('id', $id);
+        } else {
+            $id = $_COOKIE['id'];
+        }
+        return $id;
     }
 }
