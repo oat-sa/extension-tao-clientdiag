@@ -1,7 +1,7 @@
 define({
     'Authenticator' : {
         'actions' : {
-            'login' : 'controller/Authenticator/message'
+            'login' : 'controller/Authenticator/login'
         }
     },
     'CompatibilityChecker' : {
