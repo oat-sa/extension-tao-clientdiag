@@ -37,7 +37,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      * @return mixed
      * @throws \common_ext_ExtensionException
      */
-    private function loadConfig()
+    protected function loadConfig()
     {
         return \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
     }
@@ -153,7 +153,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      * @return array
      * @throws \common_exception_MissingParameter
      */
-    private function getData($check = false)
+    protected function getData($check = false)
     {
         $data = $this->getRequestParameters();
 
@@ -199,7 +199,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      * Get cookie id OR create it if doesnt exist
      * @return string
      */
-    private function getId()
+    protected function getId()
     {
         if (!isset($_COOKIE['id'])) {
             $id = uniqid();
