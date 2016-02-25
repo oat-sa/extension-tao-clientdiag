@@ -48,7 +48,7 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             $tableResults->addColumn(Sql::DIAGNOSTIC_PERFORMANCE_AVERAGE, 'float');
             $tableResults->addColumn(Sql::DIAGNOSTIC_PERFORMANCE_MEDIAN, 'float');
             $tableResults->addColumn(Sql::DIAGNOSTIC_PERFORMANCE_VARIANCE, 'float');
-            $tableResults->addColumn('created_at', 'datetime', ['default' => 'CURRENT_TIMESTAMP']);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_CREATED_AT, 'datetime');
 
             $tableResults->setPrimaryKey(array(Sql::DIAGNOSTIC_ID));
 

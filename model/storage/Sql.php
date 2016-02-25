@@ -130,9 +130,15 @@ class Sql extends ConfigurableService implements Storage
      */
     private function insert($id, $data)
     {
-        $columns = array_merge(array(self::DIAGNOSTIC_ID => $id), $data);
+        $platform = $this->persistence->getPlatform();
+        $columns = array_merge(array(
+            self::DIAGNOSTIC_ID => $id,
+            self::DIAGNOSTIC_CREATED_AT => $platform->getNowExpression()
+        ), $data);
+
         $query = 'INSERT INTO ' . self::DIAGNOSTIC_TABLE . '(' . implode(', ', array_keys($columns)) . ')' .
                  ' VALUES (' . str_repeat("?,", count($columns) - 1) . '? )';
+
         return $this->persistence->exec($query, array_values($columns));
     }
 

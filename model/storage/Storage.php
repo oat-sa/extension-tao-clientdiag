@@ -38,6 +38,7 @@ interface Storage
     const DIAGNOSTIC_PERFORMANCE_AVERAGE  = 'performance_average';
     const DIAGNOSTIC_PERFORMANCE_MEDIAN   = 'performance_median';
     const DIAGNOSTIC_PERFORMANCE_VARIANCE = 'performance_variance';
+    const DIAGNOSTIC_CREATED_AT           = 'created_at';
 
     /**
      * Store data into storage model based on entity
