@@ -17,9 +17,9 @@ interface Storage
     const DIAGNOSTIC_LOGIN                = 'login';
     const DIAGNOSTIC_IP                   = 'ip';
     const DIAGNOSTIC_BROWSER              = 'browser';
-    const DIAGNOSTIC_BROWSERVERSION       = 'browserVersion';
+    const DIAGNOSTIC_BROWSERVERSION       = 'browser_version';
     const DIAGNOSTIC_OS                   = 'os';
-    const DIAGNOSTIC_OSVERSION            = 'osVersion';
+    const DIAGNOSTIC_OSVERSION            = 'os_version';
     const DIAGNOSTIC_COMPATIBLE           = 'compatible';
     const DIAGNOSTIC_VERSION              = 'version';
     const DIAGNOSTIC_BANDWIDTH_MIN        = 'bandwidth_min';

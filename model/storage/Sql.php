@@ -136,7 +136,7 @@ class Sql extends ConfigurableService implements Storage
             self::DIAGNOSTIC_CREATED_AT => $platform->getNowExpression()
         ), $data);
 
-        $query = 'INSERT INTO ' . self::DIAGNOSTIC_TABLE . '(' . implode(', ', array_keys($columns)) . ')' .
+        $query = 'INSERT INTO ' . self::DIAGNOSTIC_TABLE . '(' . implode(', ', array_map('Doctrine\Common\Inflector\Inflector::tableize',array_keys($columns))) . ')' .
                  ' VALUES (' . str_repeat("?,", count($columns) - 1) . '? )';
 
         return $this->persistence->exec($query, array_values($columns));
