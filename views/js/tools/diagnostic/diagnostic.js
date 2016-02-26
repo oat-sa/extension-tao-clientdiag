@@ -125,7 +125,7 @@ define([
             details.type = type;
 
             $.post(
-                helpers._url(config.actionStore, config.controller, config.extension),
+                helpers._url(config.actionStore, config.controller, config.extension, config.storeParams),
                 details,
                 done,
                 "json"
@@ -145,7 +145,7 @@ define([
             browserTester(window, getConfig(this.config.browser, _defaultsBrowser)).start(function (information) {
                 // which browser
                 $.post(
-                    helpers._url(config.actionCheck, config.controller, config.extension),
+                    helpers._url(config.actionCheck, config.controller, config.extension, config.storeParams),
                     information,
                     function (data) {
                         var percentage = 'success' === data.type ? 100 : 0;
@@ -427,6 +427,7 @@ define([
      * @param {String} [config.actionCheck] - The name of the action to call to check the browser results
      * @param {String} [config.controller] - The name of the controller to call
      * @param {String} [config.extension] - The name of the extension containing the controller
+     * @param {Object} [config.storeParams] - A list of additional parameters to send with diagnostic results
      *
      * @param {String} [config.browser.action] - The name of the action to call to get the browser checker
      * @param {String} [config.browser.controller] - The name of the controller to call to get the browser checker

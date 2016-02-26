@@ -97,7 +97,7 @@ class Sql extends ConfigurableService implements Storage
     protected function cleanInputData(array $input)
     {
         foreach ($input as $key => $value) {
-            $const = 'self::DIAGNOSTIC_' . strtoupper($key);
+            $const = get_called_class() . '::DIAGNOSTIC_' . strtoupper($key);
             if (defined($const)) {
                 $data[constant($const)] = $value;
             }
