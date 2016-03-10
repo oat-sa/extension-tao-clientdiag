@@ -143,6 +143,8 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('1.5.0');
         }
 
+        $this->skip('1.5.0', '1.6.0');
+
         if ($this->isVersion('1.6.0')) {
             $persistence = $this->getServiceManager()
                 ->get(Storage::SERVICE_ID)
