@@ -65,8 +65,10 @@ class Authenticator extends \tao_actions_CommonModule
             $this->setData('errorMessage', $e->getUserMessage());
         }
 
-        $this->setData('clientConfigUrl', $this->getClientConfigUrl());
         $this->setData('successCallback', $this->getRequestParameter('successCallback'));
-        $this->setView('Authenticator' . DIRECTORY_SEPARATOR . 'login.tpl');
+        $this->setData('client-config-url', $this->getClientConfigUrl());
+        $this->setData('content-controller', 'taoClientDiagnostic/controller/Authenticator/login');
+        $this->setData('content-template', 'Authenticator' . DIRECTORY_SEPARATOR . 'login.tpl');
+        $this->setView('index.tpl');
     }
 }

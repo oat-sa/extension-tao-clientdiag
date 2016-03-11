@@ -21,9 +21,11 @@
 
 namespace oat\taoClientDiagnostic\scripts\update;
 
+use Doctrine\DBAL\Types\Type;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\authorization\RequireUsername;
 use oat\taoClientDiagnostic\model\storage\Csv;
+use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\taoClientDiagnostic\model\storage\Storage;
 
 class Updater extends \common_ext_ExtensionUpdater
@@ -139,6 +141,62 @@ class Updater extends \common_ext_ExtensionUpdater
             }
 
             $this->setVersion('1.5.0');
+        }
+
+        $this->skip('1.5.0', '1.6.0');
+
+        if ($this->isVersion('1.6.0')) {
+            $persistence = $this->getServiceManager()
+                ->get(Storage::SERVICE_ID)
+                ->getPersistence();
+
+            $schemaManager = $persistence->getDriver()->getSchemaManager();
+            $schema = $schemaManager->createSchema();
+
+            $fromSchema = clone $schema;
+
+            /** @var \Doctrine\DBAL\Schema\Table $tableResults */
+            $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
+
+            $tableResults->dropColumn('browserVersion');
+            $tableResults->dropColumn('osVersion');
+
+            $tableResults->addColumn(Sql::DIAGNOSTIC_BROWSERVERSION, 'string', ['length' => 32]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_OSVERSION, 'string', ['length' => 32]);
+
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_VERSION, ['type' => Type::getType('string'), 'length' => 16]);
+
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_BROWSER, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_OS, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_COMPATIBLE, ['notnull' => false]);
+
+
+
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_BANDWIDTH_MIN, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_BANDWIDTH_MAX, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_BANDWIDTH_SUM, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_BANDWIDTH_COUNT, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_BANDWIDTH_AVERAGE, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_BANDWIDTH_MEDIAN, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_BANDWIDTH_VARIANCE, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_BANDWIDTH_DURATION, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_BANDWIDTH_SIZE, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_PERFORMANCE_MIN, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_PERFORMANCE_MAX, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_PERFORMANCE_SUM, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_PERFORMANCE_COUNT, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_PERFORMANCE_AVERAGE, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_PERFORMANCE_MEDIAN, ['notnull' => false]);
+            $tableResults->changeColumn(Sql::DIAGNOSTIC_PERFORMANCE_VARIANCE, ['notnull' => false]);
+
+
+
+            $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+            foreach ($queries as $query) {
+                $persistence->exec($query);
+            }
+
+            $this->setVersion('1.6.1');
         }
     }
 }

@@ -29,7 +29,7 @@ define([
      * @param {Array|Object} list The list to compute stats on
      * @param {String|Function} fieldName The name of the field to process, or a callback method returning the value
      * @param {Number} [decimals] Optional number of fixed decimals for values
-     * @returns {{min: Number, max: Number, sum: Number, count: Number, average: Number, median: Number, variance: Number, values: *}}
+     * @returns {Object}
      */
     var stats = function stats(list, fieldName, decimals) {
         var sum = 0;

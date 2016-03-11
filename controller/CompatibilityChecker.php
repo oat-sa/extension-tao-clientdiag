@@ -37,7 +37,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      * @return mixed
      * @throws \common_ext_ExtensionException
      */
-    private function loadConfig()
+    protected function loadConfig()
     {
         return \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
     }
@@ -50,9 +50,18 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     {
         $authorizationService = $this->getServiceManager()->get(Authorization::SERVICE_ID);
         if ($authorizationService->isAuthorized()) {
-            $this->setData('clientDiagConfig', $this->loadConfig());
-            $this->setData('clientConfigUrl', $this->getClientConfigUrl());
-            $this->setView('CompatibilityChecker' . DIRECTORY_SEPARATOR . 'index.tpl');
+
+            $config = $this->loadConfig();
+            if (isset($config['diagHeader'])) {
+                $config['header'] = $config['diagHeader'];
+                unset($config['diagHeader']);
+            }
+
+            $this->setData('client-config-url', $this->getClientConfigUrl());
+            $this->setData('content-config', $config);
+            $this->setData('content-controller', 'taoClientDiagnostic/controller/CompatibilityChecker/diagnostics');
+            $this->setData('content-template', 'CompatibilityChecker' . DIRECTORY_SEPARATOR . 'diagnostics.tpl');
+            $this->setView('index.tpl');
         } else {
             $this->redirect($authorizationService->getAuthorizationUrl(_url('index')));
         }
@@ -144,7 +153,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      * @return array
      * @throws \common_exception_MissingParameter
      */
-    private function getData($check = false)
+    protected function getData($check = false)
     {
         $data = $this->getRequestParameters();
 
@@ -190,7 +199,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      * Get cookie id OR create it if doesnt exist
      * @return string
      */
-    private function getId()
+    protected function getId()
     {
         if (!isset($_COOKIE['id'])) {
             $id = uniqid();

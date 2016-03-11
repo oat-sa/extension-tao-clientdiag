@@ -1,9 +1,12 @@
-define(function(){
-    return {
-        'CompatibilityChecker' : {
-            'actions' : {
-                'index' : 'controller/compatibilityChecker/index'
-            }
+define({
+    'Authenticator' : {
+        'actions' : {
+            'login' : 'controller/Authenticator/login'
         }
-    };
+    },
+    'CompatibilityChecker' : {
+        'actions' : {
+            'index' : 'controller/CompatibilityChecker/diagnostics'
+        }
+    }
 });

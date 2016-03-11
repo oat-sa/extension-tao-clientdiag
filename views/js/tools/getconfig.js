@@ -1,4 +1,4 @@
-/*
+/**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
@@ -13,41 +13,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
  */
-
 /**
- *
- * @author dieter <dieter@taotesting.com>
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
-define([
-    'jquery',
-    'layout/loading-bar',
-    'ui/feedback',
-    'taoClientDiagnostic/tools/message',
-    'taoClientDiagnostic/tools/diagnostic/diagnostic'
-], function ($, loadingBar, feedback, showMessage, diagnosticFactory) {
+define(['lodash'], function (_) {
     'use strict';
 
     /**
-     * @exports
+     * Gets a config set
+     * @param {Object} [config]
+     * @param {Object} [defaults]
+     * @returns {Object}
      */
-    return {
-        start: function(config) {
-            var $contentArea = $('.content');
-
-            showMessage('#feedback-box');
-
-            diagnosticFactory(config)
-                .on('start', function() {
-                    loadingBar.start();
-                })
-                .on('end', function() {
-                    loadingBar.stop();
-                })
-                .render($contentArea);
-        }
+    return function getConfig(config, defaults) {
+        return _(config || {})
+            .omit(function (value) {
+                return value === null || value === undefined;
+            })
+            .defaults(defaults || {})
+            .value();
     };
 });
