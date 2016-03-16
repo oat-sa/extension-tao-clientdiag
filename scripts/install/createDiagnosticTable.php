@@ -11,9 +11,12 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
 {
     public function __invoke($params)
     {
-        $persistence = ServiceManager::getServiceManager()
-            ->get(Storage::SERVICE_ID)
-            ->getPersistence();
+        $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+
+        if (!$storageService instanceof Sql) {
+            return new \common_report_Report(\common_report_Report::TYPE_WARNING, 'Diagnostic tool storage is not compatible to create table');
+        }
+        $persistence = $storageService->getPersistence();
 
         $schemaManager = $persistence->getDriver()->getSchemaManager();
         $schema = $schemaManager->createSchema();
