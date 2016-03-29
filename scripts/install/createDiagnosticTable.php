@@ -30,10 +30,10 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             $tableResults->addColumn(Sql::DIAGNOSTIC_LOGIN, 'string', ['length' => 32]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_IP, 'string', ['length' => 32]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_BROWSER, 'string', ['length' => 32,'notnull' => false]);
-            $tableResults->addColumn(Sql::DIAGNOSTIC_BROWSERVERSION, 'string', ['length' => 32]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_BROWSERVERSION, 'string', ['length' => 32, 'notnull' => false  ]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_OS, 'string', ['length' => 32, 'notnull' => false]);
-            $tableResults->addColumn(Sql::DIAGNOSTIC_OSVERSION, 'string', ['length' => 32]);
-            $tableResults->addColumn(Sql::DIAGNOSTIC_COMPATIBLE, 'boolean', ['notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_OSVERSION, 'string', ['length' => 32, 'notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_COMPATIBLE, 'integer', ['length' => 1, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_VERSION, 'string', ['length' => 16]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_BANDWIDTH_MIN, 'float', ['notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_BANDWIDTH_MAX, 'float', ['notnull' => false]);
