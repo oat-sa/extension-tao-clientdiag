@@ -200,5 +200,86 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('1.6.1', '1.7.0');
+
+        if ($this->isVersion('1.7.0')) {
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+
+            if ($storageService instanceof Sql) {
+                $persistence = $storageService->getPersistence();
+
+                $schemaManager = $persistence->getDriver()->getSchemaManager();
+                $schema = $schemaManager->createSchema();
+
+                /* create temp column && Nullable os,browser version */
+                $addTempSchema = clone $schema;
+                $tableResults = $addTempSchema->getTable(Sql::DIAGNOSTIC_TABLE);
+                $tableResults->changeColumn(Sql::DIAGNOSTIC_BROWSERVERSION, ['notnull' => false]);
+                $tableResults->changeColumn(Sql::DIAGNOSTIC_OSVERSION   , ['notnull' => false]);
+                $tableResults->addColumn('compatible_tmp', 'integer', ['length' => 1, 'notnull' => false]);
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql($schema, $addTempSchema);
+                foreach ($queries as $query) {
+                    $persistence->exec($query);
+                }
+
+                /* Migrate data to temp column */
+                $sql =  'SELECT ' . Sql::DIAGNOSTIC_ID . ', ' .Sql::DIAGNOSTIC_COMPATIBLE .
+                        ' FROM ' . Sql::DIAGNOSTIC_TABLE;
+                $stmt = $persistence->query($sql);
+                $results = $stmt->fetchAll();
+
+                foreach ($results as $result) {
+
+                    if ($result['compatible']===true || $result['compatible']==1) {
+                        $compatible = 1;
+                    } elseif ($result['compatible']===false || $result['compatible']==0) {
+                        $compatible = 0;
+                    } else {
+                        $compatible = (int) $result['compatible'];
+                    }
+
+                    $sql = 'UPDATE ' . Sql::DIAGNOSTIC_TABLE .
+                           ' SET compatible_tmp = :compatible'.
+                           ' WHERE ' . Sql::DIAGNOSTIC_ID . ' = :id';
+                    $persistence->exec($sql, array(
+                        'compatible' => $compatible,
+                        'id' => $result['id']
+                    ));
+                }
+
+                /* delete compatible boolean column */
+                $deleteCompatibleSchema = clone $addTempSchema;
+                $tableResults = $deleteCompatibleSchema->getTable(Sql::DIAGNOSTIC_TABLE);
+                $tableResults->dropColumn(Sql::DIAGNOSTIC_COMPATIBLE);
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql($addTempSchema, $deleteCompatibleSchema);
+                foreach ($queries as $query) {
+                    $persistence->exec($query);
+                }
+
+                /* create compatible integer column */
+                $addCompatibleSchema = clone $deleteCompatibleSchema;
+                $tableResults = $addCompatibleSchema->getTable(Sql::DIAGNOSTIC_TABLE);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_COMPATIBLE, 'integer', ['length' => 1, 'notnull' => false]);
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql($deleteCompatibleSchema, $addCompatibleSchema);
+                foreach ($queries as $query) {
+                    $persistence->exec($query);
+                }
+
+                /* migrate date to compatible column */
+                $sql = 'UPDATE ' . Sql::DIAGNOSTIC_TABLE .
+                    ' SET ' . Sql::DIAGNOSTIC_COMPATIBLE . ' = compatible_tmp';
+                $persistence->exec($sql);
+
+                /* delete temp column */
+                $deleteTempSchema = clone $addCompatibleSchema;
+                $tableResults = $deleteTempSchema->getTable(Sql::DIAGNOSTIC_TABLE);
+                $tableResults->dropColumn('compatible_tmp');
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql($addCompatibleSchema, $deleteTempSchema);
+                foreach ($queries as $query) {
+                    $persistence->exec($query);
+                }
+            }
+
+            $this->setVersion('1.7.1');
+        }
     }
 }
