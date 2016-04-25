@@ -281,5 +281,7 @@ class Updater extends \common_ext_ExtensionUpdater
 
             $this->setVersion('1.7.1');
         }
+
+        $this->skip('1.7.1', '1.7.2');
     }
 }
