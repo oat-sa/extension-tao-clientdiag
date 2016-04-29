@@ -33,7 +33,7 @@ module.exports = function(grunt) {
             modules : [{
                 name: 'taoClientDiagnostic/controller/routes',
                 include : ext.getExtensionsControllers(['taoClientDiagnostic']),
-                exclude : ['mathJax', 'mediaElement'].concat(libs)
+                exclude : ['mathJax'].concat(libs)
             }]
         }
     };
