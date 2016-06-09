@@ -7,12 +7,11 @@ use oat\tao\model\theme\Theme;
 <!doctype html>
 <html class="no-js no-version-warning">
 <head>
-    <script src="<?= Template::js('lib/modernizr-2.8/modernizr.js', 'tao') ?>"></script>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= Layout::getTitle() ?></title>
-    <link rel="shortcut icon" href="<?= Template::img('img/favicon.ico') ?>"/>
+    <link rel="shortcut icon" href="<?= Template::img('img/favicon.ico', 'tao') ?>"/>
 
     <script id="amd-loader"
         <?php if (\tao_helpers_Mode::is('production')): ?>
@@ -35,13 +34,11 @@ use oat\tao\model\theme\Theme;
 </head>
 
 <body>
-<div id="requirement-check" class="feedback-error js-hide">
-    <span class="icon-error"></span>
-    <span id="requirement-msg-area"><?=
-        __('You must activate JavaScript in your browser to run this application.') ?></span>
+
+<div id="js-check" class="feedback-error check-msg">
+    <span class="icon-error"></span><?=__('You must activate JavaScript in your browser to run this application.')?>
 </div>
 <script src="<?= Template::js('layout/requirement-check.js', 'tao')?>"></script>
-
 <div class="content-wrap">
 
     <?php Template::inc('blocks/header.tpl', 'tao'); ?>
