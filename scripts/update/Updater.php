@@ -24,6 +24,7 @@ namespace oat\taoClientDiagnostic\scripts\update;
 use Doctrine\DBAL\Types\Type;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\authorization\RequireUsername;
+use oat\taoClientDiagnostic\model\ClientDetectService;
 use oat\taoClientDiagnostic\model\storage\Csv;
 use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\taoClientDiagnostic\model\storage\Storage;
@@ -283,5 +284,12 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('1.7.1', '1.8.0');
+
+        if ($this->isVersion('1.8.0')) {
+            $service = new ClientDetectService();
+            $service->setServiceManager($this->getServiceManager());
+            $this->getServiceManager()->register(ClientDetectService::SERVICE_ID, $service);
+            $this->setVersion('1.8.1');
+        }
     }
 }

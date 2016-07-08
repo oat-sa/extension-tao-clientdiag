@@ -1,20 +1,24 @@
 <?php
 
+use oat\oatbox\service\ServiceManager;
+use oat\taoClientDiagnostic\model\ClientDetectService;
+
 	header("Content-Type: text/javascript");
 	header("Cache-Control: no-cache, no-store, must-revalidate, max-age=0"); 
 	header("Pragma: no-cache");
-	header("Expires: 0"); 
+	header("Expires: 0");
 
-	include_once('libraries/utilities.php');
-	include_once('libraries/whichbrowser.php');
-		
-	$options = array('headers' => getallheaders());
+$options = [];
+
 	if (isset($_REQUEST['ua'])) $options['useragent'] = $_REQUEST['ua'];
 	if (isset($_REQUEST['e'])) $options['engine'] = intval($_REQUEST['e']);
 	if (isset($_REQUEST['f'])) $options['features'] = intval($_REQUEST['f']);
 	if (isset($_REQUEST['w'])) $options['width'] = intval($_REQUEST['w']);
 	if (isset($_REQUEST['h'])) $options['height'] = intval($_REQUEST['h']);
-	$detected = new WhichBrowser($options);
+
+$service = ServiceManager::getServiceManager()->get(ClientDetectService::SERVICE_ID);
+
+$detected = $service->getClientInfo($options);
 	
 ?>
 	
