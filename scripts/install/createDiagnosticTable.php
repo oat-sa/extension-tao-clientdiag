@@ -2,12 +2,10 @@
 
 namespace oat\taoClientDiagnostic\scripts\install;
 
-use oat\oatbox\service\ServiceManager;
 use oat\taoClientDiagnostic\model\storage\Sql;
 use Doctrine\DBAL\Schema\SchemaException;
-use oat\taoClientDiagnostic\model\storage\Storage;
 
-$persistence = common_persistence_Manager::getPersistence('default');
+$persistence = \common_persistence_Manager::getPersistence('default');
 
 
 $schemaManager = $persistence->getDriver()->getSchemaManager();
