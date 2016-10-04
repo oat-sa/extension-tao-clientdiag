@@ -25,6 +25,8 @@ use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
 use oat\taoClientDiagnostic\model\storage\Storage;
+use oat\taoClientRestrict\model\requirements\WebBrowserService;
+use oat\taoClientRestrict\model\requirements\OSService;
 
 /**
  * Class CompatibilityChecker
@@ -72,7 +74,16 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     public function whichBrowser()
     {
-        $this->setView('CompatibilityChecker' . DIRECTORY_SEPARATOR . 'browserDetection.php');
+        $osService = OSService::singleton();
+        $browserService = WebBrowserService::singleton();
+
+        $result = [
+            'browser' =>  $browserService->getClientName(),
+            'browserVersion' => $browserService->getClientVersion(),
+            'os' => $osService->getClientName(),
+            'osVersion' => $osService->getClientVersion()
+        ];
+        $this->returnJson($result);
     }
 
     /**

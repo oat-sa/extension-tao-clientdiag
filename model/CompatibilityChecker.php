@@ -21,37 +21,34 @@
 
 namespace oat\taoClientDiagnostic\model;
 
+use oat\taoClientRestrict\model\requirements\WebBrowserService;
+use oat\taoClientRestrict\model\requirements\OSService;
+
 
 class CompatibilityChecker
 {
 
-    private $os, $osVersion, $browser, $browserVersion, $compatibility, $data, $dataList;
+    private $os, $osVersion, $browser, $browserVersion, $compatibility;
 
     /**
      * CompatibilityChecker constructor
      * Check parameter required
      * Extract compatibility file
-     * @param $data
      * @throws \common_exception_MissingParameter
      * @throws \tao_models_classes_FileNotFoundException
      */
-    function __construct($data)
+    function __construct()
     {
-        $this->dataList = array_keys($data);
+        $osService = OSService::singleton();
+        $browserService = WebBrowserService::singleton();
 
-        //compatibility data aren't there
-        if (!isset($data['browser']) || !isset($data['browserVersion']) || !isset($data['os']) || !isset($data['osVersion'])) {
-            throw new \common_exception_MissingParameter('browser / browserVersion / os / osVersion');
-        }
-
-        $this->browser        = $data['browser'];
-        $this->browserVersion = $data['browserVersion'];
-        $this->os             = $data['os'];
-        $this->osVersion      = $data['osVersion'];
-
-        $this->data = array_values($data);
+        $this->browser        = $browserService->getClientName();
+        $this->browserVersion = $browserService->getClientVersion();
+        $this->os             = $osService->getClientName();
+        $this->osVersion      = $osService->getClientVersion();
 
         $compatibilityFile = __DIR__ . '/../include/compatibility.json';
+
         if (!file_exists($compatibilityFile)) {
             throw new \tao_models_classes_FileNotFoundException("Unable to find the compatibility file");
         }
