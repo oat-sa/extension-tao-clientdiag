@@ -21,8 +21,8 @@
 
 namespace oat\taoClientDiagnostic\model;
 
-use oat\taoClientRestrict\model\requirements\WebBrowserService;
-use oat\taoClientRestrict\model\requirements\OSService;
+use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
+use oat\taoClientDiagnostic\model\browserDetector\OSService;
 
 
 class CompatibilityChecker

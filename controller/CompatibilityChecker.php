@@ -25,8 +25,8 @@ use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
 use oat\taoClientDiagnostic\model\storage\Storage;
-use oat\taoClientRestrict\model\requirements\WebBrowserService;
-use oat\taoClientRestrict\model\requirements\OSService;
+use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
+use oat\taoClientDiagnostic\model\browserDetector\OSService;
 
 /**
  * Class CompatibilityChecker
