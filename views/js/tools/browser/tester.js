@@ -19,10 +19,11 @@
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
 define([
+    'jquery',
     'i18n',
     'helpers',
     'taoClientDiagnostic/tools/getconfig'
-], function (__, helpers, getConfig) {
+], function ($, __, helpers, getConfig) {
     'use strict';
 
     /**
@@ -104,18 +105,11 @@ define([
              */
             start: function start(done) {
                 var url = getTesterUrl(window, initConfig.action, initConfig.controller, initConfig.extension);
-                require([url], function () {
-                    // the WhichBrowser class is provided by the loaded resource as a global variable
-                    // this is ugly but this is the way this lib works...
-                    var info = new WhichBrowser();
-                    var browser = info.browser;
-                    var os = info.os;
-                    done({
-                        browser: browser && browser.name || __('Unknown browser'),
-                        browserVersion: browser && browser.version && browser.version.original || __('Unknown version'),
-                        os: os && os.name || __('Unknown OS'),
-                        osVersion: os && os.version && (os.version.alias || os.version.original) || __('Unknown version')
-                    });
+                $.ajax({
+                    url : url,
+                    success : function(data) {
+                        done(data);
+                    }
                 });
             }
         };
