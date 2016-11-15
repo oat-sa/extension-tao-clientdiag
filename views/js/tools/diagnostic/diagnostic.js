@@ -148,7 +148,7 @@ define([
                     helpers._url(config.actionCheck, config.controller, config.extension, config.storeParams),
                     information,
                     function (data) {
-                        var percentage = 'success' === data.type ? 100 : 0;
+                        var percentage = ('success' === data.type) ? 100 : (('warning' === data.type) ? 33 : 0);
                         var status = self.status.getStatus(percentage, data);
                         var summary = {
                             browser: {
