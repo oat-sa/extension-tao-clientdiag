@@ -137,6 +137,33 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     }
 
     /**
+     * Action is used to check upload speed from client side.
+     */
+    public function upload()
+    {
+        try {
+            if ($this->getRequestMethod() !== \Request::HTTP_POST) {
+                throw new \common_exception_NotImplemented('Only post method is accepted.');
+            }
+            if (!isset($_POST['upload']) || !is_string($_POST['upload'])) {
+                throw new \common_exception_InconsistentData("'upload' POST variable is missed.");
+            }
+            $size = mb_strlen($_POST['upload'], '8bit');
+            $result = ['success' => true, 'size' => $size];
+        } catch (\common_exception_NotImplemented $e) {
+            $result = ['success' => false, 'error' => $e->getMessage()];
+            \common_Logger::w($e->getMessage());
+        } catch (\common_exception_InconsistentData $e) {
+            $result = ['success' => false, 'error' => $e->getMessage()];
+            \common_Logger::w($e->getMessage());
+        } catch (\Exception $e) {
+            $result = ['success' => false, 'type' => 'error', 'message' => 'Please contact administrator'];
+            \common_Logger::w($e->getMessage());
+        }
+        $this->returnJson($result);
+    }
+
+    /**
      * Register data from the front end
      */
     public function storeData()

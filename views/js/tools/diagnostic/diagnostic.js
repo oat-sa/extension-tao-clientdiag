@@ -30,12 +30,13 @@ define([
     'taoClientDiagnostic/tools/diagnostic/status',
     'taoClientDiagnostic/tools/performances/tester',
     'taoClientDiagnostic/tools/bandwidth/tester',
+    'taoClientDiagnostic/tools/upload/tester',
     'taoClientDiagnostic/tools/browser/tester',
     'taoClientDiagnostic/tools/getconfig',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/main',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/result',
     'css!taoClientDiagnosticCss/diagnostics'
-], function ($, _, __, async, helpers, feedback, component, statusFactory, performancesTester, bandwidthTester, browserTester,getConfig,  mainTpl, resultTpl) {
+], function ($, _, __, async, helpers, feedback, component, statusFactory, performancesTester, bandwidthTester, uploadTester, browserTester,getConfig,  mainTpl, resultTpl) {
     'use strict';
 
     /**
@@ -261,6 +262,63 @@ define([
         },
 
         /**
+         * Check upload speed
+         * @param {Function} done
+         */
+        checkUpload: function checkBandwidth(done) {
+            var self = this;
+            var config = this.config.upload;
+
+            this.changeStatus(__('Checking upload speed...'));
+            uploadTester(config).start(function (report) {
+                var summary = {
+                    min: {message: __('Minimum upload speed'), value: report.min + ' Mbps'},
+                    max: {message: __('Maximum upload speed'), value: report.max + ' Mbps'},
+                    average: {message: __('Average upload speed'), value: report.average + ' Mbps'}
+                };
+                console.log(summary);
+                return;
+                self.store('upload', report, function () {
+                    var status = [];
+
+                    var bandwidthUnit = config.unit;
+                    var testTakers = config.ideal;
+                    var maxTestTakers = config.max;
+
+                    if (!_.isArray(testTakers)) {
+                        testTakers = [testTakers];
+                    }
+
+                    _.forEach(testTakers, function (threshold, i) {
+                        var max = threshold * bandwidthUnit;
+                        var st = self.status.getStatus(details.max / max * 100, 'bandwidth');
+                        var nb = Math.floor(details.max / bandwidthUnit);
+
+                        if (nb > maxTestTakers) {
+                            nb = '>' + maxTestTakers;
+                        }
+
+                        st.id = 'bandwidth-' + i;
+                        st.title = __('Bandwidth');
+                        st.feedback.legend = __('Number of simultaneous test takers the connection can handle');
+
+                        st.quality.label = nb;
+
+                        if (nb.toString().length > 2) {
+                            st.quality.wide = true;
+                        }
+
+                        status.push(st);
+
+                        self.addResult(st);
+                    });
+
+                    done(status, summary);
+                });
+            });
+        },
+
+        /**
          * Add a result row
          * @param {Object} result
          * @returns {diagnostic}
@@ -388,12 +446,14 @@ define([
                 this.prepare();
 
                 // launch each testers in series, then display the results
-                async.series([function (cb) {
+                async.series([/*function (cb) {
                     doCheck('checkBrowser', cb);
                 }, function (cb) {
                     doCheck('checkPerformances', cb);
                 }, function (cb) {
                     doCheck('checkBandwidth', cb);
+                },*/ function (cb) {
+                    doCheck('checkUpload', cb);
                 }], function () {
                     // pick the lowest percentage as the main score
                     var total = _.min(scores, 'percentage');
