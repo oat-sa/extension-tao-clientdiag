@@ -19,11 +19,8 @@ define([
     'jquery',
     'lodash',
     'async',
-    'util/url',
-    'taoClientDiagnostic/tools/stats',
-    'taoClientDiagnostic/tools/fixedDecimals',
-    'lib/polyfill/performance-now'
-], function($, _, async, urlHelper, context, stats, fixedDecimals) {
+    'util/url'
+], function($, _, async, urlHelper) {
     'use strict';
 
     /**
@@ -34,29 +31,28 @@ define([
     var _kilo = 1024;
 
     /**
-     * Result of calibration requests
+     * A binary mega bytes (MiB)
+     * @type {Number}
+     * @private
      */
-    var calibrationData = {
-        total : 0
-    };
+    var _mega = _kilo * _kilo;
 
     /**
-     * Number of calibration requests
-     * @type {number}
+     * Result of calibration requests
      */
-    var calibrationRequestsNum = 3;
+    var data = [];
 
     /**
      * Generate random string of given length
      * @param length
      */
     var generateStr = function generateStr(length) {
-        var s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        for( var i=0; i < length; i++ )
+        for( var i=0; i < length; i++ ) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
+        }
 
         return text;
     };
@@ -68,86 +64,54 @@ define([
      * This callback is also called if a timeout breaks the download;
      */
     var upload = function upload(size) {
-        var url;
-        var str;
-        var result;
-        var time;
 
-        url = urlHelper.route('upload', 'CompatibilityChecker', 'taoClientDiagnostic', {cache : Date.now()});
-        str = generateStr(size);
+        var url = urlHelper.route('upload', 'CompatibilityChecker', 'taoClientDiagnostic', {cache : Date.now()});
+        var str = generateStr(size);
 
-        time = Date.now();
-        $.ajax({
+        return $.ajax({
             url : url,
             type : 'POST',
             data : {
                 upload : str
             },
-            async : false,
-            success : function (resp) {
-                result = resp;
-            }
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                var startTime = Date.now();
+                // Upload progress
+                xhr.upload.addEventListener("progress", function(evt){
+                    if (evt.lengthComputable) {
+                        var passedTime = Date.now() - startTime;
+                        data.push({
+                            time: passedTime,
+                            loaded: evt.loaded,
+                            speed: ((evt.loaded * 8) / _mega) / (passedTime / 1000)
+                        });
+                    }
+                }, false);
+
+                return xhr;
+            },
         });
-        result.time = Date.now() - time;
-        return result;
     };
 
     /**
-     * Performs a bandwidth test by downloading a bunch of data sets with different sizes
-     *
+     * Performs a upload speed test
      * @returns {Object}
      */
-    var bandwidthTester = function bandwidthTester (config){
+    var uploadTester = function uploadTester (config){
         return {
             /**
-             * Performs a bandwidth test, then call a function to provide the result
+             * Performs upload speed test, then call a function to provide the result
              * @param {Function} done
              */
-            start : function start(done){
-                var report = {
-                    min : 0,
-                    max : 0,
-                    average : 0,
-                };
-                var total = 0;
-                var successRequests = 0;
-                var successCalibrationRequests = 0;
-
-                for (var calibrationRequest = 0; calibrationRequest < calibrationRequestsNum; calibrationRequest++) {
-                    var result = upload(0);
-                    if (result.success) {
-                        calibrationData.total += result.time;
-                        successCalibrationRequests++;
-                    }
-                }
-
-                calibrationData.average = calibrationData.total / successCalibrationRequests;
-
-                _.forEach(config.cases, function (size) {
-                    var result = upload(parseInt(size, 10));
-                    var speed;
-                    if (result.success) {
-                        speed = size / ((result.time - calibrationData.average) / 1000); //bytes per sec
-
-                        if (report.min === 0 || report.min > speed) {
-                            report.min = speed;
-                        }
-
-                        if (report.max < speed) {
-                            report.max = speed;
-                        }
-
-                        total += speed;
-                        successRequests++;
-                    }
+            start : function start(done) {
+                var jqXHR = upload(parseInt(config.size, 10));
+                jqXHR.then(function() {
+                    done(data);
                 });
-                report.average = (total / successRequests) * 8 / (1024 * 1024); //Mbps
-                report.max = report.max * 8 / (1024 * 1024); //Mbps
-                report.min = report.min * 8 / (1024 * 1024); //Mbps
-                done(report);
             }
         };
     };
 
-    return bandwidthTester;
+    return uploadTester;
 });

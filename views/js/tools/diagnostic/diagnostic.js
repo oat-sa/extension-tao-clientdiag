@@ -199,7 +199,6 @@ define([
                     status.title = __('Workstation performances');
 
                     self.addResult(status);
-
                     done(status, summary);
                 });
             });
@@ -265,53 +264,40 @@ define([
          * Check upload speed
          * @param {Function} done
          */
-        checkUpload: function checkBandwidth(done) {
+        checkUpload: function checkUpload(done) {
             var self = this;
             var config = this.config.upload;
 
             this.changeStatus(__('Checking upload speed...'));
-            uploadTester(config).start(function (report) {
-                var summary = {
-                    min: {message: __('Minimum upload speed'), value: report.min + ' Mbps'},
-                    max: {message: __('Maximum upload speed'), value: report.max + ' Mbps'},
-                    average: {message: __('Average upload speed'), value: report.average + ' Mbps'}
-                };
-                console.log(summary);
-                return;
-                self.store('upload', report, function () {
-                    var status = [];
+            uploadTester(config).start(function (data) {
+                var totalSpeed = 0;
+                var avgSpeed;
+                var maxSpeed = 0;
+                var optimal = config.optimal / 1024 / 1024;
 
-                    var bandwidthUnit = config.unit;
-                    var testTakers = config.ideal;
-                    var maxTestTakers = config.max;
-
-                    if (!_.isArray(testTakers)) {
-                        testTakers = [testTakers];
+                    _.forEach(data, function (val) {
+                    totalSpeed += val.speed;
+                    if (maxSpeed < val.speed) {
+                        maxSpeed = Math.round(val.speed * 100) / 100;
                     }
+                });
+                avgSpeed = Math.round(totalSpeed / data.length * 100) / 100;
 
-                    _.forEach(testTakers, function (threshold, i) {
-                        var max = threshold * bandwidthUnit;
-                        var st = self.status.getStatus(details.max / max * 100, 'bandwidth');
-                        var nb = Math.floor(details.max / bandwidthUnit);
+                var status = self.status.getStatus((100 / optimal) * avgSpeed, 'upload');
+                var summary = {
+                    uploadAvg: {message: __('Average upload speed'), value: avgSpeed + ' Mbps'},
+                    uploadMax: {message: __('Max upload speed'), value: maxSpeed + ' Mbps'},
+                };
 
-                        if (nb > maxTestTakers) {
-                            nb = '>' + maxTestTakers;
-                        }
+                self.store('upload', {
+                    max: summary.uploadMax.value,
+                    avg: summary.uploadAvg.value,
+                    type: 'upload'
+                }, function () {
+                    status.id = 'upload';
+                    status.title = __('Upload speed');
 
-                        st.id = 'bandwidth-' + i;
-                        st.title = __('Bandwidth');
-                        st.feedback.legend = __('Number of simultaneous test takers the connection can handle');
-
-                        st.quality.label = nb;
-
-                        if (nb.toString().length > 2) {
-                            st.quality.wide = true;
-                        }
-
-                        status.push(st);
-
-                        self.addResult(st);
-                    });
+                    self.addResult(status);
 
                     done(status, summary);
                 });
@@ -446,13 +432,13 @@ define([
                 this.prepare();
 
                 // launch each testers in series, then display the results
-                async.series([/*function (cb) {
+                async.series([function (cb) {
                     doCheck('checkBrowser', cb);
                 }, function (cb) {
                     doCheck('checkPerformances', cb);
                 }, function (cb) {
                     doCheck('checkBandwidth', cb);
-                },*/ function (cb) {
+                }, function (cb) {
                     doCheck('checkUpload', cb);
                 }], function () {
                     // pick the lowest percentage as the main score
