@@ -63,6 +63,24 @@ define([
     }];
 
     /**
+     * A list of thresholds for bandwidth check
+     * @type {Array}
+     */
+    var uploadThresholds = [{
+        threshold: 0,
+        message: __('Low upload speed'),
+        type: 'error'
+    }, {
+        threshold: 33,
+        message: __('Average upload speed'),
+        type: 'warning'
+    }, {
+        threshold: 66,
+        message: __('Good upload speed'),
+        type: 'success'
+    }];
+
+    /**
      * A list of thresholds for summary
      * @type {Array}
      */
@@ -92,6 +110,7 @@ define([
             thresholds: {
                 performances: performancesThresholds,
                 bandwidth: bandwidthThresholds,
+                upload: uploadThresholds,
                 summary: summaryThresholds
             },
 

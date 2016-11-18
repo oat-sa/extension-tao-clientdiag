@@ -283,5 +283,16 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('1.7.1', '1.9.1');
+
+        if ($this->isVersion('1.9.1')) {
+            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+            $config['upload'] =[
+                'size' => 1 * 1024 * 1024,
+                'optimal' => 1 * 1024 * 1024,
+            ];
+            $extension->setConfig('clientDiag', $config);
+            $this->setVersion('1.10.0');
+        }
     }
 }
