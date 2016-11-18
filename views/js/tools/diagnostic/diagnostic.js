@@ -30,12 +30,13 @@ define([
     'taoClientDiagnostic/tools/diagnostic/status',
     'taoClientDiagnostic/tools/performances/tester',
     'taoClientDiagnostic/tools/bandwidth/tester',
+    'taoClientDiagnostic/tools/upload/tester',
     'taoClientDiagnostic/tools/browser/tester',
     'taoClientDiagnostic/tools/getconfig',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/main',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/result',
     'css!taoClientDiagnosticCss/diagnostics'
-], function ($, _, __, async, helpers, feedback, component, statusFactory, performancesTester, bandwidthTester, browserTester,getConfig,  mainTpl, resultTpl) {
+], function ($, _, __, async, helpers, feedback, component, statusFactory, performancesTester, bandwidthTester, uploadTester, browserTester,getConfig,  mainTpl, resultTpl) {
     'use strict';
 
     /**
@@ -148,7 +149,7 @@ define([
                     helpers._url(config.actionCheck, config.controller, config.extension, config.storeParams),
                     information,
                     function (data) {
-                        var percentage = 'success' === data.type ? 100 : 0;
+                        var percentage = ('success' === data.type) ? 100 : (('warning' === data.type) ? 33 : 0);
                         var status = self.status.getStatus(percentage, data);
                         var summary = {
                             browser: {
@@ -198,7 +199,6 @@ define([
                     status.title = __('Workstation performances');
 
                     self.addResult(status);
-
                     done(status, summary);
                 });
             });
@@ -254,6 +254,50 @@ define([
 
                         self.addResult(st);
                     });
+
+                    done(status, summary);
+                });
+            });
+        },
+
+        /**
+         * Check upload speed
+         * @param {Function} done
+         */
+        checkUpload: function checkUpload(done) {
+            var self = this;
+            var config = this.config.upload;
+
+            this.changeStatus(__('Checking upload speed...'));
+            uploadTester(config).start(function (data) {
+                var totalSpeed = 0;
+                var avgSpeed;
+                var maxSpeed = 0;
+                var optimal = config.optimal / 1024 / 1024;
+
+                _.forEach(data, function (val) {
+                    totalSpeed += val.speed;
+                    if (maxSpeed < val.speed) {
+                        maxSpeed = Math.round(val.speed * 100) / 100;
+                    }
+                });
+                avgSpeed = Math.round(totalSpeed / data.length * 100) / 100;
+
+                var status = self.status.getStatus((100 / optimal) * avgSpeed, 'upload');
+                var summary = {
+                    uploadAvg: {message: __('Average upload speed'), value: avgSpeed + ' Mbps'},
+                    uploadMax: {message: __('Max upload speed'), value: maxSpeed + ' Mbps'},
+                };
+
+                self.store('upload', {
+                    max: summary.uploadMax.value,
+                    avg: summary.uploadAvg.value,
+                    type: 'upload'
+                }, function () {
+                    status.id = 'upload';
+                    status.title = __('Upload speed');
+
+                    self.addResult(status);
 
                     done(status, summary);
                 });
@@ -394,6 +438,8 @@ define([
                     doCheck('checkPerformances', cb);
                 }, function (cb) {
                     doCheck('checkBandwidth', cb);
+                }, function (cb) {
+                    doCheck('checkUpload', cb);
                 }], function () {
                     // pick the lowest percentage as the main score
                     var total = _.min(scores, 'percentage');

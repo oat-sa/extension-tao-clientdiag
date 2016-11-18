@@ -96,4 +96,19 @@ return array(
          */
         'max' => 100,
     ),
+
+    /**
+     * Upload speed test config
+     */
+    'upload' => array(
+        /**
+         * Size of data to sent to server during speed test in bytes
+         */
+        'size' => 1 * 1024 * 1024,
+
+        /**
+         * Optimal speed in bytes per second
+         */
+        'optimal' => 1 * 1024 * 1024,
+    )
 );
