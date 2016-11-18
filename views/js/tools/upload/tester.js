@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
  */
 define([
     'jquery',
@@ -38,7 +38,7 @@ define([
     var _mega = _kilo * _kilo;
 
     /**
-     * Result of calibration requests
+     * Result of diagnostic
      */
     var data = [];
 
@@ -58,15 +58,15 @@ define([
     };
 
     /**
-     * Download a data set as described by the provided descriptor and compute the duration.
-     * @param {Object} data The data set descriptor to use for download
-     * @param {Function} cb A callback function called at the end of the download.
-     * This callback is also called if a timeout breaks the download;
+     * Upload generated string to check upload speed.
+     * @param {number} size of string to upload in bytes
+     * @return {object} jqXHR
      */
     var upload = function upload(size) {
 
         var url = urlHelper.route('upload', 'CompatibilityChecker', 'taoClientDiagnostic', {cache : Date.now()});
         var str = generateStr(size);
+        data = [];
 
         return $.ajax({
             url : url,

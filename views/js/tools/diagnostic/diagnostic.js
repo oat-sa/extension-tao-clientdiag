@@ -275,7 +275,7 @@ define([
                 var maxSpeed = 0;
                 var optimal = config.optimal / 1024 / 1024;
 
-                    _.forEach(data, function (val) {
+                _.forEach(data, function (val) {
                     totalSpeed += val.speed;
                     if (maxSpeed < val.speed) {
                         maxSpeed = Math.round(val.speed * 100) / 100;
