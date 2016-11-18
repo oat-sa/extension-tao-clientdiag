@@ -18,6 +18,13 @@
 define(['taoClientDiagnostic/tools/stats'], function(stats){
     'use strict';
 
+    var listValuesArray;
+    var listValuesCollectionDataProvider;
+    var listValuesObject;
+    var listValuesObjectDataProvider;
+    var listValuesCollectionCallbackDataProvider;
+    var listValuesObjectCallbackDataProvider;
+
     QUnit.module('API');
 
     QUnit.test('The tester has the right form', function(assert){
@@ -28,7 +35,7 @@ define(['taoClientDiagnostic/tools/stats'], function(stats){
     QUnit.module('Test');
 
     /** stats from a collection **/
-    var listValuesArray = [{
+    listValuesArray = [{
         "totalDuration": 64,
         "networkDuration": 1,
         "requestDuration": 1,
@@ -75,7 +82,7 @@ define(['taoClientDiagnostic/tools/stats'], function(stats){
         "displayDuration": 72
     }];
 
-    var listValuesCollectionDataProvider = [{
+    listValuesCollectionDataProvider = [{
         title : 'min',
         name : 'min',
         input : listValuesArray,
@@ -116,7 +123,7 @@ define(['taoClientDiagnostic/tools/stats'], function(stats){
         name : 'variance',
         input : listValuesArray,
         field : 'displayDuration',
-        expected : 64.25
+        expected : 8.02
     }, {
         title : 'values',
         name : 'values',
@@ -129,12 +136,16 @@ define(['taoClientDiagnostic/tools/stats'], function(stats){
         .cases(listValuesCollectionDataProvider)
         .test('Stats on a collection', function(data, assert) {
             var results = stats(data.input, data.field);
-            assert.strictEqual(results[data.name], data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!');
-
+            var value = results[data.name];
+            if ('number' === typeof value) {
+                value = Math.round(value * 100) / 100;
+            }
+            QUnit.expect(1);
+            assert.strictEqual(value, data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!');
         });
 
     /** stats from an object **/
-    var listValuesObject = {
+    listValuesObject = {
          "sample0": {
              "totalDuration": 64,
              "networkDuration": 1,
@@ -191,7 +202,7 @@ define(['taoClientDiagnostic/tools/stats'], function(stats){
         }
     };
 
-    var listValuesObjectDataProvider = [{
+    listValuesObjectDataProvider = [{
         title : 'min',
         name : 'min',
         input : listValuesObject,
@@ -232,7 +243,7 @@ define(['taoClientDiagnostic/tools/stats'], function(stats){
         name : 'variance',
         input : listValuesObject,
         field : 'displayDuration',
-        expected : 64.25
+        expected : 8.02
     }, {
         title : 'values',
         name : 'values',
@@ -245,16 +256,20 @@ define(['taoClientDiagnostic/tools/stats'], function(stats){
         .cases(listValuesObjectDataProvider)
         .test('Stats on an object', function(data, assert) {
             var results = stats(data.input, data.field);
-            assert.strictEqual(results[data.name], data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!');
-
+            var value = results[data.name];
+            if ('number' === typeof value) {
+                value = Math.round(value * 100) / 100;
+            }
+            QUnit.expect(1);
+            assert.strictEqual(value, data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!');
         });
 
-    var getValue = function(value) {
+    function getValue(value) {
         return value.displayDuration;
-    };
+    }
 
     /** stats from a collection using a callback **/
-    var listValuesCollectionCallbackDataProvider = [{
+    listValuesCollectionCallbackDataProvider = [{
         title : 'min',
         name : 'min',
         input : listValuesArray,
@@ -295,7 +310,7 @@ define(['taoClientDiagnostic/tools/stats'], function(stats){
         name : 'variance',
         input : listValuesArray,
         field : getValue,
-        expected : 64.25
+        expected : 8.02
     }, {
         title : 'values',
         name : 'values',
@@ -308,12 +323,16 @@ define(['taoClientDiagnostic/tools/stats'], function(stats){
         .cases(listValuesCollectionCallbackDataProvider)
         .test('Stats on a collection using a callback', function(data, assert) {
             var results = stats(data.input, data.field);
-            assert.strictEqual(results[data.name], data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!');
-
+            var value = results[data.name];
+            if ('number' === typeof value) {
+                value = Math.round(value * 100) / 100;
+            }
+            QUnit.expect(1);
+            assert.strictEqual(value, data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!');
         });
 
     /** stats from an object **/
-    var listValuesObjectCallbackDataProvider = [{
+    listValuesObjectCallbackDataProvider = [{
         title : 'min',
         name : 'min',
         input : listValuesObject,
@@ -354,7 +373,7 @@ define(['taoClientDiagnostic/tools/stats'], function(stats){
         name : 'variance',
         input : listValuesObject,
         field : getValue,
-        expected : 64.25
+        expected : 8.02
     }, {
         title : 'values',
         name : 'values',
@@ -367,8 +386,12 @@ define(['taoClientDiagnostic/tools/stats'], function(stats){
         .cases(listValuesObjectCallbackDataProvider)
         .test('Stats on an object using a callback', function(data, assert) {
             var results = stats(data.input, data.field);
-            assert.strictEqual(results[data.name], data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!');
-
+            var value = results[data.name];
+            if ('number' === typeof value) {
+                value = Math.round(value * 100) / 100;
+            }
+            QUnit.expect(1);
+            assert.strictEqual(value, data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!');
         });
 
 });
