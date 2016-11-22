@@ -15,8 +15,17 @@
  *
  * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
  */
-define(['taoClientDiagnostic/tools/upload/tester'], function(uploadTester){
+define(['jquery', 'lodash', 'taoClientDiagnostic/tools/upload/tester'], function($, _, uploadTester){
     'use strict';
+
+    // backup/restore ajax method between each test
+    var ajaxBackup;
+    QUnit.testStart(function () {
+        ajaxBackup = $.ajax;
+    });
+    QUnit.testDone(function () {
+        $.ajax = ajaxBackup;
+    });
 
     QUnit.module('API');
 
@@ -30,10 +39,17 @@ define(['taoClientDiagnostic/tools/upload/tester'], function(uploadTester){
     QUnit.module('Test');
 
     QUnit.asyncTest('The tester runs', function(assert) {
+        var expectedSize = 100;
+        var $ajax = $.ajax;
 
         QUnit.expect(7);
 
-        uploadTester({size : 100}).start(function(result) {
+        $.ajax = function (config) {
+            config.url = window.location.href.replace('test.html', 'test.json');
+            return $ajax(config);
+        };
+
+        uploadTester({size : expectedSize}).start(function(result) {
 
             assert.ok(result.length > 0, 'Result array is not empty');
             assert.ok(typeof result[0].speed === 'number', 'Speed is a number');
