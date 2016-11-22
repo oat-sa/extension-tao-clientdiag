@@ -296,5 +296,31 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('1.10.0', '1.10.1');
+
+        if($this->isVersion('1.10.1')){
+
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+
+            if ($storageService instanceof Sql) {
+                $persistence = $storageService->getPersistence();
+                $schemaManager = $persistence->getDriver()->getSchemaManager();
+                $schema = $schemaManager->createSchema();
+
+                $fromSchema = clone $schema;
+
+                /** @var \Doctrine\DBAL\Schema\Table $tableResults */
+                $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
+
+                $tableResults->addColumn(Sql::DIAGNOSTIC_UPLOAD_MAX, 'float', ['notnull' => false]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_UPLOAD_AVG, 'float', ['notnull' => false]);
+
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+                foreach ($queries as $query) {
+                    $persistence->exec($query);
+                }
+            }
+
+            $this->setVersion('1.10.2');
+        }
     }
 }

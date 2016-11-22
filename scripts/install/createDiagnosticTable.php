@@ -52,6 +52,8 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             $tableResults->addColumn(Sql::DIAGNOSTIC_PERFORMANCE_MEDIAN, 'float', ['notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_PERFORMANCE_VARIANCE, 'float', ['notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_CREATED_AT, 'datetime');
+            $tableResults->addColumn(Sql::DIAGNOSTIC_UPLOAD_MAX, 'float', ['notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_UPLOAD_AVG, 'float', ['notnull' => false]);
 
             $tableResults->setPrimaryKey(array(Sql::DIAGNOSTIC_ID));
 
