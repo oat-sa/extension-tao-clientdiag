@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.1.0-sprint20\n"
-"PO-Revision-Date: 2016-02-23T13:37:56\n"
+"Project-Id-Version: TAO 3.2.0-sprint41\n"
+"PO-Revision-Date: 2016-12-23T08:48:37\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-FR\n"
@@ -25,6 +25,9 @@ msgstr "Performance moyenne (risque de lenteurs)"
 msgid "Average rendering time"
 msgstr "Temps de rendu moyen"
 
+msgid "Average upload speed"
+msgstr "Bande Passante Moyenne"
+
 msgid "Bandwidth"
 msgstr "Bande passante"
 
@@ -42,6 +45,9 @@ msgstr "Test du navigateur..."
 
 msgid "Checking the performances..."
 msgstr "Test des performances..."
+
+msgid "Checking upload speed..."
+msgstr "Vérification de la vitesse de téléchargement..."
 
 msgid "Compatible"
 msgstr "Conforme"
@@ -64,6 +70,9 @@ msgstr "Bande passante correcte"
 msgid "Good performances"
 msgstr "Performance correcte"
 
+msgid "Good upload speed"
+msgstr "Bande Passante Conforme"
+
 msgid "Hide Details"
 msgstr "Masquer les détails"
 
@@ -75,6 +84,12 @@ msgstr ""
 
 msgid "Low bandwidth"
 msgstr "Bande passante faible"
+
+msgid "Low upload speed"
+msgstr "Bande Passante non conforme"
+
+msgid "Max upload speed"
+msgstr "Bande Passante Montante Max"
 
 msgid "Maximum bandwidth"
 msgstr "Bande passante maximum"
@@ -112,14 +127,8 @@ msgstr "Cet outil va effectuer plusieurs tests pour vérifier la configuration d
 msgid "Total"
 msgstr "Synthèse"
 
-msgid "Unknown browser"
-msgstr "Navigateur non supporté"
-
-msgid "Unknown OS"
-msgstr "Système d'exploitation non supporté"
-
-msgid "Unknown version"
-msgstr "Version non supportée"
+msgid "Upload speed"
+msgstr "Bande Passante Montante"
 
 msgid "Very slow performances"
 msgstr "Performance faible (lenteurs très importantes)"

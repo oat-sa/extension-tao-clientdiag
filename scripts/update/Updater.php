@@ -324,6 +324,10 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         
+<<<<<<< HEAD
         $this->skip('1.10.2', '1.11.0');
+=======
+        $this->skip('1.10.2', '1.11.2');
+>>>>>>> 7f9aeac... Transtale upload tokens to french
     }
 }
