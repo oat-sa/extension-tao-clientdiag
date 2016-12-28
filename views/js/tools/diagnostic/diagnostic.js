@@ -491,6 +491,15 @@ define([
      * @returns {diagnostic}
      */
     function diagnosticFactory(config) {
+        // fix the translations for content loaded from config files
+        if (config) {
+            _.forEach(['title', 'header', 'footer', 'info', 'button'], function(name) {
+                if (config[name]) {
+                    config[name] = __(config[name]);
+                }
+            });
+        }
+
         return component(diagnostic, _defaults)
             .setTemplate(mainTpl)
 
