@@ -26,7 +26,7 @@ msgid "Average rendering time"
 msgstr "Temps de rendu moyen"
 
 msgid "Average upload speed"
-msgstr "Bande Passante Moyenne"
+msgstr "Bande Passante Montante Moy"
 
 msgid "Bandwidth"
 msgstr "Bande passante"
