@@ -14,7 +14,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 msgid "All rights reserved."
-msgstr "Tous droits réservés"
+msgstr ""
 
 msgid "Average bandwidth"
 msgstr "Bande passante moyenne"
@@ -77,10 +77,10 @@ msgid "Hide Details"
 msgstr "Masquer les détails"
 
 msgid "Log in"
-msgstr "Connexion"
+msgstr ""
 
 msgid "Login"
-msgstr "Utilisateur"
+msgstr ""
 
 msgid "Low bandwidth"
 msgstr "Bande passante faible"
