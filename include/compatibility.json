@@ -45,7 +45,7 @@
 
     {"compatible" : 1, "os" : "Windows", "osVersion" : "Server2003", "browser" : "Firefox", "versions" : [34, 37, 40]},
 
-    {"compatible" : 1, "os" : "Chrome OS", "osVersion" : "", "browser" : "Chrome", "versions" : [53]},
+    {"compatible" : 1, "os" : "Chrome OS", "osVersion" : "", "browser" : "Chrome",  "versions" : [48, 49, 50, 51, 52, 53, 54, 55]},
 
     {"compatible" : 1, "os" : "iOS", "osVersion" : "10", "browser" : "Safari", "versions" : [10]},
     {"compatible" : 1, "os" : "iOS", "osVersion" : "9", "browser" : "Safari", "versions" : [9]},
