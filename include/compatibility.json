@@ -1,51 +1,52 @@
 [
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.12", "browser" : "Firefox", "versions" : [50]},
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.12", "browser" : "Chrome", "versions" : [55]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.12", "browser" : "Firefox", "versions" : [45]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.12", "browser" : "Chrome", "versions" : [48]},
     {"compatible" : 1, "os" : "OS X", "osVersion" : "10.12", "browser" : "Safari", "versions" : [10]},
 
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.11", "browser" : "Firefox", "versions" : [40, 41, 42, 43, 44, 45]},
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.11", "browser" : "Chrome", "versions" : [45, 46, 47, 48, 49]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.11", "browser" : "Firefox", "versions" : [40]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.11", "browser" : "Chrome", "versions" : [45]},
     {"compatible" : 1, "os" : "OS X", "osVersion" : "10.11", "browser" : "Safari", "versions" : [9]},
 
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.10", "browser" : "Firefox", "versions" : [34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.10", "browser" : "Firefox", "versions" : [34]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.10", "browser" : "Chrome", "versions" : [39]},
     {"compatible" : 1, "os" : "OS X", "osVersion" : "10.10", "browser" : "Safari", "versions" : [8]},
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.10", "browser" : "Chrome", "versions" : [39,40, 41, 42, 43, 44, 45, 46, 47, 48, 49]},
 
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.9", "browser" : "Firefox", "versions" : [27, 28, 29, 30, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.9", "browser" : "Firefox", "versions" : [27, 28, 29, 30, 34]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.9", "browser" : "Chrome", "versions" : [39]},
     {"compatible" : 1, "os" : "OS X", "osVersion" : "10.9", "browser" : "Safari", "versions" : [7]},
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.9", "browser" : "Chrome", "versions" : [39, 40, 41, 42, 42, 44, 45, 46, 47, 48, 49]},
 
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.7", "browser" : "Firefox", "versions" : [27, 28, 29, 30, 34, 35, 36, 37, 38, 39]},
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.7", "browser" : "Chrome", "versions" : [39,40, 41, 42, 43, 44]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.7", "browser" : "Firefox", "versions" : [27, 28, 29, 30, 34]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.7", "browser" : "Chrome", "versions" : [39]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.7", "browser" : "Safari", "versions" : []},
 
-    {"compatible" : 1, "os" : "Linux", "osVersion" : "", "browser" : "Chrome", "versions" : [39, 40, 41, 42, 43, 44]},
+    {"compatible" : 1, "os" : "Linux", "osVersion" : "", "browser" : "Chrome", "versions" : [39]},
     {"compatible" : 1, "os" : "Linux", "osVersion" : "", "browser" : "Firefox", "versions" : [31]},
 
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "10", "browser" : "Firefox", "versions" : [40, 41, 42, 43, 44, 45, 50]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "10", "browser" : "Chrome", "versions" : [45, 46, 47, 48, 55]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "10", "browser" : "Firefox", "versions" : [40]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "10", "browser" : "Chrome", "versions" : [45]},
     {"compatible" : 1, "os" : "Windows", "osVersion" : "10", "browser" : "Internet Explorer", "versions" : [11]},
     {"compatible" : 1, "os" : "Windows", "osVersion" : "10", "browser" : "Edge", "versions" : []},
 
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "8.1", "browser" : "Firefox", "versions" : [27, 28, 29, 30, 36, 40, 41, 42, 43, 44, 45, 50]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "8.1", "browser" : "Chrome", "versions" : [33, 34, 35, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 55]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "8.1", "browser" : "Internet Explorer", "versions" : [10,11]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "8.1", "browser" : "Firefox", "versions" : [27, 28, 29, 30, 36, 40]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "8.1", "browser" : "Chrome", "versions" : [33, 34, 35, 40]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "8.1", "browser" : "Internet Explorer", "versions" : [10, 11]},
 
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "8", "browser" : "Firefox", "versions" : [35,36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 50]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "8", "browser" : "Chrome", "versions" : [39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 55]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "8", "browser" : "Internet Explorer", "versions" : [10,11]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "8", "browser" : "Firefox", "versions" : [35]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "8", "browser" : "Chrome", "versions" : [39]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "8", "browser" : "Internet Explorer", "versions" : [10, 11]},
 
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "7", "browser" : "Firefox", "versions" : [34,35,36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 50]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "7", "browser" : "Firefox", "versions" : [34]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "7", "browser" : "Chrome", "versions" : [40]},
     {"compatible" : 1, "os" : "Windows", "osVersion" : "7", "browser" : "Internet Explorer", "versions" : [10, 11]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "7", "browser" : "Chrome", "versions" : [40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 55]},
     {"compatible" : 0, "os" : "Windows", "osVersion" : "7", "browser" : "Internet Explorer", "versions" : [9]},
 
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "XP", "browser" : "Firefox", "versions" : [35, 36]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "XP", "browser" : "Chrome", "versions" : [40, 41, 42, 43, 44]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "XP", "browser" : "Firefox", "versions" : [35]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "XP", "browser" : "Chrome", "versions" : [40]},
     {"compatible" : 0, "os" : "Windows", "osVersion" : "XP", "browser" : "Internet Explorer", "versions" : [8]},
 
     {"compatible" : 1, "os" : "Windows", "osVersion" : "Server2003", "browser" : "Firefox", "versions" : [34, 37, 40]},
 
-    {"compatible" : 1, "os" : "Chrome OS", "osVersion" : "", "browser" : "Chrome", "versions" : [53]},
+    {"compatible" : 1, "os" : "Chrome OS", "osVersion" : "", "browser" : "Chrome", "versions" : [48]},
 
     {"compatible" : 1, "os" : "iOS", "osVersion" : "10", "browser" : "Safari", "versions" : [10]},
     {"compatible" : 1, "os" : "iOS", "osVersion" : "9", "browser" : "Safari", "versions" : [9]},
@@ -57,5 +58,4 @@
     {"compatible" : 1, "os" : "Android", "osVersion" : "4.4", "browser" : "Firefox", "versions" : [28]},
     {"compatible" : 1, "os" : "Android", "osVersion" : "4.1", "browser" : "Chrome", "versions" : [34]},
     {"compatible" : 1, "os" : "Android", "osVersion" : "2.4", "browser" : "", "versions" : []}
-
 ]
