@@ -15,10 +15,6 @@
     {"compatible" : 1, "os" : "OS X", "osVersion" : "10.9", "browser" : "Chrome", "versions" : [39]},
     {"compatible" : 1, "os" : "OS X", "osVersion" : "10.9", "browser" : "Safari", "versions" : [7]},
 
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.8", "browser" : "Firefox", "versions" : []},
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.8", "browser" : "Chrome", "versions" : []},
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.8", "browser" : "Safari", "versions" : []},
-
     {"compatible" : 1, "os" : "OS X", "osVersion" : "10.7", "browser" : "Firefox", "versions" : [27, 28, 29, 30, 34]},
     {"compatible" : 1, "os" : "OS X", "osVersion" : "10.7", "browser" : "Chrome", "versions" : [39]},
     {"compatible" : 1, "os" : "OS X", "osVersion" : "10.7", "browser" : "Safari", "versions" : []},
@@ -62,5 +58,4 @@
     {"compatible" : 1, "os" : "Android", "osVersion" : "4.4", "browser" : "Firefox", "versions" : [28]},
     {"compatible" : 1, "os" : "Android", "osVersion" : "4.1", "browser" : "Chrome", "versions" : [34]},
     {"compatible" : 1, "os" : "Android", "osVersion" : "2.4", "browser" : "", "versions" : []}
-
 ]
