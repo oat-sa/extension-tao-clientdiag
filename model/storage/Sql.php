@@ -158,4 +158,17 @@ class Sql extends ConfigurableService implements Storage
                  ' WHERE ' . self::DIAGNOSTIC_ID . ' = ?';
         return $this->persistence->exec($query, array_merge(array_values($data), array($id)));
     }
+
+
+    public function flush()
+    {
+        $query = 'DELETE FROM ' . self::DIAGNOSTIC_TABLE;
+
+        try{
+            $this->getPersistence()->exec($query);
+        } catch (\PDOException $e){
+            return false;
+        }
+        return true;
+    }
 }
