@@ -158,4 +158,13 @@ class Csv extends ConfigurableService implements Storage
         \tao_helpers_File::copy($tmpFile, $this->getOption('filename')) && unlink($tmpFile);
         return;
     }
+
+    public function flush()
+    {
+        $file = $this->getOption('filename');
+        if(file_exists($file)){
+            return unlink($file);
+        }
+        return true;
+    }
 }
