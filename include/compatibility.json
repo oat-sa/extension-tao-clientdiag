@@ -29,16 +29,18 @@
 
     {"compatible" : 1, "os" : "Windows", "osVersion" : "8.1", "browser" : "Firefox", "versions" : [27, 28, 29, 30, 36, 40]},
     {"compatible" : 1, "os" : "Windows", "osVersion" : "8.1", "browser" : "Chrome", "versions" : [33, 34, 35, 40]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "8.1", "browser" : "Internet Explorer", "versions" : [10, 11]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "8.1", "browser" : "Internet Explorer", "versions" : [11]},
+    {"compatible" : 0, "os" : "Windows", "osVersion" : "8.1", "browser" : "Internet Explorer", "versions" : [10]},
 
     {"compatible" : 1, "os" : "Windows", "osVersion" : "8", "browser" : "Firefox", "versions" : [35]},
     {"compatible" : 1, "os" : "Windows", "osVersion" : "8", "browser" : "Chrome", "versions" : [39]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "8", "browser" : "Internet Explorer", "versions" : [10, 11]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "8", "browser" : "Internet Explorer", "versions" : [11]},
+    {"compatible" : 0, "os" : "Windows", "osVersion" : "8", "browser" : "Internet Explorer", "versions" : [10]},
 
     {"compatible" : 1, "os" : "Windows", "osVersion" : "7", "browser" : "Firefox", "versions" : [34]},
     {"compatible" : 1, "os" : "Windows", "osVersion" : "7", "browser" : "Chrome", "versions" : [40]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "7", "browser" : "Internet Explorer", "versions" : [10, 11]},
-    {"compatible" : 0, "os" : "Windows", "osVersion" : "7", "browser" : "Internet Explorer", "versions" : [9]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "7", "browser" : "Internet Explorer", "versions" : [11]},
+    {"compatible" : 0, "os" : "Windows", "osVersion" : "7", "browser" : "Internet Explorer", "versions" : [9, 10]},
 
     {"compatible" : 1, "os" : "Windows", "osVersion" : "XP", "browser" : "Firefox", "versions" : [35]},
     {"compatible" : 1, "os" : "Windows", "osVersion" : "XP", "browser" : "Chrome", "versions" : [40]},
