@@ -67,4 +67,10 @@ interface Storage
      * @return mixed
      */
     public function store($id, $data);
+
+    /**
+     * Flush the diagnostic records
+     * @return bool whether the flush goes well or not
+     */
+    public function flush();
 }
