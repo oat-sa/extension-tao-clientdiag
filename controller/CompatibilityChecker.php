@@ -21,6 +21,7 @@
 
 namespace oat\taoClientDiagnostic\controller;
 
+use oat\tao\model\mvc\DefaultUrlService;
 use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
@@ -61,6 +62,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
 
             $this->setData('client-config-url', $this->getClientConfigUrl());
             $this->setData('content-config', $config);
+            $this->setData('logout', $this->getServiceManager()->get(DefaultUrlService::SERVICE_ID)->getLogoutUrl());
             $this->setData('content-controller', 'taoClientDiagnostic/controller/CompatibilityChecker/diagnostics');
             $this->setData('content-template', 'CompatibilityChecker' . DIRECTORY_SEPARATOR . 'diagnostics.tpl');
             $this->setView('index.tpl');
