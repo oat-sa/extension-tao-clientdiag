@@ -290,8 +290,8 @@ define([
                 };
 
                 self.store('upload', {
-                    max: summary.uploadMax.value,
-                    avg: summary.uploadAvg.value,
+                    max: maxSpeed,
+                    avg: avgSpeed,
                     type: 'upload'
                 }, function () {
                     status.id = 'upload';
