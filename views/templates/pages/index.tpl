@@ -3,9 +3,9 @@
 <?php endforeach; ?>>
     <div class="header"></div>
     <div class="content">
-<?php if(has_data('title')): ?>
-        <h1><?= get_data('title'); ?></h1>
-<?php endif; ?>
+        <?php if(has_data('title')): ?>
+                <h1><?= get_data('title'); ?></h1>
+        <?php endif; ?>
         <div class="panel"></div>
         <div class="list clearfix"></div>
     </div>

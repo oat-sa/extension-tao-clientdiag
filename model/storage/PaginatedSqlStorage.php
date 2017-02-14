@@ -22,7 +22,6 @@
 namespace oat\taoClientDiagnostic\model\storage;
 
 use Doctrine\DBAL\Driver\PDOStatement;
-use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\taoClientDiagnostic\exception\StorageException;
 
 /**
@@ -30,6 +29,8 @@ use oat\taoClientDiagnostic\exception\StorageException;
  */
 class PaginatedSqlStorage extends Sql implements PaginatedStorage
 {
+    const DIAGNOSTIC_WORKSTATION = 'workstation';
+
     /**
      * Gets an existing record in database by id
      * @param $id
@@ -57,7 +58,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
      * @return mixed
      * @throws StorageException
      */
-    public function findPage($page = null, $size = PAGE_SIZE, $filter = null)
+    public function findPage($page = null, $size = self::PAGE_SIZE, $filter = null)
     {
         try {
             $offset = ($page - 1) * $size;

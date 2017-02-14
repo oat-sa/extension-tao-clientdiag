@@ -173,6 +173,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
 
         try {
             $storageService = $this->getServiceManager()->get(Storage::SERVICE_ID);
+            \common_Logger::i(print_r($data, true));
             $storageService->store($id, $data);
             $this->returnJson(array('success' => true, 'type' => 'success'));
         } catch (StorageException $e) {

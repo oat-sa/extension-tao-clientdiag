@@ -26,10 +26,9 @@ define([
     'util/encode',
     'ui/feedback',
     'ui/dialog',
-    'taoProctoring/component/breadcrumbs',
     'taoClientDiagnostic/tools/diagnostic/status',
     'ui/datatable'
-], function ($, __, helpers, loadingBar, encode, feedback, dialog, breadcrumbsFactory, statusFactory) {
+], function ($, __, helpers, loadingBar, encode, feedback, dialog, statusFactory) {
     'use strict';
 
     /**
@@ -65,23 +64,19 @@ define([
         start : function start() {
             var $container = $(cssScope);
             var $list = $container.find('.list');
-            var crumbs = $container.data('breadcrumbs');
             var dataset = $container.data('set');
             var config = $container.data('config') || {};
             var installedExtension = $container.data('installedextension') || false;
-            var testCenterId = $container.data('testcenter');
-            var diagnosticUrl = helpers._url('diagnostic', 'Diagnostic', 'taoProctoring', {testCenter : testCenterId});
-            var deliveryUrl = helpers._url('deliveriesByProctor', 'Diagnostic', 'taoProctoring', {testCenter : testCenterId});
-            var removeUrl = helpers._url('remove', 'Diagnostic', 'taoProctoring', {testCenter : testCenterId});
-            var serviceUrl = helpers._url('diagnosticData', 'Diagnostic', 'taoProctoring', {testCenter : testCenterId});
+            var diagnosticUrl = helpers._url('diagnostic', 'Diagnostic', 'taoClientDiagnostic');
+            var deliveryUrl = helpers._url('deliveriesByProctor', 'Diagnostic', 'taoProctoring');
+            var removeUrl = helpers._url('remove', 'Diagnostic', 'taoClientDiagnostic');
+            var serviceUrl = helpers._url('diagnosticData', 'Diagnostic', 'taoClientDiagnostic');
 
             var performancesConfig = config.performances || {};
             var performancesOptimal = performancesConfig.optimal;
             var performancesRange = Math.abs(performancesOptimal - (performancesConfig.threshold));
 
             var diagnosticStatus = statusFactory();
-
-            var bc = breadcrumbsFactory($container, crumbs);
 
             var tools = [];
             var actions = [];
@@ -233,7 +228,7 @@ define([
                         bandwidth = '> 100';
                     }
 
-                    return bandwidth + ' Mbs';
+                    return bandwidth;// + ' Mbs';
                 }
             });
 

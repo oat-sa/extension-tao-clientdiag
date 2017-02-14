@@ -22,8 +22,6 @@
 
 namespace oat\taoClientDiagnostic\model\storage;
 
-use oat\taoClientDiagnostic\model\storage\Storage;
-
 /**
  * Interface PaginatedStorage
  */
@@ -36,6 +34,7 @@ interface PaginatedStorage extends Storage
 
     /**
      * Gets an existing record in database by id
+     *
      * @param $id
      * @return mixed
      */
@@ -43,15 +42,17 @@ interface PaginatedStorage extends Storage
 
     /**
      * Gets a page from the storage model based on entity
+     *
      * @param int $page The page number
      * @param int $size The size of a page (number of rows)
      * @param array $filter A list of filters (pairs columns => value)
      * @return mixed
      */
-    public function findPage($page = null, $size = PAGE_SIZE, $filter = null);
+    public function findPage($page = null, $size = self::PAGE_SIZE, $filter = null);
 
     /**
      * Gets the number of rows from the storage model based on entity
+     *
      * @param array $filter A list of filters (pairs columns => value)
      * @return int
      */
@@ -59,6 +60,7 @@ interface PaginatedStorage extends Storage
 
     /**
      * Deletes a row from the storage model based on entity
+     *
      * @param $id
      * @param array $filter A list of filters (pairs columns => value)
      * @return mixed

@@ -1,4 +1,4 @@
-/*
+/**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
  *
  */
 
@@ -29,10 +29,9 @@ define([
     'layout/loading-bar',
     'ui/actionbar',
     'ui/feedback',
-    'taoProctoring/component/breadcrumbs',
     'taoClientDiagnostic/tools/diagnostic/diagnostic',
-    'tpl!taoProctoring/templates/diagnostic/main'
-], function ($, __, helpers, loadingBar, actionbar, feedback, breadcrumbsFactory, diagnosticFactory, diagnosticTpl) {
+    'tpl!taoClientDiagnostic/templates/diagnostic/main'
+], function ($, __, helpers, loadingBar, actionbar, feedback, diagnosticFactory, diagnosticTpl) {
     'use strict';
 
     /**
@@ -57,13 +56,9 @@ define([
             var $container = $(cssScope);
             var $list = $container.find('.list');
             var $panel = $('.panel');
-            var crumbs = $container.data('breadcrumbs');
             var config = $container.data('config');
-            var testCenterId = $container.data('testcenter');
-            var indexUrl = helpers._url('index', 'Diagnostic', 'taoProctoring', {testCenter : testCenterId});
-            var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', 'taoProctoring', {testCenter : testCenterId});
-
-            var bc = breadcrumbsFactory($container, crumbs);
+            var indexUrl = helpers._url('index', 'Diagnostic', 'taoClientDiagnostic');
+            var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', 'taoClientDiagnostic');
 
             /**
              * Installs the diagnostic tool GUI

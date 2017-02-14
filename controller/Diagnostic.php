@@ -20,11 +20,16 @@
 
 namespace oat\taoClientDiagnostic\controller;
 
+use oat\generis\model\OntologyAwareTrait;
 use oat\ltiDeliveryProvider\model\LTIDeliveryTool;
-use oat\taoProctoring\controller\ProctoringModule;
+use oat\oatbox\service\ServiceNotFoundException;
 use oat\taoProctoring\helpers\BreadcrumbsHelper;
-use oat\taoProctoring\helpers\TestCenterHelper;
 use oat\taoProctoring\model\implementation\DeliveryService;
+use DateTime;
+use oat\taoProctoring\helpers\DataTableHelper;
+use common_session_SessionManager as SessionManager;
+
+use oat\taoClientDiagnostic\model\diagnostic\DiagnosticDataTable;
 
 require_once __DIR__.'/../../tao/lib/oauth/OAuth.php';
 
@@ -36,51 +41,64 @@ require_once __DIR__.'/../../tao/lib/oauth/OAuth.php';
  * @license GPL-2.0
  *
  */
-class Diagnostic extends ProctoringModule
+class Diagnostic extends \tao_actions_CommonModule
 {
+    use OntologyAwareTrait;
+
+    const DEFAULT_SORT_COLUMN = 'firstname';
+    const DEFAULT_SORT_ORDER = 'asc';
+    protected $currentTestCenter = null;
+    protected $currentDelivery   = null;
+
+//http://tao.dev/taoClientDiagnostic/Diagnostic/index?testCenter=http%3A%2F%2Ftao.local%2Fmytao.rdf%23i1486562301521295
     /**
      * Display the list of all readiness checks performed on the given test center
      * It also allows launching new ones.
      */
     public function index()
     {
+//        if (! $this->hasRequestParameter('testCenter')) {
+//            throw new \common_Exception('no current test center');
+//        }
+//        $testCenter = $this->getResource($this->getRequestParameter('testCenter'));
 
-        $testCenter = $this->getCurrentTestCenter();
         $requestOptions = $this->getRequestOptions();
 
-        $this->setData('title', __('Readiness Check for test site %s', _dh($testCenter->getLabel())));
+        $diagnosticDataTable = new DiagnosticDataTable();
 
-//        \common_Logger::i($testCenter->getUri());
-//        \common_Logger::i(print_r(TestCenterHelper::getDiagnostics($testCenter, $requestOptions), true));
-//        \common_Logger::i(print_r(TestCenterHelper::getDiagnosticConfig($testCenter), true));
-//        \common_Logger::i((int) \common_ext_ExtensionsManager::singleton()->isInstalled('ltiDeliveryProvider'));
-//        \common_Logger::i(print_r(BreadcrumbsHelper::testCenters(), true));
-//        \common_Logger::i(print_r(BreadcrumbsHelper::testCenters($testCenter, TestCenterHelper::getTestCenters()), true));
-//        \common_Logger::i(print_r(BreadcrumbsHelper::diagnostics(
-//            $testCenter,
-//            array(
-//                BreadcrumbsHelper::deliveries($testCenter),
-//            )
-//        ), true));
-        $this->composeView(
-            'diagnostic-index',
-            array(
-                'testCenter' => $testCenter->getUri(),
-                'set' => TestCenterHelper::getDiagnostics($testCenter, $requestOptions),
-                'config' => TestCenterHelper::getDiagnosticConfig($testCenter),
-                'installedextension' => \common_ext_ExtensionsManager::singleton()->isInstalled('ltiDeliveryProvider'),
-            ),
-            array(
-                BreadcrumbsHelper::testCenters(),
-                BreadcrumbsHelper::testCenter($testCenter, TestCenterHelper::getTestCenters()),
-                BreadcrumbsHelper::diagnostics(
-                    $testCenter,
-                    array(
-                        BreadcrumbsHelper::deliveries($testCenter),
-                    )
-                )
-            )
+//        $title             = __('Readiness Check for test site %s', _dh($testCenter->getLabel()));
+        $title             = __('Readiness diagnostics');
+        $cssClass          = 'diagnostic-index';
+//        $diagnostics       = $diagnosticDataTable->getDiagnostics($testCenter, $requestOptions);
+        $diagnostics       = $diagnosticDataTable->getDiagnostics($requestOptions);
+//        $diagnosticsConfig = $diagnosticDataTable->getDiagnosticConfig($testCenter);
+        $diagnosticsConfig = $diagnosticDataTable->getDiagnosticConfig();
+        $ltiInstalled      = \common_ext_ExtensionsManager::singleton()->isInstalled('ltiDeliveryProvider');
+
+        $data = array(
+            'title'              => $title,
+//            'testCenter'         => $testCenter->getUri(),
+            'set'                => $diagnostics,
+            'config'             => $diagnosticsConfig,
+            'installedextension' => $ltiInstalled,
         );
+
+        foreach($data as $key => $value) {
+            if (is_array($value) || is_object($value)) {
+                $data[$key] = json_encode($value);
+            }
+        }
+
+        $userLabel = SessionManager::getSession()->getUserLabel();
+
+        $this->setData('cls', $cssClass);
+        $this->setData('clientConfigUrl', $this->getClientConfigUrl());
+        $this->setData('userLabel', $userLabel);
+
+        $this->defaultData();
+        $this->setData('data', $data);
+        $this->setData('content-template', 'pages/index.tpl');
+        $this->setView('layout.tpl');
     }
 
 
@@ -202,26 +220,36 @@ class Diagnostic extends ProctoringModule
      */
     public function diagnostic()
     {
-        $testCenter = $this->getCurrentTestCenter();
+//        $testCenter = $this->getCurrentTestCenter();
+//        $this->setData('title', __('Readiness Check for test site %s', $testCenter->getLabel()));
 
-        $this->setData('title', __('Readiness Check for test site %s', $testCenter->getLabel()));
-        $this->composeView(
-            'diagnostic-runner',
-            array(
-                'testCenter' => $testCenter->getUri(),
-                'config' => TestCenterHelper::getDiagnosticConfig($testCenter),
-            ),
-            array(
-                BreadcrumbsHelper::testCenters(),
-                BreadcrumbsHelper::testCenter($testCenter, TestCenterHelper::getTestCenters()),
-                BreadcrumbsHelper::diagnostics(
-                    $testCenter,
-                    array(
-                        BreadcrumbsHelper::deliveries($testCenter),
-                    )
-                )
-            )
+
+        $diagnosticDataTable = new DiagnosticDataTable();
+
+        $diagnosticsConfig = $diagnosticDataTable->getDiagnosticConfig();
+        $title             = __('Readiness Check');
+        $cssClass          = 'diagnostic-runner';
+
+        $data = array(
+            'title'  => $title,
+            'config' => $diagnosticsConfig,
+//            'testCenter' => $testCenter->getUri(),
+//            'config' => TestCenterHelper::getDiagnosticConfig($testCenter),
         );
+
+        foreach($data as $key => $value) {
+            if (is_array($value) || is_object($value)) {
+                $data[$key] = json_encode($value);
+            }
+        }
+
+        $this->defaultData();
+        $this->setData('userLabel', SessionManager::getSession()->getUserLabel());
+        $this->setData('clientConfigUrl', $this->getClientConfigUrl());
+        $this->setData('cls', $cssClass);
+        $this->setData('data', $data);
+        $this->setData('content-template', 'pages/index.tpl');
+        $this->setView('layout.tpl');
     }
 
     /**
@@ -233,10 +261,9 @@ class Diagnostic extends ProctoringModule
     public function diagnosticData()
     {
         try {
-
-            $testCenter = $this->getCurrentTestCenter();
             $requestOptions = $this->getRequestOptions();
-            $this->returnJson(TestCenterHelper::getDiagnostics($testCenter, $requestOptions));
+            $diagnosticDataTable = new DiagnosticDataTable();
+            $this->returnJson($diagnosticDataTable->getDiagnostics($requestOptions));
 
         } catch (ServiceNotFoundException $e) {
             \common_Logger::w('No diagnostic service defined for proctoring');
@@ -251,12 +278,108 @@ class Diagnostic extends ProctoringModule
      */
     public function remove()
     {
-        $testCenter = $this->getCurrentTestCenter();
-
         $id = $this->getRequestParameter('id');
-
+        $diagnosticDataTable = new DiagnosticDataTable();
         $this->returnJson([
-            'success' => TestCenterHelper::removeDiagnostic($testCenter, $id)
+            'success' => $diagnosticDataTable->removeDiagnostic($id)
         ]);
+    }
+
+    /**
+     * Get the requested test center resource
+     * Use this to identify which test center is currently being selected buy the proctor
+     *
+     * @return \core_kernel_classes_Resource
+     * @throws \common_Exception
+     */
+    protected function getCurrentTestCenter()
+    {
+        if (is_null($this->currentTestCenter)) {
+            if($this->hasRequestParameter('testCenter')) {
+                $this->currentTestCenter = $this->getResource($this->getRequestParameter('testCenter'));
+            } else {
+                //@todo use a better exception
+                throw new \common_Exception('no current test center');
+            }
+        }
+        return $this->currentTestCenter;
+    }
+
+    /**
+     * Gets the data table request options
+     *
+     * @param array $defaults
+     * @return array
+     */
+    protected function getRequestOptions(array $defaults = []) {
+
+        $defaults = array_merge($this->getDefaultOptions(), $defaults);
+
+        $page = $this->hasRequestParameter('page') ? $this->getRequestParameter('page') : $defaults['page'];
+        $rows = $this->hasRequestParameter('rows') ? $this->getRequestParameter('rows') : $defaults['rows'];
+        $sortBy = $this->hasRequestParameter('sortby') ? $this->getRequestParameter('sortby') : $defaults['sortby'];
+        $sortOrder = $this->hasRequestParameter('sortorder') ? $this->getRequestParameter('sortorder') : $defaults['sortorder'];
+        $filter = $this->hasRequestParameter('filter') ? $this->getRequestParameter('filter') : $defaults['filter'];
+        $filterquery = $this->hasRequestParameter('filterquery') ? $this->getRequestParameter('filterquery') : $defaults['filter'];
+        $periodStart = $this->hasRequestParameter('periodStart') ? $this->getRequestParameter('periodStart') : $defaults['periodStart'];
+        $periodEnd = $this->hasRequestParameter('periodEnd') ? $this->getRequestParameter('periodEnd') : $defaults['periodEnd'];
+        $detailed = $this->hasRequestParameter('detailed') ? $this->getRequestParameter('detailed') : 'false';
+        $detailed = filter_var($detailed, FILTER_VALIDATE_BOOLEAN);
+
+        return array(
+            'page' => $page,
+            'rows' => $rows,
+            'sortBy' => $sortBy,
+            'sortOrder' => $sortOrder,
+            'filter' => $filter ? $filter : $filterquery,
+            'periodStart' => $periodStart,
+            'detailed' => $detailed,
+            'periodEnd' => $periodEnd
+        );
+
+    }
+
+    /**
+     * @return array
+     */
+    private function getDefaultOptions()
+    {
+        $today = new DateTime();
+        return [
+            'page' => DataTableHelper::DEFAULT_PAGE,
+            'rows' => DataTableHelper::DEFAULT_ROWS,
+            'sortby' => self::DEFAULT_SORT_COLUMN,
+            'sortorder' => self::DEFAULT_SORT_ORDER,
+            'filter' => null,
+            'periodStart' => $today->format('Y-m-d'),
+            'periodEnd' => $today->format('Y-m-d')
+        ];
+    }
+
+    /**
+     * Main method to render a view for all proctoring related controller actions
+     *
+     * @param string $cssClass
+     * @param array $data
+     * @param array $breadcrumbs
+     * @param String $template
+     */
+    protected function composeView($cssClass, $data = array(), $breadcrumbs = array(), $template = '')
+    {
+        $data['breadcrumbs'] = $breadcrumbs;
+
+        foreach($data as $key => $value) {
+            if (is_array($value) || is_object($value)) {
+                $data[$key] = json_encode($value);
+            }
+        }
+
+        $this->defaultData();
+        $this->setData('userLabel', SessionManager::getSession()->getUserLabel());
+        $this->setData('clientConfigUrl', $this->getClientConfigUrl());
+        $this->setData('cls', $cssClass);
+        $this->setData('data', $data);
+        $this->setData('content-template', 'pages/index.tpl');
+        $this->setView('layout.tpl');
     }
 }

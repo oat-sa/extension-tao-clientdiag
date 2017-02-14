@@ -51,7 +51,7 @@ define([
         button: __('Begin diagnostics'),
         actionStore: 'storeData',
         actionCheck: 'check',
-        controller: 'CompatibilityChecker',
+        controller: 'DiagnosticChecker',
         extension: 'taoClientDiagnostic'
     };
 
@@ -290,8 +290,8 @@ define([
                 };
 
                 self.store('upload', {
-                    max: summary.uploadMax.value,
-                    avg: summary.uploadAvg.value,
+                    max: avgSpeed,
+                    avg: maxSpeed,
                     type: 'upload'
                 }, function () {
                     status.id = 'upload';
