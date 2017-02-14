@@ -20,14 +20,14 @@
  */               
 
 return array(
-    'name' => 'taoClientDiagnostic',
-    'label' => 'Browser and OS diagnostic tool',
+    'name'        => 'taoClientDiagnostic',
+    'label'       => 'Browser and OS diagnostic tool',
     'description' => 'Check compatibility of the os and browser of a client',
-    'license' => 'GPL-2.0',
-    'version' => '1.14.0',
-    'author' => 'Open Assessment Technologies SA',
-    'requires' => array(
-        'tao' => '>=4.0.0',
+    'license'     => 'GPL-2.0',
+    'version'     => '1.14.0',
+    'author'      => 'Open Assessment Technologies SA',
+    'requires'    => array(
+        'tao'        => '>=4.0.0',
         'taoQtiItem' => '>=2.9'
     ),
     // for compatibility
