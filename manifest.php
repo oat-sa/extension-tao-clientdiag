@@ -28,7 +28,7 @@ return array(
     'author'      => 'Open Assessment Technologies SA',
     'requires'    => array(
         'tao'        => '>=4.0.0',
-        'taoQtiItem' => '>=2.9'
+        'taoQtiItem' => '>=2.9',
     ),
     // for compatibility
     'dependencies' => array('tao'),
@@ -38,9 +38,9 @@ return array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext'=>'taoClientDiagnostic','mod' => 'CompatibilityChecker')),
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext'=>'taoClientDiagnostic','mod' => 'Authenticator')),
         /***/
-        array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext'=>'taoClientDiagnostic','mod' => 'Diagnostic')),
-        /***/
-    ),
+//        array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#infrastructureChecker', array('ext'=>'taoClientDiagnostic','mod' => 'Diagnostic')),
+    /***/
+),
     'install' => array(
         'php' => array(
 			'oat\taoClientDiagnostic\scripts\install\createDiagnosticTable',

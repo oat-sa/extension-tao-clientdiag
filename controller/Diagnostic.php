@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  *
  */
 
@@ -264,7 +264,6 @@ class Diagnostic extends \tao_actions_CommonModule
             $requestOptions = $this->getRequestOptions();
             $diagnosticDataTable = new DiagnosticDataTable();
             $this->returnJson($diagnosticDataTable->getDiagnostics($requestOptions));
-
         } catch (ServiceNotFoundException $e) {
             \common_Logger::w('No diagnostic service defined for proctoring');
             $this->returnError('Proctoring interface not available');

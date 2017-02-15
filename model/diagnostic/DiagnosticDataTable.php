@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; under version 2
@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  *
  */
 
@@ -49,82 +49,82 @@ use oat\taoProctoring\model\deliveryLog\DeliveryLog;
  */
 class DiagnosticDataTable
 {
-    /**
-     * Gets a list of available test sites
-     *
-     * @param array [$options]
-     * @return array
-     * @throws ServiceNotFoundException
-     * @throws \common_Exception
-     * @throws \common_exception_Error
-     */
-    public static function getTestCenters($options = array())
-    {
-        $testCenterService = TestCenterService::singleton();
-        $currentUser = \common_session_SessionManager::getSession()->getUser();
+//    /**
+//     * Gets a list of available test sites
+//     *
+//     * @param array [$options]
+//     * @return array
+//     * @throws ServiceNotFoundException
+//     * @throws \common_Exception
+//     * @throws \common_exception_Error
+//     */
+//    public static function getTestCenters($options = array())
+//    {
+//        $testCenterService = TestCenterService::singleton();
+//        $currentUser = \common_session_SessionManager::getSession()->getUser();
+//
+//        $testCenters = $testCenterService->getTestCentersByProctor($currentUser, $options);
+//        $entries = array();
+//        foreach ($testCenters as $testCenter) {
+//            $entries[] = array(
+//                'id' => $testCenter->getUri(),
+//                'url' => _url('testCenter', 'TestCenter', null, array('testCenter' => $testCenter->getUri())),
+//                'label' => $testCenter->getLabel(),
+//                'text' => __('Go to')
+//            );
+//
+//        }
+//        return $entries;
+//    }
 
-        $testCenters = $testCenterService->getTestCentersByProctor($currentUser, $options);
-        $entries = array();
-        foreach ($testCenters as $testCenter) {
-            $entries[] = array(
-                'id' => $testCenter->getUri(),
-                'url' => _url('testCenter', 'TestCenter', null, array('testCenter' => $testCenter->getUri())),
-                'label' => $testCenter->getLabel(),
-                'text' => __('Go to')
-            );
+//    /**
+//     * Gets a list of available test sites
+//     *
+//     * @param string $testCenterId
+//     * @return core_kernel_classes_Resource
+//     * @throws ServiceNotFoundException
+//     * @throws \common_Exception
+//     * @throws \common_exception_Error
+//     */
+//    public static function getTestCenter($testCenterId)
+//    {
+//        $testCenterService = TestCenterService::singleton();
+//
+//        return $testCenterService->getTestCenter($testCenterId);
+//    }
 
-        }
-        return $entries;
-    }
-
-    /**
-     * Gets a list of available test sites
-     *
-     * @param string $testCenterId
-     * @return core_kernel_classes_Resource
-     * @throws ServiceNotFoundException
-     * @throws \common_Exception
-     * @throws \common_exception_Error
-     */
-    public static function getTestCenter($testCenterId)
-    {
-        $testCenterService = TestCenterService::singleton();
-
-        return $testCenterService->getTestCenter($testCenterId);
-    }
-
-    /**
-     * Gets a list of entries available for a test site
-     *
-     * @param $testCenter core_kernel_classes_Resource
-     * @return array
-     * @throws ServiceNotFoundException
-     * @throws \common_Exception
-     * @throws \common_exception_Error
-     */
-    public static function getTestCenterActions(core_kernel_classes_Resource $testCenter)
-    {
-
-        $actionDiagnostics = BreadcrumbsHelper::diagnostics($testCenter);
-        $actionDeliveries = BreadcrumbsHelper::deliveries($testCenter);
-
-        $actions = array(
-            array(
-                'url' => $actionDeliveries['url'],
-                'label' => __('Sessions'),
-                'content' => __('Monitor and manage sessions for the test site'),
-                'text' => __('Go')
-            ),
-            array(
-                'url' => $actionDiagnostics['url'],
-                'label' => __('Readiness Check'),
-                'content' => __('Check the compatibility of the current workstation and see the results'),
-                'text' => __('Go')
-            ),
-        );
-
-        return $actions;
-    }
+//    /**
+//     * Gets a list of entries available for a test site
+//     *
+//     * @param $testCenter core_kernel_classes_Resource
+//     * @return array
+//     * @throws ServiceNotFoundException
+//     * @throws \common_Exception
+//     * @throws \common_exception_Error
+//     */
+//    public static function getTestCenterActions(core_kernel_classes_Resource $testCenter)
+//    {
+//
+//        $actionDiagnostics = BreadcrumbsHelper::diagnostics($testCenter);
+//        $actionDeliveries = BreadcrumbsHelper::deliveries($testCenter);
+//
+//        $actions = array(
+//            array(
+//                'url' => $actionDeliveries['url'],
+//                'label' => __('Sessions'),
+//                'content' => __('Monitor and manage sessions for the test site'),
+//                'text' => __('Go')
+//            ),
+//            array(
+//                'url' => $actionDiagnostics['url'],
+//                'label' => __('Readiness Check'),
+//                'content' => __('Check the compatibility of the current workstation and see the results'),
+//                'text' => __('Go')
+//            ),
+//        );
+//
+//        return $actions;
+//    }
 
     /**
      * Gets the client diagnostic config
