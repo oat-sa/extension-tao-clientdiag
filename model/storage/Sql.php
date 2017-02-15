@@ -98,10 +98,10 @@ class Sql extends ConfigurableService implements Storage
     {
         foreach ($input as $key => $value) {
             $const = get_called_class() . '::DIAGNOSTIC_' . strtoupper($key);
-            \common_Logger::i($const);
             if (defined($const)) {
-                \common_Logger::i('isDefined');
                 $data[constant($const)] = $value;
+            } else {
+                \common_Logger::i($const);
             }
         }
         if (empty($data)) {

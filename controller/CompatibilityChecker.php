@@ -14,8 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
  *
  */
 
@@ -35,16 +34,6 @@ use oat\taoClientDiagnostic\model\browserDetector\OSService;
  */
 class CompatibilityChecker extends \tao_actions_CommonModule
 {
-    /**
-     * Get config parameters for compatibility check
-     * @return mixed
-     * @throws \common_ext_ExtensionException
-     */
-    protected function loadConfig()
-    {
-        return \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
-    }
-
     /**
      * If logged in, display index view with config data
      * If not, forward to login
@@ -175,7 +164,6 @@ class CompatibilityChecker extends \tao_actions_CommonModule
 
         try {
             $storageService = $this->getServiceManager()->get(Storage::SERVICE_ID);
-            \common_Logger::i(print_r($data, true));
             $storageService->store($id, $data);
             $this->returnJson(array('success' => true, 'type' => 'success'));
         } catch (StorageException $e) {
@@ -196,7 +184,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     protected function getData($check = false)
     {
-        $data = $this->getRequestParameters();
+        $data = $this->getParameters();
 
         if ($this->hasRequestParameter('type')) {
             $type = $this->getRequestParameter('type');
@@ -237,17 +225,38 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     }
 
     /**
+     * Get current http parameters
+     *
+     * @return array
+     */
+    protected function getParameters()
+    {
+        return $this->getRequestParameters();
+    }
+
+    /**
      * Get cookie id OR create it if doesnt exist
      * @return string
      */
     protected function getId()
     {
-        if (!isset($_COOKIE['id'])) {
+        if (! isset($_COOKIE['id'])) {
             $id = uniqid();
             setcookie('id', $id);
         } else {
             $id = $_COOKIE['id'];
         }
         return $id;
+    }
+
+    /**
+     * Get config parameters for compatibility check
+     *
+     * @return mixed
+     * @throws \common_ext_ExtensionException
+     */
+    protected function loadConfig()
+    {
+        return \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
     }
 }

@@ -14,8 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
  *
  */
 
@@ -33,6 +32,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
 
     /**
      * Gets an existing record in database by id
+     *
      * @param $id
      * @return mixed
      * @throws StorageException
@@ -105,7 +105,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
         try {
             \common_Logger::i('Deleting diagnostic result ' . $id);
             $query = 'DELETE FROM ' . self::DIAGNOSTIC_TABLE;
-            return (boolean)$this->query($query, $filter)->rowCount();
+            return (boolean) $this->query($query, $filter)->rowCount();
         } catch (\PDOException $e) {
             throw new StorageException($e->getMessage());
         }

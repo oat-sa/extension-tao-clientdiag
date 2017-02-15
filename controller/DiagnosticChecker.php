@@ -21,11 +21,9 @@
 namespace oat\taoClientDiagnostic\controller;
 
 use oat\tao\helpers\UserHelper;
-use oat\taoClientDiagnostic\controller\CompatibilityChecker;
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticDataTable;
-use oat\taoProctoring\helpers\TestCenterHelper;
-//use oat\taoProctoring\model\DiagnosticStorage;
 use oat\taoClientDiagnostic\model\storage\PaginatedSqlStorage;
+
 /**
  * Class DiagnosticChecker
  *
@@ -36,7 +34,6 @@ class DiagnosticChecker extends CompatibilityChecker
     /**
      * Fetch POST data
      * Get login by cookie
-     * Get Ip
      * If check parameters is true, check mandatory parameters
      *
      * @param bool $check
@@ -46,13 +43,8 @@ class DiagnosticChecker extends CompatibilityChecker
     protected function getData($check = false)
     {
         $data = parent::getData($check);
-
-
         $data['login'] = UserHelper::getUserLogin(\common_session_SessionManager::getSession()->getUser());
 
-//        if ($this->hasRequestParameter('testCenter')) {
-//            $data[DiagnosticStorage::DIAGNOSTIC_TEST_CENTER] = $this->getRequestParameter('testCenter');
-//        }
         if ($this->hasRequestParameter('workstation')) {
             $data[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION] = trim($this->getRequestParameter('workstation'));
         }
@@ -60,63 +52,43 @@ class DiagnosticChecker extends CompatibilityChecker
         return $data;
     }
 
-    public function getRequestParameters()
+    /**
+     * Get current http parameters
+     * Unset workstation parameters to avoid cast it as type
+     *
+     * @return array
+     */
+    protected function getParameters()
     {
-        $data =  parent::getRequestParameters();
+        $data =  parent::getParameters();
         if (isset($data['workstation'])) {
             unset($data['workstation']);
         }
-        \common_Logger::i('- ' .  print_r($data, true));
-
         return $data;
-    }
-
-
-    /**
-     * Get cookie id OR create it if doesnt exist
-     * @return string
-     */
-    protected function getId()
-    {
-        $id = parent::getId();
-
-        // the id is related to the test center to avoid overwrites
-//        if ($this->hasRequestParameter('testCenter')) {
-//            $id = md5($id . $this->getRequestParameter('testCenter') . $id);
-//        }
-
-        return $id;
     }
 
     /**
      * Gets the name of the workstation being tested
+     * If current id is found on database, associated workstation is retrieve
+     * Else an uniqid is generated
      */
     public function workstation()
     {
         $response = [
-            'success' => false
+            'success'     => false,
+            'workstation' => uniqid('workstation-')
         ];
 
-//        if ($this->hasRequestParameter('testCenter')) {
-//            $testCenter = new \core_kernel_classes_Resource($this->getRequestParameter('testCenter'));
-            $id = $this->getId();
-            $response['workstation'] = uniqid('workstation-');
+        $diagnosticDataTable = new DiagnosticDataTable();
+        $diagnostic = $diagnosticDataTable->getDiagnostic($this->getId());
 
-//            try {
-                $diagnosticDataTable = new DiagnosticDataTable();
-                $diagnostic = $diagnosticDataTable->getDiagnostic($id);
-//            } catch (\common_exception_NoImplementation $e) {
-//                \common_Logger::i("Unable to get the workstation name for $id");
-//            }
-
-            if (isset($diagnostic)) {
-                $response['success'] = true;
-                $workstation = trim($diagnostic[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION]);
-                if ($workstation) {
-                    $response['workstation'] = $workstation;
-                }
+        if (isset($diagnostic)) {
+            $response['success'] = true;
+            $workstation = trim($diagnostic[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION]);
+            if ($workstation) {
+                $response['workstation'] = $workstation;
             }
-//        }
+        }
 
         $this->returnJson($response);
     }

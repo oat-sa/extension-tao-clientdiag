@@ -14,8 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
  *
  */
 
@@ -25,6 +24,8 @@ use Doctrine\DBAL\Types\Type;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\authorization\RequireUsername;
 use oat\taoClientDiagnostic\model\storage\Csv;
+use oat\taoClientDiagnostic\model\storage\PaginatedSqlStorage;
+use oat\taoClientDiagnostic\model\storage\PaginatedStorage;
 use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\taoClientDiagnostic\model\storage\Storage;
 
@@ -32,8 +33,9 @@ class Updater extends \common_ext_ExtensionUpdater
 {
 
     /**
+     * Update platform at version jump
      *
-     * @param string $currentVersion
+     * @param string $initialVersion
      * @return string $versionUpdatedTo
      */
     public function update($initialVersion)
@@ -323,6 +325,32 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('1.10.2');
         }
 
-        $this->skip('1.10.2', '1.14.0');
+        $this->skip('1.10.2', '1.13.2');
+
+        if ($this->isVersion('1.13.2')) {
+
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+
+            if ($storageService instanceof Sql && ! $storageService instanceof PaginatedStorage) {
+                $paginatedStorage = new PaginatedSqlStorage($storageService->getOptions());
+                $this->getServiceManager()->register(Storage::SERVICE_ID, $paginatedStorage);
+
+                $persistence   = $storageService->getPersistence();
+                $schema        = $persistence->getDriver()->getSchemaManager()->createSchema();
+
+                $fromSchema = clone $schema;
+                $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
+
+                $tableResults->addColumn(PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION, 'string', ['length' => 64, 'notnull' => false]);
+
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+                foreach ($queries as $query) {
+                    $persistence->exec($query);
+                }
+            }
+            $this->setVersion('1.14.0');
+        }
+
+        return null;
     }
 }
