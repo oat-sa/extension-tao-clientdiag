@@ -53,11 +53,11 @@ define([
     }
 
     /**
-     * Controls the taoProctoring readiness check page
+     * Controls the readiness check page
      *
      * @type {Object}
      */
-    var taoProctoringDiagnosticCtlr = {
+    var taoDiagnosticCtlr = {
         /**
          * Entry point of the page
          */
@@ -68,7 +68,6 @@ define([
             var config = $container.data('config') || {};
             var installedExtension = $container.data('installedextension') || false;
             var diagnosticUrl = helpers._url('diagnostic', 'Diagnostic', 'taoClientDiagnostic');
-            var deliveryUrl = helpers._url('deliveriesByProctor', 'Diagnostic', 'taoProctoring');
             var removeUrl = helpers._url('remove', 'Diagnostic', 'taoClientDiagnostic');
             var serviceUrl = helpers._url('diagnosticData', 'Diagnostic', 'taoClientDiagnostic');
 
@@ -260,5 +259,5 @@ define([
         }
     };
 
-    return taoProctoringDiagnosticCtlr;
+    return taoDiagnosticCtlr;
 });

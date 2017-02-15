@@ -44,11 +44,11 @@ define([
     loadingBar.start();
 
     /**
-     * Controls the taoProctoring readiness check page
+     * Controls the readiness check page
      *
      * @type {Object}
      */
-    var taoProctoringDiagnosticRunnerCtlr = {
+    var taoDiagnosticRunnerCtlr = {
         /**
          * Entry point of the page
          */
@@ -125,5 +125,5 @@ define([
         }
     };
 
-    return taoProctoringDiagnosticRunnerCtlr;
+    return taoDiagnosticRunnerCtlr;
 });

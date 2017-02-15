@@ -29,7 +29,7 @@ use common_session_SessionManager as SessionManager;
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticDataTable;
 
 /**
- * Proctoring Diagnostic controller for the readiness check screen
+ * Diagnostic controller for the readiness check list screen
  *
  * @author Open Assessment Technologies SA
  * @package taoProctoring
@@ -54,13 +54,11 @@ class Diagnostic extends \tao_actions_CommonModule
     public function index()
     {
         $diagnostics       = $this->getDiagnosticDataTable()->getDiagnostics($this->getRequestOptions());
-        $ltiInstalled      = \common_ext_ExtensionsManager::singleton()->isInstalled('ltiDeliveryProvider');
 
         $data = array(
             'title'              => __('Readiness diagnostics'),
             'set'                => $diagnostics,
             'config'             => $this->loadConfig(),
-            'installedextension' => $ltiInstalled,
         );
 
         foreach($data as $key => $value) {
@@ -116,8 +114,8 @@ class Diagnostic extends \tao_actions_CommonModule
         try {
             $this->returnJson($this->getDiagnosticDataTable()->getDiagnostics($this->getRequestOptions()));
         } catch (ServiceNotFoundException $e) {
-            \common_Logger::w(__('No diagnostic service defined for proctoring'));
-            $this->returnError(__('Proctoring interface not available'));
+            \common_Logger::w(__('No diagnostic service defined'));
+            $this->returnError(__('Interface not available'));
         }
     }
 

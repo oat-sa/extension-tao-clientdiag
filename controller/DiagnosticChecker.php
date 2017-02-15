@@ -32,6 +32,11 @@ use oat\taoClientDiagnostic\model\storage\PaginatedSqlStorage;
 class DiagnosticChecker extends CompatibilityChecker
 {
     /**
+     * @var DiagnosticDataTable
+     */
+    protected $dataTable;
+
+    /**
      * Fetch POST data
      * Get login by cookie
      * If check parameters is true, check mandatory parameters
@@ -79,8 +84,7 @@ class DiagnosticChecker extends CompatibilityChecker
             'workstation' => uniqid('workstation-')
         ];
 
-        $diagnosticDataTable = new DiagnosticDataTable();
-        $diagnostic = $diagnosticDataTable->getDiagnostic($this->getId());
+        $diagnostic = $this->getDiagnosticDataTable()->getDiagnostic($this->getId());
 
         if (isset($diagnostic)) {
             $response['success'] = true;
@@ -91,5 +95,20 @@ class DiagnosticChecker extends CompatibilityChecker
         }
 
         $this->returnJson($response);
+    }
+
+    /**
+     * Get the model to access diagnostic storage through dataTable
+     *
+     * @return DiagnosticDataTable
+     */
+    protected function getDiagnosticDataTable()
+    {
+        if (! $this->dataTable) {
+            $diagnosticDatatable = new DiagnosticDataTable();
+            $diagnosticDatatable->setServiceLocator($this->getServiceManager());
+            $this->dataTable = $diagnosticDatatable;
+        }
+        return $this->dataTable;
     }
 }

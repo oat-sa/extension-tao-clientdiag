@@ -12,12 +12,12 @@ use oat\tao\model\theme\Theme;
         <?= tao_helpers_Scriptloader::render() ?>
         <link rel="stylesheet" href="<?= Template::css('tao-main-style.css', 'tao') ?>" />
         <link rel="stylesheet" href="<?= Template::css('tao-3.css', 'tao') ?>" />
-        <link rel="stylesheet" href="<?= Template::css('proctoring.css', 'taoProctoring') ?>"/>
+        <link rel="stylesheet" href="<?= Template::css('diagnostics.css', 'taoClientDiagnostic') ?>"/>
         <link rel="stylesheet" href="<?= Layout::getThemeStylesheet(Theme::CONTEXT_FRONTOFFICE) ?>" />
         <link rel="shortcut icon" href="<?= Template::img('favicon.ico', 'tao') ?>"/>
         <?= Layout::getAmdLoader(Template::js('loader/backoffice.min.js', 'tao'), 'controller/backoffice') ?>
     </head>
-    <body class="proctoring-scope">
+    <body class="diagnostic-scope">
 <?php Template::inc('blocks/requirement-check.tpl', 'tao'); ?>
 
         <div class="content-wrap">

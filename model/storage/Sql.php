@@ -100,8 +100,6 @@ class Sql extends ConfigurableService implements Storage
             $const = get_called_class() . '::DIAGNOSTIC_' . strtoupper($key);
             if (defined($const)) {
                 $data[constant($const)] = $value;
-            } else {
-                \common_Logger::i($const);
             }
         }
         if (empty($data)) {
