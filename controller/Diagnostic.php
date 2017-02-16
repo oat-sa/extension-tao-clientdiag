@@ -53,12 +53,12 @@ class Diagnostic extends \tao_actions_CommonModule
      */
     public function index()
     {
-        $diagnostics       = $this->getDiagnosticDataTable()->getDiagnostics($this->getRequestOptions());
+        $diagnostics = $this->getDiagnosticDataTable()->getDiagnostics($this->getRequestOptions());
 
         $data = array(
-            'title'              => __('Readiness diagnostics'),
-            'set'                => $diagnostics,
-            'config'             => $this->loadConfig(),
+            'title'  => __('Readiness diagnostics'),
+            'set'    => $diagnostics,
+            'config' => $this->loadConfig(),
         );
 
         foreach($data as $key => $value) {
