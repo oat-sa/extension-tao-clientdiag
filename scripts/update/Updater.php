@@ -331,9 +331,12 @@ class Updater extends \common_ext_ExtensionUpdater
 
             $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
 
-            if ($storageService instanceof Sql && ! $storageService instanceof PaginatedStorage) {
-                $paginatedStorage = new PaginatedSqlStorage($storageService->getOptions());
-                $this->getServiceManager()->register(Storage::SERVICE_ID, $paginatedStorage);
+            if ($storageService instanceof Sql) {
+
+                if (! $storageService instanceof PaginatedStorage) {
+                    $paginatedStorage = new PaginatedSqlStorage($storageService->getOptions());
+                    $this->getServiceManager()->register(Storage::SERVICE_ID, $paginatedStorage);
+                }
 
                 $persistence   = $storageService->getPersistence();
                 $schema        = $persistence->getDriver()->getSchemaManager()->createSchema();
@@ -348,6 +351,7 @@ class Updater extends \common_ext_ExtensionUpdater
                     $persistence->exec($query);
                 }
             }
+
             $this->setVersion('1.14.0');
         }
 
