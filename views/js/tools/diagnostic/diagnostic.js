@@ -51,7 +51,7 @@ define([
         button: __('Begin diagnostics'),
         actionStore: 'storeData',
         actionCheck: 'check',
-        controller: 'CompatibilityChecker',
+        controller: 'DiagnosticChecker',
         extension: 'taoClientDiagnostic'
     };
 

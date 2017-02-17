@@ -14,15 +14,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
  *
  */
 
 namespace oat\taoClientDiagnostic\model\storage;
 
 use Doctrine\DBAL\Driver\PDOStatement;
-use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\taoClientDiagnostic\exception\StorageException;
 
 /**
@@ -30,8 +28,11 @@ use oat\taoClientDiagnostic\exception\StorageException;
  */
 class PaginatedSqlStorage extends Sql implements PaginatedStorage
 {
+    const DIAGNOSTIC_WORKSTATION = 'workstation';
+
     /**
      * Gets an existing record in database by id
+     *
      * @param $id
      * @return mixed
      * @throws StorageException
@@ -57,7 +58,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
      * @return mixed
      * @throws StorageException
      */
-    public function findPage($page = null, $size = PAGE_SIZE, $filter = null)
+    public function findPage($page = null, $size = self::PAGE_SIZE, $filter = null)
     {
         try {
             $offset = ($page - 1) * $size;
@@ -104,7 +105,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
         try {
             \common_Logger::i('Deleting diagnostic result ' . $id);
             $query = 'DELETE FROM ' . self::DIAGNOSTIC_TABLE;
-            return (boolean)$this->query($query, $filter)->rowCount();
+            return (boolean) $this->query($query, $filter)->rowCount();
         } catch (\PDOException $e) {
             throw new StorageException($e->getMessage());
         }
