@@ -65,12 +65,17 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
             foreach($data as $idx => $row) {
                 $rowData = [
                     'id'          => $row[PaginatedSqlStorage::DIAGNOSTIC_ID],
-                    'workstation' => $row[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION] . ' (' . $row[PaginatedSqlStorage::DIAGNOSTIC_IP] . ')',
                     'os'          => $row[PaginatedSqlStorage::DIAGNOSTIC_OS] . ' (' . $row[PaginatedSqlStorage::DIAGNOSTIC_OSVERSION] . ')',
                     'browser'     => $row[PaginatedSqlStorage::DIAGNOSTIC_BROWSER] . ' (' . $row[PaginatedSqlStorage::DIAGNOSTIC_BROWSERVERSION] . ')',
                     'performance' => $row[PaginatedSqlStorage::DIAGNOSTIC_PERFORMANCE_AVERAGE],
                     'bandwidth'   => $row[PaginatedSqlStorage::DIAGNOSTIC_BANDWIDTH_MAX],
                 ];
+
+                if (isset($row[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION])) {
+                    $rowData['workstation'] = $row[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION] . ' (' . $row[PaginatedSqlStorage::DIAGNOSTIC_IP] . ')';
+                } else {
+                    $rowData['workstation'] = '(' . $row[PaginatedSqlStorage::DIAGNOSTIC_IP] . ')';
+                }
 
                 if (isset($row[PaginatedSqlStorage::DIAGNOSTIC_CREATED_AT])) {
                     $dt = new DateTime($row[PaginatedSqlStorage::DIAGNOSTIC_CREATED_AT]);

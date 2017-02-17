@@ -61,19 +61,11 @@ class Diagnostic extends \tao_actions_CommonModule
             'config' => $this->loadConfig(),
         );
 
-        foreach($data as $key => $value) {
-            if (is_array($value) || is_object($value)) {
-                $data[$key] = json_encode($value);
-            }
-        }
-
         $userLabel = SessionManager::getSession()->getUserLabel();
 
-        $this->setData('cls', 'diagnostic-index');
-        $this->setData('clientConfigUrl', $this->getClientConfigUrl());
-        $this->setData('userLabel', $userLabel);
-
         $this->defaultData();
+        $this->setData('cls', 'diagnostic-index');
+        $this->setData('userLabel', $userLabel);
         $this->setData('data', $data);
         $this->setData('content-template', 'pages/index.tpl');
         $this->setView('layout.tpl');
@@ -89,15 +81,8 @@ class Diagnostic extends \tao_actions_CommonModule
             'config' => $this->loadConfig(),
         );
 
-        foreach($data as $key => $value) {
-            if (is_array($value) || is_object($value)) {
-                $data[$key] = json_encode($value);
-            }
-        }
-
         $this->defaultData();
         $this->setData('userLabel', SessionManager::getSession()->getUserLabel());
-        $this->setData('clientConfigUrl', $this->getClientConfigUrl());
         $this->setData('cls', 'diagnostic-runner');
         $this->setData('data', $data);
         $this->setData('content-template', 'pages/index.tpl');
