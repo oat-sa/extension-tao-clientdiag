@@ -355,7 +355,16 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('1.14.0');
         }
 
-        $this->skip('1.14.0', '1.14.1');
+        $this->skip('1.14.0', '1.14.0');
+
+        if ($this->isVersion('1.14.0')) {
+            $accessService = \funcAcl_models_classes_AccessService::singleton();
+            $readinessCheckerRole = new \core_kernel_classes_Resource('http://www.tao.lu/Ontologies/generis.rdf#ReadinessCheckerRole');
+            $accessService->grantModuleAccess($readinessCheckerRole, 'taoClientDiagnostic', 'Diagnostic');
+            $accessService->grantModuleAccess($readinessCheckerRole, 'taoClientDiagnostic', 'DiagnosticChecker');
+
+            $this->setVersion('1.14.1');
+        }
 
         return null;
     }
