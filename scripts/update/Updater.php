@@ -28,6 +28,7 @@ use oat\taoClientDiagnostic\controller\Diagnostic;
 use oat\taoClientDiagnostic\controller\DiagnosticChecker;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\authorization\RequireUsername;
+use oat\taoClientDiagnostic\model\ClientDiagnosticRoles;
 use oat\taoClientDiagnostic\model\storage\Csv;
 use oat\taoClientDiagnostic\model\storage\PaginatedSqlStorage;
 use oat\taoClientDiagnostic\model\storage\PaginatedStorage;
@@ -365,18 +366,8 @@ class Updater extends \common_ext_ExtensionUpdater
 
         if ($this->isVersion('1.14.1')) {
             OntologyUpdater::syncModels();
-
-
-            AclProxy::applyRule(new AccessRule(AccessRule::GRANT,
-                'http://www.taotesting.com/ontologies/TAOClientDiagnostic.rdf#ReadinessCheckerRole',
-                Diagnostic::class)
-            );
-            AclProxy::applyRule(new AccessRule(
-                AccessRule::GRANT,
-                'http://www.taotesting.com/ontologies/TAOClientDiagnostic.rdf#ReadinessCheckerRole',
-                DiagnosticChecker::class
-            ));
-
+            AclProxy::applyRule(new AccessRule(AccessRule::GRANT, ClientDiagnosticRoles::READINESS_CHECKER_ROLE, Diagnostic::class));
+            AclProxy::applyRule(new AccessRule(AccessRule::GRANT, ClientDiagnosticRoles::READINESS_CHECKER_ROLE, DiagnosticChecker::class));
             $this->setVersion('1.14.2');
         }
 

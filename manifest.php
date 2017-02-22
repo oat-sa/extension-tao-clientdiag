@@ -22,6 +22,7 @@ use oat\taoClientDiagnostic\model\ClientDiagnosticRoles;
 use oat\taoClientDiagnostic\controller\DiagnosticChecker;
 use oat\taoClientDiagnostic\controller\Diagnostic;
 use oat\taoClientDiagnostic\scripts\install\createDiagnosticTable;
+use oat\tao\model\accessControl\func\AccessRule;
 
 return array(
     'name'        => 'taoClientDiagnostic',
@@ -41,8 +42,8 @@ return array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#taoClientDiagnosticManager', array('ext'=>'taoClientDiagnostic')),
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext'=>'taoClientDiagnostic','mod' => 'CompatibilityChecker')),
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext'=>'taoClientDiagnostic','mod' => 'Authenticator')),
-        array('grant', ClientDiagnosticRoles::READINESS_CHECKER_ROLE, Diagnostic::class),
-        array('grant', ClientDiagnosticRoles::READINESS_CHECKER_ROLE, DiagnosticChecker::class),
+        array(AccessRule::GRANT, ClientDiagnosticRoles::READINESS_CHECKER_ROLE, Diagnostic::class),
+        array(AccessRule::GRANT, ClientDiagnosticRoles::READINESS_CHECKER_ROLE, DiagnosticChecker::class),
     ),
     'install' => array(
         'rdf' => array(
