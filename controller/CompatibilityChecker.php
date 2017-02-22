@@ -257,6 +257,8 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     protected function loadConfig()
     {
-        return \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
+        $config =  \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
+        $config['controller'] = 'CompatibilityChecker';
+        return $config;
     }
 }
