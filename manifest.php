@@ -37,6 +37,8 @@ return array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#taoClientDiagnosticManager', array('ext'=>'taoClientDiagnostic')),
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext'=>'taoClientDiagnostic','mod' => 'CompatibilityChecker')),
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext'=>'taoClientDiagnostic','mod' => 'Authenticator')),
+        array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#DiagnosticRole', array('ext'=>'taoClientDiagnostic','mod' => 'Diagnostic')),
+        array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#DiagnosticRole', array('ext'=>'taoClientDiagnostic','mod' => 'DiagnosticChecker')),
     ),
     'install' => array(
         'php' => array(
