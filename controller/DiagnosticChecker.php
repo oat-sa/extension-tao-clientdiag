@@ -111,4 +111,17 @@ class DiagnosticChecker extends CompatibilityChecker
         }
         return $this->dataTable;
     }
+
+    /**
+     * Get config parameters for compatibility check
+     *
+     * @return mixed
+     * @throws \common_ext_ExtensionException
+     */
+    protected function loadConfig()
+    {
+        $config = parent::loadConfig();
+        $config['controller'] = 'DiagnosticChecker';
+        return $config;
+    }
 }

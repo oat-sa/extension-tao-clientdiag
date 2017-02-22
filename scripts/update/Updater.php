@@ -21,6 +21,11 @@
 namespace oat\taoClientDiagnostic\scripts\update;
 
 use Doctrine\DBAL\Types\Type;
+use oat\tao\model\accessControl\func\AccessRule;
+use oat\tao\model\accessControl\func\AclProxy;
+use oat\tao\scripts\update\OntologyUpdater;
+use oat\taoClientDiagnostic\controller\Diagnostic;
+use oat\taoClientDiagnostic\controller\DiagnosticChecker;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\authorization\RequireUsername;
 use oat\taoClientDiagnostic\model\storage\Csv;
@@ -344,26 +349,35 @@ class Updater extends \common_ext_ExtensionUpdater
                 $fromSchema = clone $schema;
                 $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
 
-                $tableResults->addColumn(PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION, 'string', ['length' => 64, 'notnull' => false]);
-
-                $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
-                foreach ($queries as $query) {
-                    $persistence->exec($query);
+                if (! $tableResults->hasColumn(PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION)) {
+                    $tableResults->addColumn(PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION, 'string', ['length' => 64, 'notnull' => false]);
+                    $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+                    foreach ($queries as $query) {
+                        $persistence->exec($query);
+                    }
                 }
             }
 
             $this->setVersion('1.14.0');
         }
 
-        $this->skip('1.14.0', '1.14.0');
+        $this->skip('1.14.0', '1.14.1');
 
-        if ($this->isVersion('1.14.0')) {
-            $accessService = \funcAcl_models_classes_AccessService::singleton();
-            $readinessCheckerRole = new \core_kernel_classes_Resource('http://www.tao.lu/Ontologies/generis.rdf#ReadinessCheckerRole');
-            $accessService->grantModuleAccess($readinessCheckerRole, 'taoClientDiagnostic', 'Diagnostic');
-            $accessService->grantModuleAccess($readinessCheckerRole, 'taoClientDiagnostic', 'DiagnosticChecker');
+        if ($this->isVersion('1.14.1')) {
+            OntologyUpdater::syncModels();
 
-            $this->setVersion('1.14.1');
+
+            AclProxy::applyRule(new AccessRule(AccessRule::GRANT,
+                'http://www.taotesting.com/ontologies/TAOClientDiagnostic.rdf#ReadinessCheckerRole',
+                Diagnostic::class)
+            );
+            AclProxy::applyRule(new AccessRule(
+                AccessRule::GRANT,
+                'http://www.taotesting.com/ontologies/TAOClientDiagnostic.rdf#ReadinessCheckerRole',
+                DiagnosticChecker::class
+            ));
+
+            $this->setVersion('1.14.2');
         }
 
         return null;

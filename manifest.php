@@ -15,16 +15,20 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * 
  * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
- *               
- * 
+ *
  */               
+
+use oat\taoClientDiagnostic\model\ClientDiagnosticRoles;
+use oat\taoClientDiagnostic\controller\DiagnosticChecker;
+use oat\taoClientDiagnostic\controller\Diagnostic;
+use oat\taoClientDiagnostic\scripts\install\createDiagnosticTable;
 
 return array(
     'name'        => 'taoClientDiagnostic',
     'label'       => 'Browser and OS diagnostic tool',
     'description' => 'Check compatibility of the os and browser of a client',
     'license'     => 'GPL-2.0',
-    'version'     => '1.14.1',
+    'version'     => '1.14.2',
     'author'      => 'Open Assessment Technologies SA',
     'requires'    => array(
         'tao'        => '>=4.0.0',
@@ -37,12 +41,15 @@ return array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#taoClientDiagnosticManager', array('ext'=>'taoClientDiagnostic')),
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext'=>'taoClientDiagnostic','mod' => 'CompatibilityChecker')),
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext'=>'taoClientDiagnostic','mod' => 'Authenticator')),
-        array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#ReadinessCheckerRole', array('ext'=>'taoClientDiagnostic','mod' => 'Diagnostic')),
-        array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#ReadinessCheckerRole', array('ext'=>'taoClientDiagnostic','mod' => 'DiagnosticChecker')),
+        array('grant', ClientDiagnosticRoles::READINESS_CHECKER_ROLE, Diagnostic::class),
+        array('grant', ClientDiagnosticRoles::READINESS_CHECKER_ROLE, DiagnosticChecker::class),
     ),
     'install' => array(
+        'rdf' => array(
+            __DIR__ . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR . 'ontology' . DIRECTORY_SEPARATOR . 'roles.rdf',
+        ),
         'php' => array(
-			'oat\taoClientDiagnostic\scripts\install\createDiagnosticTable',
+            createDiagnosticTable::class
         )
     ),
     'uninstall' => array(
