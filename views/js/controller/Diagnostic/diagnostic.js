@@ -60,7 +60,6 @@ define([
             var config = $container.data('config');
             var indexUrl = helpers._url('index', 'Diagnostic', extension);
             var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', extension);
-            console.log(config);
             /**
              * Installs the diagnostic tool GUI
              * @param {String} workstation

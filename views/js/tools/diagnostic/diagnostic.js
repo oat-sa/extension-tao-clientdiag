@@ -499,7 +499,7 @@ define([
                 }
             });
         }
-        console.log(config);
+        
         return component(diagnostic, _defaults)
             .setTemplate(mainTpl)
 
