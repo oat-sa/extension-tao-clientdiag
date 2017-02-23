@@ -54,12 +54,13 @@ define([
          */
         start : function start() {
             var $container = $(cssScope);
+            var extension = $container.data('extension') || 'taoClientDiagnostic';
             var $list = $container.find('.list');
             var $panel = $('.panel');
             var config = $container.data('config');
-            var indexUrl = helpers._url('index', 'Diagnostic', 'taoClientDiagnostic');
-            var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', 'taoClientDiagnostic');
-
+            var indexUrl = helpers._url('index', 'Diagnostic', extension);
+            var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', extension);
+            console.log(config);
             /**
              * Installs the diagnostic tool GUI
              * @param {String} workstation

@@ -31,6 +31,7 @@ interface Storage
      * All columns of diagnostic storage
      */
     const DIAGNOSTIC_ID                   = 'id';
+    const DIAGNOSTIC_CONTEXT_ID           = 'context_id';
     const DIAGNOSTIC_LOGIN                = 'login';
     const DIAGNOSTIC_IP                   = 'ip';
     const DIAGNOSTIC_BROWSER              = 'browser';
