@@ -333,6 +333,14 @@ class Updater extends \common_ext_ExtensionUpdater
 
         $this->skip('1.10.2', '1.13.2');
 
+        if ($this->isBetween('1.11.0', '1.15.1')) {
+            $service = $this->safeLoadService(Storage::SERVICE_ID);
+            if (!$service instanceof Storage) {
+                // invalid Service, replace with default
+                $this->getServiceManager()->register(Storage::SERVICE_ID, new PaginatedSqlStorage($storageService->getOptions()));
+            }
+        }
+
         if ($this->isVersion('1.13.2')) {
 
             $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
@@ -392,5 +400,7 @@ class Updater extends \common_ext_ExtensionUpdater
 
             $this->setVersion('1.15.0');
         }
+
+        $this->skip('1.15.0', '1.15.1');
     }
 }
