@@ -372,5 +372,25 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('1.14.2', '1.14.3');
+
+        if ($this->isVersion('1.14.3')) {
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+            if ($storageService instanceof Sql) {
+                $persistence   = $storageService->getPersistence();
+                $schema        = $persistence->getDriver()->getSchemaManager()->createSchema();
+                $fromSchema = clone $schema;
+                $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
+
+                if (! $tableResults->hasColumn(PaginatedSqlStorage::DIAGNOSTIC_CONTEXT_ID)) {
+                    $tableResults->addColumn(PaginatedSqlStorage::DIAGNOSTIC_CONTEXT_ID, 'string', ['length' => 256, 'notnull' => false]);
+                    $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+                    foreach ($queries as $query) {
+                        $persistence->exec($query);
+                    }
+                }
+            }
+
+            $this->setVersion('1.15.0');
+        }
     }
 }

@@ -34,6 +34,9 @@ use oat\taoClientDiagnostic\model\browserDetector\OSService;
  */
 class CompatibilityChecker extends \tao_actions_CommonModule
 {
+
+    const COOKIE_ID = 'compatibility_checker_id';
+
     /**
      * If logged in, display index view with config data
      * If not, forward to login
@@ -240,11 +243,11 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     protected function getId()
     {
-        if (! isset($_COOKIE['id'])) {
+        if (! isset($_COOKIE[self::COOKIE_ID])) {
             $id = uniqid();
-            setcookie('id', $id);
+            setcookie(self::COOKIE_ID, $id);
         } else {
-            $id = $_COOKIE['id'];
+            $id = $_COOKIE[self::COOKIE_ID];
         }
         return $id;
     }

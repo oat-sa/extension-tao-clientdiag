@@ -59,8 +59,7 @@ define([
             var $panel = $('.panel');
             var config = $container.data('config');
             var indexUrl = helpers._url('index', 'Diagnostic', extension);
-            var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', 'taoClientDiagnostic');
-
+            var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', extension);
             /**
              * Installs the diagnostic tool GUI
              * @param {String} workstation
