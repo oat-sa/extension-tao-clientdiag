@@ -499,7 +499,7 @@ define([
                 }
             });
         }
-
+        
         return component(diagnostic, _defaults)
             .setTemplate(mainTpl)
 

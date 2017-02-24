@@ -21,8 +21,14 @@
 namespace oat\taoClientDiagnostic\scripts\update;
 
 use Doctrine\DBAL\Types\Type;
+use oat\tao\model\accessControl\func\AccessRule;
+use oat\tao\model\accessControl\func\AclProxy;
+use oat\tao\scripts\update\OntologyUpdater;
+use oat\taoClientDiagnostic\controller\Diagnostic;
+use oat\taoClientDiagnostic\controller\DiagnosticChecker;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\authorization\RequireUsername;
+use oat\taoClientDiagnostic\model\ClientDiagnosticRoles;
 use oat\taoClientDiagnostic\model\storage\Csv;
 use oat\taoClientDiagnostic\model\storage\PaginatedSqlStorage;
 use oat\taoClientDiagnostic\model\storage\PaginatedStorage;
@@ -327,6 +333,14 @@ class Updater extends \common_ext_ExtensionUpdater
 
         $this->skip('1.10.2', '1.13.2');
 
+        if ($this->isBetween('1.11.0', '1.15.1')) {
+            $service = $this->safeLoadService(Storage::SERVICE_ID);
+            if (!$service instanceof Storage) {
+                // invalid Service, replace with default
+                $this->getServiceManager()->register(Storage::SERVICE_ID, new PaginatedSqlStorage($service->getOptions()));
+            }
+        }
+
         if ($this->isVersion('1.13.2')) {
 
             $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
@@ -344,17 +358,49 @@ class Updater extends \common_ext_ExtensionUpdater
                 $fromSchema = clone $schema;
                 $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
 
-                $tableResults->addColumn(PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION, 'string', ['length' => 64, 'notnull' => false]);
-
-                $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
-                foreach ($queries as $query) {
-                    $persistence->exec($query);
+                if (! $tableResults->hasColumn(PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION)) {
+                    $tableResults->addColumn(PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION, 'string', ['length' => 64, 'notnull' => false]);
+                    $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+                    foreach ($queries as $query) {
+                        $persistence->exec($query);
+                    }
                 }
             }
 
             $this->setVersion('1.14.0');
         }
 
-        return null;
+        $this->skip('1.14.0', '1.14.1');
+
+        if ($this->isVersion('1.14.1')) {
+            OntologyUpdater::syncModels();
+            AclProxy::applyRule(new AccessRule(AccessRule::GRANT, ClientDiagnosticRoles::READINESS_CHECKER_ROLE, Diagnostic::class));
+            AclProxy::applyRule(new AccessRule(AccessRule::GRANT, ClientDiagnosticRoles::READINESS_CHECKER_ROLE, DiagnosticChecker::class));
+            $this->setVersion('1.14.2');
+        }
+
+        $this->skip('1.14.2', '1.14.3');
+
+        if ($this->isVersion('1.14.3')) {
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+            if ($storageService instanceof Sql) {
+                $persistence   = $storageService->getPersistence();
+                $schema        = $persistence->getDriver()->getSchemaManager()->createSchema();
+                $fromSchema = clone $schema;
+                $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
+
+                if (! $tableResults->hasColumn(PaginatedSqlStorage::DIAGNOSTIC_CONTEXT_ID)) {
+                    $tableResults->addColumn(PaginatedSqlStorage::DIAGNOSTIC_CONTEXT_ID, 'string', ['length' => 256, 'notnull' => false]);
+                    $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+                    foreach ($queries as $query) {
+                        $persistence->exec($query);
+                    }
+                }
+            }
+
+            $this->setVersion('1.15.0');
+        }
+
+        $this->skip('1.15.0', '1.15.2');
     }
 }
