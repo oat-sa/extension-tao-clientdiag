@@ -60,11 +60,13 @@ define([
             var config = $container.data('config');
             var indexUrl = helpers._url('index', 'Diagnostic', extension);
             var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', extension);
+            var buttons = [];
             /**
              * Installs the diagnostic tool GUI
              * @param {String} workstation
              */
             function installTester(workstation) {
+
                 diagnosticFactory(config)
                     .setTemplate(diagnosticTpl)
                     .on('render', function() {
@@ -100,17 +102,34 @@ define([
                     .render($list);
             }
 
+            buttons.push({
+                id: 'back',
+                icon: 'step-backward',
+                title: __('Return to the list'),
+                label: __('List of readiness checks'),
+                action: function() {
+                    window.location.href = indexUrl;
+                }
+            });
+
+            // tool: close tab, this won't be present in an LTI iframe
+            // button should always be right most
+            if(window.self === window.top) {
+                buttons.push({
+                    id: 'exitButton',
+                    icon: 'close',
+                    title: __('Exit'),
+                    label: __('Exit'),
+                    action: function() {
+                        console.log(this)
+                        window.self.close();
+                    }
+                });
+            }
+
             actionbar({
                 renderTo: $panel,
-                buttons: [{
-                    id: 'back',
-                    icon: 'step-backward',
-                    title: __('Return to the list'),
-                    label: __('List of readiness checks'),
-                    action: function() {
-                        window.location.href = indexUrl;
-                    }
-                }]
+                buttons: buttons
             });
 
             // need to known the workstation name to display it

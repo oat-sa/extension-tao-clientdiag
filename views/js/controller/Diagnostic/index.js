@@ -117,6 +117,7 @@ define([
                 request(removeUrl, selection, __('The readiness check result have been removed'));
             }
 
+
             // tool: page refresh
             tools.push({
                 id: 'refresh',
@@ -138,6 +139,9 @@ define([
                     window.location.href = diagnosticUrl;
                 }
             });
+
+console.log(installedExtension)
+
 
             if(installedExtension){
                 // tool: compatibilty via lti
@@ -170,6 +174,21 @@ define([
                     });
                 }
             });
+
+
+            // tool: close tab, this won't be present in an LTI iframe
+            // button should always be right most
+            if(window.self === window.top) {
+                tools.push({
+                    id: 'exitButton',
+                    icon: 'close',
+                    title: __('Exit'),
+                    label: __('Exit'),
+                    action: function() {
+                        window.self.close();
+                    }
+                });
+            }
 
             // action: remove the result
             actions.push({
