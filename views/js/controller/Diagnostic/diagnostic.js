@@ -61,12 +61,12 @@ define([
             var indexUrl = helpers._url('index', 'Diagnostic', extension);
             var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', extension);
             var buttons = [];
+
             /**
              * Installs the diagnostic tool GUI
              * @param {String} workstation
              */
             function installTester(workstation) {
-
                 diagnosticFactory(config)
                     .setTemplate(diagnosticTpl)
                     .on('render', function() {
@@ -121,7 +121,6 @@ define([
                     title: __('Exit'),
                     label: __('Exit'),
                     action: function() {
-                        console.log(this)
                         window.self.close();
                     }
                 });

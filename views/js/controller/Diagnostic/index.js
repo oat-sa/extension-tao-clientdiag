@@ -140,9 +140,6 @@ define([
                 }
             });
 
-console.log(installedExtension)
-
-
             if(installedExtension){
                 // tool: compatibilty via lti
                 tools.push({
