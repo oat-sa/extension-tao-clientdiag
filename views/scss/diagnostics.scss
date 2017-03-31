@@ -201,3 +201,9 @@ table.datatable {
     }
 
 }
+
+.action-bar {
+    .tool-exitButton, [data-control="exitButton"] {
+        float:right;
+    }
+}
