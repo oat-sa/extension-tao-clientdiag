@@ -67,10 +67,10 @@ define([
             var $list = $container.find('.list');
             var dataset = $container.data('set');
             var config = $container.data('config') || {};
-            var installedExtension = $container.data('installedextension') || false;
             var diagnosticUrl = helpers._url('diagnostic', 'Diagnostic', extension);
             var removeUrl = helpers._url('remove', 'Diagnostic', extension);
             var serviceUrl = helpers._url('diagnosticData', 'Diagnostic', extension);
+            var deliveryUrl = $container.data('deliveryurl') || '';
 
             var performancesConfig = config.performances || {};
             var performancesOptimal = performancesConfig.optimal;
@@ -139,10 +139,10 @@ define([
                 }
             });
 
-            if(installedExtension){
-                // tool: compatibilty via lti
+            if(deliveryUrl !== ''){
+                // tool: compatibilty
                 tools.push({
-                    id: 'lti',
+                    id: 'compatibility',
                     icon: 'play',
                     title: __('Try a test delivery'),
                     label: __('Try a test delivery'),
