@@ -23,6 +23,7 @@ namespace oat\taoClientDiagnostic\scripts\update;
 use Doctrine\DBAL\Types\Type;
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\accessControl\func\AclProxy;
+use oat\tao\model\user\TaoRoles;
 use oat\tao\scripts\update\OntologyUpdater;
 use oat\taoClientDiagnostic\controller\Diagnostic;
 use oat\taoClientDiagnostic\controller\DiagnosticChecker;
@@ -116,7 +117,7 @@ class Updater extends \common_ext_ExtensionUpdater
         if($this->isVersion('1.3.1')) {
             AclProxy::applyRule(new AccessRule(
                 AccessRule::GRANT,
-                'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole',
+                TaoRoles::ANONYMOUS,
                 ['ext' => 'taoClientDiagnostic' , 'mod' => 'Authenticator']
             ));
 
