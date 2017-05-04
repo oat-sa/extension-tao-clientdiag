@@ -23,6 +23,7 @@ namespace oat\taoClientDiagnostic\scripts\update;
 use Doctrine\DBAL\Types\Type;
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\accessControl\func\AclProxy;
+use oat\tao\model\user\TaoRoles;
 use oat\tao\scripts\update\OntologyUpdater;
 use oat\taoClientDiagnostic\controller\Diagnostic;
 use oat\taoClientDiagnostic\controller\DiagnosticChecker;
@@ -58,9 +59,11 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         if ($currentVersion == '1.1.0') {
-            $accessService = \funcAcl_models_classes_AccessService::singleton();
-            $anonymous = new \core_kernel_classes_Resource('http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole');
-            $accessService->grantModuleAccess($anonymous, 'taoClientDiagnostic', 'CompatibilityChecker');
+            AclProxy::applyRule(new AccessRule(
+                AccessRule::GRANT,
+                TaoRoles::ANONYMOUS,
+                ['ext' => 'taoClientDiagnostic' , 'mod' => 'CompatibilityChecker']
+            ));
 
             $currentVersion = '1.1.1';
         }
@@ -112,9 +115,11 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         if($this->isVersion('1.3.1')) {
-            $accessService = \funcAcl_models_classes_AccessService::singleton();
-            $anonymous = new \core_kernel_classes_Resource('http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole');
-            $accessService->grantModuleAccess($anonymous, 'taoClientDiagnostic', 'Authenticator');
+            AclProxy::applyRule(new AccessRule(
+                AccessRule::GRANT,
+                TaoRoles::ANONYMOUS,
+                ['ext' => 'taoClientDiagnostic' , 'mod' => 'Authenticator']
+            ));
 
             if (!$this->getServiceManager()->has(Authorization::SERVICE_ID)) {
                 $service = new RequireUsername();
@@ -401,6 +406,6 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('1.15.0');
         }
 
-        $this->skip('1.15.0', '2.0.0');
+        $this->skip('1.15.0', '2.0.1');
     }
 }
