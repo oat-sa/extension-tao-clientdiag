@@ -61,7 +61,7 @@ class Updater extends \common_ext_ExtensionUpdater
         if ($currentVersion == '1.1.0') {
             AclProxy::applyRule(new AccessRule(
                 AccessRule::GRANT,
-                'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole',
+                TaoRoles::ANONYMOUS,
                 ['ext' => 'taoClientDiagnostic' , 'mod' => 'CompatibilityChecker']
             ));
 
