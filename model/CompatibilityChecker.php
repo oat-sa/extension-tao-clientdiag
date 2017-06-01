@@ -23,7 +23,8 @@ namespace oat\taoClientDiagnostic\model;
 
 use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
 use oat\taoClientDiagnostic\model\browserDetector\OSService;
-
+use oat\taoClientRestrict\model\requirements\RequirementsServiceInterface;
+use oat\oatbox\service\ServiceManager;
 
 class CompatibilityChecker
 {
@@ -65,6 +66,12 @@ class CompatibilityChecker
      */
     public function isCompatibleConfig()
     {
+        /** @var RequirementsServiceInterface $requirementsService */
+        $requirementsService = ServiceManager::getServiceManager()->get(RequirementsServiceInterface::CONFIG_ID);
+        if (!$requirementsService->browserComplies()) {
+            return 0;
+        }
+
         $browserVersion = explode('.', $this->browserVersion);
 
         $osVersion = explode('.', $this->osVersion);

@@ -406,6 +406,6 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('1.15.0');
         }
 
-        $this->skip('1.15.0', '2.0.1');
+        $this->skip('1.15.0', '2.1.0');
     }
 }
