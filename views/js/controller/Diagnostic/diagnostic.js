@@ -98,6 +98,7 @@ define([
                     })
                     .on('render', function() {
                         loadingBar.stop();
+                        this.run();
                     })
                     .render($list);
             }

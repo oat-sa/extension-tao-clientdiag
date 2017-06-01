@@ -27,6 +27,7 @@ use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerMo
 use oat\taoClientDiagnostic\model\storage\Storage;
 use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
 use oat\taoClientDiagnostic\model\browserDetector\OSService;
+use qtism\runtime\tests\SessionManager;
 
 /**
  * Class CompatibilityChecker
@@ -221,6 +222,11 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $data['login'] = 'Anonymous';
         }
 
+        $user = \common_session_SessionManager::getSession()->getUser();
+        if ($user && $user->getIdentifier()) {
+            $data['user_id'] = $user->getIdentifier();
+        }
+
         $data['version'] = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getVersion();
 
         $data['ip'] = (!empty($_SERVER['HTTP_X_REAL_IP'])) ? $_SERVER['HTTP_X_REAL_IP'] : ((!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : 'unknown');
@@ -250,6 +256,14 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $id = $_COOKIE[self::COOKIE_ID];
         }
         return $id;
+    }
+
+    /**
+     * Delete cookie id
+     */
+    public function deleteId()
+    {
+        setcookie(self::COOKIE_ID, null);
     }
 
     /**

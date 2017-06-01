@@ -407,5 +407,29 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('1.15.0', '2.0.1');
+
+        if ($this->isVersion('2.0.1')) {
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+
+            if ($storageService instanceof Sql) {
+                $persistence = $storageService->getPersistence();
+
+                $schemaManager = $persistence->getDriver()->getSchemaManager();
+                $schema = $schemaManager->createSchema();
+
+                /* create temp column && Nullable os,browser version */
+                $addTempSchema = clone $schema;
+                $tableResults = $addTempSchema->getTable(Sql::DIAGNOSTIC_TABLE);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_USER_ID, 'string', ['length' => 255, 'notnull' => false]);
+                $tableResults->addIndex([Sql::DIAGNOSTIC_USER_ID], 'ind_user_id');
+                $tableResults->addIndex([Sql::DIAGNOSTIC_CONTEXT_ID], 'ind_context_id');
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql($schema, $addTempSchema);
+                foreach ($queries as $query) {
+                    $persistence->exec($query);
+                }
+            }
+
+            $this->setVersion('2.1.0');
+        }
     }
 }

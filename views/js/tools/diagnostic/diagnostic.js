@@ -27,6 +27,8 @@ define([
     'helpers',
     'ui/feedback',
     'ui/component',
+    'core/dataProvider/request',
+    'util/url',
     'taoClientDiagnostic/tools/diagnostic/status',
     'taoClientDiagnostic/tools/performances/tester',
     'taoClientDiagnostic/tools/bandwidth/tester',
@@ -36,7 +38,23 @@ define([
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/main',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/result',
     'css!taoClientDiagnosticCss/diagnostics'
-], function ($, _, __, async, helpers, feedback, component, statusFactory, performancesTester, bandwidthTester, uploadTester, browserTester,getConfig,  mainTpl, resultTpl) {
+], function ($,
+             _,
+             __,
+             async,
+             helpers,
+             feedback,
+             component,
+             request,
+             urlUtil,
+             statusFactory,
+             performancesTester,
+             bandwidthTester,
+             uploadTester,
+             browserTester,
+             getConfig,
+             mainTpl,
+             resultTpl) {
     'use strict';
 
     /**
@@ -52,7 +70,8 @@ define([
         actionStore: 'storeData',
         actionCheck: 'check',
         controller: 'DiagnosticChecker',
-        extension: 'taoClientDiagnostic'
+        extension: 'taoClientDiagnostic',
+        actionDropId: 'deleteId'
     };
 
     /**
@@ -369,6 +388,8 @@ define([
             // restore the start button to allow a new diagnostic run
             this.controls.$start.removeClass('hidden');
 
+            this.deleteIdentifier();
+
             /**
              * Notifies the diagnostic end
              * @event diagnostic#end
@@ -379,6 +400,14 @@ define([
             this.setState('done', true);
 
             return this;
+        },
+
+        /**
+         * delete unique id for this test session (next test will generate new one)
+         */
+        deleteIdentifier: function deleteIdentifier() {
+            var url = urlUtil.route(this.config.actionDropId, this.config.controller, this.config.extension);
+            return request(url, null, 'POST');
         },
 
         /**
