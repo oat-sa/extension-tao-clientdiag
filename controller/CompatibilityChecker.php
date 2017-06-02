@@ -264,6 +264,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     public function deleteId()
     {
         setcookie(self::COOKIE_ID, null);
+        $this->returnJson(array('success' => true, 'type' => 'success'));
     }
 
     /**
