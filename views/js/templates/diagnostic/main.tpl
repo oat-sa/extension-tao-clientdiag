@@ -3,6 +3,9 @@
     <h1>{{title}}</h1>
 
     <div class="intro">
+        {{#with configurableText}}
+            {{#if diagInstructions}}<p>{{diagInstructions}}</p>{{/if}}
+        {{/with}}
         {{#if header}}<p>{{header}}</p>{{/if}}
         {{#if info}}<p>{{info}}</p>{{/if}}
         <p>

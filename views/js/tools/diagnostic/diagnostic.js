@@ -164,6 +164,7 @@ define([
 
                         status.id = 'browser';
                         status.title = __('Operating system and web browser');
+                        status.customMsg = config.configurableText.diagBrowserCheckResult;
 
                         self.addResult(status);
 
@@ -180,12 +181,13 @@ define([
          */
         checkPerformances: function checkPerformances(done) {
             var self = this;
-            var config = getConfig(this.config.performances, _defaultsPerformances);
-            var optimal = config.optimal;
-            var range = Math.abs(optimal - (config.threshold));
+            var config = this.config;
+            var perfsConfig = getConfig(this.config.performances, _defaultsPerformances);
+            var optimal = perfsConfig.optimal;
+            var range = Math.abs(optimal - (perfsConfig.threshold));
 
             this.changeStatus(__('Checking the performances...'));
-            performancesTester(config.samples, config.occurrences, config.timeout * 1000).start(function (average, details) {
+            performancesTester(perfsConfig.samples, perfsConfig.occurrences, perfsConfig.timeout * 1000).start(function (average, details) {
                 var cursor = range - average + optimal;
                 var status = self.status.getStatus(cursor / range * 100, 'performances');
                 var summary = {
@@ -197,6 +199,7 @@ define([
                 self.store('performance', details, function () {
                     status.id = 'performance';
                     status.title = __('Workstation performances');
+                    status.customMsg = config.configurableText.diagPerformancesCheckResult;
 
                     self.addResult(status);
                     done(status, summary);
@@ -210,7 +213,8 @@ define([
          */
         checkBandwidth: function checkBandwidth(done) {
             var self = this;
-            var config = getConfig(this.config.bandwidth, _defaultsBandwidth);
+            var config = this.config;
+            var bandwithConfig = getConfig(this.config.bandwidth, _defaultsBandwidth);
 
             this.changeStatus(__('Checking the bandwidth...'));
             bandwidthTester().start(function (average, details) {
@@ -223,9 +227,9 @@ define([
                 self.store('bandwidth', details, function () {
                     var status = [];
 
-                    var bandwidthUnit = config.unit;
-                    var testTakers = config.ideal;
-                    var maxTestTakers = config.max;
+                    var bandwidthUnit = bandwithConfig.unit;
+                    var testTakers = bandwithConfig.ideal;
+                    var maxTestTakers = bandwithConfig.max;
 
                     if (!_.isArray(testTakers)) {
                         testTakers = [testTakers];
@@ -243,6 +247,7 @@ define([
                         st.id = 'bandwidth-' + i;
                         st.title = __('Bandwidth');
                         st.feedback.legend = __('Number of simultaneous test takers the connection can handle');
+                        st.customMsg = config.configurableText.diagBandwithCheckResult;
 
                         st.quality.label = nb;
 
@@ -266,14 +271,17 @@ define([
          */
         checkUpload: function checkUpload(done) {
             var self = this;
-            var config = this.config.upload;
+            var config = this.config;
+            var uploadConfig = this.config.upload;
 
             this.changeStatus(__('Checking upload speed...'));
-            uploadTester(config).start(function (data) {
+            uploadTester(uploadConfig).start(function (data) {
                 var totalSpeed = 0;
                 var avgSpeed;
                 var maxSpeed = 0;
-                var optimal = config.optimal / 1024 / 1024;
+                var optimal = uploadConfig.optimal / 1024 / 1024;
+                var status;
+                var summary;
 
                 _.forEach(data, function (val) {
                     totalSpeed += val.speed;
@@ -283,8 +291,8 @@ define([
                 });
                 avgSpeed = Math.round(totalSpeed / data.length * 100) / 100;
 
-                var status = self.status.getStatus((100 / optimal) * avgSpeed, 'upload');
-                var summary = {
+                status = self.status.getStatus((100 / optimal) * avgSpeed, 'upload');
+                summary = {
                     uploadAvg: {message: __('Average upload speed'), value: avgSpeed + ' Mbps'},
                     uploadMax: {message: __('Max upload speed'), value: maxSpeed + ' Mbps'},
                 };
@@ -296,6 +304,7 @@ define([
                 }, function () {
                     status.id = 'upload';
                     status.title = __('Upload speed');
+                    status.customMsg = config.configurableText.diagUploadCheckResult;
 
                     self.addResult(status);
 
@@ -450,6 +459,8 @@ define([
                     // display the result
                     status.title = __('Total');
                     status.id = 'total';
+                    status.customMsg = self.config.configurableText.diagTotalCheckResult;
+
                     status.details = information;
                     self.addResult(status);
 
@@ -499,7 +510,7 @@ define([
                 }
             });
         }
-        
+
         return component(diagnostic, _defaults)
             .setTemplate(mainTpl)
 

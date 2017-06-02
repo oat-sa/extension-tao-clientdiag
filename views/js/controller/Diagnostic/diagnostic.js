@@ -59,8 +59,9 @@ define([
             var indexUrl = helpers._url('index', 'Diagnostic', extension);
             var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', extension);
             var buttons = [];
+            var moduleConfig = module.config() || {};
 
-            config.configurableText = (module.config() || {}).configurableText;
+            config.configurableText = moduleConfig.configurableText || {};
 
             /**
              * Installs the diagnostic tool GUI
