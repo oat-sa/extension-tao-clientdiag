@@ -23,6 +23,7 @@
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
  */
 define([
+    'module',
     'jquery',
     'i18n',
     'helpers',
@@ -31,7 +32,7 @@ define([
     'ui/feedback',
     'taoClientDiagnostic/tools/diagnostic/diagnostic',
     'tpl!taoClientDiagnostic/templates/diagnostic/main'
-], function ($, __, helpers, loadingBar, actionbar, feedback, diagnosticFactory, diagnosticTpl) {
+], function (module, $, __, helpers, loadingBar, actionbar, feedback, diagnosticFactory, diagnosticTpl) {
     'use strict';
 
     /**
@@ -39,9 +40,6 @@ define([
      * @type {String}
      */
     var cssScope = '.diagnostic-runner';
-
-    // the page is always loading data when starting
-    loadingBar.start();
 
     /**
      * Controls the readiness check page
@@ -61,6 +59,8 @@ define([
             var indexUrl = helpers._url('index', 'Diagnostic', extension);
             var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', extension);
             var buttons = [];
+
+            config.configurableText = (module.config() || {}).configurableText;
 
             /**
              * Installs the diagnostic tool GUI
@@ -142,6 +142,9 @@ define([
                 });
         }
     };
+
+    // the page is always loading data when starting
+    loadingBar.start();
 
     return taoDiagnosticRunnerCtlr;
 });

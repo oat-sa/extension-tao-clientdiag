@@ -10,3 +10,12 @@
         <div class="list clearfix"></div>
     </div>
 </div>
+<script type="text/javascript">
+    requirejs.config({
+        config: {
+            'taoClientDiagnostic/controller/Diagnostic/diagnostic' : {
+                configurableText: <?=get_data('configurableText')?>
+            }
+        }
+    });
+</script>
