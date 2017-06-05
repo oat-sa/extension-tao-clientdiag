@@ -24,7 +24,7 @@ define([
     'lodash',
     'i18n',
     'async',
-    'helpers',
+    'util/url',
     'ui/feedback',
     'ui/component',
     'taoClientDiagnostic/tools/diagnostic/status',
@@ -36,7 +36,7 @@ define([
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/main',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/result',
     'css!taoClientDiagnosticCss/diagnostics'
-], function ($, _, __, async, helpers, feedback, component, statusFactory, performancesTester, bandwidthTester, uploadTester, browserTester,getConfig,  mainTpl, resultTpl) {
+], function ($, _, __, async, url, feedback, component, statusFactory, performancesTester, bandwidthTester, uploadTester, browserTester,getConfig,  mainTpl, resultTpl) {
     'use strict';
 
     /**
@@ -50,19 +50,7 @@ define([
         info: __('Be aware that these tests will take up to several minutes.'),
         button: __('Begin diagnostics'),
         actionStore: 'storeData',
-        actionCheck: 'check',
         controller: 'DiagnosticChecker',
-        extension: 'taoClientDiagnostic'
-    };
-
-    /**
-     * Default values for the browser tester
-     * @type {Object}
-     * @private
-     */
-    var _defaultsBrowser = {
-        action: 'whichBrowser',
-        controller: 'CompatibilityChecker',
         extension: 'taoClientDiagnostic'
     };
 
@@ -126,7 +114,7 @@ define([
             details.type = type;
 
             $.post(
-                helpers._url(config.actionStore, config.controller, config.extension, config.storeParams),
+                url.route(config.actionStore, config.controller, config.extension, config.storeParams),
                 details,
                 done,
                 "json"
@@ -138,40 +126,8 @@ define([
          * @param {Function} done
          */
         checkBrowser: function checkBrowser(done) {
-            var self = this;
-            var config = this.config;
-
             this.changeStatus(__('Checking the browser...'));
-
-            browserTester(window, getConfig(this.config.browser, _defaultsBrowser)).start(function (information) {
-                // which browser
-                $.post(
-                    helpers._url(config.actionCheck, config.controller, config.extension, config.storeParams),
-                    information,
-                    function (data) {
-                        var percentage = ('success' === data.type) ? 100 : (('warning' === data.type) ? 33 : 0);
-                        var status = self.status.getStatus(percentage, data);
-                        var summary = {
-                            browser: {
-                                message: __('Web browser'),
-                                value: information.browser + ' ' + information.browserVersion
-                            },
-                            os: {
-                                message: __('Operating system'),
-                                value: information.os + ' ' + information.osVersion
-                            }
-                        };
-
-                        status.id = 'browser';
-                        status.title = __('Operating system and web browser');
-
-                        self.addResult(status);
-
-                        done(status, summary);
-                    },
-                    'json'
-                );
-            });
+            browserTester(this.config).start(done);
         },
 
         /**
@@ -389,41 +345,40 @@ define([
             var self = this;
             var information = {};
             var scores = {};
+            var testers = [];
 
             // common handling for testers
-            function doCheck(method, cb) {
+            function doCheck(tester, testerName, cb) {
+                self.changeStatus(tester.status);
+
                 /**
                  * Notifies the start of a tester operation
                  * @event diagnostic#starttester
                  * @param {String} name - The name of the tester
                  */
-                self.trigger('starttester', method);
-                self.setState(method, true);
+                self.trigger('starttester', testerName);
+                self.setState(testerName, true);
+                require([tester.tester], function (testerFactory){
+                    testerFactory(getConfig(tester, self.config)).start(function (status, details) {
+                        // the returned details must be ingested into the main details list
+                        _.assign(information, details);
 
-                self[method](function (status, details) {
-                    // the returned details must be ingested into the main details list
-                    _.assign(information, details);
+                        scores[status.id] = status;
 
-                    // sometimes it is an array, sometimes not...
-                    // simplify all by only supporting arrays
-                    if (!_.isArray(status)) {
-                        status = [status];
-                    }
-                    _.forEach(status, function (st) {
-                        scores[st.id] = st;
+                        /**
+                         * Notifies the end of a tester operation
+                         * @event diagnostic#endtester
+                         * @param {String} name - The name of the tester
+                         * @param {Array} results - The results of the test
+                         */
+                        self.trigger('endtester', testerName, status);
+                        self.setState(testerName, false);
+
+                        self.store(testerName, details, function () {
+                            self.addResult(status);
+                            cb();
+                        });
                     });
-
-                    /**
-                     * Notifies the end of a tester operation
-                     * @event diagnostic#endtester
-                     * @param {String} name - The name of the tester
-                     * @param {Array} results - The results of the test
-                     */
-                    self.trigger('endtester', method, status);
-                    self.setState(method, false);
-
-                    // do not forget to notify the end of the operation to the manager
-                    cb();
                 });
             }
 
@@ -431,16 +386,14 @@ define([
                 // set up the component to a new run
                 this.prepare();
 
+                _.forEach(this.config.testers, function(tester, testerName) {
+                    testers.push(function (cb) {
+                        doCheck(tester, testerName, cb);
+                    });
+                });
+
                 // launch each testers in series, then display the results
-                async.series([function (cb) {
-                    doCheck('checkBrowser', cb);
-                }, function (cb) {
-                    doCheck('checkPerformances', cb);
-                }, function (cb) {
-                    doCheck('checkBandwidth', cb);
-                }, function (cb) {
-                    doCheck('checkUpload', cb);
-                }], function () {
+                async.series(testers, function () {
                     // pick the lowest percentage as the main score
                     var total = _.min(scores, 'percentage');
 
@@ -499,7 +452,7 @@ define([
                 }
             });
         }
-        
+
         return component(diagnostic, _defaults)
             .setTemplate(mainTpl)
 

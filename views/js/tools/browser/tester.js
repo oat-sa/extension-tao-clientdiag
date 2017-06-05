@@ -21,9 +21,10 @@
 define([
     'jquery',
     'i18n',
-    'helpers',
-    'taoClientDiagnostic/tools/getconfig'
-], function ($, __, helpers, getConfig) {
+    'util/url',
+    'taoClientDiagnostic/tools/getconfig',
+    'taoClientDiagnostic/tools/diagnostic/status'
+], function ($, __, url, getConfig, statusFactory) {
     'use strict';
 
     /**
@@ -32,9 +33,11 @@ define([
      * @private
      */
     var _defaults = {
-        action: 'whichBrowser',
-        controller: 'CompatibilityChecker',
-        extension: 'taoClientDiagnostic'
+        browserVersionAction: 'whichBrowser',
+        browserVersionController: 'CompatibilityChecker',
+        browserVersionExtension: 'taoClientDiagnostic',
+        action: 'check',
+        controller: 'DiagnosticChecker'
     };
 
     /**
@@ -82,20 +85,19 @@ define([
         params.w = screen.width;
         params.h = screen.height;
 
-        return helpers._url(action, controller, extension, params);
+        return url.route(action, controller, extension, params);
     }
 
     /**
      * Performs a browser support test
      *
-     * @param {Window} window - Need an access to the window object
      * @param {Object} [config] - Some optional configs
      * @param {String} [config.action] - The name of the action to call to get the browser checker
      * @param {String} [config.controller] - The name of the controller to call to get the browser checker
      * @param {String} [config.extension] - The name of the extension containing the controller to call to get the browser checker
      * @returns {Object}
      */
-    function browserTester(window, config) {
+    function browserTester(config) {
         var initConfig = getConfig(config || {}, _defaults);
 
         return {
@@ -104,11 +106,41 @@ define([
              * @param {Function} done
              */
             start: function start(done) {
-                var url = getTesterUrl(window, initConfig.action, initConfig.controller, initConfig.extension);
+                var testerUrl = getTesterUrl(
+                    window,
+                    initConfig.browserVersionAction,
+                    initConfig.browserVersionController,
+                    initConfig.browserVersionExtension
+                );
+
                 $.ajax({
-                    url : url,
-                    success : function(data) {
-                        done(data);
+                    url : testerUrl,
+                    success : function(browserInfo) {
+                        // which browser
+                        $.post(
+                            url.route(initConfig.action, initConfig.controller, initConfig.extension),
+                            browserInfo,
+                            function (data) {
+                                var percentage = ('success' === data.type) ? 100 : (('warning' === data.type) ? 33 : 0);
+                                var status = statusFactory().getStatus(percentage, data);
+                                var summary = {
+                                    browser: {
+                                        message: __('Web browser'),
+                                        value: browserInfo.browser + ' ' + browserInfo.browserVersion
+                                    },
+                                    os: {
+                                        message: __('Operating system'),
+                                        value: browserInfo.os + ' ' + browserInfo.osVersion
+                                    }
+                                };
+
+                                status.id = 'browser';
+                                status.title = __('Operating system and web browser');
+
+                                done(status, summary);
+                            },
+                            'json'
+                        );
                     }
                 });
             }

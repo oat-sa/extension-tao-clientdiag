@@ -21,14 +21,17 @@
 define([
     'jquery',
     'lodash',
+    'i18n',
     'async',
     'context',
     'helpers',
     'taoClientDiagnostic/tools/stats',
     'taoQtiItem/qtiItem/core/Loader',
     'taoQtiItem/qtiCommonRenderer/renderers/Renderer',
+    'taoClientDiagnostic/tools/getconfig',
+    'taoClientDiagnostic/tools/diagnostic/status',
     'lib/polyfill/performance-now'
-], function($, _, async, context, helpers, stats, Loader, Renderer) {
+], function($, _, __, async, context, helpers, stats, Loader, Renderer, getConfig, statusFactory) {
     'use strict';
 
     /**
@@ -61,6 +64,21 @@ define([
         'taoClientDiagnostic/tools/performances/data/sample2/',
         'taoClientDiagnostic/tools/performances/data/sample3/'
     ];
+
+    var performancesTester;
+
+    /**
+     * Default values for the performances tester
+     * @type {Object}
+     * @private
+     */
+    var _defaults = {
+        // The threshold for optimal performances
+        optimal: 0.025,
+
+        // The threshold for minimal performances
+        threshold: 0.25
+    };
 
     /**
      * Base text used to build sample identifiers
@@ -147,17 +165,22 @@ define([
      * @param {Number} [timeout]
      * @returns {Object}
      */
-    var performancesTester = function performancesTester(samples, occurrences, timeout) {
+    performancesTester = function performancesTester(config) {
+        var initConfig = getConfig(config, _defaults);
         var idx = 0;
-        var _samples = _.map(!_.isEmpty(samples) && samples || _defaultSamples, function(sample) {
+        var _samples = _.map(!_.isEmpty(initConfig.samples) && initConfig.samples || _defaultSamples, function(sample) {
             idx ++;
             return {
                 id : _sampleBaseId + idx,
                 url : sample,
-                timeout : timeout || _defaultTimeout,
-                nb : occurrences || _defaultOccurrencesCount
+                timeout : initConfig.timeout * 1000 || _defaultTimeout,
+                nb : initConfig.occurrences || _defaultOccurrencesCount
             };
         });
+
+
+        var optimal = initConfig.optimal;
+        var range = Math.abs(optimal - (initConfig.threshold));
 
         // add one occurrence on the first sample to obfuscate the time needed to load the runner
         _samples[0].nb ++;
@@ -180,6 +203,9 @@ define([
                 async.series(tests, function(err, measures) {
                     var decimals = 2;
                     var results;
+                    var cursor;
+                    var status;
+                    var summary;
 
                     if(err && !measures.length){
                         //something went wrong
@@ -191,7 +217,18 @@ define([
 
                     results = stats(measures, 'duration', decimals);
 
-                    done(results.average, results);
+                    cursor = range - results.average + optimal;
+                    status = statusFactory().getStatus(cursor / range * 100, 'performances');
+                    summary = {
+                        performancesMin: {message: __('Minimum rendering time'), value: results.min + ' s'},
+                        performancesMax: {message: __('Maximum rendering time'), value: results.max + ' s'},
+                        performancesAverage: {message: __('Average rendering time'), value: results.average + ' s'}
+                    };
+
+                    status.title = __('Workstation performances');
+                    status.id = 'performances';
+
+                    done(status, summary);
                 });
             }
         };
