@@ -137,7 +137,7 @@ define([
                                 status.id = 'browser';
                                 status.title = __('Operating system and web browser');
 
-                                done(status, summary);
+                                done(status, summary, browserInfo);
                             },
                             'json'
                         );

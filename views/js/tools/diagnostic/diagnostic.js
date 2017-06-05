@@ -55,35 +55,6 @@ define([
     };
 
     /**
-     * Default values for the bandwidth tester
-     * @type {Object}
-     * @private
-     */
-    var _defaultsBandwidth = {
-        // The typical bandwidth needed for a test taker (Mbps)
-        unit: 0.16,
-
-        // The thresholds for optimal bandwidth
-        ideal: 45,
-
-        // Maximum number of test takers to display
-        max: 100
-    };
-
-    /**
-     * Default values for the performances tester
-     * @type {Object}
-     * @private
-     */
-    var _defaultsPerformances = {
-        // The threshold for optimal performances
-        optimal: 0.025,
-
-        // The threshold for minimal performances
-        threshold: 0.25
-    };
-
-    /**
      * Defines a diagnostic tool
      * @type {Object}
      */
@@ -119,145 +90,6 @@ define([
                 done,
                 "json"
             );
-        },
-
-        /**
-         * Performs a browser checks
-         * @param {Function} done
-         */
-        checkBrowser: function checkBrowser(done) {
-            this.changeStatus(__('Checking the browser...'));
-            browserTester(this.config).start(done);
-        },
-
-        /**
-         * Performs a browser performances check
-         * @param {Function} done
-         */
-        checkPerformances: function checkPerformances(done) {
-            var self = this;
-            var config = getConfig(this.config.performances, _defaultsPerformances);
-            var optimal = config.optimal;
-            var range = Math.abs(optimal - (config.threshold));
-
-            this.changeStatus(__('Checking the performances...'));
-            performancesTester(config.samples, config.occurrences, config.timeout * 1000).start(function (average, details) {
-                var cursor = range - average + optimal;
-                var status = self.status.getStatus(cursor / range * 100, 'performances');
-                var summary = {
-                    performancesMin: {message: __('Minimum rendering time'), value: details.min + ' s'},
-                    performancesMax: {message: __('Maximum rendering time'), value: details.max + ' s'},
-                    performancesAverage: {message: __('Average rendering time'), value: details.average + ' s'}
-                };
-
-                self.store('performance', details, function () {
-                    status.id = 'performance';
-                    status.title = __('Workstation performances');
-
-                    self.addResult(status);
-                    done(status, summary);
-                });
-            });
-        },
-
-        /**
-         * Performs a browser bandwidth check
-         * @param {Function} done
-         */
-        checkBandwidth: function checkBandwidth(done) {
-            var self = this;
-            var config = getConfig(this.config.bandwidth, _defaultsBandwidth);
-
-            this.changeStatus(__('Checking the bandwidth...'));
-            bandwidthTester().start(function (average, details) {
-                var summary = {
-                    bandwidthMin: {message: __('Minimum bandwidth'), value: details.min + ' Mbps'},
-                    bandwidthMax: {message: __('Maximum bandwidth'), value: details.max + ' Mbps'},
-                    bandwidthAverage: {message: __('Average bandwidth'), value: details.average + ' Mbps'}
-                };
-
-                self.store('bandwidth', details, function () {
-                    var status = [];
-
-                    var bandwidthUnit = config.unit;
-                    var testTakers = config.ideal;
-                    var maxTestTakers = config.max;
-
-                    if (!_.isArray(testTakers)) {
-                        testTakers = [testTakers];
-                    }
-
-                    _.forEach(testTakers, function (threshold, i) {
-                        var max = threshold * bandwidthUnit;
-                        var st = self.status.getStatus(details.max / max * 100, 'bandwidth');
-                        var nb = Math.floor(details.max / bandwidthUnit);
-
-                        if (nb > maxTestTakers) {
-                            nb = '>' + maxTestTakers;
-                        }
-
-                        st.id = 'bandwidth-' + i;
-                        st.title = __('Bandwidth');
-                        st.feedback.legend = __('Number of simultaneous test takers the connection can handle');
-
-                        st.quality.label = nb;
-
-                        if (nb.toString().length > 2) {
-                            st.quality.wide = true;
-                        }
-
-                        status.push(st);
-
-                        self.addResult(st);
-                    });
-
-                    done(status, summary);
-                });
-            });
-        },
-
-        /**
-         * Check upload speed
-         * @param {Function} done
-         */
-        checkUpload: function checkUpload(done) {
-            var self = this;
-            var config = this.config.upload;
-
-            this.changeStatus(__('Checking upload speed...'));
-            uploadTester(config).start(function (data) {
-                var totalSpeed = 0;
-                var avgSpeed;
-                var maxSpeed = 0;
-                var optimal = config.optimal / 1024 / 1024;
-
-                _.forEach(data, function (val) {
-                    totalSpeed += val.speed;
-                    if (maxSpeed < val.speed) {
-                        maxSpeed = Math.round(val.speed * 100) / 100;
-                    }
-                });
-                avgSpeed = Math.round(totalSpeed / data.length * 100) / 100;
-
-                var status = self.status.getStatus((100 / optimal) * avgSpeed, 'upload');
-                var summary = {
-                    uploadAvg: {message: __('Average upload speed'), value: avgSpeed + ' Mbps'},
-                    uploadMax: {message: __('Max upload speed'), value: maxSpeed + ' Mbps'},
-                };
-
-                self.store('upload', {
-                    max: maxSpeed,
-                    avg: avgSpeed,
-                    type: 'upload'
-                }, function () {
-                    status.id = 'upload';
-                    status.title = __('Upload speed');
-
-                    self.addResult(status);
-
-                    done(status, summary);
-                });
-            });
         },
 
         /**
@@ -359,7 +191,7 @@ define([
                 self.trigger('starttester', testerName);
                 self.setState(testerName, true);
                 require([tester.tester], function (testerFactory){
-                    testerFactory(getConfig(tester, self.config)).start(function (status, details) {
+                    testerFactory(getConfig(tester, self.config)).start(function (status, details, results) {
                         // the returned details must be ingested into the main details list
                         _.assign(information, details);
 
@@ -374,7 +206,7 @@ define([
                         self.trigger('endtester', testerName, status);
                         self.setState(testerName, false);
 
-                        self.store(testerName, details, function () {
+                        self.store(testerName, results, function () {
                             self.addResult(status);
                             cb();
                         });

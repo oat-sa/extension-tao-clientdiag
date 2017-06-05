@@ -65,8 +65,6 @@ define([
         'taoClientDiagnostic/tools/performances/data/sample3/'
     ];
 
-    var performancesTester;
-
     /**
      * Default values for the performances tester
      * @type {Object}
@@ -165,7 +163,7 @@ define([
      * @param {Number} [timeout]
      * @returns {Object}
      */
-    performancesTester = function performancesTester(config) {
+    var performancesTester = function performancesTester(config) {
         var initConfig = getConfig(config, _defaults);
         var idx = 0;
         var _samples = _.map(!_.isEmpty(initConfig.samples) && initConfig.samples || _defaultSamples, function(sample) {
@@ -228,7 +226,7 @@ define([
                     status.title = __('Workstation performances');
                     status.id = 'performances';
 
-                    done(status, summary);
+                    done(status, summary, results);
                 });
             }
         };

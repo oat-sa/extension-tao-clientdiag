@@ -255,7 +255,7 @@ define([
                         status.quality.wide = true;
                     }
 
-                    done(status, summary);
+                    done(status, summary, results);
                 });
             }
         };

@@ -18,9 +18,11 @@
 define([
     'jquery',
     'lodash',
+    'i18n',
     'async',
-    'util/url'
-], function($, _, async, urlHelper) {
+    'util/url',
+    'taoClientDiagnostic/tools/diagnostic/status'
+], function($, _, __, async, urlHelper, statusFactory) {
     'use strict';
 
     /**
@@ -98,7 +100,7 @@ define([
      * Performs a upload speed test
      * @returns {Object}
      */
-    var uploadTester = function uploadTester (config){
+    var uploadTester = function uploadTester(config) {
         return {
             /**
              * Performs upload speed test, then call a function to provide the result
@@ -107,7 +109,35 @@ define([
             start : function start(done) {
                 var jqXHR = upload(parseInt(config.size, 10));
                 jqXHR.then(function() {
-                    done(data);
+                    var totalSpeed = 0;
+                    var avgSpeed;
+                    var maxSpeed = 0;
+                    var optimal = config.optimal / 1024 / 1024;
+
+                    _.forEach(data, function (val) {
+                        totalSpeed += val.speed;
+                        if (maxSpeed < val.speed) {
+                            maxSpeed = Math.round(val.speed * 100) / 100;
+                        }
+                    });
+                    avgSpeed = Math.round(totalSpeed / data.length * 100) / 100;
+
+                    var status = statusFactory().getStatus((100 / optimal) * avgSpeed, 'upload');
+                    var summary = {
+                        uploadAvg: {message: __('Average upload speed'), value: avgSpeed + ' Mbps'},
+                        uploadMax: {message: __('Max upload speed'), value: maxSpeed + ' Mbps'}
+                    };
+
+                    var result = {
+                        max: maxSpeed,
+                        avg: avgSpeed,
+                        type: 'upload'
+                    };
+
+                    status.id = 'upload';
+                    status.title = __('Upload speed');
+
+                    done(status, summary, result);
                 });
             }
         };
