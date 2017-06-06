@@ -6,6 +6,7 @@
             <span class="icon icon-{{type}}"></span>
             <span class="msg">{{message}}</span>
             {{#if legend}}<div class="legend">{{legend}}</div>{{/if}}
+            {{#if customMsg}}<div class="customMsg">{{customMsg}}</div>{{/if}}
         </div>
         {{/with}}
 
@@ -15,7 +16,7 @@
         </div>
         {{/with}}
     </div>
-    {{#if customMsg}}<div class="customMsg">{{customMsg}}</div>{{/if}}
+
     {{#with details}}
     <div class="clearfix">
         <button data-action="show-details" class="rgt btn-info small">{{__ 'Show Details'}}</button>

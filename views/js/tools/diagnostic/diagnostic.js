@@ -178,9 +178,7 @@ define([
 
                         status.id = 'browser';
                         status.title = __('Operating system and web browser');
-                        if (self.hasFailed(status)) {
-                            status.customMsg = customMsg.replace(_placeholders.CURRENT_BROWSER, currentBrowser);
-                        }
+                        self.addCustomFeedbackMsg(status, customMsg.replace(_placeholders.CURRENT_BROWSER, currentBrowser));
 
                         self.addResult(status);
 
@@ -215,9 +213,7 @@ define([
                 self.store('performance', details, function () {
                     status.id = 'performance';
                     status.title = __('Workstation performances');
-                    if (self.hasFailed(status)) {
-                        status.customMsg = config.configurableText.diagPerformancesCheckResult;
-                    }
+                    self.addCustomFeedbackMsg(status, config.configurableText.diagPerformancesCheckResult);
 
                     self.addResult(status);
                     done(status, summary);
@@ -266,9 +262,7 @@ define([
                         st.title = __('Bandwidth');
                         st.feedback.legend = __('Number of simultaneous test takers the connection can handle');
 
-                        if (self.hasFailed(st)) {
-                            st.customMsg = config.configurableText.diagBandwithCheckResult;
-                        }
+                        self.addCustomFeedbackMsg(st, config.configurableText.diagUploadCheckResult);
 
                         st.quality.label = nb;
 
@@ -325,16 +319,19 @@ define([
                 }, function () {
                     status.id = 'upload';
                     status.title = __('Upload speed');
-
-                    if (self.hasFailed(status)) {
-                        status.customMsg = config.configurableText.diagUploadCheckResult;
-                    }
+                    self.addCustomFeedbackMsg(status, config.configurableText.diagUploadCheckResult);
 
                     self.addResult(status);
 
                     done(status, summary);
                 });
             });
+        },
+
+        addCustomFeedbackMsg: function addCustomFeedbackMsg(status, msg) {
+            if (this.hasFailed(status)) {
+                status.feedback.customMsg = msg;
+            }
         },
 
         /**
@@ -357,6 +354,8 @@ define([
          */
         addResult: function addResult(result) {
             var $result, $indicator;
+
+            console.dir(result);
 
             if (this.is('rendered')) {
                 // adjust the width of the displayed label, if any, to the text length
@@ -496,7 +495,7 @@ define([
                     // display the result
                     status.title = __('Total');
                     status.id = 'total';
-                    status.customMsg = self.config.configurableText.diagTotalCheckResult;
+                    self.addCustomFeedbackMsg(status, self.config.configurableText.diagTotalCheckResult);
 
                     status.details = information;
                     self.addResult(status);
