@@ -97,7 +97,7 @@ define([
      * @param {String} [config.extension] - The name of the extension containing the controller to call to get the browser checker
      * @returns {Object}
      */
-    function browserTester(config) {
+    function browserTester(config, diagnosticTool) {
         var initConfig = getConfig(config || {}, _defaults);
 
         return {
@@ -113,6 +113,7 @@ define([
                     initConfig.browserVersionExtension
                 );
 
+                diagnosticTool.changeStatus(__('Checking the browser...'));
                 $.ajax({
                     url : testerUrl,
                     success : function(browserInfo) {

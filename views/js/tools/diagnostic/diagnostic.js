@@ -181,8 +181,6 @@ define([
 
             // common handling for testers
             function doCheck(tester, testerName, cb) {
-                self.changeStatus(tester.status);
-
                 /**
                  * Notifies the start of a tester operation
                  * @event diagnostic#starttester
@@ -191,7 +189,7 @@ define([
                 self.trigger('starttester', testerName);
                 self.setState(testerName, true);
                 require([tester.tester], function (testerFactory){
-                    testerFactory(getConfig(tester, self.config)).start(function (status, details, results) {
+                    testerFactory(getConfig(tester, self.config), self).start(function (status, details, results) {
                         // the returned details must be ingested into the main details list
                         _.assign(information, details);
 

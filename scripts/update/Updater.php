@@ -420,25 +420,21 @@ class Updater extends \common_ext_ExtensionUpdater
             if (isset($config['performances'])) {
                 $performance = $config['performances'];
                 $performance['tester'] = 'taoClientDiagnostic/tools/performances/tester';
-                $performance['status'] = __('Checking the performances...');
                 $newConfig['testers']['performance'] = $performance;
             }
             if (isset($config['bandwidth'])) {
                 $bandwidth = $config['bandwidth'];
                 $bandwidth['tester'] = 'taoClientDiagnostic/tools/bandwidth/tester';
-                $bandwidth['status'] = __('Checking the bandwidth...');
                 $newConfig['testers']['bandwidth'] = $bandwidth;
             }
             if (isset($config['upload'])) {
                 $upload = $config['upload'];
                 $upload['tester'] = 'taoClientDiagnostic/tools/upload/tester';
-                $upload['status'] = __('Checking upload speed...');
                 $newConfig['testers']['upload'] = $upload;
             }
 
             $newConfig['testers']['browser'] = [
                 'tester' => 'taoClientDiagnostic/tools/browser/tester',
-                'status' => __('Checking the browser...'),
             ];
 
             $extension->setConfig('clientDiag', $newConfig);

@@ -100,7 +100,7 @@ define([
      * Performs a upload speed test
      * @returns {Object}
      */
-    var uploadTester = function uploadTester(config) {
+    var uploadTester = function uploadTester(config, diagnosticTool) {
         return {
             /**
              * Performs upload speed test, then call a function to provide the result
@@ -108,6 +108,7 @@ define([
              */
             start : function start(done) {
                 var jqXHR = upload(parseInt(config.size, 10));
+                diagnosticTool.changeStatus(__('Checking upload speed...'));
                 jqXHR.then(function() {
                     var totalSpeed = 0;
                     var avgSpeed;
@@ -121,7 +122,7 @@ define([
                         }
                     });
                     avgSpeed = Math.round(totalSpeed / data.length * 100) / 100;
-                    
+
                     var status = statusFactory().getStatus((100 / optimal) * avgSpeed, 'upload');
                     var summary = {
                         uploadAvg: {message: __('Average upload speed'), value: avgSpeed + ' Mbps'},

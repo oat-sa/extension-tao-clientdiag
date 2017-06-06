@@ -173,7 +173,7 @@ define([
      *
      * @returns {Object}
      */
-    var bandwidthTester = function bandwidthTester (config) {
+    var bandwidthTester = function bandwidthTester (config, diagnosticTool) {
         var initConfig = getConfig(config || {}, _defaults);
 
         return {
@@ -184,6 +184,9 @@ define([
             start : function start(done) {
                 var self = this;
                 var tests = [];
+
+                diagnosticTool.changeStatus(__('Checking the bandwidth...'));
+
                 _.forEach(_downloadData, function(data) {
                     var cb = _.bind(download, self, data);
                     var iterations = data.nb || 1;

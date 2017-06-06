@@ -163,7 +163,7 @@ define([
      * @param {Number} [timeout]
      * @returns {Object}
      */
-    var performancesTester = function performancesTester(config) {
+    var performancesTester = function performancesTester(config, diagnosticTool) {
         var initConfig = getConfig(config, _defaults);
         var idx = 0;
         var _samples = _.map(!_.isEmpty(initConfig.samples) && initConfig.samples || _defaultSamples, function(sample) {
@@ -190,6 +190,9 @@ define([
              */
             start: function start(done) {
                 var tests = [];
+
+                diagnosticTool.changeStatus(__('Checking the performances...'));
+
                 _.forEach(_samples, function(data) {
                     var cb = _.partial(loadItem, data);
                     var iterations = data.nb || 1;

@@ -39,7 +39,6 @@ return array(
          */
         'performance' => array(
             'tester' => 'taoClientDiagnostic/tools/performances/tester',
-            'status' => __('Checking the performances...'),
             /**
              * A list of samples to render in order to compute the rendering performances
              * @type array
@@ -81,7 +80,6 @@ return array(
          */
         'bandwidth' => array(
             'tester' => 'taoClientDiagnostic/tools/bandwidth/tester',
-            'status' => __('Checking the bandwidth...'),
             /**
              * The typical bandwidth needed for a test taker (Mbps)
              * @type float
@@ -106,7 +104,6 @@ return array(
          */
         'upload' => array(
             'tester' => 'taoClientDiagnostic/tools/upload/tester',
-            'status' => __('Checking upload speed...'),
             /**
              * Size of data to sent to server during speed test in bytes
              */
@@ -119,7 +116,6 @@ return array(
         ),
         'browser' => [
             'tester' => 'taoClientDiagnostic/tools/browser/tester',
-            'status' => __('Checking the browser...'),
         ],
     ]
 );
