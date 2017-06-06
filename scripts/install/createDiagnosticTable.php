@@ -78,6 +78,9 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
 
             $tableResults->setPrimaryKey(array(Sql::DIAGNOSTIC_ID));
 
+            $tableResults->addIndex([Sql::DIAGNOSTIC_CONTEXT_ID], 'ind_context_id');
+            $tableResults->addIndex([Sql::DIAGNOSTIC_USER_ID], 'ind_user_id');
+
             $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
             foreach ($queries as $query) {
                 $persistence->exec($query);

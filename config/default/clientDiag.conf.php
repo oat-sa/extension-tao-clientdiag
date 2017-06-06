@@ -21,6 +21,18 @@
  * Default client diag config
  */
 return array(
+
+    /**
+     * Diagnostic will be run on the page load
+     */
+    'autoStart' => false,
+
+    /**
+     * The results of all diagnostic runs will be saved
+     * (learners and students will see only their runs, teachers and administrators will see all possible runs)
+     */
+    'storeAllRuns' => false,
+
     /**
      * Custom text for diagnostic header
      * @string

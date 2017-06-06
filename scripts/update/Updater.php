@@ -421,8 +421,6 @@ class Updater extends \common_ext_ExtensionUpdater
                 $addTempSchema = clone $schema;
                 $tableResults = $addTempSchema->getTable(Sql::DIAGNOSTIC_TABLE);
                 $tableResults->addColumn(Sql::DIAGNOSTIC_USER_ID, 'string', ['length' => 255, 'notnull' => false]);
-                $tableResults->addIndex([Sql::DIAGNOSTIC_USER_ID], 'ind_user_id');
-                $tableResults->addIndex([Sql::DIAGNOSTIC_CONTEXT_ID], 'ind_context_id');
                 $queries = $persistence->getPlatform()->getMigrateSchemaSql($schema, $addTempSchema);
                 foreach ($queries as $query) {
                     $persistence->exec($query);

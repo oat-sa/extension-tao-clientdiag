@@ -71,7 +71,8 @@ define([
         actionCheck: 'check',
         controller: 'DiagnosticChecker',
         extension: 'taoClientDiagnostic',
-        actionDropId: 'deleteId'
+        actionDropId: 'deleteId',
+        storeAllRuns: false
     };
 
     /**
@@ -385,10 +386,14 @@ define([
          * @private
          */
         finish: function finish() {
+            var config = this.config;
+
             // restore the start button to allow a new diagnostic run
             this.controls.$start.removeClass('hidden');
 
-            this.deleteIdentifier();
+            if (config.storeAllRuns) {
+                this.deleteIdentifier();
+            }
 
             /**
              * Notifies the diagnostic end

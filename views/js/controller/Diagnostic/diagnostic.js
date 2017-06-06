@@ -98,7 +98,9 @@ define([
                     })
                     .on('render', function() {
                         loadingBar.stop();
-                        this.run();
+                        if (config.autoStart) {
+                            this.run();
+                        }
                     })
                     .render($list);
             }
