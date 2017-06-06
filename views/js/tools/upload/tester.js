@@ -121,7 +121,7 @@ define([
                         }
                     });
                     avgSpeed = Math.round(totalSpeed / data.length * 100) / 100;
-                    debugger;
+                    
                     var status = statusFactory().getStatus((100 / optimal) * avgSpeed, 'upload');
                     var summary = {
                         uploadAvg: {message: __('Average upload speed'), value: avgSpeed + ' Mbps'},
