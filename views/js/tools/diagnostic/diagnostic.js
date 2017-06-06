@@ -52,7 +52,8 @@ define([
         actionStore: 'storeData',
         actionCheck: 'check',
         controller: 'DiagnosticChecker',
-        extension: 'taoClientDiagnostic'
+        extension: 'taoClientDiagnostic',
+        configurableText: {}
     };
 
     /**
