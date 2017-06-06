@@ -24,7 +24,6 @@ define([
     'lodash',
     'i18n',
     'async',
-    'helpers',
     'ui/feedback',
     'ui/component',
     'core/dataProvider/request',
@@ -42,7 +41,6 @@ define([
              _,
              __,
              async,
-             helpers,
              feedback,
              component,
              request,
@@ -68,51 +66,10 @@ define([
         info: __('Be aware that these tests will take up to several minutes.'),
         button: __('Begin diagnostics'),
         actionStore: 'storeData',
-        actionCheck: 'check',
         controller: 'DiagnosticChecker',
         extension: 'taoClientDiagnostic',
         actionDropId: 'deleteId',
         storeAllRuns: false
-    };
-
-    /**
-     * Default values for the browser tester
-     * @type {Object}
-     * @private
-     */
-    var _defaultsBrowser = {
-        action: 'whichBrowser',
-        controller: 'CompatibilityChecker',
-        extension: 'taoClientDiagnostic'
-    };
-
-    /**
-     * Default values for the bandwidth tester
-     * @type {Object}
-     * @private
-     */
-    var _defaultsBandwidth = {
-        // The typical bandwidth needed for a test taker (Mbps)
-        unit: 0.16,
-
-        // The thresholds for optimal bandwidth
-        ideal: 45,
-
-        // Maximum number of test takers to display
-        max: 100
-    };
-
-    /**
-     * Default values for the performances tester
-     * @type {Object}
-     * @private
-     */
-    var _defaultsPerformances = {
-        // The threshold for optimal performances
-        optimal: 0.025,
-
-        // The threshold for minimal performances
-        threshold: 0.25
     };
 
     /**
@@ -146,182 +103,11 @@ define([
             details.type = type;
 
             $.post(
-                helpers._url(config.actionStore, config.controller, config.extension, config.storeParams),
+                urlUtil.route(config.actionStore, config.controller, config.extension, config.storeParams),
                 details,
                 done,
                 "json"
             );
-        },
-
-        /**
-         * Performs a browser checks
-         * @param {Function} done
-         */
-        checkBrowser: function checkBrowser(done) {
-            var self = this;
-            var config = this.config;
-
-            this.changeStatus(__('Checking the browser...'));
-
-            browserTester(window, getConfig(this.config.browser, _defaultsBrowser)).start(function (information) {
-                // which browser
-                $.post(
-                    helpers._url(config.actionCheck, config.controller, config.extension, config.storeParams),
-                    information,
-                    function (data) {
-                        var percentage = ('success' === data.type) ? 100 : (('warning' === data.type) ? 33 : 0);
-                        var status = self.status.getStatus(percentage, data);
-                        var summary = {
-                            browser: {
-                                message: __('Web browser'),
-                                value: information.browser + ' ' + information.browserVersion
-                            },
-                            os: {
-                                message: __('Operating system'),
-                                value: information.os + ' ' + information.osVersion
-                            }
-                        };
-
-                        status.id = 'browser';
-                        status.title = __('Operating system and web browser');
-
-                        self.addResult(status);
-
-                        done(status, summary);
-                    },
-                    'json'
-                );
-            });
-        },
-
-        /**
-         * Performs a browser performances check
-         * @param {Function} done
-         */
-        checkPerformances: function checkPerformances(done) {
-            var self = this;
-            var config = getConfig(this.config.performances, _defaultsPerformances);
-            var optimal = config.optimal;
-            var range = Math.abs(optimal - (config.threshold));
-
-            this.changeStatus(__('Checking the performances...'));
-            performancesTester(config.samples, config.occurrences, config.timeout * 1000).start(function (average, details) {
-                var cursor = range - average + optimal;
-                var status = self.status.getStatus(cursor / range * 100, 'performances');
-                var summary = {
-                    performancesMin: {message: __('Minimum rendering time'), value: details.min + ' s'},
-                    performancesMax: {message: __('Maximum rendering time'), value: details.max + ' s'},
-                    performancesAverage: {message: __('Average rendering time'), value: details.average + ' s'}
-                };
-
-                self.store('performance', details, function () {
-                    status.id = 'performance';
-                    status.title = __('Workstation performances');
-
-                    self.addResult(status);
-                    done(status, summary);
-                });
-            });
-        },
-
-        /**
-         * Performs a browser bandwidth check
-         * @param {Function} done
-         */
-        checkBandwidth: function checkBandwidth(done) {
-            var self = this;
-            var config = getConfig(this.config.bandwidth, _defaultsBandwidth);
-
-            this.changeStatus(__('Checking the bandwidth...'));
-            bandwidthTester().start(function (average, details) {
-                var summary = {
-                    bandwidthMin: {message: __('Minimum bandwidth'), value: details.min + ' Mbps'},
-                    bandwidthMax: {message: __('Maximum bandwidth'), value: details.max + ' Mbps'},
-                    bandwidthAverage: {message: __('Average bandwidth'), value: details.average + ' Mbps'}
-                };
-
-                self.store('bandwidth', details, function () {
-                    var status = [];
-
-                    var bandwidthUnit = config.unit;
-                    var testTakers = config.ideal;
-                    var maxTestTakers = config.max;
-
-                    if (!_.isArray(testTakers)) {
-                        testTakers = [testTakers];
-                    }
-
-                    _.forEach(testTakers, function (threshold, i) {
-                        var max = threshold * bandwidthUnit;
-                        var st = self.status.getStatus(details.max / max * 100, 'bandwidth');
-                        var nb = Math.floor(details.max / bandwidthUnit);
-
-                        if (nb > maxTestTakers) {
-                            nb = '>' + maxTestTakers;
-                        }
-
-                        st.id = 'bandwidth-' + i;
-                        st.title = __('Bandwidth');
-                        st.feedback.legend = __('Number of simultaneous test takers the connection can handle');
-
-                        st.quality.label = nb;
-
-                        if (nb.toString().length > 2) {
-                            st.quality.wide = true;
-                        }
-
-                        status.push(st);
-
-                        self.addResult(st);
-                    });
-
-                    done(status, summary);
-                });
-            });
-        },
-
-        /**
-         * Check upload speed
-         * @param {Function} done
-         */
-        checkUpload: function checkUpload(done) {
-            var self = this;
-            var config = this.config.upload;
-
-            this.changeStatus(__('Checking upload speed...'));
-            uploadTester(config).start(function (data) {
-                var totalSpeed = 0;
-                var avgSpeed;
-                var maxSpeed = 0;
-                var optimal = config.optimal / 1024 / 1024;
-
-                _.forEach(data, function (val) {
-                    totalSpeed += val.speed;
-                    if (maxSpeed < val.speed) {
-                        maxSpeed = Math.round(val.speed * 100) / 100;
-                    }
-                });
-                avgSpeed = Math.round(totalSpeed / data.length * 100) / 100;
-
-                var status = self.status.getStatus((100 / optimal) * avgSpeed, 'upload');
-                var summary = {
-                    uploadAvg: {message: __('Average upload speed'), value: avgSpeed + ' Mbps'},
-                    uploadMax: {message: __('Max upload speed'), value: maxSpeed + ' Mbps'},
-                };
-
-                self.store('upload', {
-                    max: maxSpeed,
-                    avg: avgSpeed,
-                    type: 'upload'
-                }, function () {
-                    status.id = 'upload';
-                    status.title = __('Upload speed');
-
-                    self.addResult(status);
-
-                    done(status, summary);
-                });
-            });
         },
 
         /**
@@ -423,41 +209,38 @@ define([
             var self = this;
             var information = {};
             var scores = {};
+            var testers = [];
 
             // common handling for testers
-            function doCheck(method, cb) {
+            function doCheck(tester, testerName, cb) {
                 /**
                  * Notifies the start of a tester operation
                  * @event diagnostic#starttester
                  * @param {String} name - The name of the tester
                  */
-                self.trigger('starttester', method);
-                self.setState(method, true);
+                self.trigger('starttester', testerName);
+                self.setState(testerName, true);
+                require([tester.tester], function (testerFactory){
+                    testerFactory(getConfig(tester, self.config), self).start(function (status, details, results) {
+                        // the returned details must be ingested into the main details list
+                        _.assign(information, details);
 
-                self[method](function (status, details) {
-                    // the returned details must be ingested into the main details list
-                    _.assign(information, details);
+                        scores[status.id] = status;
 
-                    // sometimes it is an array, sometimes not...
-                    // simplify all by only supporting arrays
-                    if (!_.isArray(status)) {
-                        status = [status];
-                    }
-                    _.forEach(status, function (st) {
-                        scores[st.id] = st;
+                        /**
+                         * Notifies the end of a tester operation
+                         * @event diagnostic#endtester
+                         * @param {String} name - The name of the tester
+                         * @param {Array} results - The results of the test
+                         */
+                        self.trigger('endtester', testerName, status);
+                        self.setState(testerName, false);
+
+                        self.store(testerName, results, function () {
+                            self.addResult(status);
+                            cb();
+                        });
                     });
-
-                    /**
-                     * Notifies the end of a tester operation
-                     * @event diagnostic#endtester
-                     * @param {String} name - The name of the tester
-                     * @param {Array} results - The results of the test
-                     */
-                    self.trigger('endtester', method, status);
-                    self.setState(method, false);
-
-                    // do not forget to notify the end of the operation to the manager
-                    cb();
                 });
             }
 
@@ -465,16 +248,14 @@ define([
                 // set up the component to a new run
                 this.prepare();
 
+                _.forEach(this.config.testers, function(tester, testerName) {
+                    testers.push(function (cb) {
+                        doCheck(tester, testerName, cb);
+                    });
+                });
+
                 // launch each testers in series, then display the results
-                async.series([function (cb) {
-                    doCheck('checkBrowser', cb);
-                }, function (cb) {
-                    doCheck('checkPerformances', cb);
-                }, function (cb) {
-                    doCheck('checkBandwidth', cb);
-                }, function (cb) {
-                    doCheck('checkUpload', cb);
-                }], function () {
+                async.series(testers, function () {
                     // pick the lowest percentage as the main score
                     var total = _.min(scores, 'percentage');
 
@@ -533,7 +314,7 @@ define([
                 }
             });
         }
-        
+
         return component(diagnostic, _defaults)
             .setTemplate(mainTpl)
 
@@ -558,6 +339,9 @@ define([
                 };
 
                 // start the diagnostic
+                if(config.autoStart){
+                    self.run();
+                }
                 this.controls.$start.on('click', function () {
                     self.run();
                 });
