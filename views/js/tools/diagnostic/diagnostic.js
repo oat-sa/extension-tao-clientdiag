@@ -94,6 +94,39 @@ define([
         },
 
         /**
+         * Retrieve a custom message from the config
+         * @param key
+         * @returns {*}
+         */
+        getCustomMsg: function getCustomMsg(key) {
+            return this.config.configurableText[key];
+        },
+
+        /**
+         * Enrich the feeback object with a custom message if the test has failed
+         * @param {Object} status - the test result
+         * @param {String} msg - the custom message
+         */
+        addCustomFeedbackMsg: function addCustomFeedbackMsg(status, msg) {
+            if (this.hasFailed(status) && msg) {
+                status.feedback.customMsg = msg;
+            }
+        },
+
+        /**
+         * Check if a result is considered as failed
+         * @param {Object} result
+         * @returns {boolean}
+         */
+        hasFailed: function hasFailed(result) {
+            return !(
+                   result
+                && result.feedback
+                && result.feedback.type === "success"
+            );
+        },
+
+        /**
          * Add a result row
          * @param {Object} result
          * @returns {diagnostic}

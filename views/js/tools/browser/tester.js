@@ -136,9 +136,11 @@ define([
                                         value: currentOs
                                     }
                                 };
+                                var customMsg = diagnosticTool.getCustomMsg('diagBrowserCheckResult') || '';
 
                                 status.id = 'browser';
                                 status.title = __('Operating system and web browser');
+                                diagnosticTool.addCustomFeedbackMsg(status, customMsg.replace('%CURRENT_BROWSER%', currentBrowser));
 
                                 done(status, summary, browserInfo);
                             },

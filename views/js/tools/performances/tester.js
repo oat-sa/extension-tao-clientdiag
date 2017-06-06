@@ -228,6 +228,7 @@ define([
 
                     status.title = __('Workstation performances');
                     status.id = 'performances';
+                    diagnosticTool.addCustomFeedbackMsg(status, diagnosticTool.getCustomMsg('diagPerformancesCheckResult'));
 
                     done(status, summary, results);
                 });

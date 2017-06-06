@@ -137,6 +137,7 @@ define([
 
                     status.id = 'upload';
                     status.title = __('Upload speed');
+                    diagnosticTool.addCustomFeedbackMsg(status, diagnosticTool.getCustomMsg('diagUploadCheckResult'));
 
                     done(status, summary, result);
                 });
