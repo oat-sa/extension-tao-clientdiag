@@ -174,7 +174,7 @@ define([
                                 value: currentOs
                             }
                         };
-                        var customMsg = config.configurableText.diagBrowserCheckResult;
+                        var customMsg = config.configurableText.diagBrowserCheckResult || '';
 
                         status.id = 'browser';
                         status.title = __('Operating system and web browser');
@@ -354,8 +354,6 @@ define([
          */
         addResult: function addResult(result) {
             var $result, $indicator;
-
-            console.dir(result);
 
             if (this.is('rendered')) {
                 // adjust the width of the displayed label, if any, to the text length

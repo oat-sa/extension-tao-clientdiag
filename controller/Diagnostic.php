@@ -22,6 +22,7 @@ namespace oat\taoClientDiagnostic\controller;
 
 use oat\generis\model\OntologyAwareTrait;
 use oat\oatbox\service\ServiceNotFoundException;
+use oat\tao\model\theme\ThemeService;
 use oat\taoClientDiagnostic\model\diagnostic\Paginator;
 use DateTime;
 use common_session_SessionManager as SessionManager;
@@ -86,6 +87,19 @@ class Diagnostic extends \tao_actions_CommonModule
         $this->setData('cls', 'diagnostic-runner');
         $this->setData('data', $data);
         $this->setData('content-template', 'pages/index.tpl');
+
+        $themeService = $this->getServiceManager()->get(ThemeService::SERVICE_ID);
+        $theme = $themeService->getTheme();
+        $configurableText = $theme->getTextFromArray([
+            'diagInstructions',
+            'diagBrowserCheckResult',
+            'diagPerformancesCheckResult',
+            'diagBandwithCheckResult',
+            'diagUploadCheckResult',
+            'diagTotalCheckResult'
+        ]);
+        $this->setData('configurableText', json_encode($configurableText));
+
         $this->setView('layout.tpl');
     }
 

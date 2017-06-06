@@ -10,6 +10,7 @@
         <div class="list clearfix"></div>
     </div>
 </div>
+<?php if (get_data('configurableText')) { ?>
 <script type="text/javascript">
     requirejs.config({
         config: {
@@ -19,3 +20,4 @@
         }
     });
 </script>
+<?php } ?>
