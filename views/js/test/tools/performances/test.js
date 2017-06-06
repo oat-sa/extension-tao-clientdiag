@@ -31,23 +31,22 @@ define(['taoClientDiagnostic/tools/performances/tester'], function(performancesT
 
     QUnit.asyncTest('The tester runs', function(assert){
 
-        QUnit.expect(9);
+        QUnit.expect(10);
 
-        performancesTester().start(function(duration, details){
-
+        performancesTester().start(function(status, details, results) {
+            var duration = results.average;
             var toString = {}.toString;
 
-            console.log(duration, details);
-
-            assert.ok(typeof duration === 'number', 'The result is a number');
+            assert.ok(typeof status === 'object', 'The status is a object');
+            assert.ok(typeof details === 'object', 'The details is a object');
+            assert.ok(typeof results === 'object', 'The results is a object');
             assert.ok(duration > 0, 'The result is a positive number');
-            assert.ok(typeof details === 'object', 'The details are provided inside an object');
-            assert.ok(typeof details.min === 'number', 'The minimum speed is provided inside the details');
-            assert.ok(typeof details.max === 'number', 'The maximum speed is provided inside the details');
-            assert.ok(typeof details.average === 'number', 'The average speed is provided inside the details');
-            assert.ok(typeof details.variance === 'number', 'The speed variance is provided inside the details');
-            assert.equal(duration, details.average, 'The total duration provided inside the details must be equal to provided duration');
-            assert.ok(toString.call(details.values) === '[object Array]', 'The detailed measures are provided inside the details');
+            assert.ok(typeof results.min === 'number', 'The minimum speed is provided inside the details');
+            assert.ok(typeof results.max === 'number', 'The maximum speed is provided inside the details');
+            assert.ok(typeof results.average === 'number', 'The average speed is provided inside the details');
+            assert.ok(typeof results.variance === 'number', 'The speed variance is provided inside the details');
+            assert.equal(duration, results.average, 'The total duration provided inside the details must be equal to provided duration');
+            assert.ok(toString.call(results.values) === '[object Array]', 'The detailed measures are provided inside the details');
 
             QUnit.start();
         });

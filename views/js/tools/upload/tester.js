@@ -52,7 +52,7 @@ define([
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        for( var i=0; i < length; i++ ) {
+        for (var i=0; i < length; i++ ) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
 
@@ -121,7 +121,7 @@ define([
                         }
                     });
                     avgSpeed = Math.round(totalSpeed / data.length * 100) / 100;
-
+                    debugger;
                     var status = statusFactory().getStatus((100 / optimal) * avgSpeed, 'upload');
                     var summary = {
                         uploadAvg: {message: __('Average upload speed'), value: avgSpeed + ' Mbps'},
