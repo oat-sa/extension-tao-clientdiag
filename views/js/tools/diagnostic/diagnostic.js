@@ -328,9 +328,14 @@ define([
             });
         },
 
-        addCustomFeedbackMsg: function addCustomFeedbackMsg(status, msg) {
+        /**
+         * Enrich the feeback object with a custom message if the test has failed
+         * @param {Object} status - the test result
+         * @param {String} customMsg - the custom message
+         */
+        addCustomFeedbackMsg: function addCustomFeedbackMsg(status, customMsg) {
             if (this.hasFailed(status)) {
-                status.feedback.customMsg = msg;
+                status.feedback.customMsg = customMsg;
             }
         },
 
