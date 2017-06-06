@@ -17,12 +17,15 @@
  */
 define([
     'lodash',
+    'i18n',
     'async',
     'context',
+    'taoClientDiagnostic/tools/getconfig',
     'taoClientDiagnostic/tools/stats',
     'taoClientDiagnostic/tools/fixedDecimals',
+    'taoClientDiagnostic/tools/diagnostic/status',
     'lib/polyfill/performance-now'
-], function(_, async, context, stats, fixedDecimals) {
+], function(_, __, async, context, getConfig, stats, fixedDecimals, statusFactory) {
     'use strict';
 
     /**
@@ -45,6 +48,23 @@ define([
      * @private
      */
     var _second = 1000;
+
+
+    /**
+     * Default values for the bandwidth tester
+     * @type {Object}
+     * @private
+     */
+    var _defaults = {
+        // The typical bandwidth needed for a test taker (Mbps)
+        unit: 0.16,
+
+        // The thresholds for optimal bandwidth
+        ideal: 45,
+
+        // Maximum number of test takers to display
+        max: 100
+    };
 
     /**
      * List of descriptors defining the data sets to download.
@@ -153,15 +173,20 @@ define([
      *
      * @returns {Object}
      */
-    var bandwidthTester = function bandwidthTester (){
+    var bandwidthTester = function bandwidthTester (config, diagnosticTool) {
+        var initConfig = getConfig(config || {}, _defaults);
+
         return {
             /**
              * Performs a bandwidth test, then call a function to provide the result
              * @param {Function} done
              */
-            start : function start(done){
+            start : function start(done) {
                 var self = this;
                 var tests = [];
+
+                diagnosticTool.changeStatus(__('Checking the bandwidth...'));
+
                 _.forEach(_downloadData, function(data) {
                     var cb = _.bind(download, self, data);
                     var iterations = data.nb || 1;
@@ -178,6 +203,13 @@ define([
                     var decimals = 2;
                     var getValue;
                     var results;
+                    var summary;
+                    var status;
+                    var nb;
+                    var bandwidthUnit = initConfig.unit;
+                    var threshold = initConfig.ideal;
+                    var maxTestTakers = initConfig.max;
+                    var max = threshold * bandwidthUnit;
 
                     if (err && !measures.length) {
                         //something went wrong
@@ -203,7 +235,31 @@ define([
                     results.duration = fixedDecimals(duration / _second, decimals);
                     results.size = size;
 
-                    done(results.average, results);
+                    summary = {
+                        bandwidthMin: {message: __('Minimum bandwidth'), value: results.min + ' Mbps'},
+                        bandwidthMax: {message: __('Maximum bandwidth'), value: results.max + ' Mbps'},
+                        bandwidthAverage: {message: __('Average bandwidth'), value: results.average + ' Mbps'}
+                    };
+
+                    status = statusFactory().getStatus(results.max / max * 100, 'bandwidth');
+                    nb = Math.floor(results.max / bandwidthUnit);
+
+                    if (nb > maxTestTakers) {
+                        nb = '>' + maxTestTakers;
+                    }
+
+                    status.id = 'bandwidth';
+                    status.title = __('Bandwidth');
+                    status.feedback.legend = __('Number of simultaneous test takers the connection can handle');
+                    //diagnosticTool.add
+
+                    status.quality.label = nb;
+
+                    if (nb.toString().length > 2) {
+                        status.quality.wide = true;
+                    }
+
+                    done(status, summary, results);
                 });
             }
         };
