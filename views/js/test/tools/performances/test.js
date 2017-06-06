@@ -18,6 +18,10 @@
 define(['taoClientDiagnostic/tools/performances/tester'], function(performancesTester){
     'use strict';
 
+    var diagnosticTool = {
+        changeStatus : function changeStatus() {}
+    };
+
     QUnit.module('API');
 
     QUnit.test('The tester has the right form', function(assert){
@@ -33,7 +37,7 @@ define(['taoClientDiagnostic/tools/performances/tester'], function(performancesT
 
         QUnit.expect(10);
 
-        performancesTester().start(function(status, details, results) {
+        performancesTester({}, diagnosticTool).start(function(status, details, results) {
             var duration = results.average;
             var toString = {}.toString;
 

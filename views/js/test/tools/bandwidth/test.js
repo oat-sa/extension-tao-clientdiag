@@ -18,6 +18,10 @@
 define(['taoClientDiagnostic/tools/bandwidth/tester'], function(bandwidthTester){
     'use strict';
 
+    var diagnosticTool = {
+        changeStatus : function changeStatus() {}
+    };
+
     QUnit.module('API');
 
     QUnit.test('The tester has the right form', function(assert){
@@ -33,7 +37,7 @@ define(['taoClientDiagnostic/tools/bandwidth/tester'], function(bandwidthTester)
 
         QUnit.expect(13);
 
-        bandwidthTester().start(function(status, details, results){
+        bandwidthTester({}, diagnosticTool).start(function(status, details, results){
 
             var toString = {}.toString;
             var speed = results.average;

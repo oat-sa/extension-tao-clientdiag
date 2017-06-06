@@ -20,6 +20,10 @@ define(['jquery', 'lodash', 'taoClientDiagnostic/tools/upload/tester'], function
 
     // backup/restore ajax method between each test
     var ajaxBackup;
+    var diagnosticTool = {
+        changeStatus : function changeStatus() {}
+    };
+
     QUnit.testStart(function () {
         ajaxBackup = $.ajax;
     });
@@ -49,7 +53,7 @@ define(['jquery', 'lodash', 'taoClientDiagnostic/tools/upload/tester'], function
             return $ajax(config);
         };
 
-        uploadTester({size : expectedSize}).start(function(status, details, result) {
+        uploadTester({size : expectedSize}, diagnosticTool).start(function(status, details, result) {
             assert.ok(typeof result.avg === 'number', 'Speed is a number');
             assert.ok(result.avg > 0, 'Speed is a positive number');
             assert.ok(typeof result.avg === 'number', 'Loaded is a number');
