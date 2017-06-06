@@ -37,8 +37,6 @@ define(['taoClientDiagnostic/tools/performances/tester'], function(performancesT
 
             var toString = {}.toString;
 
-            console.log(duration, details);
-
             assert.ok(typeof duration === 'number', 'The result is a number');
             assert.ok(duration > 0, 'The result is a positive number');
             assert.ok(typeof details === 'object', 'The details are provided inside an object');
