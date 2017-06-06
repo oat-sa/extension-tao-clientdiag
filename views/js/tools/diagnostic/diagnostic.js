@@ -96,6 +96,16 @@ define([
         threshold: 0.25
     };
 
+
+    /**
+     * Placeholders for text replacement in custom messages
+     * @type {Object}
+     * @private
+     */
+    var _placeholders = {
+        CURRENT_BROWSER: '%CURRENT_BROWSER%'
+    };
+
     /**
      * Defines a diagnostic tool
      * @type {Object}
@@ -152,20 +162,25 @@ define([
                     function (data) {
                         var percentage = ('success' === data.type) ? 100 : (('warning' === data.type) ? 33 : 0);
                         var status = self.status.getStatus(percentage, data);
+                        var currentBrowser = information.browser + ' ' + information.browserVersion;
+                        var currentOs = information.os + ' ' + information.osVersion;
                         var summary = {
                             browser: {
                                 message: __('Web browser'),
-                                value: information.browser + ' ' + information.browserVersion
+                                value: currentBrowser
                             },
                             os: {
                                 message: __('Operating system'),
-                                value: information.os + ' ' + information.osVersion
+                                value: currentOs
                             }
                         };
+                        var customMsg = config.configurableText.diagBrowserCheckResult;
 
                         status.id = 'browser';
                         status.title = __('Operating system and web browser');
-                        status.customMsg = config.configurableText.diagBrowserCheckResult;
+                        if (self.hasFailed(status)) {
+                            status.customMsg = customMsg.replace(_placeholders.CURRENT_BROWSER, currentBrowser);
+                        }
 
                         self.addResult(status);
 
@@ -200,7 +215,9 @@ define([
                 self.store('performance', details, function () {
                     status.id = 'performance';
                     status.title = __('Workstation performances');
-                    status.customMsg = config.configurableText.diagPerformancesCheckResult;
+                    if (self.hasFailed(status)) {
+                        status.customMsg = config.configurableText.diagPerformancesCheckResult;
+                    }
 
                     self.addResult(status);
                     done(status, summary);
@@ -248,7 +265,10 @@ define([
                         st.id = 'bandwidth-' + i;
                         st.title = __('Bandwidth');
                         st.feedback.legend = __('Number of simultaneous test takers the connection can handle');
-                        st.customMsg = config.configurableText.diagBandwithCheckResult;
+
+                        if (self.hasFailed(st)) {
+                            st.customMsg = config.configurableText.diagBandwithCheckResult;
+                        }
 
                         st.quality.label = nb;
 
@@ -295,7 +315,7 @@ define([
                 status = self.status.getStatus((100 / optimal) * avgSpeed, 'upload');
                 summary = {
                     uploadAvg: {message: __('Average upload speed'), value: avgSpeed + ' Mbps'},
-                    uploadMax: {message: __('Max upload speed'), value: maxSpeed + ' Mbps'},
+                    uploadMax: {message: __('Max upload speed'), value: maxSpeed + ' Mbps'}
                 };
 
                 self.store('upload', {
@@ -305,13 +325,29 @@ define([
                 }, function () {
                     status.id = 'upload';
                     status.title = __('Upload speed');
-                    status.customMsg = config.configurableText.diagUploadCheckResult;
+
+                    if (self.hasFailed(status)) {
+                        status.customMsg = config.configurableText.diagUploadCheckResult;
+                    }
 
                     self.addResult(status);
 
                     done(status, summary);
                 });
             });
+        },
+
+        /**
+         * Check if a result is considered as failed
+         * @param {Object} result
+         * @returns {boolean}
+         */
+        hasFailed: function hasFailed(result) {
+            return !(
+                   result
+                && result.feedback
+                && result.feedback.type === "success"
+            );
         },
 
         /**
