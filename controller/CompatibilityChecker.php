@@ -23,7 +23,7 @@ namespace oat\taoClientDiagnostic\controller;
 use oat\tao\model\mvc\DefaultUrlService;
 use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
-use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
+use oat\taoClientDiagnostic\model\CompatibilityCheckerService;
 use oat\taoClientDiagnostic\model\storage\Storage;
 use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
 use oat\taoClientDiagnostic\model\browserDetector\OSService;
@@ -82,18 +82,46 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     }
 
     /**
-     * Check if requester is compatible (os+browser)
+     * Check if requester os is compatible
      * Register compatibility
      * return json message
      */
+    public function checkOS()
+    {
+        $this->isCompatible(CompatibilityCheckerService::CHECK_OS);
+    }
+
+    /**
+     * Check if requester browser is compatible
+     * return json message
+     */
+    public function checkBrowser()
+    {
+        $this->isCompatible(CompatibilityCheckerService::CHECK_BROWSER);
+    }
+
+    /**
+     * Check if requester is compatible (os+browser)
+     * return json message
+     */
     public function check()
+    {
+        $this->isCompatible(CompatibilityCheckerService::CHECK_BROWSER | CompatibilityCheckerService::CHECK_OS);
+    }
+
+    /**
+     * Check if requester is compatible
+     * @param int $check
+     * return json message
+     */
+    protected function isCompatible($check = 3)
     {
         try {
             $data = $this->getData(true);
             $id   = $this->getId();
 
-            $checker            = new CompatibilityCheckerModel($data);
-            $isCompatible       = (int)$checker->isCompatibleConfig();
+            $checker            = $this->getServiceManager()->get(CompatibilityCheckerService::SERVICE_ID);
+            $isCompatible       = (int)$checker->isCompatibleConfig($check);
             $data['compatible'] = $isCompatible;
 
             try {

@@ -35,6 +35,7 @@ use oat\taoClientDiagnostic\model\storage\PaginatedSqlStorage;
 use oat\taoClientDiagnostic\model\storage\PaginatedStorage;
 use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\taoClientDiagnostic\model\storage\Storage;
+use oat\taoClientDiagnostic\model\CompatibilityCheckerService;
 
 class Updater extends \common_ext_ExtensionUpdater
 {
@@ -461,6 +462,22 @@ class Updater extends \common_ext_ExtensionUpdater
             }
 
             $this->setVersion('2.2.0');
+        }
+
+        if ($this->isVersion('2.2.0')) {
+            $compatibilityCheckerService = new CompatibilityCheckerService([
+                CompatibilityCheckerService::OPTION_COMPATIBILITY_FILE => __DIR__ . '/../../include/compatibility.json'
+            ]);
+            $this->getServiceManager()->register(CompatibilityCheckerService::SERVICE_ID, $compatibilityCheckerService);
+
+            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+            $config['testers']['os'] = [
+                'tester' => 'taoClientDiagnostic/tools/os/tester',
+            ];
+
+            $extension->setConfig('clientDiag', $config);
+            $this->setVersion('2.3.0');
         }
     }
 }

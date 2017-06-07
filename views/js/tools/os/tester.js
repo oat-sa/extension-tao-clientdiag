@@ -36,7 +36,7 @@ define([
         browserVersionAction: 'whichBrowser',
         browserVersionController: 'CompatibilityChecker',
         browserVersionExtension: 'taoClientDiagnostic',
-        action: 'checkBrowser',
+        action: 'checkOs',
         controller: 'DiagnosticChecker'
     };
 
@@ -76,7 +76,7 @@ define([
                     initConfig.browserVersionExtension
                 );
 
-                diagnosticTool.changeStatus(__('Checking the browser...'));
+                diagnosticTool.changeStatus(__('Checking the operating system...'));
                 $.ajax({
                     url : testerUrl,
                     success : function(browserInfo) {
@@ -88,14 +88,14 @@ define([
                                 var percentage = ('success' === data.type) ? 100 : (('warning' === data.type) ? 33 : 0);
                                 var status = statusFactory().getStatus(percentage, data);
                                 var summary = {
-                                    browser: {
-                                        message: __('Web browser'),
-                                        value: browserInfo.browser + ' ' + browserInfo.browserVersion
+                                    os: {
+                                        message: __('Operating system'),
+                                        value: browserInfo.os + ' ' + browserInfo.osVersion
                                     }
                                 };
 
                                 status.id = 'browser';
-                                status.title = __('Web browser');
+                                status.title = __('Operating system');
 
                                 done(status, summary, browserInfo);
                             },
