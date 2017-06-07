@@ -440,5 +440,27 @@ class Updater extends \common_ext_ExtensionUpdater
             $extension->setConfig('clientDiag', $newConfig);
             $this->setVersion('2.1.0');
         }
+
+		if ($this->isVersion('2.1.0')) {
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+
+            if ($storageService instanceof Sql) {
+                $persistence = $storageService->getPersistence();
+
+                $schemaManager = $persistence->getDriver()->getSchemaManager();
+                $schema = $schemaManager->createSchema();
+
+                /* create temp column && Nullable os,browser version */
+                $addTempSchema = clone $schema;
+                $tableResults = $addTempSchema->getTable(Sql::DIAGNOSTIC_TABLE);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_USER_ID, 'string', ['length' => 255, 'notnull' => false]);
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql($schema, $addTempSchema);
+                foreach ($queries as $query) {
+                    $persistence->exec($query);
+                }
+            }
+
+            $this->setVersion('2.2.0');
+        }
     }
 }

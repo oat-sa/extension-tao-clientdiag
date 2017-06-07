@@ -47,6 +47,7 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             $tableResults->addColumn(Sql::DIAGNOSTIC_ID, 'string', ['length' => 16]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_CONTEXT_ID, 'string', ['length' => 256, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_LOGIN, 'string', ['length' => 32]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_USER_ID, 'string', ['length' => 255, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_IP, 'string', ['length' => 32]);
             $tableResults->addColumn(PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION, 'string', ['length' => 64, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_BROWSER, 'string', ['length' => 32,'notnull' => false]);
@@ -76,6 +77,9 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             $tableResults->addColumn(Sql::DIAGNOSTIC_UPLOAD_AVG, 'float', ['notnull' => false]);
 
             $tableResults->setPrimaryKey(array(Sql::DIAGNOSTIC_ID));
+
+            $tableResults->addIndex([Sql::DIAGNOSTIC_CONTEXT_ID], 'ind_context_id');
+            $tableResults->addIndex([Sql::DIAGNOSTIC_USER_ID], 'ind_user_id');
 
             $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
             foreach ($queries as $query) {
