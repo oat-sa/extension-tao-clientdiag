@@ -339,9 +339,6 @@ define([
                 };
 
                 // start the diagnostic
-                if(config.autoStart){
-                    self.run();
-                }
                 this.controls.$start.on('click', function () {
                     self.run();
                 });
