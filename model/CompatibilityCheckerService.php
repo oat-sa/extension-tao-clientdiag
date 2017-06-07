@@ -30,6 +30,8 @@ class CompatibilityCheckerService extends ConfigurableService
 
     const SERVICE_ID = 'taoClientDiagnostic/CompatibilityCheckerService';
 
+    const OPTION_COMPATIBILITY_FILE = 'compatibility_file';
+
     const CHECK_BROWSER = 1;
     const CHECK_OS = 2;
 
@@ -42,8 +44,9 @@ class CompatibilityCheckerService extends ConfigurableService
      * @throws \common_exception_MissingParameter
      * @throws \tao_models_classes_FileNotFoundException
      */
-    function __construct()
+    function __construct($options = [])
     {
+        parent::__construct($options);
         $osService = OSService::singleton();
         $browserService = WebBrowserService::singleton();
 
@@ -52,7 +55,7 @@ class CompatibilityCheckerService extends ConfigurableService
         $this->os             = $osService->getClientName();
         $this->osVersion      = $osService->getClientVersion();
 
-        $compatibilityFile = __DIR__ . '/../include/compatibility.json';
+        $compatibilityFile = $this->getOption(self::OPTION_COMPATIBILITY_FILE);
 
         if (!file_exists($compatibilityFile)) {
             throw new \tao_models_classes_FileNotFoundException("Unable to find the compatibility file");
@@ -86,7 +89,6 @@ class CompatibilityCheckerService extends ConfigurableService
             if ($check === self::CHECK_OS && $validOs && $rule->compatible) {
                 return 1;
             }
-
 
             //browser validation
             if ($rule->browser == $this->browser && empty($rule->versions)) {

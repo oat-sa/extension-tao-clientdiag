@@ -465,7 +465,9 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         if ($this->isVersion('2.2.0')) {
-            $compatibilityCheckerService = new CompatibilityCheckerService([]);
+            $compatibilityCheckerService = new CompatibilityCheckerService([
+                CompatibilityCheckerService::OPTION_COMPATIBILITY_FILE => __DIR__ . '/../../include/compatibility.json'
+            ]);
             $this->getServiceManager()->register(CompatibilityCheckerService::SERVICE_ID, $compatibilityCheckerService);
 
             $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
