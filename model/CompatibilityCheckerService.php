@@ -23,12 +23,17 @@ namespace oat\taoClientDiagnostic\model;
 
 use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
 use oat\taoClientDiagnostic\model\browserDetector\OSService;
+use oat\oatbox\service\ConfigurableService;
 
-
-class CompatibilityChecker
+class CompatibilityCheckerService extends ConfigurableService
 {
 
-    private $os, $osVersion, $browser, $browserVersion, $compatibility;
+    const SERVICE_ID = 'taoClientDiagnostic/CompatibilityCheckerService';
+
+    const CHECK_BROWSER = 1;
+    const CHECK_OS = 2;
+
+    protected $os, $osVersion, $browser, $browserVersion, $compatibility;
 
     /**
      * CompatibilityChecker constructor
@@ -63,43 +68,64 @@ class CompatibilityChecker
      *  - return 2 if not tested
      * @return int
      */
-    public function isCompatibleConfig()
+    public function isCompatibleConfig($check = 3)
     {
         $browserVersion = explode('.', $this->browserVersion);
+        $rules = array_filter($this->compatibility, function ($val) {
+            return $val->os === $this->os;
+        });
 
-        $osVersion = explode('.', $this->osVersion);
-        foreach ($this->compatibility as $rule) {
-            //os name
-            if ($rule->os === $this->os) {
-                //os Version
-                $validOs = true;
-                if ($rule->osVersion !== "") {
-                    foreach (explode('.', $rule->osVersion) as $key => $version) {
-                        if (!isset($osVersion[$key]) || $osVersion[$key] !== $version) {
-                            $validOs = false;
-                        }
-                    }
-                }
+        foreach ($rules as $rule) {
+            $validOs = true;
+            $validBrowser = false;
 
-                //browser validation
-                if (empty($rule->versions)) {
-                    // all versions work
-                    $isValid = true;
-                } else {
-                    // it is valid if the version is in the array
-                    // OR if the browser is chrome or firefox and it is a newer version than those in the array
-                    $isValid = in_array($browserVersion[0], $rule->versions)
-                        || (in_array($rule->browser,
-                                array('Chrome', 'Firefox')) && $browserVersion[0] > max($rule->versions));
-                }
+            if ($rule->osVersion !== "") {
+                $validOs = $this->versionCompare($this->osVersion, $rule->osVersion) === 0;
+            }
 
-                if ($validOs && ($rule->browser === ""
-                        || $rule->browser === $this->browser && $isValid)
-                ) {
-                    return $rule->compatible;
-                }
+            if ($check === self::CHECK_OS && $validOs && $rule->compatible) {
+                return 1;
+            }
+
+
+            //browser validation
+            if ($rule->browser == $this->browser && empty($rule->versions)) {
+                // all versions work
+                $validBrowser = true;
+            } elseif($rule->browser == $this->browser) {
+                // it is valid if the version is in the array
+                // OR if the browser is chrome or firefox and it is a newer version than those in the array
+                $validBrowser = in_array($browserVersion[0], $rule->versions)
+                    || (in_array($rule->browser, ['Chrome', 'Firefox']) && $browserVersion[0] > max($rule->versions));
+            } else {
+                $validBrowser = false;
+            }
+
+            if ($validOs && $validBrowser) {
+                return $rule->compatible;
             }
         }
+
         return 2;
+    }
+
+    /**
+     * Standard version_compare threats that  5.2 < 5.2.0, 5.2 < 5.2.1, ...
+     *
+     * @param $ver1
+     * @param $ver2
+     * @param null|string @see http://php.net/manual/en/function.version-compare.php
+     * @return mixed
+     */
+    public function versionCompare($ver1, $ver2, $operator = null)
+    {
+        $ver1 = preg_replace('#(\.0+)+($|-)#', '', $ver1);
+        $ver2 = preg_replace('#(\.0+)+($|-)#', '', $ver2);
+        if ($operator === null) {
+            $result = version_compare($ver1, $ver2);
+        } else {
+            $result = version_compare($ver1, $ver2, $operator);
+        }
+        return $result;
     }
 }
