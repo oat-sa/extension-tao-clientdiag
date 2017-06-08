@@ -33,6 +33,6 @@ class DiagnosticService extends ConfigurableService implements DiagnosticService
      */
     public function getTesters()
     {
-        return \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
+        return $this->getServiceManager()->get('taoClientDiagnostic/clientDiag')->getConfig();
     }
 }
