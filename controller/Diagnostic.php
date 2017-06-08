@@ -26,7 +26,7 @@ use oat\tao\model\theme\ThemeService;
 use oat\taoClientDiagnostic\model\diagnostic\Paginator;
 use DateTime;
 use common_session_SessionManager as SessionManager;
-
+use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticDataTable;
 
 /**
@@ -190,7 +190,9 @@ class Diagnostic extends \tao_actions_CommonModule
      */
     protected function loadConfig()
     {
-        return \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
+        /** @var DiagnosticServiceInterface $service */
+        $service = $this->getServiceManager()->get(DiagnosticServiceInterface::SERVICE_ID);
+        return $service->getTesters();
     }
 
     /**
