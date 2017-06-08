@@ -35,6 +35,7 @@ use oat\taoClientDiagnostic\model\storage\PaginatedSqlStorage;
 use oat\taoClientDiagnostic\model\storage\PaginatedStorage;
 use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\taoClientDiagnostic\model\storage\Storage;
+use oat\taoClientDiagnostic\model\diagnostic\DiagnosticService;
 
 class Updater extends \common_ext_ExtensionUpdater
 {
@@ -464,5 +465,10 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('2.2.0', '2.3.0');
+
+        if ($this->isVersion('2.3.0')) {
+            $this->getServiceManager()->register(DiagnosticService::SERVICE_ID, new DiagnosticService());
+            $this->setVersion('2.4.0');
+        }
     }
 }
