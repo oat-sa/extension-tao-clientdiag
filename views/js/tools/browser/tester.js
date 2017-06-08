@@ -124,19 +124,23 @@ define([
                             function (data) {
                                 var percentage = ('success' === data.type) ? 100 : (('warning' === data.type) ? 33 : 0);
                                 var status = statusFactory().getStatus(percentage, data);
+                                var currentBrowser = browserInfo.browser + ' ' + browserInfo.browserVersion;
+                                var currentOs = browserInfo.os + ' ' + browserInfo.osVersion;
                                 var summary = {
                                     browser: {
                                         message: __('Web browser'),
-                                        value: browserInfo.browser + ' ' + browserInfo.browserVersion
+                                        value: currentBrowser
                                     },
                                     os: {
                                         message: __('Operating system'),
-                                        value: browserInfo.os + ' ' + browserInfo.osVersion
+                                        value: currentOs
                                     }
                                 };
+                                var customMsg = diagnosticTool.getCustomMsg('diagBrowserCheckResult') || '';
 
                                 status.id = 'browser';
                                 status.title = __('Operating system and web browser');
+                                diagnosticTool.addCustomFeedbackMsg(status, customMsg.replace('%CURRENT_BROWSER%', currentBrowser));
 
                                 done(status, summary, browserInfo);
                             },

@@ -251,6 +251,7 @@ define([
                     status.id = 'bandwidth';
                     status.title = __('Bandwidth');
                     status.feedback.legend = __('Number of simultaneous test takers the connection can handle');
+                    diagnosticTool.addCustomFeedbackMsg(status, diagnosticTool.getCustomMsg('diagBandwithCheckResult'));
 
                     status.quality.label = nb;
 
