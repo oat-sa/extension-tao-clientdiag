@@ -21,6 +21,18 @@
  * Default client diag config
  */
 return array(
+
+    /**
+     * Diagnostic will be run on the page load
+     */
+    'autoStart' => false,
+
+    /**
+     * The results of all diagnostic runs will be saved
+     * (learners and students will see only their runs, teachers and administrators will see all possible runs)
+     */
+    'storeAllRuns' => false,
+
     /**
      * Custom text for diagnostic header
      * @string
@@ -32,83 +44,90 @@ return array(
      * @type string
      */
     'footer' => '',
-
-    /**
-     * Performances check config
-     * @type array
-     */
-    'performances' => array(
+    'testers' => [
         /**
-         * A list of samples to render in order to compute the rendering performances
+         * Performances check config
          * @type array
          */
-        'samples' => array(
-            'taoClientDiagnostic/tools/performances/data/sample1/',
-            'taoClientDiagnostic/tools/performances/data/sample2/',
-            'taoClientDiagnostic/tools/performances/data/sample3/'
+        'performance' => array(
+            'tester' => 'taoClientDiagnostic/tools/performances/tester',
+            /**
+             * A list of samples to render in order to compute the rendering performances
+             * @type array
+             */
+            'samples' => array(
+                'taoClientDiagnostic/tools/performances/data/sample1/',
+                'taoClientDiagnostic/tools/performances/data/sample2/',
+                'taoClientDiagnostic/tools/performances/data/sample3/'
+            ),
+
+            /**
+             * The number of renderings by samples
+             * @type int
+             */
+            'occurrences' => 10,
+
+            /**
+             * Max allowed duration for a sample rendering
+             * @type int
+             */
+            'timeout' => 30,
+
+            /**
+             * The threshold for optimal performances
+             * @type float
+             */
+            'optimal' => 0.025,
+
+            /**
+             * The threshold for minimal performances
+             * @type float
+             */
+            'threshold' => 0.25,
         ),
 
         /**
-         * The number of renderings by samples
-         * @type int
+         * Bandwidth check config
+         * @type array
          */
-        'occurrences' => 10,
+        'bandwidth' => array(
+            'tester' => 'taoClientDiagnostic/tools/bandwidth/tester',
+            /**
+             * The typical bandwidth needed for a test taker (Mbps)
+             * @type float
+             */
+            'unit' => 0.16,
+
+            /**
+             * The ideal number of simultaneous test takers
+             * @type int
+             */
+            'ideal' => 45,
+
+            /**
+             * Maximum number of test takers to display on a bar
+             * @type int
+             */
+            'max' => 100,
+        ),
 
         /**
-         * Max allowed duration for a sample rendering
-         * @type int
+         * Upload speed test config
          */
-        'timeout' => 30,
+        'upload' => array(
+            'tester' => 'taoClientDiagnostic/tools/upload/tester',
+            /**
+             * Size of data to sent to server during speed test in bytes
+             */
+            'size' => 1 * 1024 * 1024,
 
-        /**
-         * The threshold for optimal performances
-         * @type float
-         */
-        'optimal' => 0.025,
-
-        /**
-         * The threshold for minimal performances
-         * @type float
-         */
-        'threshold' => 0.25,
-    ),
-
-    /**
-     * Bandwidth check config
-     * @type array
-     */
-    'bandwidth' => array(
-        /**
-         * The typical bandwidth needed for a test taker (Mbps)
-         * @type float
-         */
-        'unit' => 0.16,
-
-        /**
-         * The ideal number of simultaneous test takers
-         * @type int
-         */
-        'ideal' => 45,
-
-        /**
-         * Maximum number of test takers to display on a bar
-         * @type int
-         */
-        'max' => 100,
-    ),
-
-    /**
-     * Upload speed test config
-     */
-    'upload' => array(
-        /**
-         * Size of data to sent to server during speed test in bytes
-         */
-        'size' => 1 * 1024 * 1024,
-
-        /**
-         * Optimal speed in bytes per second
-         */
-        'optimal' => 1 * 1024 * 1024,
-    )
+            /**
+             * Optimal speed in bytes per second
+             */
+            'optimal' => 1 * 1024 * 1024,
+        ),
+        'browser' => [
+            'tester' => 'taoClientDiagnostic/tools/browser/tester',
+        ],
+    ]
 );

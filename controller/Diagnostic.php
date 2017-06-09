@@ -22,10 +22,11 @@ namespace oat\taoClientDiagnostic\controller;
 
 use oat\generis\model\OntologyAwareTrait;
 use oat\oatbox\service\ServiceNotFoundException;
+use oat\tao\model\theme\ThemeService;
 use oat\taoClientDiagnostic\model\diagnostic\Paginator;
 use DateTime;
 use common_session_SessionManager as SessionManager;
-
+use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticDataTable;
 
 /**
@@ -86,6 +87,19 @@ class Diagnostic extends \tao_actions_CommonModule
         $this->setData('cls', 'diagnostic-runner');
         $this->setData('data', $data);
         $this->setData('content-template', 'pages/index.tpl');
+
+        $themeService = $this->getServiceManager()->get(ThemeService::SERVICE_ID);
+        $theme = $themeService->getTheme();
+        $configurableText = $theme->getTextFromArray([
+            'diagInstructions',
+            'diagBrowserCheckResult',
+            'diagPerformancesCheckResult',
+            'diagBandwithCheckResult',
+            'diagUploadCheckResult',
+            'diagTotalCheckResult'
+        ]);
+        $this->setData('configurableText', json_encode($configurableText));
+
         $this->setView('layout.tpl');
     }
 
@@ -176,7 +190,9 @@ class Diagnostic extends \tao_actions_CommonModule
      */
     protected function loadConfig()
     {
-        return \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
+        /** @var DiagnosticServiceInterface $service */
+        $service = $this->getServiceManager()->get(DiagnosticServiceInterface::SERVICE_ID);
+        return $service->getTesters();
     }
 
     /**

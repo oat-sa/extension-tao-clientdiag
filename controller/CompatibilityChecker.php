@@ -24,9 +24,11 @@ use oat\tao\model\mvc\DefaultUrlService;
 use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
+use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
 use oat\taoClientDiagnostic\model\storage\Storage;
 use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
 use oat\taoClientDiagnostic\model\browserDetector\OSService;
+use qtism\runtime\tests\SessionManager;
 
 /**
  * Class CompatibilityChecker
@@ -221,6 +223,11 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $data['login'] = 'Anonymous';
         }
 
+        $user = \common_session_SessionManager::getSession()->getUser();
+        if ($user && $user->getIdentifier()) {
+            $data['user_id'] = $user->getIdentifier();
+        }
+
         $data['version'] = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getVersion();
 
         $data['ip'] = (!empty($_SERVER['HTTP_X_REAL_IP'])) ? $_SERVER['HTTP_X_REAL_IP'] : ((!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : 'unknown');
@@ -253,6 +260,15 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     }
 
     /**
+     * Delete cookie id
+     */
+    public function deleteId()
+    {
+        setcookie(self::COOKIE_ID, null);
+        $this->returnJson(array('success' => true, 'type' => 'success'));
+    }
+
+    /**
      * Get config parameters for compatibility check
      *
      * @return mixed
@@ -260,7 +276,9 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     protected function loadConfig()
     {
-        $config =  \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
+        /** @var DiagnosticServiceInterface $service */
+        $service = $this->getServiceManager()->get(DiagnosticServiceInterface::SERVICE_ID);
+        $config = $service->getTesters();
         $config['controller'] = 'CompatibilityChecker';
         return $config;
     }

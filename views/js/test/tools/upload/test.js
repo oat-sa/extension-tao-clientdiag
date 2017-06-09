@@ -20,6 +20,10 @@ define(['jquery', 'lodash', 'taoClientDiagnostic/tools/upload/tester'], function
 
     // backup/restore ajax method between each test
     var ajaxBackup;
+    var diagnosticTool = {
+        changeStatus : function changeStatus() {}
+    };
+
     QUnit.testStart(function () {
         ajaxBackup = $.ajax;
     });
@@ -42,22 +46,18 @@ define(['jquery', 'lodash', 'taoClientDiagnostic/tools/upload/tester'], function
         var expectedSize = 100;
         var $ajax = $.ajax;
 
-        QUnit.expect(7);
+        QUnit.expect(4);
 
         $.ajax = function (config) {
             config.url = window.location.href.replace('test.html', 'test.json');
             return $ajax(config);
         };
 
-        uploadTester({size : expectedSize}).start(function(result) {
-
-            assert.ok(result.length > 0, 'Result array is not empty');
-            assert.ok(typeof result[0].speed === 'number', 'Speed is a number');
-            assert.ok(result[0].speed > 0, 'Speed is a positive number');
-            assert.ok(typeof result[0].loaded === 'number', 'Loaded is a number');
-            assert.ok(result[0].loaded > 0, 'Loaded is a positive number');
-            assert.ok(typeof result[0].time === 'number', 'Time is a number');
-            assert.ok(result[0].time > 0, 'Time is a positive number');
+        uploadTester({size : expectedSize}, diagnosticTool).start(function(status, details, result) {
+            assert.ok(typeof result.avg === 'number', 'Speed is a number');
+            assert.ok(result.avg > 0, 'Speed is a positive number');
+            assert.ok(typeof result.avg === 'number', 'Loaded is a number');
+            assert.ok(result.avg > 0, 'Loaded is a positive number');
 
             QUnit.start();
         });

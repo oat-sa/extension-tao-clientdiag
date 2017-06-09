@@ -35,6 +35,7 @@ use oat\taoClientDiagnostic\model\storage\PaginatedSqlStorage;
 use oat\taoClientDiagnostic\model\storage\PaginatedStorage;
 use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\taoClientDiagnostic\model\storage\Storage;
+use oat\taoClientDiagnostic\model\diagnostic\DiagnosticService;
 
 class Updater extends \common_ext_ExtensionUpdater
 {
@@ -407,5 +408,69 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('1.15.0', '2.0.1');
+
+        if ($this->isVersion('2.0.1')) {
+            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+            $newConfig = [
+                'diagHeader' => $config['diagHeader'],
+                'footer' => $config['footer'],
+                'testers' => [],
+            ];
+
+            if (isset($config['performances'])) {
+                $performance = $config['performances'];
+                $performance['tester'] = 'taoClientDiagnostic/tools/performances/tester';
+                $newConfig['testers']['performance'] = $performance;
+            }
+            if (isset($config['bandwidth'])) {
+                $bandwidth = $config['bandwidth'];
+                $bandwidth['tester'] = 'taoClientDiagnostic/tools/bandwidth/tester';
+                $newConfig['testers']['bandwidth'] = $bandwidth;
+            }
+            if (isset($config['upload'])) {
+                $upload = $config['upload'];
+                $upload['tester'] = 'taoClientDiagnostic/tools/upload/tester';
+                $newConfig['testers']['upload'] = $upload;
+            }
+
+            $newConfig['testers']['browser'] = [
+                'tester' => 'taoClientDiagnostic/tools/browser/tester',
+            ];
+
+            $extension->setConfig('clientDiag', $newConfig);
+            $this->setVersion('2.1.0');
+        }
+
+		if ($this->isVersion('2.1.0')) {
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+
+            if ($storageService instanceof Sql) {
+                $persistence = $storageService->getPersistence();
+
+                $schemaManager = $persistence->getDriver()->getSchemaManager();
+                $schema = $schemaManager->createSchema();
+
+                /* create temp column && Nullable os,browser version */
+                $addTempSchema = clone $schema;
+                $tableResults = $addTempSchema->getTable(Sql::DIAGNOSTIC_TABLE);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_USER_ID, 'string', ['length' => 255, 'notnull' => false]);
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql($schema, $addTempSchema);
+                foreach ($queries as $query) {
+                    $persistence->exec($query);
+                }
+            }
+
+            $this->setVersion('2.2.0');
+        }
+
+        $this->skip('2.2.0', '2.3.0');
+
+        if ($this->isVersion('2.3.0')) {
+            $this->getServiceManager()->register(DiagnosticService::SERVICE_ID, new DiagnosticService());
+            $this->setVersion('2.4.0');
+        }
+
+        $this->skip('2.4.0', '2.4.1');
     }
 }
