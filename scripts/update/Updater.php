@@ -470,5 +470,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->getServiceManager()->register(DiagnosticService::SERVICE_ID, new DiagnosticService());
             $this->setVersion('2.4.0');
         }
+
+        $this->skip('2.4.0', '2.4.1');
     }
 }

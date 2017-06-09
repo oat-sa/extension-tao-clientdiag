@@ -24,6 +24,7 @@ use oat\tao\model\mvc\DefaultUrlService;
 use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
+use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
 use oat\taoClientDiagnostic\model\storage\Storage;
 use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
 use oat\taoClientDiagnostic\model\browserDetector\OSService;
@@ -275,7 +276,9 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     protected function loadConfig()
     {
-        $config =  \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConfig('clientDiag');
+        /** @var DiagnosticServiceInterface $service */
+        $service = $this->getServiceManager()->get(DiagnosticServiceInterface::SERVICE_ID);
+        $config = $service->getTesters();
         $config['controller'] = 'CompatibilityChecker';
         return $config;
     }

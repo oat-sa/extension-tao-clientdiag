@@ -72,7 +72,7 @@ define([
             var removeUrl = helpers._url('remove', 'Diagnostic', extension);
             var serviceUrl = helpers._url('diagnosticData', 'Diagnostic', extension);
 
-            var performancesConfig = config.performances || {};
+            var performancesConfig = config.testers.performance || {};
             var performancesOptimal = performancesConfig.optimal;
             var performancesRange = Math.abs(performancesOptimal - (performancesConfig.threshold));
 
