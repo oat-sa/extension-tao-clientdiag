@@ -92,7 +92,9 @@ class Diagnostic extends \tao_actions_CommonModule
         $theme = $themeService->getTheme();
         $configurableText = $theme->getTextFromArray([
             'diagInstructions',
+            'diagBrowserOsCheckResult',
             'diagBrowserCheckResult',
+            'diagOsCheckResult',
             'diagPerformancesCheckResult',
             'diagBandwithCheckResult',
             'diagUploadCheckResult',

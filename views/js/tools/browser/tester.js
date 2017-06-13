@@ -41,6 +41,16 @@ define([
     };
 
     /**
+     * Placeholder variables for custom messages
+     * @type {Object}
+     * @private
+     */
+    var _placeHolders = {
+        CURRENT_BROWSER: '%CURRENT_BROWSER%',
+        CURRENT_OS: '%CURRENT_OS%'
+    };
+
+    /**
      * Gets the URL of the browser tester
      * @param {Window} window - Need an access to the window object
      * @param {String} action - The name of the action to call to get the browser checker
@@ -140,7 +150,11 @@ define([
 
                                 status.id = 'browser';
                                 status.title = __('Operating system and web browser');
-                                diagnosticTool.addCustomFeedbackMsg(status, customMsg.replace('%CURRENT_BROWSER%', currentBrowser));
+
+                                customMsg = customMsg
+                                    .replace(_placeHolders.CURRENT_BROWSER, currentBrowser)
+                                    .replace(_placeHolders.CURRENT_OS, currentOs);
+                                diagnosticTool.addCustomFeedbackMsg(status, customMsg);
 
                                 done(status, summary, browserInfo);
                             },
