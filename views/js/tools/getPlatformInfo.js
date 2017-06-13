@@ -28,6 +28,17 @@ define([
     'use strict';
 
     /**
+     * Some default values
+     * @type {Object}
+     * @private
+     */
+    var defaultConfig = {
+        browserVersionAction: 'whichBrowser',
+        browserVersionController: 'CompatibilityChecker',
+        browserVersionExtension: 'taoClientDiagnostic'
+    };
+
+    /**
      * Gets the URL of the platform tester
      * @returns {String}
      */
@@ -74,17 +85,22 @@ define([
     /**
      * Check the user browser and os
      * @param {Window} window - Need an access to the window object
-     * @param {String} action - The name of the action to call to get the browser checker
-     * @param {String} controller - The name of the controller to call to get the browser checker
-     * @param {String} extension - The name of the extension containing the controller to call to get the browser checker
+     * @param {Object} config
+     * @param {String} config.browserVersionAction - The name of the action to call to get the browser checker
+     * @param {String} config.browserVersionController - The name of the controller to call to get the browser checker
+     * @param {String} config.browserVersionExtension - The name of the extension containing the controller to call to get the browser checker
      * @returns {Promise}
      */
-    return function getPlatformInfo(window, action, controller, extension) {
-        var testerUrl = getTesterUrl(
+    return function getPlatformInfo(window, config) {
+        var testerUrl;
+
+        config = _.defaults((config || {}), defaultConfig);
+
+        testerUrl = getTesterUrl(
             window,
-            action,
-            controller,
-            extension
+            config.browserVersionAction,
+            config.browserVersionController,
+            config.browserVersionExtension
         );
 
         return new Promise(function (resolve, reject) {

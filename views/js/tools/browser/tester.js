@@ -71,46 +71,42 @@ define([
             start: function start(done) {
                 diagnosticTool.changeStatus(__('Checking the browser...'));
 
-                getPlatformInfo(
-                    window,
-                    initConfig.browserVersionAction,
-                    initConfig.browserVersionController,
-                    initConfig.browserVersionExtension
-                ).then(function(platformInfo) {
-                    // which browser
-                    $.post(
-                        url.route(initConfig.action, initConfig.controller, initConfig.extension),
-                        platformInfo,
-                        function (data) {
-                            var percentage = ('success' === data.type) ? 100 : (('warning' === data.type) ? 33 : 0);
-                            var status = statusFactory().getStatus(percentage, data);
-                            var currentBrowser = platformInfo.browser + ' ' + platformInfo.browserVersion;
-                            var currentOs = platformInfo.os + ' ' + platformInfo.osVersion;
-                            var summary = {
-                                browser: {
-                                    message: __('Web browser'),
-                                    value: currentBrowser
-                                },
-                                os: {
-                                    message: __('Operating system'),
-                                    value: currentOs
-                                }
-                            };
-                            var customMsg = diagnosticTool.getCustomMsg('diagBrowserCheckResult') || '';
+                getPlatformInfo(window, initConfig)
+                    .then(function(platformInfo) {
+                        // which browser
+                        $.post(
+                            url.route(initConfig.action, initConfig.controller, initConfig.extension),
+                            platformInfo,
+                            function (data) {
+                                var percentage = ('success' === data.type) ? 100 : (('warning' === data.type) ? 33 : 0);
+                                var status = statusFactory().getStatus(percentage, data);
+                                var currentBrowser = platformInfo.browser + ' ' + platformInfo.browserVersion;
+                                var currentOs = platformInfo.os + ' ' + platformInfo.osVersion;
+                                var summary = {
+                                    browser: {
+                                        message: __('Web browser'),
+                                        value: currentBrowser
+                                    },
+                                    os: {
+                                        message: __('Operating system'),
+                                        value: currentOs
+                                    }
+                                };
+                                var customMsg = diagnosticTool.getCustomMsg('diagBrowserCheckResult') || '';
 
-                            status.id = 'browser';
-                            status.title = __('Operating system and web browser');
+                                status.id = 'browser';
+                                status.title = __('Operating system and web browser');
 
-                            customMsg = customMsg
-                                .replace(_placeHolders.CURRENT_BROWSER, currentBrowser)
-                                .replace(_placeHolders.CURRENT_OS, currentOs);
-                            diagnosticTool.addCustomFeedbackMsg(status, customMsg);
+                                customMsg = customMsg
+                                    .replace(_placeHolders.CURRENT_BROWSER, currentBrowser)
+                                    .replace(_placeHolders.CURRENT_OS, currentOs);
+                                diagnosticTool.addCustomFeedbackMsg(status, customMsg);
 
-                            done(status, summary, platformInfo);
-                        },
-                        'json'
-                    );
-                });
+                                done(status, summary, platformInfo);
+                            },
+                            'json'
+                        );
+                    });
             }
         };
     }
