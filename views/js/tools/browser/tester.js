@@ -92,7 +92,7 @@ define([
                                         value: currentOs
                                     }
                                 };
-                                var customMsg = diagnosticTool.getCustomMsg('diagBrowserCheckResult') || '';
+                                var customMsg = diagnosticTool.getCustomMsg('diagBrowserOsCheckResult') || '';
 
                                 status.id = 'browser';
                                 status.title = __('Operating system and web browser');
