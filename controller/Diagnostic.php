@@ -90,16 +90,7 @@ class Diagnostic extends \tao_actions_CommonModule
 
         $themeService = $this->getServiceManager()->get(ThemeService::SERVICE_ID);
         $theme = $themeService->getTheme();
-        $configurableText = $theme->getTextFromArray([
-            'diagInstructions',
-            'diagBrowserOsCheckResult',
-            'diagBrowserCheckResult',
-            'diagOsCheckResult',
-            'diagPerformancesCheckResult',
-            'diagBandwithCheckResult',
-            'diagUploadCheckResult',
-            'diagTotalCheckResult'
-        ]);
+        $configurableText = $theme->getAllTexts();
         $this->setData('configurableText', json_encode($configurableText));
 
         $this->setView('layout.tpl');
