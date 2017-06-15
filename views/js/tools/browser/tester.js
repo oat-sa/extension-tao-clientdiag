@@ -23,8 +23,9 @@ define([
     'i18n',
     'util/url',
     'taoClientDiagnostic/tools/getconfig',
+    'taoClientDiagnostic/tools/getPlatformInfo',
     'taoClientDiagnostic/tools/diagnostic/status'
-], function ($, __, url, getConfig, statusFactory) {
+], function ($, __, url, getConfig, getPlatformInfo, statusFactory) {
     'use strict';
 
     /**
@@ -41,52 +42,14 @@ define([
     };
 
     /**
-     * Gets the URL of the browser tester
-     * @param {Window} window - Need an access to the window object
-     * @param {String} action - The name of the action to call to get the browser checker
-     * @param {String} controller - The name of the controller to call to get the browser checker
-     * @param {String} extension - The name of the extension containing the controller to call to get the browser checker
-     * @returns {String}
+     * Placeholder variables for custom messages
+     * @type {Object}
+     * @private
      */
-    function getTesterUrl(window, action, controller, extension) {
-        var document = window.document;
-        var navigator = window.navigator;
-        var screen = window.screen;
-        var params = {};
-        var e = 0;
-        var f = 0;
-
-        // append the browser user agent
-        params.ua = navigator.userAgent;
-
-        // detect browser family
-        e |= window.ActiveXObject ? 1 : 0;
-        e |= window.opera ? 2 : 0;
-        e |= window.chrome ? 4 : 0;
-        e |= 'getBoxObjectFor' in document || 'mozInnerScreenX' in window ? 8 : 0;
-        e |= ('WebKitCSSMatrix' in window || 'WebKitPoint' in window || 'webkitStorageInfo' in window || 'webkitURL' in window) ? 16 : 0;
-        e |= (e & 16 && ({}.toString).toString().indexOf("\n") === -1) ? 32 : 0;
-        params.e = e;
-
-        // gather info about browser functionality
-        f |= 'sandbox' in document.createElement('iframe') ? 1 : 0;
-        f |= 'WebSocket' in window ? 2 : 0;
-        f |= window.Worker ? 4 : 0;
-        f |= window.applicationCache ? 8 : 0;
-        f |= window.history && window.history.pushState ? 16 : 0;
-        f |= document.documentElement.webkitRequestFullScreen ? 32 : 0;
-        f |= 'FileReader' in window ? 64 : 0;
-        params.f = f;
-
-        // append a unique ID
-        params.r = Math.random().toString(36).substring(7);
-
-        // get the screen size
-        params.w = screen.width;
-        params.h = screen.height;
-
-        return url.route(action, controller, extension, params);
-    }
+    var _placeHolders = {
+        CURRENT_BROWSER: '%CURRENT_BROWSER%',
+        CURRENT_OS: '%CURRENT_OS%'
+    };
 
     /**
      * Performs a browser support test
@@ -106,26 +69,19 @@ define([
              * @param {Function} done
              */
             start: function start(done) {
-                var testerUrl = getTesterUrl(
-                    window,
-                    initConfig.browserVersionAction,
-                    initConfig.browserVersionController,
-                    initConfig.browserVersionExtension
-                );
-
                 diagnosticTool.changeStatus(__('Checking the browser...'));
-                $.ajax({
-                    url : testerUrl,
-                    success : function(browserInfo) {
+
+                getPlatformInfo(window, initConfig)
+                    .then(function(platformInfo) {
                         // which browser
                         $.post(
                             url.route(initConfig.action, initConfig.controller, initConfig.extension),
-                            browserInfo,
+                            platformInfo,
                             function (data) {
                                 var percentage = ('success' === data.type) ? 100 : (('warning' === data.type) ? 33 : 0);
                                 var status = statusFactory().getStatus(percentage, data);
-                                var currentBrowser = browserInfo.browser + ' ' + browserInfo.browserVersion;
-                                var currentOs = browserInfo.os + ' ' + browserInfo.osVersion;
+                                var currentBrowser = platformInfo.browser + ' ' + platformInfo.browserVersion;
+                                var currentOs = platformInfo.os + ' ' + platformInfo.osVersion;
                                 var summary = {
                                     browser: {
                                         message: __('Web browser'),
@@ -136,18 +92,21 @@ define([
                                         value: currentOs
                                     }
                                 };
-                                var customMsg = diagnosticTool.getCustomMsg('diagBrowserCheckResult') || '';
+                                var customMsg = diagnosticTool.getCustomMsg('diagBrowserOsCheckResult') || '';
 
                                 status.id = 'browser';
                                 status.title = __('Operating system and web browser');
-                                diagnosticTool.addCustomFeedbackMsg(status, customMsg.replace('%CURRENT_BROWSER%', currentBrowser));
 
-                                done(status, summary, browserInfo);
+                                customMsg = customMsg
+                                    .replace(_placeHolders.CURRENT_BROWSER, currentBrowser)
+                                    .replace(_placeHolders.CURRENT_OS, currentOs);
+                                diagnosticTool.addCustomFeedbackMsg(status, customMsg);
+
+                                done(status, summary, platformInfo);
                             },
                             'json'
                         );
-                    }
-                });
+                    });
             }
         };
     }
