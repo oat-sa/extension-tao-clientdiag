@@ -27,8 +27,10 @@ define([
     'ui/feedback',
     'ui/dialog',
     'taoClientDiagnostic/tools/diagnostic/status',
-    'ui/datatable'
-], function ($, __, helpers, loadingBar, encode, feedback, dialog, statusFactory) {
+    'moment',
+    'ui/datatable',
+    'lib/moment-timezone.min'
+], function ($, __, helpers, loadingBar, encode, feedback, dialog, statusFactory, moment) {
     'use strict';
 
     /**
@@ -37,9 +39,20 @@ define([
      */
     var cssScope = '.diagnostic-index';
 
+    /**
+     * Default Time Zone for date
+     * @type {string}
+     */
+    var defaultDateTimeZone = 'UTC';
+
+    /**
+     * Default date format
+     * @type {string}
+     */
+    var defaultDateFormat = 'Y/MM/DD HH:mm:ss';
+
     // the page is always loading data when starting
     loadingBar.start();
-
     /**
      * Format a number with decimals
      * @param {Number} number - The number to format
@@ -50,6 +63,17 @@ define([
         var nb = undefined === digits ? 2 : Math.max(0, parseInt(digits, 10));
         var factor = Math.pow(10, nb) || 1;
         return Math.round(number * factor) / factor;
+    }
+
+    /**
+     * Transform date to local timezone
+     * @param {String} date
+     * @returns {String}
+     */
+    function transformDateToLocal(date) {
+         var time = moment.tz(date, defaultDateTimeZone);
+         date = time.tz(moment.tz.guess()).format(defaultDateFormat);
+        return date;
     }
 
     /**
@@ -251,7 +275,11 @@ define([
             // column: Date of diagnostic
             model.push({
                 id: 'date',
-                label: __('Date')
+                label: __('Date'),
+                transform: function(value) {
+                    var date = transformDateToLocal(value);
+                    return date;
+                }
             });
 
             $list
