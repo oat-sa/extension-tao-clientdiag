@@ -1,4 +1,8 @@
 [
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.13", "browser" : "Firefox", "versions" : [45]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.13", "browser" : "Chrome", "versions" : [48]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "10.13", "browser" : "Safari", "versions" : [10]},
+
     {"compatible" : 1, "os" : "OS X", "osVersion" : "10.12", "browser" : "Firefox", "versions" : [45]},
     {"compatible" : 1, "os" : "OS X", "osVersion" : "10.12", "browser" : "Chrome", "versions" : [48]},
     {"compatible" : 1, "os" : "OS X", "osVersion" : "10.12", "browser" : "Safari", "versions" : [10]},
