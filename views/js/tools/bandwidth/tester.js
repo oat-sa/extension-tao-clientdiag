@@ -99,14 +99,6 @@ define([
             timeout : 20 * _second,
             threshold : 0,
             nb : 3
-        },
-        "10MB" : {
-            id : '10MB',
-            file : 'data/bin10MB.data',
-            size : 10 * _mega,
-            timeout : 20 * _second,
-            threshold : 8,
-            nb : 3
         }
     };
 
