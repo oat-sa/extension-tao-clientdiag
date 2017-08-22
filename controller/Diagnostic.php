@@ -185,7 +185,9 @@ class Diagnostic extends \tao_actions_CommonModule
     {
         /** @var DiagnosticServiceInterface $service */
         $service = $this->getServiceManager()->get(DiagnosticServiceInterface::SERVICE_ID);
-        return $service->getTesters();
+        $config = $service->getTesters();
+        $config['timezone'] = date_default_timezone_get();
+        return $config;
     }
 
     /**
