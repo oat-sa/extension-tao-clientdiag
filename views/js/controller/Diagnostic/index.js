@@ -68,10 +68,12 @@ define([
     /**
      * Transform date to local timezone
      * @param {String} date
+     * @param {String} timezone
      * @returns {String}
      */
-    function transformDateToLocal(date) {
-         var time = moment.tz(date, defaultDateTimeZone);
+    function transformDateToLocal(date, timezone) {
+         timezone = timezone ? timezone : defaultDateTimeZone;
+         var time = moment.tz(date, timezone);
          date = time.tz(moment.tz.guess()).format(defaultDateFormat);
         return date;
     }
@@ -277,8 +279,7 @@ define([
                 id: 'date',
                 label: __('Date'),
                 transform: function(value) {
-                    var date = transformDateToLocal(value);
-                    return date;
+                    return transformDateToLocal(value, config.timezone);
                 }
             });
 
