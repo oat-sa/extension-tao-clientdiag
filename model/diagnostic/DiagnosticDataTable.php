@@ -78,9 +78,7 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
                 }
 
                 if (isset($row[PaginatedSqlStorage::DIAGNOSTIC_CREATED_AT])) {
-                    $timeZone = new \DateTimeZone('UTC');
-                    $dt = new DateTime($row[PaginatedSqlStorage::DIAGNOSTIC_CREATED_AT], $timeZone);
-                    $rowData['date'] = DateHelper::displayeDate($dt, DateHelper::FORMAT_LONG, $timeZone);
+                    $rowData['date'] = $row[PaginatedSqlStorage::DIAGNOSTIC_CREATED_AT];
                 }
 
                 $data[$idx] = $rowData;
