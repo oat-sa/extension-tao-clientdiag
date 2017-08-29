@@ -119,7 +119,7 @@ define([
             return cb('threshold');
         }
 
-        url = context.base_www + '/js/tools/bandwidth/' + data.file + '?' + Date.now();
+        url = context.base_www + 'js/tools/bandwidth/' + data.file + '?' + Date.now();
         request = new XMLHttpRequest();
         request.open('GET', url, true);
         request.setRequestHeader('Accept', 'application/octet-stream');
