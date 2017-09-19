@@ -35,9 +35,12 @@ use oat\tao\model\theme\Theme;
 
 <body>
 
+<noscript>
 <div id="js-check" class="feedback-error check-msg">
     <span class="icon-error"></span><?=__('You must activate JavaScript in your browser to run this application.')?>
 </div>
+</noscript>
+
 <script src="<?= Template::js('layout/requirement-check.js', 'tao')?>"></script>
 <div class="content-wrap">
 
