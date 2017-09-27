@@ -21,7 +21,9 @@ define(['jquery', 'lodash', 'taoClientDiagnostic/tools/upload/tester'], function
     // backup/restore ajax method between each test
     var ajaxBackup;
     var diagnosticTool = {
-        changeStatus : function changeStatus() {}
+        changeStatus : function changeStatus(){},
+        getCustomMsg : function getCustomMsg(){},
+        addCustomFeedbackMsg : function addCustomFeedbackMsg(){},
     };
 
     QUnit.testStart(function () {
