@@ -19,7 +19,9 @@ define(['taoClientDiagnostic/tools/performances/tester'], function(performancesT
     'use strict';
 
     var diagnosticTool = {
-        changeStatus : function changeStatus() {}
+        changeStatus : function changeStatus(){},
+        getCustomMsg : function getCustomMsg(){},
+        addCustomFeedbackMsg : function addCustomFeedbackMsg(){},
     };
 
     QUnit.module('API');

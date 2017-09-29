@@ -23,8 +23,7 @@ define([
     'taoClientDiagnostic/tools/getconfig',
     'taoClientDiagnostic/tools/stats',
     'taoClientDiagnostic/tools/fixedDecimals',
-    'taoClientDiagnostic/tools/diagnostic/status',
-    'lib/polyfill/performance-now'
+    'taoClientDiagnostic/tools/diagnostic/status'
 ], function(_, __, async, context, getConfig, stats, fixedDecimals, statusFactory) {
     'use strict';
 
