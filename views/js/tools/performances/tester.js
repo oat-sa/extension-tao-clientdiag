@@ -29,8 +29,7 @@ define([
     'taoQtiItem/qtiItem/core/Loader',
     'taoQtiItem/qtiCommonRenderer/renderers/Renderer',
     'taoClientDiagnostic/tools/getconfig',
-    'taoClientDiagnostic/tools/diagnostic/status',
-    'lib/polyfill/performance-now'
+    'taoClientDiagnostic/tools/diagnostic/status'
 ], function($, _, __, async, context, helpers, stats, Loader, Renderer, getConfig, statusFactory) {
     'use strict';
 

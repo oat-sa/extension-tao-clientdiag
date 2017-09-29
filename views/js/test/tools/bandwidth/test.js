@@ -19,7 +19,9 @@ define(['taoClientDiagnostic/tools/bandwidth/tester'], function(bandwidthTester)
     'use strict';
 
     var diagnosticTool = {
-        changeStatus : function changeStatus() {}
+        changeStatus : function changeStatus(){},
+        getCustomMsg : function getCustomMsg(){},
+        addCustomFeedbackMsg : function addCustomFeedbackMsg(){},
     };
 
     QUnit.module('API');
