@@ -51,30 +51,42 @@ define([
      */
     var defaultDateFormat = 'Y/MM/DD HH:mm:ss';
 
-    // the page is always loading data when starting
-    loadingBar.start();
     /**
      * Format a number with decimals
      * @param {Number} number - The number to format
      * @param {Number} [digits] - The number of decimals
      * @returns {Number}
      */
-    function formatNumber(number, digits) {
-        var nb = undefined === digits ? 2 : Math.max(0, parseInt(digits, 10));
+    var formatNumber = function formatNumber(number, digits) {
+        var nb = 'undefined' === typeof digits ? 2 : Math.max(0, parseInt(digits, 10));
         var factor = Math.pow(10, nb) || 1;
         return Math.round(number * factor) / factor;
-    }
+    };
+
+    /**
+     * Format a bandwidth value
+     * @param {Number} value
+     * @returns {Number}
+     */
+    var formatBandwidth = function formatBandwidth(value) {
+        var bandwidth = formatNumber(value);
+
+        if (value > 100) {
+            bandwidth = '> 100';
+        }
+
+        return bandwidth;// + ' Mbs';
+    };
 
     /**
      * Transform date to local timezone
      * @param {String} date
      * @returns {String}
      */
-    function transformDateToLocal(date) {
-         var time = moment.tz(date, defaultDateTimeZone);
-         date = time.tz(moment.tz.guess()).format(defaultDateFormat);
-        return date;
-    }
+    var transformDateToLocal = function transformDateToLocal(date) {
+        var time = moment.tz(date, defaultDateTimeZone);
+        return time.tz(moment.tz.guess()).format(defaultDateFormat);
+    };
 
     /**
      * Controls the readiness check page
@@ -229,13 +241,13 @@ define([
             });
 
             // results of browser test
-            if (config.testers.browser && config.testers.browser.enabled) {
-                // column: Workstation identifier
-                model.push({
-                    id: 'workstation',
-                    label: __('Workstation')
-                });
+            // column: Workstation identifier
+            model.push({
+                id: 'workstation',
+                label: __('Workstation')
+            });
 
+            if (config.testers.browser && config.testers.browser.enabled) {
                 // column: Operating system information
                 model.push({
                     id: 'os',
@@ -269,15 +281,7 @@ define([
                 model.push({
                     id: 'bandwidth',
                     label: __('Bandwidth'),
-                    transform: function (value) {
-                        var bandwidth = formatNumber(value);
-
-                        if (value > 100) {
-                            bandwidth = '> 100';
-                        }
-
-                        return bandwidth;// + ' Mbs';
-                    }
+                    transform: formatBandwidth
                 });
             }
 
@@ -287,15 +291,17 @@ define([
                 model.push({
                     id: 'intensive_bandwidth',
                     label: __('Intensive bandwidth'),
-                    transform: function (value) {
-                        var bandwidth = formatNumber(value);
+                    transform: formatBandwidth
+                });
+            }
 
-                        if (value > 100) {
-                            bandwidth = '> 100';
-                        }
-
-                        return bandwidth;// + ' Mbs';
-                    }
+            // results of upload speed test
+            if (config.testers.upload && config.testers.upload.enabled) {
+                // column: Available upload speed
+                model.push({
+                    id: 'upload',
+                    label: __('Upload speed'),
+                    transform: formatBandwidth
                 });
             }
 
@@ -330,6 +336,9 @@ define([
                 }, dataset);
         }
     };
+
+    // the page is always loading data when starting
+    loadingBar.start();
 
     return taoDiagnosticCtlr;
 });

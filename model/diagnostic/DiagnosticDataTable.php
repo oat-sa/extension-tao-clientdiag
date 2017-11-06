@@ -70,6 +70,7 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
                     'performance' => $row[PaginatedSqlStorage::DIAGNOSTIC_PERFORMANCE_AVERAGE],
                     'bandwidth'   => $row[PaginatedSqlStorage::DIAGNOSTIC_BANDWIDTH_MAX],
                     'intensive_bandwidth' => $row[PaginatedSqlStorage::DIAGNOSTIC_INTENSIVE_BANDWIDTH_MAX],
+                    'upload' => $row[PaginatedSqlStorage::DIAGNOSTIC_UPLOAD_MAX],
                 ];
 
                 if (isset($row[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION])) {
