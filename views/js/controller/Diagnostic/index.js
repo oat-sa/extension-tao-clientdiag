@@ -228,49 +228,76 @@ define([
                 }
             });
 
-            // column: Workstation identifier
-            model.push({
-                id: 'workstation',
-                label: __('Workstation')
-            });
+            // results of browser test
+            if (config.testers.browser && config.testers.browser.enabled) {
+                // column: Workstation identifier
+                model.push({
+                    id: 'workstation',
+                    label: __('Workstation')
+                });
 
-            // column: Operating system information
-            model.push({
-                id: 'os',
-                label: __('OS')
-            });
+                // column: Operating system information
+                model.push({
+                    id: 'os',
+                    label: __('OS')
+                });
 
-            // column: Browser information
-            model.push({
-                id: 'browser',
-                label: __('Browser')
-            });
+                // column: Browser information
+                model.push({
+                    id: 'browser',
+                    label: __('Browser')
+                });
+            }
 
-            // column: Performances of the workstation
-            model.push({
-                id: 'performance',
-                label: __('Performances'),
-                transform: function(value) {
-                    var cursor = performancesRange - value + performancesOptimal;
-                    var status = diagnosticStatus.getStatus(cursor / performancesRange * 100, 'performances');
-                    return status.feedback.message;
-                }
-            });
-
-            // column: Available bandwidth
-            model.push({
-                id: 'bandwidth',
-                label: __('Bandwidth'),
-                transform: function(value) {
-                    var bandwidth = formatNumber(value);
-
-                    if (value > 100) {
-                        bandwidth = '> 100';
+            // results of performances test
+            if (config.testers.performance && config.testers.performance.enabled) {
+                // column: Performances of the workstation
+                model.push({
+                    id: 'performance',
+                    label: __('Performances'),
+                    transform: function (value) {
+                        var cursor = performancesRange - value + performancesOptimal;
+                        var status = diagnosticStatus.getStatus(cursor / performancesRange * 100, 'performances');
+                        return status.feedback.message;
                     }
+                });
+            }
 
-                    return bandwidth;// + ' Mbs';
-                }
-            });
+            // results of bandwidth test
+            if (config.testers.bandwidth && config.testers.bandwidth.enabled) {
+                // column: Available bandwidth
+                model.push({
+                    id: 'bandwidth',
+                    label: __('Bandwidth'),
+                    transform: function (value) {
+                        var bandwidth = formatNumber(value);
+
+                        if (value > 100) {
+                            bandwidth = '> 100';
+                        }
+
+                        return bandwidth;// + ' Mbs';
+                    }
+                });
+            }
+
+            // results of intensive bandwidth test
+            if (config.testers.intensive_bandwidth && config.testers.intensive_bandwidth.enabled) {
+                // column: Available bandwidth
+                model.push({
+                    id: 'intensive_bandwidth',
+                    label: __('Intensive bandwidth'),
+                    transform: function (value) {
+                        var bandwidth = formatNumber(value);
+
+                        if (value > 100) {
+                            bandwidth = '> 100';
+                        }
+
+                        return bandwidth;// + ' Mbs';
+                    }
+                });
+            }
 
             // column: Date of diagnostic
             model.push({
