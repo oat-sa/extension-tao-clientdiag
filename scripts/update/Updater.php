@@ -483,16 +483,18 @@ class Updater extends \common_ext_ExtensionUpdater
                     $tester['enabled'] = true;
                     $tester['level'] = 1;
                 }
-
-                $config['testers']['intensive_bandwidth'] = [
-                    'enabled' => false,
-                    'level' => 2,
-                    'tester' => 'taoClientDiagnostic/tools/bandwidth/tester',
-                    'unit' => 1.2,
-                    'ideal' => 45,
-                    'max' => 100
-                ];
             }
+
+            $config['testers']['intensive_bandwidth'] = [
+                'enabled' => false,
+                'level' => 2,
+                'tester' => 'taoClientDiagnostic/tools/bandwidth/tester',
+                'unit' => 1.2,
+                'ideal' => 45,
+                'max' => 100
+            ];
+
+            $extension->setConfig('clientDiag', $config);
 
             $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
             if ($storageService instanceof Sql) {
@@ -521,8 +523,6 @@ class Updater extends \common_ext_ExtensionUpdater
                     $persistence->exec($query);
                 }
             }
-
-            $extension->setConfig('clientDiag', $config);
 
             $this->setVersion('2.7.0');
         }
