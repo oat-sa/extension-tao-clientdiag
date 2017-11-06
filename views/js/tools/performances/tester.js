@@ -78,6 +78,21 @@ define([
     };
 
     /**
+     * List of translated texts per level
+     * @type {Object}
+     * @private
+     */
+    var _messages = [
+        {
+            title: __('Workstation performances'),
+            status: __('Checking the performances...'),
+            performancesMin: __('Minimum rendering time'),
+            performancesMax: __('Maximum rendering time'),
+            performancesAverage: __('Average rendering time')
+        }
+    ];
+
+    /**
      * Base text used to build sample identifiers
      * @type {String}
      * @private
@@ -164,6 +179,7 @@ define([
      */
     var performancesTester = function performancesTester(config, diagnosticTool) {
         var initConfig = getConfig(config, _defaults);
+        var level = Math.min(Math.max(parseInt(initConfig.level, 10), 1), _messages.length) - 1;
         var idx = 0;
         var _samples = _.map(!_.isEmpty(initConfig.samples) && initConfig.samples || _defaultSamples, function(sample) {
             idx ++;
@@ -190,7 +206,7 @@ define([
             start: function start(done) {
                 var tests = [];
 
-                diagnosticTool.changeStatus(__('Checking the performances...'));
+                diagnosticTool.changeStatus(_messages[level].status);
 
                 _.forEach(_samples, function(data) {
                     var cb = _.partial(loadItem, data);
@@ -220,13 +236,13 @@ define([
                     cursor = range - results.average + optimal;
                     status = statusFactory().getStatus(cursor / range * 100, 'performances');
                     summary = {
-                        performancesMin: {message: __('Minimum rendering time'), value: results.min + ' s'},
-                        performancesMax: {message: __('Maximum rendering time'), value: results.max + ' s'},
-                        performancesAverage: {message: __('Average rendering time'), value: results.average + ' s'}
+                        performancesMin: {message: _messages[level].performancesMin, value: results.min + ' s'},
+                        performancesMax: {message: _messages[level].performancesMax, value: results.max + ' s'},
+                        performancesAverage: {message: _messages[level].performancesAverage, value: results.average + ' s'}
                     };
 
-                    status.title = __('Workstation performances');
-                    status.id = 'performances';
+                    status.title =  _messages[level].title;
+                    status.id = initConfig.id || 'performances';
                     diagnosticTool.addCustomFeedbackMsg(status, diagnosticTool.getCustomMsg('diagPerformancesCheckResult'));
 
                     done(status, summary, results);

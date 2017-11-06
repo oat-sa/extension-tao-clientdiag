@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2015-2017 (original work) Open Assessment Technologies SA;
  */
 
 /**
@@ -50,7 +50,24 @@ return array(
          * @type array
          */
         'performance' => array(
+            /**
+             * Allows to disable the test on the platform
+             * @type boolean
+             */
+            'enabled' => true,
+
+            /**
+             * Defines the test level. In case of multiple tests of the same kind, this config allows to compare intensities.
+             * @type boolean
+             */
+            'level' => 1,
+
+            /**
+             * Path to the component that will test the performances
+             * @type string
+             */
             'tester' => 'taoClientDiagnostic/tools/performances/tester',
+
             /**
              * A list of samples to render in order to compute the rendering performances
              * @type array
@@ -91,7 +108,24 @@ return array(
          * @type array
          */
         'bandwidth' => array(
+            /**
+             * Allows to disable the test on the platform
+             * @type boolean
+             */
+            'enabled' => true,
+
+            /**
+             * Defines the test level. In case of multiple tests of the same kind, this config allows to compare intensities.
+             * @type boolean
+             */
+            'level' => 1,
+
+            /**
+             * Path to the component that will test the bandwidth
+             * @type string
+             */
             'tester' => 'taoClientDiagnostic/tools/bandwidth/tester',
+
             /**
              * The typical bandwidth needed for a test taker (Mbps)
              * @type float
@@ -112,10 +146,70 @@ return array(
         ),
 
         /**
+         * Bandwidth check config
+         * @type array
+         */
+        'intensiveBandwidth' => array(
+            /**
+             * Allows to disable the test on the platform
+             * @type boolean
+             */
+            'enabled' => false,
+
+            /**
+             * Defines the test level. In case of multiple tests of the same kind, this config allows to compare intensities.
+             * @type boolean
+             */
+            'level' => 2,
+
+            /**
+             * Path to the component that will test the bandwidth
+             * @type string
+             */
+            'tester' => 'taoClientDiagnostic/tools/bandwidth/tester',
+
+            /**
+             * The typical bandwidth needed for a test taker (Mbps)
+             * @type float
+             */
+            'unit' => 1.2,
+
+            /**
+             * The ideal number of simultaneous test takers
+             * @type int
+             */
+            'ideal' => 45,
+
+            /**
+             * Maximum number of test takers to display on a bar
+             * @type int
+             */
+            'max' => 100,
+        ),
+
+        /**
          * Upload speed test config
+         * @type array
          */
         'upload' => array(
+            /**
+             * Allows to disable the test on the platform
+             * @type boolean
+             */
+            'enabled' => true,
+
+            /**
+             * Defines the test level. In case of multiple tests of the same kind, this config allows to compare intensities.
+             * @type boolean
+             */
+            'level' => 1,
+
+            /**
+             * Path to the component that will test the upload speed
+             * @type string
+             */
             'tester' => 'taoClientDiagnostic/tools/upload/tester',
+
             /**
              * Size of data to sent to server during speed test in bytes
              */
@@ -126,7 +220,28 @@ return array(
              */
             'optimal' => 1 * 1024 * 1024,
         ),
+
+        /**
+         * Browser compatibility check config
+         * @type array
+         */
         'browser' => [
+            /**
+             * Allows to disable the test on the platform
+             * @type boolean
+             */
+            'enabled' => true,
+
+            /**
+             * Defines the test level. In case of multiple tests of the same kind, this config allows to compare intensities.
+             * @type boolean
+             */
+            'level' => 1,
+
+            /**
+             * Path to the component that will test the browser compatibility
+             * @type string
+             */
             'tester' => 'taoClientDiagnostic/tools/browser/tester',
         ],
     ]

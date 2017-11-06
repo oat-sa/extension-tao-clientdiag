@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2016-2017 (original work) Open Assessment Technologies SA ;
  */
 /**
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
@@ -246,14 +246,14 @@ define([
             var testers = [];
 
             // common handling for testers
-            function doCheck(tester, testerName, cb) {
+            function doCheck(tester, testerId, cb) {
                 /**
                  * Notifies the start of a tester operation
                  * @event diagnostic#starttester
                  * @param {String} name - The name of the tester
                  */
-                self.trigger('starttester', testerName);
-                self.setState(testerName, true);
+                self.trigger('starttester', testerId);
+                self.setState(testerId, true);
                 require([tester.tester], function (testerFactory){
                     testerFactory(getConfig(tester, self.config), self).start(function (status, details, results) {
                         // the returned details must be ingested into the main details list
@@ -264,13 +264,13 @@ define([
                         /**
                          * Notifies the end of a tester operation
                          * @event diagnostic#endtester
-                         * @param {String} name - The name of the tester
+                         * @param {String} id - The identifier of the tester
                          * @param {Array} results - The results of the test
                          */
-                        self.trigger('endtester', testerName, status);
-                        self.setState(testerName, false);
+                        self.trigger('endtester', testerId, status);
+                        self.setState(testerId, false);
 
-                        self.store(testerName, results, function () {
+                        self.store(testerId, results, function () {
                             self.addResult(status);
                             cb();
                         });
@@ -282,10 +282,13 @@ define([
                 // set up the component to a new run
                 this.prepare();
 
-                _.forEach(this.config.testers, function(tester, testerName) {
-                    testers.push(function (cb) {
-                        doCheck(tester, testerName, cb);
-                    });
+                _.forEach(this.config.testers, function(tester, testerId) {
+                    tester.id = testerId;
+                    if (tester.enabled) {
+                        testers.push(function (cb) {
+                            doCheck(tester, testerId, cb);
+                        });
+                    }
                 });
 
                 // launch each testers in series, then display the results

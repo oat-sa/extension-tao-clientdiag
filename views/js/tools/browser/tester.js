@@ -52,6 +52,20 @@ define([
     };
 
     /**
+     * List of translated texts per level
+     * @type {Object}
+     * @private
+     */
+    var _messages = [
+        {
+            title: __('Operating system and web browser'),
+            status: __('Checking the browser...'),
+            browser: __('Web browser'),
+            os: __('Operating system')
+        }
+    ];
+
+    /**
      * Performs a browser support test
      *
      * @param {Object} [config] - Some optional configs
@@ -61,7 +75,8 @@ define([
      * @returns {Object}
      */
     function browserTester(config, diagnosticTool) {
-        var initConfig = getConfig(config || {}, _defaults);
+        var initConfig = getConfig(config, _defaults);
+        var level = Math.min(Math.max(parseInt(initConfig.level, 10), 1), _messages.length) - 1;
 
         return {
             /**
@@ -69,7 +84,7 @@ define([
              * @param {Function} done
              */
             start: function start(done) {
-                diagnosticTool.changeStatus(__('Checking the browser...'));
+                diagnosticTool.changeStatus(_messages[level].status);
 
                 getPlatformInfo(window, initConfig)
                     .then(function(platformInfo) {
@@ -84,18 +99,18 @@ define([
                                 var currentOs = platformInfo.os + ' ' + platformInfo.osVersion;
                                 var summary = {
                                     browser: {
-                                        message: __('Web browser'),
+                                        message: _messages[level].browser,
                                         value: currentBrowser
                                     },
                                     os: {
-                                        message: __('Operating system'),
+                                        message: _messages[level].os,
                                         value: currentOs
                                     }
                                 };
                                 var customMsg = diagnosticTool.getCustomMsg('diagBrowserOsCheckResult') || '';
 
-                                status.id = 'browser';
-                                status.title = __('Operating system and web browser');
+                                status.id = initConfig.id || 'browser';
+                                status.title =  _messages[level].title;
 
                                 customMsg = customMsg
                                     .replace(_placeHolders.CURRENT_BROWSER, currentBrowser)

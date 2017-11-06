@@ -65,7 +65,7 @@ define([
 
             /**
              * Installs the diagnostic tool GUI
-             * @param {String} workstation
+             * @param {String} [workstation]
              */
             function installTester(workstation) {
                 diagnosticFactory(config)

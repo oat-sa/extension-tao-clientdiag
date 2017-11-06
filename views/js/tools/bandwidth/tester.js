@@ -102,6 +102,29 @@ define([
     };
 
     /**
+     * List of translated texts per level
+     * @type {Object}
+     * @private
+     */
+    var _messages = [
+        {
+            title: __('Bandwidth'),
+            status: __('Checking the bandwidth...'),
+            legend: __('Number of simultaneous test takers the connection can handle'),
+            bandwidthMin: __('Minimum bandwidth'),
+            bandwidthMax: __('Maximum bandwidth'),
+            bandwidthAverage: __('Average bandwidth')
+        }, {
+            title: __('Media intensive bandwidth'),
+            status: __('Checking the media intensive bandwidth...'),
+            legend: __('Number of simultaneous test takers the connection can handle with media intensive'),
+            bandwidthMin: __('Minimum intensive bandwidth'),
+            bandwidthMax: __('Maximum intensive bandwidth'),
+            bandwidthAverage: __('Average intensive bandwidth')
+        }
+    ];
+
+    /**
      * Download a data set as described by the provided descriptor and compute the duration.
      * @param {Object} data The data set descriptor to use for download
      * @param {Function} cb A callback function called at the end of the download.
@@ -165,7 +188,8 @@ define([
      * @returns {Object}
      */
     var bandwidthTester = function bandwidthTester (config, diagnosticTool) {
-        var initConfig = getConfig(config || {}, _defaults);
+        var initConfig = getConfig(config, _defaults);
+        var level = Math.min(Math.max(parseInt(initConfig.level, 10), 1), _messages.length) - 1;
 
         return {
             /**
@@ -176,7 +200,7 @@ define([
                 var self = this;
                 var tests = [];
 
-                diagnosticTool.changeStatus(__('Checking the bandwidth...'));
+                diagnosticTool.changeStatus(_messages[level].status);
 
                 _.forEach(_downloadData, function(data) {
                     var cb = _.bind(download, self, data);
@@ -227,9 +251,9 @@ define([
                     results.size = size;
 
                     summary = {
-                        bandwidthMin: {message: __('Minimum bandwidth'), value: results.min + ' Mbps'},
-                        bandwidthMax: {message: __('Maximum bandwidth'), value: results.max + ' Mbps'},
-                        bandwidthAverage: {message: __('Average bandwidth'), value: results.average + ' Mbps'}
+                        bandwidthMin: {message: _messages[level].bandwidthMin, value: results.min + ' Mbps'},
+                        bandwidthMax: {message: _messages[level].bandwidthMax, value: results.max + ' Mbps'},
+                        bandwidthAverage: {message:  _messages[level].bandwidthAverage, value: results.average + ' Mbps'}
                     };
 
                     status = statusFactory().getStatus(results.max / max * 100, 'bandwidth');
@@ -239,9 +263,9 @@ define([
                         nb = '>' + maxTestTakers;
                     }
 
-                    status.id = 'bandwidth';
-                    status.title = __('Bandwidth');
-                    status.feedback.legend = __('Number of simultaneous test takers the connection can handle');
+                    status.id = initConfig.id || 'bandwidth';
+                    status.title =  _messages[level].title;
+                    status.feedback.legend =  _messages[level].legend;
                     diagnosticTool.addCustomFeedbackMsg(status, diagnosticTool.getCustomMsg('diagBandwithCheckResult'));
 
                     status.quality.label = nb;
