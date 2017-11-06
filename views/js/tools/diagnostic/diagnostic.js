@@ -241,7 +241,7 @@ define([
          */
         run: function run() {
             var self = this;
-            var information = {};
+            var information = [];
             var scores = {};
             var testers = [];
 
@@ -257,8 +257,9 @@ define([
                 require([tester.tester], function (testerFactory){
                     testerFactory(getConfig(tester, self.config), self).start(function (status, details, results) {
                         // the returned details must be ingested into the main details list
-                        _.assign(information, details);
-
+                        _.forEach(details, function(info) {
+                            information.push(info);
+                        });
                         scores[status.id] = status;
 
                         /**
