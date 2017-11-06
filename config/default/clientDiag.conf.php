@@ -149,7 +149,7 @@ return array(
          * Bandwidth check config
          * @type array
          */
-        'intensiveBandwidth' => array(
+        'intensive_bandwidth' => array(
             /**
              * Allows to disable the test on the platform
              * @type boolean

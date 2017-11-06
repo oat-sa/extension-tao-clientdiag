@@ -65,6 +65,15 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             $tableResults->addColumn(Sql::DIAGNOSTIC_BANDWIDTH_VARIANCE, 'float', ['notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_BANDWIDTH_DURATION, 'float', ['notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_BANDWIDTH_SIZE, 'integer', ['length' => 16, 'notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_MIN, 'float', ['notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_MAX, 'float', ['notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_SUM, 'float', ['notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_COUNT, 'integer', ['length' => 16, 'notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_AVERAGE, 'float', ['notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_MEDIAN, 'float', ['notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_VARIANCE, 'float', ['notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_DURATION, 'float', ['notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_SIZE, 'integer', ['length' => 16, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_PERFORMANCE_MIN, 'float', ['notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_PERFORMANCE_MAX, 'float', ['notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_PERFORMANCE_SUM, 'float', ['notnull' => false]);
