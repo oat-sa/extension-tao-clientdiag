@@ -51,30 +51,42 @@ define([
      */
     var defaultDateFormat = 'Y/MM/DD HH:mm:ss';
 
-    // the page is always loading data when starting
-    loadingBar.start();
     /**
      * Format a number with decimals
      * @param {Number} number - The number to format
      * @param {Number} [digits] - The number of decimals
      * @returns {Number}
      */
-    function formatNumber(number, digits) {
-        var nb = undefined === digits ? 2 : Math.max(0, parseInt(digits, 10));
+    var formatNumber = function formatNumber(number, digits) {
+        var nb = 'undefined' === typeof digits ? 2 : Math.max(0, parseInt(digits, 10));
         var factor = Math.pow(10, nb) || 1;
         return Math.round(number * factor) / factor;
-    }
+    };
+
+    /**
+     * Format a bandwidth value
+     * @param {Number} value
+     * @returns {Number}
+     */
+    var formatBandwidth = function formatBandwidth(value) {
+        var bandwidth = formatNumber(value);
+
+        if (value > 100) {
+            bandwidth = '> 100';
+        }
+
+        return bandwidth;
+    };
 
     /**
      * Transform date to local timezone
      * @param {String} date
      * @returns {String}
      */
-    function transformDateToLocal(date) {
-         var time = moment.tz(date, defaultDateTimeZone);
-         date = time.tz(moment.tz.guess()).format(defaultDateFormat);
-        return date;
-    }
+    var transformDateToLocal = function transformDateToLocal(date) {
+        var time = moment.tz(date, defaultDateTimeZone);
+        return time.tz(moment.tz.guess()).format(defaultDateFormat);
+    };
 
     /**
      * Controls the readiness check page
@@ -228,49 +240,70 @@ define([
                 }
             });
 
+            // results of browser test
             // column: Workstation identifier
             model.push({
                 id: 'workstation',
                 label: __('Workstation')
             });
 
-            // column: Operating system information
-            model.push({
-                id: 'os',
-                label: __('OS')
-            });
+            if (config.testers.browser && config.testers.browser.enabled) {
+                // column: Operating system information
+                model.push({
+                    id: 'os',
+                    label: __('OS')
+                });
 
-            // column: Browser information
-            model.push({
-                id: 'browser',
-                label: __('Browser')
-            });
+                // column: Browser information
+                model.push({
+                    id: 'browser',
+                    label: __('Browser')
+                });
+            }
 
-            // column: Performances of the workstation
-            model.push({
-                id: 'performance',
-                label: __('Performances'),
-                transform: function(value) {
-                    var cursor = performancesRange - value + performancesOptimal;
-                    var status = diagnosticStatus.getStatus(cursor / performancesRange * 100, 'performances');
-                    return status.feedback.message;
-                }
-            });
-
-            // column: Available bandwidth
-            model.push({
-                id: 'bandwidth',
-                label: __('Bandwidth'),
-                transform: function(value) {
-                    var bandwidth = formatNumber(value);
-
-                    if (value > 100) {
-                        bandwidth = '> 100';
+            // results of performances test
+            if (config.testers.performance && config.testers.performance.enabled) {
+                // column: Performances of the workstation
+                model.push({
+                    id: 'performance',
+                    label: __('Performances'),
+                    transform: function (value) {
+                        var cursor = performancesRange - value + performancesOptimal;
+                        var status = diagnosticStatus.getStatus(cursor / performancesRange * 100, 'performances');
+                        return status.feedback.message;
                     }
+                });
+            }
 
-                    return bandwidth;// + ' Mbs';
-                }
-            });
+            // results of bandwidth test
+            if (config.testers.bandwidth && config.testers.bandwidth.enabled) {
+                // column: Available bandwidth
+                model.push({
+                    id: 'bandwidth',
+                    label: __('Bandwidth'),
+                    transform: formatBandwidth
+                });
+            }
+
+            // results of intensive bandwidth test
+            if (config.testers.intensive_bandwidth && config.testers.intensive_bandwidth.enabled) {
+                // column: Available bandwidth
+                model.push({
+                    id: 'intensive_bandwidth',
+                    label: __('Intensive bandwidth'),
+                    transform: formatBandwidth
+                });
+            }
+
+            // results of upload speed test
+            if (config.testers.upload && config.testers.upload.enabled) {
+                // column: Available upload speed
+                model.push({
+                    id: 'upload',
+                    label: __('Upload speed'),
+                    transform: formatBandwidth
+                });
+            }
 
             // column: Date of diagnostic
             model.push({
@@ -303,6 +336,9 @@ define([
                 }, dataset);
         }
     };
+
+    // the page is always loading data when starting
+    loadingBar.start();
 
     return taoDiagnosticCtlr;
 });

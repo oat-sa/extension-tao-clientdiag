@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.1.0-sprint20\n"
-"PO-Revision-Date: 2016-02-23T13:37:56\n"
+"Project-Id-Version: TAO 3.2.0-sprint63\n"
+"PO-Revision-Date: 2017-11-06T16:06:08\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: en-US\n"
@@ -19,10 +19,16 @@ msgstr ""
 msgid "Average bandwidth"
 msgstr ""
 
+msgid "Average intensive bandwidth"
+msgstr ""
+
 msgid "Average performances"
 msgstr ""
 
 msgid "Average rendering time"
+msgstr ""
+
+msgid "Average upload speed"
 msgstr ""
 
 msgid "Bandwidth"
@@ -34,19 +40,31 @@ msgstr ""
 msgid "Begin diagnostics"
 msgstr ""
 
+msgid "Browser"
+msgstr ""
+
 msgid "Checking the bandwidth..."
 msgstr ""
 
 msgid "Checking the browser..."
 msgstr ""
 
+msgid "Checking the media intensive bandwidth..."
+msgstr ""
+
 msgid "Checking the performances..."
+msgstr ""
+
+msgid "Checking upload speed..."
 msgstr ""
 
 msgid "Compatible"
 msgstr ""
 
 msgid "Connect to the diagnostic tool"
+msgstr ""
+
+msgid "Date"
 msgstr ""
 
 msgid "Details"
@@ -58,13 +76,37 @@ msgstr ""
 msgid "Done!"
 msgstr ""
 
+msgid "Exit"
+msgstr ""
+
 msgid "Good bandwidth"
 msgstr ""
 
 msgid "Good performances"
 msgstr ""
 
+msgid "Good upload speed"
+msgstr ""
+
 msgid "Hide Details"
+msgstr ""
+
+msgid "Intensive bandwidth"
+msgstr ""
+
+msgid "Interface not available"
+msgstr ""
+
+msgid "Launch another readiness check"
+msgstr ""
+
+msgid "Launch readiness check"
+msgstr ""
+
+msgid "List of readiness checks"
+msgstr ""
+
+msgid "Loading"
 msgstr ""
 
 msgid "Log in"
@@ -73,22 +115,49 @@ msgstr ""
 msgid "Login"
 msgstr ""
 
+msgid "Logout"
+msgstr ""
+
 msgid "Low bandwidth"
+msgstr ""
+
+msgid "Low upload speed"
+msgstr ""
+
+msgid "Max upload speed"
 msgstr ""
 
 msgid "Maximum bandwidth"
 msgstr ""
 
+msgid "Maximum intensive bandwidth"
+msgstr ""
+
 msgid "Maximum rendering time"
+msgstr ""
+
+msgid "Media intensive bandwidth"
 msgstr ""
 
 msgid "Minimum bandwidth"
 msgstr ""
 
+msgid "Minimum intensive bandwidth"
+msgstr ""
+
 msgid "Minimum rendering time"
 msgstr ""
 
+msgid "No diagnostic service defined"
+msgstr ""
+
+msgid "No readiness checks have been done!"
+msgstr ""
+
 msgid "Number of simultaneous test takers the connection can handle"
+msgstr ""
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
 msgstr ""
 
 msgid "Operating system"
@@ -97,10 +166,58 @@ msgstr ""
 msgid "Operating system and web browser"
 msgstr ""
 
+msgid "OS"
+msgstr ""
+
+msgid "Performances"
+msgstr ""
+
+msgid "Readiness Check"
+msgstr ""
+
+msgid "Readiness checks already done"
+msgstr ""
+
+msgid "Readiness diagnostics"
+msgstr ""
+
+msgid "Refresh"
+msgstr ""
+
+msgid "Refresh the page"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove the readiness check result?"
+msgstr ""
+
+msgid "Remove the selected readiness check results"
+msgstr ""
+
+msgid "Return to the list"
+msgstr ""
+
 msgid "Show Details"
 msgstr ""
 
+msgid "Something went wrong ..."
+msgstr ""
+
 msgid "Starting..."
+msgstr ""
+
+msgid "The readiness check result have been removed"
+msgstr ""
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr ""
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr ""
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
 msgstr ""
 
 msgid "This browser is not tested."
@@ -112,13 +229,13 @@ msgstr ""
 msgid "Total"
 msgstr ""
 
-msgid "Unknown browser"
+msgid "Try a test delivery"
 msgstr ""
 
-msgid "Unknown OS"
+msgid "Unable to get the workstation name!"
 msgstr ""
 
-msgid "Unknown version"
+msgid "Upload speed"
 msgstr ""
 
 msgid "Very slow performances"
@@ -127,10 +244,16 @@ msgstr ""
 msgid "Web browser"
 msgstr ""
 
+msgid "Workstation"
+msgstr ""
+
+msgid "Workstation name"
+msgstr ""
+
 msgid "Workstation performances"
 msgstr ""
 
-msgid "You must activate JavaScript in your browser to run this application."
+msgid "Workstation:"
 msgstr ""
 
 msgid "Your system is fully compliant."

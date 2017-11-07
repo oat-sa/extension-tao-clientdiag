@@ -30,7 +30,7 @@ define(['lodash'], function (_) {
     return function getConfig(config, defaults) {
         return _(config || {})
             .omit(function (value) {
-                return value === null || value === undefined;
+                return value === null || typeof value === 'undefined';
             })
             .defaults(defaults || {})
             .value();

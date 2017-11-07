@@ -50,6 +50,15 @@ interface Storage
     const DIAGNOSTIC_BANDWIDTH_VARIANCE   = 'bandwidth_variance';
     const DIAGNOSTIC_BANDWIDTH_DURATION   = 'bandwidth_duration';
     const DIAGNOSTIC_BANDWIDTH_SIZE       = 'bandwidth_size';
+    const DIAGNOSTIC_INTENSIVE_BANDWIDTH_MIN        = 'intensive_bandwidth_min';
+    const DIAGNOSTIC_INTENSIVE_BANDWIDTH_MAX        = 'intensive_bandwidth_max';
+    const DIAGNOSTIC_INTENSIVE_BANDWIDTH_SUM        = 'intensive_bandwidth_sum';
+    const DIAGNOSTIC_INTENSIVE_BANDWIDTH_COUNT      = 'intensive_bandwidth_count';
+    const DIAGNOSTIC_INTENSIVE_BANDWIDTH_AVERAGE    = 'intensive_bandwidth_average';
+    const DIAGNOSTIC_INTENSIVE_BANDWIDTH_MEDIAN     = 'intensive_bandwidth_median';
+    const DIAGNOSTIC_INTENSIVE_BANDWIDTH_VARIANCE   = 'intensive_bandwidth_variance';
+    const DIAGNOSTIC_INTENSIVE_BANDWIDTH_DURATION   = 'intensive_bandwidth_duration';
+    const DIAGNOSTIC_INTENSIVE_BANDWIDTH_SIZE       = 'intensive_bandwidth_size';
     const DIAGNOSTIC_PERFORMANCE_MIN      = 'performance_min';
     const DIAGNOSTIC_PERFORMANCE_MAX      = 'performance_max';
     const DIAGNOSTIC_PERFORMANCE_SUM      = 'performance_sum';

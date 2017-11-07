@@ -21,8 +21,9 @@ define([
     'i18n',
     'async',
     'util/url',
+    'taoClientDiagnostic/tools/getconfig',
     'taoClientDiagnostic/tools/diagnostic/status'
-], function($, _, __, async, urlHelper, statusFactory) {
+], function($, _, __, async, urlHelper, getConfig, statusFactory) {
     'use strict';
 
     /**
@@ -45,14 +46,44 @@ define([
     var data = [];
 
     /**
+     * Default values for the upload speed tester
+     * @type {Object}
+     * @private
+     */
+    var _defaults = {
+        // Size of data to sent to server during speed test in bytes
+        size: _mega,
+
+        // Optimal speed in bytes per second
+        optimal: _mega
+    };
+
+    /**
+     * List of translated texts per level.
+     * The level is provided through the config as a numeric value, starting from 1.
+     * @type {Object}
+     * @private
+     */
+    var _messages = [
+        // level 1
+        {
+            title: __('Upload speed'),
+            status: __('Checking upload speed...'),
+            uploadAvg: __('Average upload speed'),
+            uploadMax: __('Max upload speed')
+        }
+    ];
+
+    /**
      * Generate random string of given length
      * @param length
      */
     var generateStr = function generateStr(length) {
         var text = "";
         var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        var i;
 
-        for (var i=0; i < length; i++ ) {
+        for (i = 0; i < length; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
 
@@ -81,8 +112,9 @@ define([
                 var startTime = Date.now();
                 // Upload progress
                 xhr.upload.addEventListener("progress", function(evt){
+                    var passedTime;
                     if (evt.lengthComputable) {
-                        var passedTime = Date.now() - startTime;
+                        passedTime = Date.now() - startTime;
                         data.push({
                             time: passedTime,
                             loaded: evt.loaded,
@@ -92,28 +124,42 @@ define([
                 }, false);
 
                 return xhr;
-            },
+            }
         });
     };
 
     /**
      * Performs a upload speed test
+     * @param {Object} config - Some optional configs
+     * @param {String} [config.id] - The identifier of the test
+     * @param {Number} [config.size] - Size of data to sent to server during speed test in bytes
+     * @param {Number} [config.optimal] - Optimal speed in bytes per second
+     * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
+     * @param {Object} diagnosticTool
      * @returns {Object}
      */
     var uploadTester = function uploadTester(config, diagnosticTool) {
+        var initConfig = getConfig(config, _defaults);
+
+        // Compute the level value that targets which messages list to use for the feedbacks.
+        // It should be comprised within the available indexes.
+        // Higher level will be down to the higher available, lower level will be up to the lowest.
+        var level = Math.min(Math.max(parseInt(initConfig.level, 10), 1), _messages.length) - 1;
+
         return {
             /**
              * Performs upload speed test, then call a function to provide the result
              * @param {Function} done
              */
             start : function start(done) {
-                var jqXHR = upload(parseInt(config.size, 10));
-                diagnosticTool.changeStatus(__('Checking upload speed...'));
+                var jqXHR = upload(parseInt(initConfig.size, 10));
+                diagnosticTool.changeStatus(_messages[level].status);
                 jqXHR.then(function() {
                     var totalSpeed = 0;
                     var avgSpeed;
                     var maxSpeed = 0;
-                    var optimal = config.optimal / 1024 / 1024;
+                    var optimal = initConfig.optimal / _mega;
+                    var status, summary, result;
 
                     _.forEach(data, function (val) {
                         totalSpeed += val.speed;
@@ -123,20 +169,20 @@ define([
                     });
                     avgSpeed = Math.round(totalSpeed / data.length * 100) / 100;
 
-                    var status = statusFactory().getStatus((100 / optimal) * avgSpeed, 'upload');
-                    var summary = {
-                        uploadAvg: {message: __('Average upload speed'), value: avgSpeed + ' Mbps'},
-                        uploadMax: {message: __('Max upload speed'), value: maxSpeed + ' Mbps'}
+                    status = statusFactory().getStatus((100 / optimal) * avgSpeed, 'upload');
+                    summary = {
+                        uploadAvg: {message: _messages[level].uploadAvg, value: avgSpeed + ' Mbps'},
+                        uploadMax: {message: _messages[level].uploadMax, value: maxSpeed + ' Mbps'}
                     };
 
-                    var result = {
+                    result = {
                         max: maxSpeed,
                         avg: avgSpeed,
                         type: 'upload'
                     };
 
-                    status.id = 'upload';
-                    status.title = __('Upload speed');
+                    status.id = initConfig.id || 'upload';
+                    status.title =  _messages[level].title;
                     diagnosticTool.addCustomFeedbackMsg(status, diagnosticTool.getCustomMsg('diagUploadCheckResult'));
 
                     done(status, summary, result);
