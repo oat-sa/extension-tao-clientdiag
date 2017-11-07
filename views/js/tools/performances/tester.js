@@ -78,11 +78,13 @@ define([
     };
 
     /**
-     * List of translated texts per level
+     * List of translated texts per level.
+     * The level is provided through the config as a numeric value, starting from 1.
      * @type {Object}
      * @private
      */
     var _messages = [
+        // level 1
         {
             title: __('Workstation performances'),
             status: __('Checking the performances...'),
@@ -172,14 +174,16 @@ define([
     /**
      * Performs a browser performances test by running a heavy page
      *
-     * @param {Array} [samples]
-     * @param {Number} [occurrences]
-     * @param {Number} [timeout]
+     * @param {Object} config - Some optional configs
+     * @param {String} [config.id] - The identifier of the test
+     * @param {Number} [config.optimal] - The threshold for optimal performances
+     * @param {Number} [config.threshold] - The threshold for minimal performances
+     * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
+     * @param {Object} diagnosticTool
      * @returns {Object}
      */
     var performancesTester = function performancesTester(config, diagnosticTool) {
         var initConfig = getConfig(config, _defaults);
-        var level = Math.min(Math.max(parseInt(initConfig.level, 10), 1), _messages.length) - 1;
         var idx = 0;
         var _samples = _.map(!_.isEmpty(initConfig.samples) && initConfig.samples || _defaultSamples, function(sample) {
             idx ++;
@@ -191,9 +195,13 @@ define([
             };
         });
 
-
         var optimal = initConfig.optimal;
         var range = Math.abs(optimal - (initConfig.threshold));
+
+        // Compute the level value that targets which messages list to use for the feedbacks.
+        // It should be comprised within the available indexes.
+        // Higher level will be down to the higher available, lower level will be up to the lowest.
+        var level = Math.min(Math.max(parseInt(initConfig.level, 10), 1), _messages.length) - 1;
 
         // add one occurrence on the first sample to obfuscate the time needed to load the runner
         _samples[0].nb ++;

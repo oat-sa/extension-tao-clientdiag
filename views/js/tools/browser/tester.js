@@ -52,11 +52,13 @@ define([
     };
 
     /**
-     * List of translated texts per level
+     * List of translated texts per level.
+     * The level is provided through the config as a numeric value, starting from 1.
      * @type {Object}
      * @private
      */
     var _messages = [
+        // level 1
         {
             title: __('Operating system and web browser'),
             status: __('Checking the browser...'),
@@ -68,14 +70,21 @@ define([
     /**
      * Performs a browser support test
      *
-     * @param {Object} [config] - Some optional configs
+     * @param {Object} config - Some optional configs
+     * @param {String} [config.id] - The identifier of the test
      * @param {String} [config.action] - The name of the action to call to get the browser checker
      * @param {String} [config.controller] - The name of the controller to call to get the browser checker
      * @param {String} [config.extension] - The name of the extension containing the controller to call to get the browser checker
+     * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
+     * @param {Object} diagnosticTool
      * @returns {Object}
      */
     function browserTester(config, diagnosticTool) {
         var initConfig = getConfig(config, _defaults);
+
+        // Compute the level value that targets which messages list to use for the feedbacks.
+        // It should be comprised within the available indexes.
+        // Higher level will be down to the higher available, lower level will be up to the lowest.
         var level = Math.min(Math.max(parseInt(initConfig.level, 10), 1), _messages.length) - 1;
 
         return {

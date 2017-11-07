@@ -102,11 +102,13 @@ define([
     };
 
     /**
-     * List of translated texts per level
+     * List of translated texts per level.
+     * The level is provided through the config as a numeric value, starting from 1.
      * @type {Object}
      * @private
      */
     var _messages = [
+        // level 1
         {
             title: __('Bandwidth'),
             status: __('Checking the bandwidth...'),
@@ -114,7 +116,9 @@ define([
             bandwidthMin: __('Minimum bandwidth'),
             bandwidthMax: __('Maximum bandwidth'),
             bandwidthAverage: __('Average bandwidth')
-        }, {
+        },
+        // level 2
+        {
             title: __('Media intensive bandwidth'),
             status: __('Checking the media intensive bandwidth...'),
             legend: __('Number of simultaneous test takers the connection can handle with media intensive'),
@@ -185,10 +189,21 @@ define([
     /**
      * Performs a bandwidth test by downloading a bunch of data sets with different sizes
      *
+     * @param {Object} config - Some optional configs
+     * @param {String} [config.id] - The identifier of the test
+     * @param {Number} [config.unit] - The typical bandwidth needed for a test taker (Mbps)
+     * @param {Number} [config.ideal] - The thresholds for optimal bandwidth
+     * @param {Number} [config.max] - Maximum number of test takers to display
+     * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
+     * @param {Object} diagnosticTool
      * @returns {Object}
      */
     var bandwidthTester = function bandwidthTester (config, diagnosticTool) {
         var initConfig = getConfig(config, _defaults);
+
+        // Compute the level value that targets which messages list to use for the feedbacks.
+        // It should be comprised within the available indexes.
+        // Higher level will be down to the higher available, lower level will be up to the lowest.
         var level = Math.min(Math.max(parseInt(initConfig.level, 10), 1), _messages.length) - 1;
 
         return {
