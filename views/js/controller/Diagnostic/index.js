@@ -75,7 +75,7 @@ define([
             bandwidth = '> 100';
         }
 
-        return bandwidth;// + ' Mbs';
+        return bandwidth;
     };
 
     /**
