@@ -78,6 +78,23 @@ define([
     };
 
     /**
+     * List of translated texts per level.
+     * The level is provided through the config as a numeric value, starting from 1.
+     * @type {Object}
+     * @private
+     */
+    var _messages = [
+        // level 1
+        {
+            title: __('Workstation performances'),
+            status: __('Checking the performances...'),
+            performancesMin: __('Minimum rendering time'),
+            performancesMax: __('Maximum rendering time'),
+            performancesAverage: __('Average rendering time')
+        }
+    ];
+
+    /**
      * Base text used to build sample identifiers
      * @type {String}
      * @private
@@ -157,9 +174,12 @@ define([
     /**
      * Performs a browser performances test by running a heavy page
      *
-     * @param {Array} [samples]
-     * @param {Number} [occurrences]
-     * @param {Number} [timeout]
+     * @param {Object} config - Some optional configs
+     * @param {String} [config.id] - The identifier of the test
+     * @param {Number} [config.optimal] - The threshold for optimal performances
+     * @param {Number} [config.threshold] - The threshold for minimal performances
+     * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
+     * @param {Object} diagnosticTool
      * @returns {Object}
      */
     var performancesTester = function performancesTester(config, diagnosticTool) {
@@ -175,9 +195,13 @@ define([
             };
         });
 
-
         var optimal = initConfig.optimal;
         var range = Math.abs(optimal - (initConfig.threshold));
+
+        // Compute the level value that targets which messages list to use for the feedbacks.
+        // It should be comprised within the available indexes.
+        // Higher level will be down to the higher available, lower level will be up to the lowest.
+        var level = Math.min(Math.max(parseInt(initConfig.level, 10), 1), _messages.length) - 1;
 
         // add one occurrence on the first sample to obfuscate the time needed to load the runner
         _samples[0].nb ++;
@@ -190,7 +214,7 @@ define([
             start: function start(done) {
                 var tests = [];
 
-                diagnosticTool.changeStatus(__('Checking the performances...'));
+                diagnosticTool.changeStatus(_messages[level].status);
 
                 _.forEach(_samples, function(data) {
                     var cb = _.partial(loadItem, data);
@@ -220,13 +244,13 @@ define([
                     cursor = range - results.average + optimal;
                     status = statusFactory().getStatus(cursor / range * 100, 'performances');
                     summary = {
-                        performancesMin: {message: __('Minimum rendering time'), value: results.min + ' s'},
-                        performancesMax: {message: __('Maximum rendering time'), value: results.max + ' s'},
-                        performancesAverage: {message: __('Average rendering time'), value: results.average + ' s'}
+                        performancesMin: {message: _messages[level].performancesMin, value: results.min + ' s'},
+                        performancesMax: {message: _messages[level].performancesMax, value: results.max + ' s'},
+                        performancesAverage: {message: _messages[level].performancesAverage, value: results.average + ' s'}
                     };
 
-                    status.title = __('Workstation performances');
-                    status.id = 'performances';
+                    status.title =  _messages[level].title;
+                    status.id = initConfig.id || 'performances';
                     diagnosticTool.addCustomFeedbackMsg(status, diagnosticTool.getCustomMsg('diagPerformancesCheckResult'));
 
                     done(status, summary, results);

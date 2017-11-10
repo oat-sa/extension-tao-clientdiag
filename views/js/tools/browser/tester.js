@@ -52,16 +52,40 @@ define([
     };
 
     /**
+     * List of translated texts per level.
+     * The level is provided through the config as a numeric value, starting from 1.
+     * @type {Object}
+     * @private
+     */
+    var _messages = [
+        // level 1
+        {
+            title: __('Operating system and web browser'),
+            status: __('Checking the browser...'),
+            browser: __('Web browser'),
+            os: __('Operating system')
+        }
+    ];
+
+    /**
      * Performs a browser support test
      *
-     * @param {Object} [config] - Some optional configs
+     * @param {Object} config - Some optional configs
+     * @param {String} [config.id] - The identifier of the test
      * @param {String} [config.action] - The name of the action to call to get the browser checker
      * @param {String} [config.controller] - The name of the controller to call to get the browser checker
      * @param {String} [config.extension] - The name of the extension containing the controller to call to get the browser checker
+     * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
+     * @param {Object} diagnosticTool
      * @returns {Object}
      */
     function browserTester(config, diagnosticTool) {
-        var initConfig = getConfig(config || {}, _defaults);
+        var initConfig = getConfig(config, _defaults);
+
+        // Compute the level value that targets which messages list to use for the feedbacks.
+        // It should be comprised within the available indexes.
+        // Higher level will be down to the higher available, lower level will be up to the lowest.
+        var level = Math.min(Math.max(parseInt(initConfig.level, 10), 1), _messages.length) - 1;
 
         return {
             /**
@@ -69,7 +93,7 @@ define([
              * @param {Function} done
              */
             start: function start(done) {
-                diagnosticTool.changeStatus(__('Checking the browser...'));
+                diagnosticTool.changeStatus(_messages[level].status);
 
                 getPlatformInfo(window, initConfig)
                     .then(function(platformInfo) {
@@ -84,18 +108,18 @@ define([
                                 var currentOs = platformInfo.os + ' ' + platformInfo.osVersion;
                                 var summary = {
                                     browser: {
-                                        message: __('Web browser'),
+                                        message: _messages[level].browser,
                                         value: currentBrowser
                                     },
                                     os: {
-                                        message: __('Operating system'),
+                                        message: _messages[level].os,
                                         value: currentOs
                                     }
                                 };
                                 var customMsg = diagnosticTool.getCustomMsg('diagBrowserOsCheckResult') || '';
 
-                                status.id = 'browser';
-                                status.title = __('Operating system and web browser');
+                                status.id = initConfig.id || 'browser';
+                                status.title =  _messages[level].title;
 
                                 customMsg = customMsg
                                     .replace(_placeHolders.CURRENT_BROWSER, currentBrowser)

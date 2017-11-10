@@ -472,5 +472,59 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('2.4.0', '2.6.1');
+
+
+        if ($this->isVersion('2.6.1')) {
+            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+
+            if (isset($config['testers'])) {
+                foreach($config['testers'] as &$tester) {
+                    $tester['enabled'] = true;
+                    $tester['level'] = 1;
+                }
+            }
+
+            $config['testers']['intensive_bandwidth'] = [
+                'enabled' => false,
+                'level' => 2,
+                'tester' => 'taoClientDiagnostic/tools/bandwidth/tester',
+                'unit' => 1.2,
+                'ideal' => 45,
+                'max' => 100
+            ];
+
+            $extension->setConfig('clientDiag', $config);
+
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+            if ($storageService instanceof Sql) {
+                $persistence = $storageService->getPersistence();
+
+                $schemaManager = $persistence->getDriver()->getSchemaManager();
+                $schema = $schemaManager->createSchema();
+
+                $fromSchema = clone $schema;
+
+                /** @var \Doctrine\DBAL\Schema\Table $tableResults */
+                $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
+
+                $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_MIN, 'float', ['notnull' => false]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_MAX, 'float', ['notnull' => false]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_SUM, 'float', ['notnull' => false]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_COUNT, 'integer', ['length' => 16, 'notnull' => false]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_AVERAGE, 'float', ['notnull' => false]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_MEDIAN, 'float', ['notnull' => false]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_VARIANCE, 'float', ['notnull' => false]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_DURATION, 'float', ['notnull' => false]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_SIZE, 'integer', ['length' => 16, 'notnull' => false]);
+
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+                foreach ($queries as $query) {
+                    $persistence->exec($query);
+                }
+            }
+
+            $this->setVersion('2.7.0');
+        }
     }
 }

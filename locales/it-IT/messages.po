@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.1.0-sprint15\n"
-"PO-Revision-Date: 2016-02-19T18:26:14\n"
+"Project-Id-Version: TAO 3.2.0-sprint63\n"
+"PO-Revision-Date: 2017-11-07T09:38:53\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: it-IT\n"
@@ -19,11 +19,17 @@ msgstr "Diritti riservati"
 msgid "Average bandwidth"
 msgstr "Media della larghezza della banda"
 
-msgid "Average performance"
+msgid "Average intensive bandwidth"
+msgstr "Media della larghezza di banda"
+
+msgid "Average performances"
 msgstr "Media della performance "
 
 msgid "Average rendering time"
 msgstr "Media del tempo di rendering"
+
+msgid "Average upload speed"
+msgstr ""
 
 msgid "Bandwidth"
 msgstr "Larghezza banda"
@@ -34,11 +40,32 @@ msgstr "Prendete visione che questi test necessita di alcuni minuti"
 msgid "Begin diagnostics"
 msgstr "Inizi diagnostica"
 
+msgid "Browser"
+msgstr ""
+
+msgid "Checking the bandwidth..."
+msgstr "Controllo di banda"
+
+msgid "Checking the browser..."
+msgstr ""
+
+msgid "Checking the media intensive bandwidth..."
+msgstr "Controllo dei media ad elevato impiego di banda"
+
+msgid "Checking the performances..."
+msgstr ""
+
+msgid "Checking upload speed..."
+msgstr ""
+
 msgid "Compatible"
 msgstr "Compatibile"
 
 msgid "Connect to the diagnostic tool"
 msgstr "Connetto allo strumento di diagnostica"
+
+msgid "Date"
+msgstr ""
 
 msgid "Details"
 msgstr "Dettagli"
@@ -46,11 +73,41 @@ msgstr "Dettagli"
 msgid "Diagnostic Tool"
 msgstr ""
 
+msgid "Done!"
+msgstr ""
+
+msgid "Exit"
+msgstr ""
+
 msgid "Good bandwidth"
 msgstr "Larghezza banda buona"
 
-msgid "Good performance"
+msgid "Good performances"
 msgstr "Buone performance"
+
+msgid "Good upload speed"
+msgstr ""
+
+msgid "Hide Details"
+msgstr ""
+
+msgid "Intensive bandwidth"
+msgstr ""
+
+msgid "Interface not available"
+msgstr ""
+
+msgid "Launch another readiness check"
+msgstr ""
+
+msgid "Launch readiness check"
+msgstr ""
+
+msgid "List of readiness checks"
+msgstr ""
+
+msgid "Loading"
+msgstr ""
 
 msgid "Log in"
 msgstr "Accesso"
@@ -58,23 +115,50 @@ msgstr "Accesso"
 msgid "Login"
 msgstr "Accesso"
 
+msgid "Logout"
+msgstr ""
+
 msgid "Low bandwidth"
 msgstr "Larghezza banda scarsa"
+
+msgid "Low upload speed"
+msgstr ""
+
+msgid "Max upload speed"
+msgstr ""
 
 msgid "Maximum bandwidth"
 msgstr "Massima larghezza banda"
 
+msgid "Maximum intensive bandwidth"
+msgstr "Massimo della larghezza di banda"
+
 msgid "Maximum rendering time"
 msgstr "Tempo massimo di rendering"
+
+msgid "Media intensive bandwidth"
+msgstr "Media ad elevato impiego di banda"
 
 msgid "Minimum bandwidth"
 msgstr "Larghezza di banda minima"
 
+msgid "Minimum intensive bandwidth"
+msgstr "Minimo della larghezza di banda"
+
 msgid "Minimum rendering time"
 msgstr "Tempo di esecuzione minimo"
 
+msgid "No diagnostic service defined"
+msgstr ""
+
+msgid "No readiness checks have been done!"
+msgstr ""
+
 msgid "Number of simultaneous test takers the connection can handle"
 msgstr "Numero di partecipanti simultaneo che la connessione può gestire."
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr "Numero di partecipanti simultanei consentiti dalla connessione in funzione dei media ad elevato impiego di banda"
 
 msgid "Operating system"
 msgstr "Sistema operativo"
@@ -82,35 +166,95 @@ msgstr "Sistema operativo"
 msgid "Operating system and web browser"
 msgstr "Sistema operativo e web browser"
 
+msgid "OS"
+msgstr ""
+
+msgid "Performances"
+msgstr ""
+
+msgid "Readiness Check"
+msgstr ""
+
+msgid "Readiness checks already done"
+msgstr ""
+
+msgid "Readiness diagnostics"
+msgstr ""
+
+msgid "Refresh"
+msgstr ""
+
+msgid "Refresh the page"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove the readiness check result?"
+msgstr ""
+
+msgid "Remove the selected readiness check results"
+msgstr ""
+
+msgid "Return to the list"
+msgstr ""
+
 msgid "Show Details"
 msgstr "Mostra dettagli"
 
+msgid "Something went wrong ..."
+msgstr ""
+
+msgid "Starting..."
+msgstr ""
+
+msgid "The readiness check result have been removed"
+msgstr ""
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr ""
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr ""
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr ""
+
 msgid "This browser is not tested."
+msgstr ""
+
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
 msgstr ""
 
 msgid "Total"
 msgstr "Totale"
 
-msgid "Unknown browser"
-msgstr "Browser sconosciuto"
+msgid "Try a test delivery"
+msgstr ""
 
-msgid "Unknown OS"
-msgstr "Sistema operativo sconosciuto"
+msgid "Unable to get the workstation name!"
+msgstr ""
 
-msgid "Unknown version"
-msgstr "Versione sconosciuta"
+msgid "Upload speed"
+msgstr ""
 
-msgid "Very slow performance"
+msgid "Very slow performances"
 msgstr "Performance veramente basse"
 
 msgid "Web browser"
 msgstr "Browser web"
 
-msgid "Workstation performance"
+msgid "Workstation"
+msgstr ""
+
+msgid "Workstation name"
+msgstr ""
+
+msgid "Workstation performances"
 msgstr "Performance della postazione di lavoro"
 
-msgid "You must activate JavaScript in your browser to run this application."
-msgstr "Devi attivare JavaScript nel tuo browser per eseguire questa applicazione"
+msgid "Workstation:"
+msgstr ""
 
 msgid "Your system is fully compliant."
 msgstr "Il tuo sistema è completamente adeguato"
