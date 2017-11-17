@@ -20,6 +20,7 @@
 
 namespace oat\taoClientDiagnostic\model\diagnostic;
 use oat\oatbox\service\ConfigurableService;
+use oat\tao\model\theme\ThemeService;
 /**
  * Class DiagnosticService
  * @package oat\taoClientDiagnostic\model\diagnostic
@@ -27,12 +28,55 @@ use oat\oatbox\service\ConfigurableService;
  */
 class DiagnosticService extends ConfigurableService implements DiagnosticServiceInterface
 {
+    /**
+     * (non-PHPdoc)
+     * @see \oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface::getDiagnosticJsConfig()
+     */
+    public function getDiagnosticJsConfig()
+    {
+        $config = $this->getRawConfig();
+        // override samples based on grafical theme, why not
+        $config['testers']['performance']['samples'] = $this->getPerformanceSamples();
+        return $config;
+    }
 
     /**
-     * @inheritdoc
+     * Returns the raw configuration of the diagtool
+     * @return array
+     */
+    protected function getRawConfig()
+    {
+        return $this->getServiceManager()->get('taoClientDiagnostic/clientDiag')->getConfig();
+    }
+
+    /**
+     * Returns the correct samples to be used for the performance tests
+     * @return array
+     */
+    protected function getPerformanceSamples()
+    {
+        $themeService = $this->getServiceManager()->get(ThemeService::SERVICE_ID);
+        $themeId = $themeService->getCurrentThemeId();
+        \common_Logger::w($themeId);
+        $config = $this->getRawConfig();
+        $sampleConfig =  $config['testers']['performance']['samples'];
+        if (is_array(reset($sampleConfig))) {
+            if (array_key_exists($themeId, $sampleConfig)) {
+                $sample = $sampleConfig[$themeId];
+            } else {
+                $sample = array_shift($sampleConfig);
+            }
+        } else {
+            $sample = $sampleConfig;
+        }
+        return $sample;
+    }
+
+    /**
+     * @deprecated please use getDiagnosticJsConfig()
      */
     public function getTesters()
     {
-        return $this->getServiceManager()->get('taoClientDiagnostic/clientDiag')->getConfig();
+        return $this->getDiagnosticJsConfig();
     }
 }

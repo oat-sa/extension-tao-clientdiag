@@ -29,8 +29,10 @@ interface DiagnosticServiceInterface
     const SERVICE_ID = 'taoClientDiagnostic/DiagnosticService';
 
     /**
-     * Returns list of tester
+     * Returns the javascript configuration for the client diagnostics
+     * Can be overriden to enable,disable and configure diagnostics
+     *
      * @return array
      */
-    public function getTesters();
+    public function getDiagnosticJsConfig();
 }
