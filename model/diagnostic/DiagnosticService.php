@@ -57,7 +57,6 @@ class DiagnosticService extends ConfigurableService implements DiagnosticService
     {
         $themeService = $this->getServiceManager()->get(ThemeService::SERVICE_ID);
         $themeId = $themeService->getCurrentThemeId();
-        \common_Logger::w($themeId);
         $config = $this->getRawConfig();
         $sampleConfig =  $config['testers']['performance']['samples'];
         if (is_array(reset($sampleConfig))) {
