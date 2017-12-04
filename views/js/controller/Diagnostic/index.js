@@ -20,17 +20,19 @@
  */
 define([
     'jquery',
+    'lodash',
     'i18n',
     'helpers',
     'layout/loading-bar',
     'util/encode',
     'ui/feedback',
     'ui/dialog',
-    'taoClientDiagnostic/tools/diagnostic/status',
+    'taoClientDiagnostic/tools/getStatus',
+    'taoClientDiagnostic/tools/performances/tester',
     'moment',
     'ui/datatable',
     'lib/moment-timezone.min'
-], function ($, __, helpers, loadingBar, encode, feedback, dialog, statusFactory, moment) {
+], function ($, _, __, helpers, loadingBar, encode, feedback, dialog, getStatus, performancesTesterFactory, moment) {
     'use strict';
 
     /**
@@ -84,7 +86,18 @@ define([
      * @returns {String}
      */
     var transformDateToLocal = function transformDateToLocal(date) {
-        var time = moment.tz(date, defaultDateTimeZone);
+        var d, time;
+
+        if (_.isFinite(date)) {
+            if (!_.isNumber(date)) {
+                date = _.parseInt(date, 10);
+            }
+            d = new Date(date * 1000);
+            time = moment.utc(d);
+        } else {
+            time = moment.tz(date, defaultDateTimeZone);
+        }
+
         return time.tz(moment.tz.guess()).format(defaultDateFormat);
     };
 
@@ -107,12 +120,7 @@ define([
             var diagnosticUrl = helpers._url('diagnostic', 'Diagnostic', extension);
             var removeUrl = helpers._url('remove', 'Diagnostic', extension);
             var serviceUrl = helpers._url('diagnosticData', 'Diagnostic', extension);
-
-            var performancesConfig = config.testers.performance || {};
-            var performancesOptimal = performancesConfig.optimal;
-            var performancesRange = Math.abs(performancesOptimal - (performancesConfig.threshold));
-
-            var diagnosticStatus = statusFactory();
+            var performancesTester = performancesTesterFactory(config.testers.performance || {});
 
             var tools = [];
             var actions = [];
@@ -268,9 +276,8 @@ define([
                     id: 'performance',
                     label: __('Performances'),
                     transform: function (value) {
-                        var cursor = performancesRange - value + performancesOptimal;
-                        var status = diagnosticStatus.getStatus(cursor / performancesRange * 100, 'performances');
-                        return status.feedback.message;
+                        var status = performancesTester.getFeedback(value);
+                        return status.feedback && status.feedback.message;
                     }
                 });
             }
