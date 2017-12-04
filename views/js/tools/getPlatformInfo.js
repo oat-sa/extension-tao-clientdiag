@@ -13,18 +13,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2016-2017 (original work) Open Assessment Technologies SA ;
  */
 /**
  * This helper performs a server request to gather information about the user browser and os
  *
- * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
+ * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
 define([
-    'lodash',
     'jquery',
-    'util/url'
-], function (_, $, url) {
+    'util/url',
+    'taoClientDiagnostic/tools/getConfig'
+], function ($, url, getConfig) {
     'use strict';
 
     /**
@@ -40,12 +40,16 @@ define([
 
     /**
      * Gets the URL of the platform tester
+     * @param {Window} win
+     * @param {String} action
+     * @param {String} controller
+     * @param {String} extension
      * @returns {String}
      */
-    function getTesterUrl(window, action, controller, extension) {
-        var document = window.document;
-        var navigator = window.navigator;
-        var screen = window.screen;
+    function getTesterUrl(win, action, controller, extension) {
+        var document = win.document;
+        var navigator = win.navigator;
+        var screen = win.screen;
         var params = {};
         var e = 0;
         var f = 0;
@@ -54,22 +58,22 @@ define([
         params.ua = navigator.userAgent;
 
         // detect browser family
-        e |= window.ActiveXObject ? 1 : 0;
-        e |= window.opera ? 2 : 0;
-        e |= window.chrome ? 4 : 0;
-        e |= 'getBoxObjectFor' in document || 'mozInnerScreenX' in window ? 8 : 0;
-        e |= ('WebKitCSSMatrix' in window || 'WebKitPoint' in window || 'webkitStorageInfo' in window || 'webkitURL' in window) ? 16 : 0;
+        e |= win.ActiveXObject ? 1 : 0;
+        e |= win.opera ? 2 : 0;
+        e |= win.chrome ? 4 : 0;
+        e |= 'getBoxObjectFor' in document || 'mozInnerScreenX' in win ? 8 : 0;
+        e |= ('WebKitCSSMatrix' in win || 'WebKitPoint' in win || 'webkitStorageInfo' in win || 'webkitURL' in win) ? 16 : 0;
         e |= (e & 16 && ({}.toString).toString().indexOf("\n") === -1) ? 32 : 0;
         params.e = e;
 
         // gather info about browser functionality
         f |= 'sandbox' in document.createElement('iframe') ? 1 : 0;
-        f |= 'WebSocket' in window ? 2 : 0;
-        f |= window.Worker ? 4 : 0;
-        f |= window.applicationCache ? 8 : 0;
-        f |= window.history && window.history.pushState ? 16 : 0;
+        f |= 'WebSocket' in win ? 2 : 0;
+        f |= win.Worker ? 4 : 0;
+        f |= win.applicationCache ? 8 : 0;
+        f |= win.history && win.history.pushState ? 16 : 0;
         f |= document.documentElement.webkitRequestFullScreen ? 32 : 0;
-        f |= 'FileReader' in window ? 64 : 0;
+        f |= 'FileReader' in win ? 64 : 0;
         params.f = f;
 
         // append a unique ID
@@ -91,26 +95,22 @@ define([
      * @param {String} config.browserVersionExtension - The name of the extension containing the controller to call to get the browser checker
      * @returns {Promise}
      */
-    return function getPlatformInfo(window, config) {
+    return function getPlatformInfo(win, config) {
         var testerUrl;
 
-        config = _.defaults((config || {}), defaultConfig);
+        config = getConfig(config, defaultConfig);
 
         testerUrl = getTesterUrl(
-            window,
+            win,
             config.browserVersionAction,
             config.browserVersionController,
             config.browserVersionExtension
         );
 
         return new Promise(function (resolve, reject) {
-            $.ajax({
-                url: testerUrl,
-                success: function (platformInfo) {
-                    resolve(platformInfo);
-                },
-                error: reject
-            });
+            $.ajax({url: testerUrl})
+                .done(resolve)
+                .fail(reject);
         });
     };
 });
