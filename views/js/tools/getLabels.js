@@ -42,7 +42,7 @@ define(['lodash'], function (_) {
         // Compute the level value that targets which list of labels to use.
         // It should be comprised within the available indexes.
         // Higher levels will be reduced to the higher available, lower levels will be increased to the lowest.
-        level = Math.min(Math.max(parseInt(level, 10), 1), messages.length || 1) - 1;
+        level = Math.min(Math.max(parseInt(level, 10) || 0, 1), messages.length || 1) - 1;
 
         return messages[level] || {};
     };

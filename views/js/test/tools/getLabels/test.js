@@ -36,6 +36,16 @@ define(['taoClientDiagnostic/tools/getLabels'], function(getLabels){
         level: 1,
         expected: {}
     }, {
+        title: '1 message without array, no level',
+        messages: {
+            title: 'foo',
+            status: 'bar'
+        },
+        expected: {
+            title: 'foo',
+            status: 'bar'
+        }
+    }, {
         title: '1 message without array, level 1',
         level: 1,
         messages: {
