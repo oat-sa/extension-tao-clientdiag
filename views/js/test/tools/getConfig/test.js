@@ -68,19 +68,23 @@ define(['taoClientDiagnostic/tools/getConfig'], function(getConfig){
             discarded: null,
             undef: undefined,
             value: 0,
-            foo: 'test'
+            foo: 'test',
+            name: null
         },
         defaults: {
-            foo: 'bar'
+            foo: 'bar',
+            value: 10,
+            name: 'foo'
         },
         expected: {
             value: 0,
-            foo: 'test'
+            foo: 'test',
+            name: 'foo'
         }
     }]).test('getConfig ', function(data, assert){
-        var status = getConfig(data.config, data.defaults);
+        var config = getConfig(data.config, data.defaults);
         QUnit.expect(1);
-        assert.deepEqual(status, data.expected, 'The helper has returned the expected data');
+        assert.deepEqual(config, data.expected, 'The helper has returned the expected data');
     });
 
 });
