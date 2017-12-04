@@ -13,18 +13,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2015-2017 (original work) Open Assessment Technologies SA ;
  */
 define([
     'lodash',
     'i18n',
     'async',
     'context',
-    'taoClientDiagnostic/tools/getconfig',
+    'taoClientDiagnostic/tools/getConfig',
+    'taoClientDiagnostic/tools/getLabels',
     'taoClientDiagnostic/tools/stats',
     'taoClientDiagnostic/tools/fixedDecimals',
-    'taoClientDiagnostic/tools/diagnostic/status'
-], function(_, __, async, context, getConfig, stats, fixedDecimals, statusFactory) {
+    'taoClientDiagnostic/tools/getStatus'
+], function(_, __, async, context, getConfig, getLabels, stats, fixedDecimals, getStatus) {
     'use strict';
 
     /**
@@ -64,6 +65,25 @@ define([
         // Maximum number of test takers to display
         max: 100
     };
+
+    /**
+     * A list of thresholds for bandwidth check
+     * @type {Array}
+     * @private
+     */
+    var _thresholds = [{
+        threshold: 0,
+        message: __('Low bandwidth'),
+        type: 'error'
+    }, {
+        threshold: 33,
+        message: __('Average bandwidth'),
+        type: 'warning'
+    }, {
+        threshold: 66,
+        message: __('Good bandwidth'),
+        type: 'success'
+    }];
 
     /**
      * List of descriptors defining the data sets to download.
@@ -134,7 +154,7 @@ define([
      * @param {Function} cb A callback function called at the end of the download.
      * This callback is also called if a timeout breaks the download;
      */
-    var download = function download(data, cb) {
+    function download(data, cb) {
         var self = this;
         var start, end;
         var timeoutId;
@@ -184,7 +204,7 @@ define([
         timeoutId = _.delay(cb, data.timeout, 'timeout');
         start = window.performance.now();
         request.send();
-    };
+    }
 
     /**
      * Performs a bandwidth test by downloading a bunch of data sets with different sizes
@@ -195,16 +215,11 @@ define([
      * @param {Number} [config.ideal] - The thresholds for optimal bandwidth
      * @param {Number} [config.max] - Maximum number of test takers to display
      * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
-     * @param {Object} diagnosticTool
      * @returns {Object}
      */
-    var bandwidthTester = function bandwidthTester (config, diagnosticTool) {
+    function bandwidthTester (config) {
         var initConfig = getConfig(config, _defaults);
-
-        // Compute the level value that targets which messages list to use for the feedbacks.
-        // It should be comprised within the available indexes.
-        // Higher level will be down to the higher available, lower level will be up to the lowest.
-        var level = Math.min(Math.max(parseInt(initConfig.level, 10), 1), _messages.length) - 1;
+        var labels = getLabels(_messages, initConfig.level);
 
         return {
             /**
@@ -214,8 +229,6 @@ define([
             start : function start(done) {
                 var self = this;
                 var tests = [];
-
-                diagnosticTool.changeStatus(_messages[level].status);
 
                 _.forEach(_downloadData, function(data) {
                     var cb = _.bind(download, self, data);
@@ -231,22 +244,11 @@ define([
                     var duration = 0;
                     var size = 0;
                     var decimals = 2;
-                    var getValue;
                     var results;
                     var summary;
                     var status;
-                    var nb;
-                    var bandwidthUnit = initConfig.unit;
-                    var threshold = initConfig.ideal;
-                    var maxTestTakers = initConfig.max;
-                    var max = threshold * bandwidthUnit;
 
-                    if (err && !measures.length) {
-                        //something went wrong
-                        throw err;
-                    }
-
-                    getValue = function(value) {
+                    function getValue(value) {
                         var speed = 0;
 
                         if (value) {
@@ -258,42 +260,76 @@ define([
                         }
 
                         return speed;
-                    };
+                    }
+
+                    if (err && !measures.length) {
+                        //something went wrong
+                        throw err;
+                    }
 
                     results = stats(measures, getValue, decimals);
 
                     results.duration = fixedDecimals(duration / _second, decimals);
                     results.size = size;
 
-                    summary = {
-                        bandwidthMin: {message: _messages[level].bandwidthMin, value: results.min + ' Mbps'},
-                        bandwidthMax: {message: _messages[level].bandwidthMax, value: results.max + ' Mbps'},
-                        bandwidthAverage: {message:  _messages[level].bandwidthAverage, value: results.average + ' Mbps'}
-                    };
-
-                    status = statusFactory().getStatus(results.max / max * 100, 'bandwidth');
-                    nb = Math.floor(results.max / bandwidthUnit);
-
-                    if (nb > maxTestTakers) {
-                        nb = '>' + maxTestTakers;
-                    }
-
-                    status.id = initConfig.id || 'bandwidth';
-                    status.title =  _messages[level].title;
-                    status.feedback.legend =  _messages[level].legend;
-                    diagnosticTool.addCustomFeedbackMsg(status, diagnosticTool.getCustomMsg('diagBandwithCheckResult'));
-
-                    status.quality.label = nb;
-
-                    if (nb.toString().length > 2) {
-                        status.quality.wide = true;
-                    }
+                    summary = self.getSummary(results);
+                    status = self.getFeedback(results.max);
 
                     done(status, summary, results);
                 });
+            },
+
+            /**
+             * Gets the labels loaded for the tester
+             * @returns {Object}
+             */
+            get labels() {
+                return labels;
+            },
+
+            /**
+             * Builds the results summary
+             * @param {Object} results
+             * @returns {Object}}
+             */
+            getSummary: function getSummary(results) {
+                return {
+                    bandwidthMin: {message: labels.bandwidthMin, value: results.min + ' Mbps'},
+                    bandwidthMax: {message: labels.bandwidthMax, value: results.max + ' Mbps'},
+                    bandwidthAverage: {message:  labels.bandwidthAverage, value: results.average + ' Mbps'}
+                };
+            },
+
+            /**
+             * Gets the feedback status for the provided result value
+             * @param {Number} result
+             * @returns {Object}}
+             */
+            getFeedback: function getFeedback(result) {
+                var bandwidthUnit = initConfig.unit;
+                var threshold = initConfig.ideal;
+                var maxTestTakers = initConfig.max;
+                var max = threshold * bandwidthUnit;
+                var status = getStatus(result / max * 100, _thresholds);
+                var nb = Math.floor(result / bandwidthUnit);
+
+                if (nb > maxTestTakers) {
+                    nb = '>' + maxTestTakers;
+                }
+
+                status.id = initConfig.id || 'bandwidth';
+                status.title =  labels.title;
+                status.feedback.legend =  labels.legend;
+                status.quality.label = nb;
+
+                if (nb.toString().length > 2) {
+                    status.quality.wide = true;
+                }
+
+                return status;
             }
         };
-    };
+    }
 
     return bandwidthTester;
 });

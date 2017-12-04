@@ -16,7 +16,7 @@
  * Copyright (c) 2016-2017 (original work) Open Assessment Technologies SA ;
  */
 /**
- * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
+ * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  * @author dieter <dieter@taotesting.com>
  */
 define([
@@ -28,12 +28,12 @@ define([
     'ui/component',
     'core/dataProvider/request',
     'util/url',
-    'taoClientDiagnostic/tools/diagnostic/status',
     'taoClientDiagnostic/tools/performances/tester',
     'taoClientDiagnostic/tools/bandwidth/tester',
     'taoClientDiagnostic/tools/upload/tester',
     'taoClientDiagnostic/tools/browser/tester',
-    'taoClientDiagnostic/tools/getconfig',
+    'taoClientDiagnostic/tools/getStatus',
+    'taoClientDiagnostic/tools/getConfig',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/main',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/result',
     'css!taoClientDiagnosticCss/diagnostics'
@@ -45,11 +45,11 @@ define([
              component,
              request,
              urlUtil,
-             statusFactory,
              performancesTester,
              bandwidthTester,
              uploadTester,
              browserTester,
+             getStatus,
              getConfig,
              mainTpl,
              resultTpl) {
@@ -72,6 +72,25 @@ define([
         storeAllRuns: false,
         configurableText: {}
     };
+
+    /**
+     * A list of thresholds for summary
+     * @type {Array}
+     * @private
+     */
+    var _thresholds = [{
+        threshold: 0,
+        message: __('Your system requires a compatibility update, please contact your system administrator.'),
+        type: 'error'
+    }, {
+        threshold: 33,
+        message: __('Your system is not optimal, please contact your system administrator.'),
+        type: 'warning'
+    }, {
+        threshold: 66,
+        message: __('Your system is fully compliant.'),
+        type: 'success'
+    }];
 
     /**
      * Defines a diagnostic tool
@@ -127,6 +146,10 @@ define([
          */
         addCustomFeedbackMsg: function addCustomFeedbackMsg(status, msg) {
             if (this.hasFailed(status) && msg) {
+                if (_.isFunction(status.customMsgRenderer)) {
+                    msg = status.customMsgRenderer(msg);
+                }
+                status.feedback = status.feedback || {};
                 status.feedback.customMsg = msg;
             }
         },
@@ -246,7 +269,9 @@ define([
             var testers = [];
 
             // common handling for testers
-            function doCheck(tester, testerId, cb) {
+            function doCheck(testerConfig, cb) {
+                var testerId = testerConfig.id;
+
                 /**
                  * Notifies the start of a tester operation
                  * @event diagnostic#starttester
@@ -254,8 +279,17 @@ define([
                  */
                 self.trigger('starttester', testerId);
                 self.setState(testerId, true);
-                require([tester.tester], function (testerFactory){
-                    testerFactory(getConfig(tester, self.config), self).start(function (status, details, results) {
+
+                require([testerConfig.tester], function (testerFactory){
+                    var tester = testerFactory(getConfig(testerConfig, self.config), self);
+                    self.changeStatus(tester.labels.status);
+                    tester.start(function (status, details, results) {
+                        var customMsg;
+                        if (testerConfig.customMsgKey) {
+                            customMsg = self.getCustomMsg(testerConfig.customMsgKey);
+                            self.addCustomFeedbackMsg(status, customMsg);
+                        }
+
                         // the returned details must be ingested into the main details list
                         _.forEach(details, function(info) {
                             information.push(info);
@@ -283,11 +317,11 @@ define([
                 // set up the component to a new run
                 this.prepare();
 
-                _.forEach(this.config.testers, function(tester, testerId) {
-                    tester.id = testerId;
-                    if (tester.enabled) {
+                _.forEach(this.config.testers, function(testerConfig, testerId) {
+                    testerConfig.id = testerConfig.id || testerId;
+                    if (testerConfig.enabled) {
                         testers.push(function (cb) {
-                            doCheck(tester, testerId, cb);
+                            doCheck(testerConfig, cb);
                         });
                     }
                 });
@@ -298,7 +332,7 @@ define([
                     var total = _.min(scores, 'percentage');
 
                     // get a status according to the main score
-                    var status = self.status.getStatus(total.percentage, 'summary');
+                    var status = getStatus(total.percentage, _thresholds);
 
                     // display the result
                     status.title = __('Total');
@@ -361,15 +395,11 @@ define([
             // uninstalls the component
             .on('destroy', function () {
                 this.controls = null;
-                this.status = null;
             })
 
             // renders the component
             .on('render', function () {
                 var self = this;
-
-                // use an external component to handle the thresholds and status
-                this.status = statusFactory();
 
                 // get access to all needed placeholders
                 this.controls = {

@@ -13,19 +13,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2016-2017 (original work) Open Assessment Technologies SA ;
  */
 /**
- * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
+ * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  */
 define([
     'jquery',
     'i18n',
     'util/url',
-    'taoClientDiagnostic/tools/getconfig',
+    'taoClientDiagnostic/tools/getConfig',
+    'taoClientDiagnostic/tools/getLabels',
     'taoClientDiagnostic/tools/getPlatformInfo',
-    'taoClientDiagnostic/tools/diagnostic/status'
-], function ($, __, url, getConfig, getPlatformInfo, statusFactory) {
+    'taoClientDiagnostic/tools/getStatus'
+], function ($, __, url, getConfig, getLabels, getPlatformInfo, getStatus) {
     'use strict';
 
     /**
@@ -76,16 +77,11 @@ define([
      * @param {String} [config.controller] - The name of the controller to call to get the browser checker
      * @param {String} [config.extension] - The name of the extension containing the controller to call to get the browser checker
      * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
-     * @param {Object} diagnosticTool
      * @returns {Object}
      */
-    function browserTester(config, diagnosticTool) {
+    function browserTester(config) {
         var initConfig = getConfig(config, _defaults);
-
-        // Compute the level value that targets which messages list to use for the feedbacks.
-        // It should be comprised within the available indexes.
-        // Higher level will be down to the higher available, lower level will be up to the lowest.
-        var level = Math.min(Math.max(parseInt(initConfig.level, 10), 1), _messages.length) - 1;
+        var labels = getLabels(_messages, initConfig.level);
 
         return {
             /**
@@ -93,44 +89,73 @@ define([
              * @param {Function} done
              */
             start: function start(done) {
-                diagnosticTool.changeStatus(_messages[level].status);
+                var self = this;
 
                 getPlatformInfo(window, initConfig)
-                    .then(function(platformInfo) {
+                    .then(function(results) {
                         // which browser
                         $.post(
                             url.route(initConfig.action, initConfig.controller, initConfig.extension),
-                            platformInfo,
+                            results,
                             function (data) {
                                 var percentage = ('success' === data.type) ? 100 : (('warning' === data.type) ? 33 : 0);
-                                var status = statusFactory().getStatus(percentage, data);
-                                var currentBrowser = platformInfo.browser + ' ' + platformInfo.browserVersion;
-                                var currentOs = platformInfo.os + ' ' + platformInfo.osVersion;
-                                var summary = {
-                                    browser: {
-                                        message: _messages[level].browser,
-                                        value: currentBrowser
-                                    },
-                                    os: {
-                                        message: _messages[level].os,
-                                        value: currentOs
-                                    }
+                                var status = self.getFeedback(percentage, data);
+                                var summary = self.getSummary(results);
+
+                                status.customMsgRenderer = function(customMsg) {
+                                    return (customMsg || '')
+                                        .replace(_placeHolders.CURRENT_BROWSER, summary.browser.value)
+                                        .replace(_placeHolders.CURRENT_OS, summary.os.value);
                                 };
-                                var customMsg = diagnosticTool.getCustomMsg('diagBrowserOsCheckResult') || '';
 
-                                status.id = initConfig.id || 'browser';
-                                status.title =  _messages[level].title;
-
-                                customMsg = customMsg
-                                    .replace(_placeHolders.CURRENT_BROWSER, currentBrowser)
-                                    .replace(_placeHolders.CURRENT_OS, currentOs);
-                                diagnosticTool.addCustomFeedbackMsg(status, customMsg);
-
-                                done(status, summary, platformInfo);
+                                done(status, summary, results);
                             },
                             'json'
                         );
                     });
+            },
+
+            /**
+             * Gets the labels loaded for the tester
+             * @returns {Object}
+             */
+            get labels() {
+                return labels;
+            },
+
+            /**
+             * Builds the results summary
+             * @param {Object} results
+             * @returns {Object}}
+             */
+            getSummary: function getSummary(results) {
+                var currentBrowser = results.browser + ' ' + results.browserVersion;
+                var currentOs = results.os + ' ' + results.osVersion;
+                return {
+                    browser: {
+                        message: labels.browser,
+                        value: currentBrowser
+                    },
+                    os: {
+                        message: labels.os,
+                        value: currentOs
+                    }
+                };
+            },
+
+            /**
+             * Gets the feedback status for the provided result value
+             * @param {Number} result
+             * @param {Object} data
+             * @returns {Object}}
+             */
+            getFeedback: function getFeedback(result, data) {
+                var status = getStatus(result, data);
+
+                status.id = initConfig.id || 'browser';
+                status.title =  labels.title;
+
+                return status;
             }
         };
     }
