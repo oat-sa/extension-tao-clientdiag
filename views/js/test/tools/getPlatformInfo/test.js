@@ -15,10 +15,13 @@
  *
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  */
-define(['jquery', 'util/url', 'taoClientDiagnostic/tools/getPlatformInfo'], function ($, url, getPlatformInfo) {
+define(['jquery', 'context', 'util/url', 'taoClientDiagnostic/tools/getPlatformInfo'], function ($, context, url, getPlatformInfo) {
     'use strict';
 
     var ajaxBackup;
+
+    // hotfix the URL to bring consistency between test platforms (browser and CLI)
+    context['root_url'] = 'http://tao.lan';
 
     /**
      * A simple AJAX mock factory that fakes a successful ajax call.

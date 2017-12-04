@@ -23,8 +23,9 @@
 define([
     'jquery',
     'util/url',
+    'core/promise',
     'taoClientDiagnostic/tools/getConfig'
-], function ($, url, getConfig) {
+], function ($, url, Promise, getConfig) {
     'use strict';
 
     /**
