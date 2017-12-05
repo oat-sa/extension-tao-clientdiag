@@ -71,6 +71,8 @@ define([
      * @private
      */
     var _defaults = {
+        id: 'performances',
+
         // The threshold for optimal performances
         optimal: 0.025,
 
@@ -289,7 +291,7 @@ define([
                 var status = getStatus((range + optimal - result) / range * 100, _thresholds);
 
                 status.title =  labels.title;
-                status.id = initConfig.id || 'performances';
+                status.id = initConfig.id;
                 return status;
             }
         };

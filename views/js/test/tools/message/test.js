@@ -15,7 +15,10 @@
  *
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  */
-define(['jquery', 'taoClientDiagnostic/tools/message', 'ui/feedback'], function ($, message, feedbackMock) {
+define([
+    'jquery',
+    'ui/feedback',
+    'taoClientDiagnostic/tools/message'], function ($, feedbackMock, message) {
     'use strict';
 
     QUnit.module('Module');

@@ -21,9 +21,13 @@ define(['taoClientDiagnostic/tools/bandwidth/tester'], function(bandwidthTester)
     QUnit.module('API');
 
     QUnit.test('The tester has the right form', function(assert){
+        QUnit.expect(6);
         assert.ok(typeof bandwidthTester === 'function', 'The module exposes a function');
         assert.ok(typeof bandwidthTester() === 'object', 'bandwidthTester is a factory');
         assert.ok(typeof bandwidthTester().start === 'function', 'the test has a start method');
+        assert.ok(typeof bandwidthTester().getSummary === 'function', 'the test has a getSummary method');
+        assert.ok(typeof bandwidthTester().getFeedback === 'function', 'the test has a getFeedback method');
+        assert.ok(typeof bandwidthTester().labels === 'object', 'the test has a labels objects');
     });
 
     QUnit.cases([{

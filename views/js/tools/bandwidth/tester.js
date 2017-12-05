@@ -56,6 +56,8 @@ define([
      * @private
      */
     var _defaults = {
+        id: 'bandwidth',
+
         // The typical bandwidth needed for a test taker (Mbps)
         unit: 0.16,
 
@@ -317,7 +319,7 @@ define([
                     nb = '>' + maxTestTakers;
                 }
 
-                status.id = initConfig.id || 'bandwidth';
+                status.id = initConfig.id;
                 status.title =  labels.title;
                 status.feedback.legend =  labels.legend;
                 status.quality.label = nb;

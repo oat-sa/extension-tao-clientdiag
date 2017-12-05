@@ -15,7 +15,11 @@
  *
  * Copyright (c) 2016-2017 (original work) Open Assessment Technologies SA ;
  */
-define(['jquery', 'lodash', 'taoClientDiagnostic/tools/upload/tester'], function($, _, uploadTester){
+define([
+    'jquery',
+    'lodash',
+    'taoClientDiagnostic/tools/upload/tester'
+], function($, _, uploadTester){
     'use strict';
 
     // backup/restore ajax method between each test
@@ -31,9 +35,13 @@ define(['jquery', 'lodash', 'taoClientDiagnostic/tools/upload/tester'], function
     QUnit.module('API');
 
     QUnit.test('The tester has the right form', function(assert) {
+        QUnit.expect(6);
         assert.ok(typeof uploadTester === 'function', 'The module exposes a function');
         assert.ok(typeof uploadTester() === 'object', 'uploadTester is a factory');
         assert.ok(typeof uploadTester().start === 'function', 'the test has a start method');
+        assert.ok(typeof uploadTester().getSummary === 'function', 'the test has a getSummary method');
+        assert.ok(typeof uploadTester().getFeedback === 'function', 'the test has a getFeedback method');
+        assert.ok(typeof uploadTester().labels === 'object', 'the test has a labels objects');
     });
 
     QUnit.cases([{

@@ -52,6 +52,8 @@ define([
      * @private
      */
     var _defaults = {
+        id: 'upload',
+
         // Size of data to sent to server during speed test in bytes
         size: _mega,
 
@@ -224,7 +226,7 @@ define([
                 var optimal = initConfig.optimal / _mega;
                 var status = getStatus((100 / optimal) * result, _thresholds);
 
-                status.id = initConfig.id || 'upload';
+                status.id = initConfig.id;
                 status.title =  labels.title;
 
                 return status;

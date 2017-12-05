@@ -15,7 +15,12 @@
  *
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  */
-define(['jquery', 'context', 'util/url', 'taoClientDiagnostic/tools/getPlatformInfo'], function ($, context, url, getPlatformInfo) {
+define([
+    'jquery',
+    'context',
+    'util/url',
+    'taoClientDiagnostic/tools/getPlatformInfo'
+], function ($, context, url, getPlatformInfo) {
     'use strict';
 
     var ajaxBackup;

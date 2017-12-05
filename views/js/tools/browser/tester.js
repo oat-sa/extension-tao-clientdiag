@@ -35,6 +35,7 @@ define([
      * @private
      */
     var _defaults = {
+        id: 'browser',
         browserVersionAction: 'whichBrowser',
         browserVersionController: 'CompatibilityChecker',
         browserVersionExtension: 'taoClientDiagnostic',
@@ -152,7 +153,7 @@ define([
             getFeedback: function getFeedback(result, data) {
                 var status = getStatus(result, data);
 
-                status.id = initConfig.id || 'browser';
+                status.id = initConfig.id;
                 status.title =  labels.title;
 
                 return status;
