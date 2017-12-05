@@ -46,6 +46,12 @@ return array(
     'footer' => '',
 
     /**
+     * List of additional custom messages (see testers configs below)
+     * @type array
+     */
+    'configurableText' => null,
+
+    /**
      * List of testers that can be loaded
      * @type array
      */
@@ -278,6 +284,36 @@ return array(
              * @type string
              */
             'customMsgKey' => 'diagBrowserOsCheckResult',
+        ],
+
+        /**
+         * Browser fingerprint config
+         * @type array
+         */
+        'fingerprint' => [
+            /**
+             * Allows to disable the test on the platform
+             * @type boolean
+             */
+            'enabled' => false,
+
+            /**
+             * Defines the test level. In case of multiple tests of the same kind, this config allows to compare intensities.
+             * @type boolean
+             */
+            'level' => 1,
+
+            /**
+             * Path to the component that will test the browser compatibility
+             * @type string
+             */
+            'tester' => 'taoClientDiagnostic/tools/fingerprint/tester',
+
+            /**
+             * The key used to get an additional custom message for the result
+             * @type string
+             */
+            'customMsgKey' => 'diagFingerprintCheckResult',
         ],
     ]
 );
