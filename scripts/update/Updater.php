@@ -528,5 +528,51 @@ class Updater extends \common_ext_ExtensionUpdater
         }
         
         $this->skip('2.7.0', '2.8.0');
+
+        if ($this->isVersion('2.8.0')) {
+            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+            
+            $config['testers']['performance']['customMsgKey'] = 'diagPerformancesCheckResult';
+            $config['testers']['bandwidth']['customMsgKey'] = 'diagBandwithCheckResult';
+            $config['testers']['intensive_bandwidth']['customMsgKey'] = 'diagBandwithCheckResult';
+            $config['testers']['upload']['customMsgKey'] = 'diagUploadCheckResult';
+            $config['testers']['browser']['customMsgKey'] = 'diagBrowserOsCheckResult';
+
+            $config['testers']['fingerprint'] = [
+                'enabled' => false,
+                'level' => 1,
+                'tester' => 'taoClientDiagnostic/tools/fingerprint/tester',
+                'customMsgKey' => 'diagFingerprintCheckResult',
+            ];
+
+            $extension->setConfig('clientDiag', $config);
+
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+            if ($storageService instanceof Sql) {
+                $persistence = $storageService->getPersistence();
+
+                $schemaManager = $persistence->getDriver()->getSchemaManager();
+                $schema = $schemaManager->createSchema();
+
+                $fromSchema = clone $schema;
+
+                /** @var \Doctrine\DBAL\Schema\Table $tableResults */
+                $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
+
+                $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_UUID, 'string', ['length' => 32]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_VALUE, 'string', ['length' => 32]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_DETAILS, 'text', ['notnull' => false]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_ERRORS, 'integer', ['length' => 1, 'notnull' => false]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_CHANGED, 'integer', ['length' => 1, 'notnull' => false]);
+
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+                foreach ($queries as $query) {
+                    $persistence->exec($query);
+                }
+            }
+            
+            $this->setVersion('2.9.0');
+        }
     }
 }
