@@ -23,16 +23,19 @@ define([
     'lodash',
     'i18n',
     'helpers',
+    'moment',
     'layout/loading-bar',
     'util/encode',
     'ui/feedback',
     'ui/dialog',
     'taoClientDiagnostic/tools/getStatus',
     'taoClientDiagnostic/tools/performances/tester',
-    'moment',
+    'taoClientDiagnostic/tools/fingerprint/tester',
+    'tpl!taoClientDiagnostic/tools/diagnostic/tpl/fingerprint',
+    'tpl!taoClientDiagnostic/tools/diagnostic/tpl/details',
     'ui/datatable',
     'lib/moment-timezone.min'
-], function ($, _, __, helpers, loadingBar, encode, feedback, dialog, getStatus, performancesTesterFactory, moment) {
+], function ($, _, __, helpers, moment, loadingBar, encode, feedback, dialog, getStatus, performancesTesterFactory, fingerprintTesterFactory, fingerprintTpl, detailsTpl) {
     'use strict';
 
     /**
@@ -121,6 +124,7 @@ define([
             var removeUrl = helpers._url('remove', 'Diagnostic', extension);
             var serviceUrl = helpers._url('diagnosticData', 'Diagnostic', extension);
             var performancesTester = performancesTesterFactory(config.testers.performance || {});
+            var fingerprintTester = fingerprintTesterFactory(config.testers.fingerprint || {});
 
             var tools = [];
             var actions = [];
@@ -258,8 +262,24 @@ define([
             if (config.testers.fingerprint && config.testers.fingerprint.enabled) {
                 // column: Fingerprint of the workstation
                 model.push({
-                    id: 'fingerprint',
-                    label: __('Fingerprint')
+                    id: 'fingerprint-cell',
+                    label: __('Fingerprint'),
+                    transform: function(v, row) {
+                        return fingerprintTpl(row.fingerprint);
+                    }
+                });
+
+                $list.on('click.fingerprint', '.fingerprint-cell span.details', function(e) {
+                    var id = $(e.target).closest('tr').data('itemIdentifier');
+                    var row = _.find(dataset.data, {id: id});
+                    if (row) {
+                        dialog({
+                            content: detailsTpl(fingerprintTester.getSummary(row.fingerprint)),
+                            buttons: 'ok',
+                            autoRender: true,
+                            autoDestroy: true
+                        });
+                    }
                 });
             }
 
@@ -326,8 +346,7 @@ define([
                 id: 'date',
                 label: __('Date'),
                 transform: function(value) {
-                    var date = transformDateToLocal(value);
-                    return date;
+                    return transformDateToLocal(value);
                 }
             });
 
@@ -335,7 +354,8 @@ define([
                 .on('query.datatable', function() {
                     loadingBar.start();
                 })
-                .on('load.datatable', function() {
+                .on('load.datatable', function(e, data) {
+                    dataset = data;
                     loadingBar.stop();
                 })
                 .datatable({

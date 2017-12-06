@@ -102,11 +102,6 @@
     .intro {
         margin-bottom: 20px;
     }
-
-    table.matrix {
-        @include simple-border();
-        margin-top: 5px;
-    }
 }
 
 
@@ -132,6 +127,17 @@ table.datatable {
         }
         .item-time:after {
             content: ')';
+        }
+    }
+}
+
+.details {
+    table.matrix {
+        @include simple-border();
+        margin-top: 5px;
+
+        td:first-child {
+            min-width: 30%;
         }
     }
 }
@@ -204,6 +210,23 @@ table.datatable {
         max-width: 800px;
     }
 
+    .detailed-value {
+        display: flex;
+        justify-content: space-between;
+        &.errors {
+            color: $warning;
+        }
+
+        .details {
+            font-size: 2rem;
+            cursor: pointer;
+            color: whiten($info, .2);
+
+            &:hover {
+                color: blacken($info, .8);
+            }
+        }
+    }
 }
 
 .action-bar {

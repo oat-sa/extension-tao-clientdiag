@@ -110,9 +110,11 @@ define([
             title: __('Fingerprint'),
             status: __('Computing the fingerprint...'),
             fingerprintValue: __('Fingerprint'),
-            fingerprintUUID: __('Browser UID'),
+            fingerprintUUID: __('Dynamic UID'),
             fingerprintDetails: __('Fingerprint sources'),
-            fingerprintErrors: __('Fingerprint errors')
+            fingerprintChanged: __('Change since last fingerprint'),
+            fingerprintErrors: __('Fingerprint errors'),
+            fingerprintError: __('Fingerprint error')
         }
     ];
 
@@ -142,22 +144,35 @@ define([
                 var self = this;
                 var errors = [];
 
+                /**
+                 * Simple error handler
+                 * @param error
+                 */
+                function handleError(error) {
+                    errors.push({
+                        key: 'error',
+                        value: '' + error
+                    });
+                    logger.error(error);
+                }
+
+                function getStorageKey(key) {
+                    return initConfig.id + '-' + _storageKeys[key];
+                }
+
                 store(_storageKeys.store)
                     .then(function (storage) {
                         browserStorage = storage;
                         return Promise.all([
-                            browserStorage.getItem(_storageKeys.uuid).then(function (value) {
+                            browserStorage.getItem(getStorageKey('uuid')).then(function (value) {
                                 browserId = value;
                             }),
-                            browserStorage.getItem(_storageKeys.fingerprint).then(function (value) {
+                            browserStorage.getItem(getStorageKey('fingerprint')).then(function (value) {
                                 lastFingerprint = value;
                             })
                         ]);
                     })
-                    .catch(function (err) {
-                        errors.push(err);
-                        logger.error(err);
-                    })
+                    .catch(handleError)
                     .then(function () {
                         return new Promise(function (resolve) {
                             new Fingerprint2().get(function (result, details) {
@@ -187,26 +202,20 @@ define([
 
                         if (browserStorage) {
                             if (freshBrowserId) {
-                                pendingPromises.push(browserStorage.setItem(_storageKeys.uuid, browserId));
+                                pendingPromises.push(browserStorage.setItem(getStorageKey('uuid'), browserId));
                             }
                             if (newFingerprint) {
-                                pendingPromises.push(browserStorage.setItem(_storageKeys.fingerprint, resultFingerprint));
+                                pendingPromises.push(browserStorage.setItem(getStorageKey('fingerprint'), resultFingerprint));
                             }
                         }
 
                         return Promise.all(pendingPromises)
-                            .catch(function (err) {
-                                errors.push(err);
-                                logger.error(err);
-                            })
+                            .catch(handleError)
                             .then(function () {
                                 return results;
                             });
                     })
-                    .catch(function (err) {
-                        errors.push(err);
-                        logger.error(err);
-                    })
+                    .catch(handleError)
                     .then(function (results) {
                         var summary, status;
 
@@ -236,18 +245,19 @@ define([
              * @returns {Object}}
              */
             getSummary: function getSummary(results) {
+                var sources = _(results[_storageKeys.details]).map('key').pull('error').value();
                 var summary = {
                     fingerprintValue: {
                         message: labels.fingerprintValue,
                         value: results[_storageKeys.fingerprint]
                     },
-                    fingerprintUUID: {
-                        message: labels.fingerprintUUID,
-                        value: results[_storageKeys.uuid]
-                    },
                     fingerprintDetails: {
                         message: labels.fingerprintDetails,
-                        value: _.size(results[_storageKeys.details])
+                        value: __('%d sources (%s)', _.size(sources), sources.join(', '))
+                    },
+                    fingerprintChanged: {
+                        message: labels.fingerprintChanged,
+                        value: results[_storageKeys.changed] ? __('Yes') : __('No')
                     }
                 };
 
@@ -256,6 +266,15 @@ define([
                         message: labels.fingerprintErrors,
                         value: results[_storageKeys.errors]
                     };
+
+                    _.forEach(results[_storageKeys.details], function(details, idx) {
+                        if (details.key === 'error') {
+                            summary['fingerprintError' + idx] = {
+                                message: labels.fingerprintError,
+                                value: details.value
+                            };
+                        }
+                    });
                 }
 
                 return summary;

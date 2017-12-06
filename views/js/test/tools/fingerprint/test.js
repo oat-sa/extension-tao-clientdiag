@@ -64,6 +64,7 @@ define([
                 'fingerprintValue',
                 'fingerprintUUID',
                 'fingerprintDetails',
+                'fingerprintChanged',
                 'fingerprintErrors'
             ];
 
@@ -112,13 +113,13 @@ define([
             assert.equal(typeof summary.fingerprintValue.message, 'string', 'The summary contains label for fingerprint');
             assert.equal(summary.fingerprintValue.value, data.results.value, 'The summary contains the expected value for fingerprint');
 
-            assert.equal(typeof summary.fingerprintUUID, 'object', 'The summary contains entry for browser id');
-            assert.equal(typeof summary.fingerprintUUID.message, 'string', 'The summary contains label for browser id');
-            assert.equal(summary.fingerprintUUID.value, data.results.uuid, 'The summary contains the expected value for browser id');
-
             assert.equal(typeof summary.fingerprintDetails, 'object', 'The summary contains entry for fingerprint sources');
             assert.equal(typeof summary.fingerprintDetails.message, 'string', 'The summary contains label for fingerprint sources');
-            assert.equal(summary.fingerprintDetails.value, data.results.details.length, 'The summary contains the expected value for fingerprint sources');
+            assert.equal(typeof summary.fingerprintDetails.value, 'string', 'The summary contains the expected value for fingerprint sources');
+
+            assert.equal(typeof summary.fingerprintChanged, 'object', 'The summary contains entry for fingerprint change');
+            assert.equal(typeof summary.fingerprintChanged.message, 'string', 'The summary contains label for fingerprint change');
+            assert.equal(typeof summary.fingerprintChanged.value, 'string', 'The summary contains the expected value for fingerprint change');
 
             if (data.errors) {
                 assert.equal(typeof summary.fingerprintErrors, 'object', 'The summary contains entry for fingerprint errors');
@@ -254,7 +255,7 @@ define([
             assert.equal(typeof results, 'object', 'The details are provided inside an object');
             assert.equal(results.value, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
             assert.deepEqual(results.details.slice(0, -1), components, 'The fingerprint details are provided inside the results');
-            assert.ok(results.details.pop() instanceof Error, 'The fingerprint error is provided inside the results');
+            assert.equal(results.details.pop().key, 'error', 'The fingerprint error is provided inside the results');
             assert.equal(results.errors, 1, 'An error should be found');
 
             QUnit.start();
@@ -280,7 +281,7 @@ define([
             assert.equal(typeof results, 'object', 'The details are provided inside an object');
             assert.equal(results.value, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
             assert.deepEqual(results.details.slice(0, -1), components, 'The fingerprint details are provided inside the results');
-            assert.ok(results.details.pop() instanceof Error, 'The fingerprint error is provided inside the results');
+            assert.equal(results.details.pop().key, 'error', 'The fingerprint error is provided inside the results');
             assert.equal(results.errors, 1, 'An error should be found');
 
             QUnit.start();
@@ -304,7 +305,7 @@ define([
             assert.equal(typeof results, 'object', 'The details are provided inside an object');
             assert.equal(typeof results.value, 'undefined', 'The fingerprint is not provided inside the results');
             assert.equal(results.details.length, 1, 'The fingerprint details are provided inside the results');
-            assert.ok(results.details.pop() instanceof Error, 'The fingerprint error is provided inside the results');
+            assert.equal(results.details.pop().key, 'error', 'The fingerprint error is provided inside the results');
             assert.equal(results.errors, 1, 'An error should be found');
 
             QUnit.start();

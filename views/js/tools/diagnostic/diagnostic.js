@@ -36,6 +36,9 @@ define([
     'taoClientDiagnostic/tools/getConfig',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/main',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/result',
+    'tpl!taoClientDiagnostic/tools/diagnostic/tpl/details',
+    'tpl!taoClientDiagnostic/tools/diagnostic/tpl/feedback',
+    'tpl!taoClientDiagnostic/tools/diagnostic/tpl/quality-bar',
     'css!taoClientDiagnosticCss/diagnostics'
 ], function ($,
              _,
@@ -52,7 +55,10 @@ define([
              getStatus,
              getConfig,
              mainTpl,
-             resultTpl) {
+             resultTpl,
+             detailsTpl,
+             feedbackTpl,
+             qualityBarTpl) {
     'use strict';
 
     /**
@@ -173,7 +179,7 @@ define([
          * @returns {diagnostic}
          */
         addResult: function addResult(result) {
-            var $result, $indicator;
+            var $main, $indicator, $result;
 
             if (this.is('rendered')) {
                 // adjust the width of the displayed label, if any, to the text length
@@ -182,15 +188,26 @@ define([
                 }
 
                 // create and append the result to the displayed list
-                $result = $(resultTpl(result));
-                $indicator = $result.find('.quality-indicator');
-                this.controls.$results.append($result);
+                $main = $(resultTpl(result));
+                $result = $main.find('.result');
+                if (result.feedback) {
+                    $result.append($(feedbackTpl(result.feedback)));
+                }
+                if (result.quality) {
+                    $result.append($(qualityBarTpl(result.quality)));
+                }
+                if (result.details) {
+                    $main.find('.details').append($(detailsTpl(result.details)));
+                }
+
+                $indicator = $main.find('.quality-indicator');
+                this.controls.$results.append($main);
 
                 // the result is hidden by default, show it with a little animation
-                $result.fadeIn(function () {
+                $main.fadeIn(function () {
                     if ($indicator.length) {
                         $indicator.animate({
-                            left: (result.percentage * $result.outerWidth() / 100) - ($indicator.outerWidth() / 2)
+                            left: (result.percentage * $main.outerWidth() / 100) - ($indicator.outerWidth() / 2)
                         });
                     }
                 });
