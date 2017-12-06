@@ -62,8 +62,8 @@ define([
                 'title',
                 'status',
                 'fingerprintValue',
-                'fingerprintBrowserId',
-                'fingerprintSources',
+                'fingerprintUUID',
+                'fingerprintDetails',
                 'fingerprintErrors'
             ];
 
@@ -80,9 +80,9 @@ define([
         title: 'no errors',
         errors: false,
         results: {
-            fingerprint: fingerprint,
+            value: fingerprint,
             uuid: 1234,
-            seed: [{
+            details: [{
                 foo: 'bar'
             }]
         }
@@ -90,14 +90,14 @@ define([
         title: 'with errors',
         errors: true,
         results: {
-            fingerprint: fingerprint,
+            value: fingerprint,
             uuid: 1234,
-            seed: [{
+            details: [{
                 foo: 'bar'
+            }, {
+                type: 'error'
             }],
-            errors: [{
-                type: 'oups'
-            }]
+            errors: 1
         }
     }])
         .test('getSummary', function (data, assert) {
@@ -110,20 +110,20 @@ define([
 
             assert.equal(typeof summary.fingerprintValue, 'object', 'The summary contains entry for fingerprint');
             assert.equal(typeof summary.fingerprintValue.message, 'string', 'The summary contains label for fingerprint');
-            assert.equal(summary.fingerprintValue.value, data.results.fingerprint, 'The summary contains the expected value for fingerprint');
+            assert.equal(summary.fingerprintValue.value, data.results.value, 'The summary contains the expected value for fingerprint');
 
-            assert.equal(typeof summary.fingerprintBrowserId, 'object', 'The summary contains entry for browser id');
-            assert.equal(typeof summary.fingerprintBrowserId.message, 'string', 'The summary contains label for browser id');
-            assert.equal(summary.fingerprintBrowserId.value, data.results.uuid, 'The summary contains the expected value for browser id');
+            assert.equal(typeof summary.fingerprintUUID, 'object', 'The summary contains entry for browser id');
+            assert.equal(typeof summary.fingerprintUUID.message, 'string', 'The summary contains label for browser id');
+            assert.equal(summary.fingerprintUUID.value, data.results.uuid, 'The summary contains the expected value for browser id');
 
-            assert.equal(typeof summary.fingerprintSources, 'object', 'The summary contains entry for fingerprint sources');
-            assert.equal(typeof summary.fingerprintSources.message, 'string', 'The summary contains label for fingerprint sources');
-            assert.equal(summary.fingerprintSources.value, data.results.seed.length, 'The summary contains the expected value for fingerprint sources');
+            assert.equal(typeof summary.fingerprintDetails, 'object', 'The summary contains entry for fingerprint sources');
+            assert.equal(typeof summary.fingerprintDetails.message, 'string', 'The summary contains label for fingerprint sources');
+            assert.equal(summary.fingerprintDetails.value, data.results.details.length, 'The summary contains the expected value for fingerprint sources');
 
             if (data.errors) {
                 assert.equal(typeof summary.fingerprintErrors, 'object', 'The summary contains entry for fingerprint errors');
                 assert.equal(typeof summary.fingerprintErrors.message, 'string', 'The summary contains label for fingerprint errors');
-                assert.equal(summary.fingerprintErrors.value, data.results.errors.length, 'The summary contains the expected value for fingerprint errors');
+                assert.equal(summary.fingerprintErrors.value, data.results.errors, 'The summary contains the expected value for fingerprint errors');
             }
         });
 
@@ -138,17 +138,17 @@ define([
         percentage: 0,
         type: 'error',
         results: {
-            fingerprint: null
+            value: null
         }
     }, {
         title: 'error fingerprint',
         percentage: 0,
         type: 'error',
         results: {
-            fingerprint: 'error',
+            value: 'error',
             uuid: 1234,
-            updated: false,
-            seed: [{
+            changed: false,
+            details: [{
                 foo: 'bar'
             }]
         }
@@ -157,10 +157,10 @@ define([
         percentage: 50,
         type: 'warning',
         results: {
-            fingerprint: fingerprint,
+            value: fingerprint,
             uuid: 'error',
-            updated: false,
-            seed: [{
+            changed: false,
+            details: [{
                 foo: 'bar'
             }]
         }
@@ -169,10 +169,10 @@ define([
         percentage: 90,
         type: 'success',
         results: {
-            fingerprint: fingerprint,
+            value: fingerprint,
             uuid: 1234,
-            updated: true,
-            seed: [{
+            changed: true,
+            details: [{
                 foo: 'bar'
             }]
         }
@@ -181,10 +181,10 @@ define([
         percentage: 100,
         type: 'success',
         results: {
-            fingerprint: fingerprint,
+            value: fingerprint,
             uuid: 1234,
-            updated: false,
-            seed: [{
+            changed: false,
+            details: [{
                 foo: 'bar'
             }]
         }
@@ -227,8 +227,8 @@ define([
             assert.equal(typeof status, 'object', 'The status is a object');
             assert.equal(typeof details, 'object', 'The details is a object');
             assert.equal(typeof results, 'object', 'The details are provided inside an object');
-            assert.equal(results.fingerprint, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
-            assert.equal(results.seed, components, 'The fingerprint details are provided inside the results');
+            assert.equal(results.value, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
+            assert.equal(results.details, components, 'The fingerprint details are provided inside the results');
             assert.equal(typeof results.errors, 'undefined', 'No errors should be found');
 
             QUnit.start();
@@ -238,7 +238,7 @@ define([
 
     QUnit.asyncTest('The tester runs, even if storage is not available', function (assert) {
 
-        QUnit.expect(6);
+        QUnit.expect(7);
 
         fingerprintMock.fails = false;
         fingerprintMock.result = fingerprint;
@@ -252,9 +252,10 @@ define([
             assert.equal(typeof status, 'object', 'The status is a object');
             assert.equal(typeof details, 'object', 'The details is a object');
             assert.equal(typeof results, 'object', 'The details are provided inside an object');
-            assert.equal(results.fingerprint, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
-            assert.equal(results.seed, components, 'The fingerprint details are provided inside the results');
-            assert.equal(results.errors && results.errors.length, 1, 'An error should be found');
+            assert.equal(results.value, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
+            assert.deepEqual(results.details.slice(0, -1), components, 'The fingerprint details are provided inside the results');
+            assert.ok(results.details.pop() instanceof Error, 'The fingerprint error is provided inside the results');
+            assert.equal(results.errors, 1, 'An error should be found');
 
             QUnit.start();
         });
@@ -263,7 +264,7 @@ define([
 
     QUnit.asyncTest('The tester runs, even if storage is not writable', function (assert) {
 
-        QUnit.expect(6);
+        QUnit.expect(7);
 
         fingerprintMock.fails = false;
         fingerprintMock.result = fingerprint;
@@ -277,9 +278,10 @@ define([
             assert.equal(typeof status, 'object', 'The status is a object');
             assert.equal(typeof details, 'object', 'The details is a object');
             assert.equal(typeof results, 'object', 'The details are provided inside an object');
-            assert.equal(results.fingerprint, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
-            assert.equal(results.seed, components, 'The fingerprint details are provided inside the results');
-            assert.equal(results.errors && results.errors.length, 1, 'An error should be found');
+            assert.equal(results.value, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
+            assert.deepEqual(results.details.slice(0, -1), components, 'The fingerprint details are provided inside the results');
+            assert.ok(results.details.pop() instanceof Error, 'The fingerprint error is provided inside the results');
+            assert.equal(results.errors, 1, 'An error should be found');
 
             QUnit.start();
         });
@@ -288,7 +290,7 @@ define([
 
     QUnit.asyncTest('The tester runs, even if an error occurs', function (assert) {
 
-        QUnit.expect(6);
+        QUnit.expect(7);
 
         fingerprintMock.fails = true;
         fingerprintMock.result = fingerprint;
@@ -300,9 +302,10 @@ define([
             assert.equal(typeof status, 'object', 'The status is a object');
             assert.equal(typeof details, 'object', 'The details is a object');
             assert.equal(typeof results, 'object', 'The details are provided inside an object');
-            assert.equal(typeof results.fingerprint, 'undefined', 'The fingerprint is not provided inside the results');
-            assert.equal(typeof results.seed, 'undefined', 'The fingerprint details are noty provided inside the results');
-            assert.equal(results.errors && results.errors.length, 1, 'An error should be found');
+            assert.equal(typeof results.value, 'undefined', 'The fingerprint is not provided inside the results');
+            assert.equal(results.details.length, 1, 'The fingerprint details are provided inside the results');
+            assert.ok(results.details.pop() instanceof Error, 'The fingerprint error is provided inside the results');
+            assert.equal(results.errors, 1, 'An error should be found');
 
             QUnit.start();
         });

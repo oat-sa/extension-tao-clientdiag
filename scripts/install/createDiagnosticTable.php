@@ -20,7 +20,6 @@
 
 namespace oat\taoClientDiagnostic\scripts\install;
 
-use oat\taoClientDiagnostic\model\storage\PaginatedSqlStorage;
 use oat\taoClientDiagnostic\model\storage\Sql;
 use Doctrine\DBAL\Schema\SchemaException;
 use oat\taoClientDiagnostic\model\storage\Storage;
@@ -49,7 +48,12 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             $tableResults->addColumn(Sql::DIAGNOSTIC_LOGIN, 'string', ['length' => 32]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_USER_ID, 'string', ['length' => 255, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_IP, 'string', ['length' => 32]);
-            $tableResults->addColumn(PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION, 'string', ['length' => 64, 'notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_WORKSTATION, 'string', ['length' => 64, 'notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_UUID, 'string', ['length' => 32]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_VALUE, 'string', ['length' => 32]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_DETAILS, 'text', ['notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_ERRORS, 'integer', ['length' => 1, 'notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_CHANGED, 'integer', ['length' => 1, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_BROWSER, 'string', ['length' => 32,'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_BROWSERVERSION, 'string', ['length' => 32, 'notnull' => false  ]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_OS, 'string', ['length' => 32, 'notnull' => false]);

@@ -248,13 +248,22 @@ define([
                 }
             });
 
-            // results of browser test
             // column: Workstation identifier
             model.push({
                 id: 'workstation',
                 label: __('Workstation')
             });
 
+            // results of fingerprinting
+            if (config.testers.fingerprint && config.testers.fingerprint.enabled) {
+                // column: Fingerprint of the workstation
+                model.push({
+                    id: 'fingerprint',
+                    label: __('Fingerprint')
+                });
+            }
+
+            // results of browser test
             if (config.testers.browser && config.testers.browser.enabled) {
                 // column: Operating system information
                 model.push({

@@ -56,11 +56,11 @@ define([
      */
     var _storageKeys = {
         store: 'client-diagnostic',
-        browserId: 'uuid',
-        fingerprint: 'fingerprint',
-        details: 'seed',
+        uuid: 'uuid',
+        fingerprint: 'value',
+        details: 'details',
         errors: 'errors',
-        updated: 'updated'
+        changed: 'changed'
     };
 
     /**
@@ -110,8 +110,8 @@ define([
             title: __('Fingerprint'),
             status: __('Computing the fingerprint...'),
             fingerprintValue: __('Fingerprint'),
-            fingerprintBrowserId: __('Browser UID'),
-            fingerprintSources: __('Fingerprint sources'),
+            fingerprintUUID: __('Browser UID'),
+            fingerprintDetails: __('Fingerprint sources'),
             fingerprintErrors: __('Fingerprint errors')
         }
     ];
@@ -146,7 +146,7 @@ define([
                     .then(function (storage) {
                         browserStorage = storage;
                         return Promise.all([
-                            browserStorage.getItem(_storageKeys.browserId).then(function (value) {
+                            browserStorage.getItem(_storageKeys.uuid).then(function (value) {
                                 browserId = value;
                             }),
                             browserStorage.getItem(_storageKeys.fingerprint).then(function (value) {
@@ -182,12 +182,12 @@ define([
                         // update the results with storage state
                         // also detect a change in the fingerprint
                         // (if the browser already have a uuid in the storage but the fingerprint changes)
-                        results[_storageKeys.browserId] = browserId;
-                        results[_storageKeys.updated] = newFingerprint && !freshBrowserId;
+                        results[_storageKeys.uuid] = browserId;
+                        results[_storageKeys.changed] = newFingerprint && !freshBrowserId;
 
                         if (browserStorage) {
                             if (freshBrowserId) {
-                                pendingPromises.push(browserStorage.setItem(_storageKeys.browserId, browserId));
+                                pendingPromises.push(browserStorage.setItem(_storageKeys.uuid, browserId));
                             }
                             if (newFingerprint) {
                                 pendingPromises.push(browserStorage.setItem(_storageKeys.fingerprint, resultFingerprint));
@@ -212,7 +212,8 @@ define([
 
                         results = results || {};
                         if (errors.length) {
-                            results[_storageKeys.errors] = errors;
+                            results[_storageKeys.errors] = errors.length;
+                            results[_storageKeys.details] = (results[_storageKeys.details] || []).concat(errors);
                         }
 
                         summary = self.getSummary(results);
@@ -240,12 +241,12 @@ define([
                         message: labels.fingerprintValue,
                         value: results[_storageKeys.fingerprint]
                     },
-                    fingerprintBrowserId: {
-                        message: labels.fingerprintBrowserId,
-                        value: results[_storageKeys.browserId]
+                    fingerprintUUID: {
+                        message: labels.fingerprintUUID,
+                        value: results[_storageKeys.uuid]
                     },
-                    fingerprintSources: {
-                        message: labels.fingerprintSources,
+                    fingerprintDetails: {
+                        message: labels.fingerprintDetails,
                         value: _.size(results[_storageKeys.details])
                     }
                 };
@@ -253,7 +254,7 @@ define([
                 if (results[_storageKeys.errors]) {
                     summary.fingerprintErrors = {
                         message: labels.fingerprintErrors,
-                        value: _.size(results[_storageKeys.errors])
+                        value: results[_storageKeys.errors]
                     };
                 }
 
@@ -272,9 +273,9 @@ define([
                     !results[_storageKeys.fingerprint] ||
                     results[_storageKeys.fingerprint] === 'error') {
                     percentage = _thresholdValues.error;
-                } else if (results[_storageKeys.browserId] === 'error') {
+                } else if (results[_storageKeys.uuid] === 'error') {
                     percentage = _thresholdValues.storageIssue;
-                } else if (results[_storageKeys.updated]) {
+                } else if (results[_storageKeys.changed]) {
                     percentage = _thresholdValues.changedFingerprint;
                 } else {
                     percentage = _thresholdValues.success;

@@ -305,6 +305,16 @@ define([
                         self.trigger('endtester', testerId, status);
                         self.setState(testerId, false);
 
+                        // results should be filtered in order to encode complex data
+                        results = _.mapValues(results, function(value) {
+                            switch(typeof(value)) {
+                                case 'boolean': return value ? 1 : 0;
+                                case 'object': return JSON.stringify(value);
+                            }
+                            return value;
+                        });
+
+                        // send the data to store
                         self.store(testerId, results, function () {
                             self.addResult(status);
                             cb();
