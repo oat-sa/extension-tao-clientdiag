@@ -65,6 +65,13 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
             foreach($data as $idx => $row) {
                 $rowData = [
                     'id'          => $row[PaginatedSqlStorage::DIAGNOSTIC_ID],
+                    'fingerprint' => [
+                        'uuid'    => $row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_UUID],
+                        'value'   => $row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_VALUE],
+                        'details' => json_decode(html_entity_decode($row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_DETAILS]), true),
+                        'errors'  => $row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_ERRORS],
+                        'changed' => $row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_CHANGED],
+                    ],
                     'os'          => $row[PaginatedSqlStorage::DIAGNOSTIC_OS] . ' (' . $row[PaginatedSqlStorage::DIAGNOSTIC_OSVERSION] . ')',
                     'browser'     => $row[PaginatedSqlStorage::DIAGNOSTIC_BROWSER] . ' (' . $row[PaginatedSqlStorage::DIAGNOSTIC_BROWSERVERSION] . ')',
                     'performance' => $row[PaginatedSqlStorage::DIAGNOSTIC_PERFORMANCE_AVERAGE],
@@ -81,7 +88,7 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
 
                 if (isset($row[PaginatedSqlStorage::DIAGNOSTIC_CREATED_AT])) {
                     $dt = new DateTime($row[PaginatedSqlStorage::DIAGNOSTIC_CREATED_AT]);
-                    $rowData['date'] = DateHelper::displayeDate($dt, DateHelper::FORMAT_LONG, new \DateTimeZone('UTC'));
+                    $rowData['date'] = $dt->getTimestamp();
                 }
 
                 $data[$idx] = $rowData;
