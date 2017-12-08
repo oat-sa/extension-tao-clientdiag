@@ -44,6 +44,17 @@ return array(
      * @type string
      */
     'footer' => '',
+
+    /**
+     * List of additional custom messages (see testers configs below)
+     * @type array
+     */
+    'configurableText' => null,
+
+    /**
+     * List of testers that can be loaded
+     * @type array
+     */
     'testers' => [
         /**
          * Performances check config
@@ -67,6 +78,12 @@ return array(
              * @type string
              */
             'tester' => 'taoClientDiagnostic/tools/performances/tester',
+
+            /**
+             * The key used to get an additional custom message for the result
+             * @type string
+             */
+            'customMsgKey' => 'diagPerformancesCheckResult',
 
             /**
              * A list of samples to render in order to compute the rendering performances
@@ -127,6 +144,12 @@ return array(
             'tester' => 'taoClientDiagnostic/tools/bandwidth/tester',
 
             /**
+             * The key used to get an additional custom message for the result
+             * @type string
+             */
+            'customMsgKey' => 'diagBandwithCheckResult',
+
+            /**
              * The typical bandwidth needed for a test taker (Mbps)
              * @type float
              */
@@ -167,6 +190,12 @@ return array(
              * @type string
              */
             'tester' => 'taoClientDiagnostic/tools/bandwidth/tester',
+
+            /**
+             * The key used to get an additional custom message for the result
+             * @type string
+             */
+            'customMsgKey' => 'diagBandwithCheckResult',
 
             /**
              * The typical bandwidth needed for a test taker (Mbps)
@@ -211,6 +240,12 @@ return array(
             'tester' => 'taoClientDiagnostic/tools/upload/tester',
 
             /**
+             * The key used to get an additional custom message for the result
+             * @type string
+             */
+            'customMsgKey' => 'diagUploadCheckResult',
+
+            /**
              * Size of data to sent to server during speed test in bytes
              */
             'size' => 1 * 1024 * 1024,
@@ -243,6 +278,42 @@ return array(
              * @type string
              */
             'tester' => 'taoClientDiagnostic/tools/browser/tester',
+
+            /**
+             * The key used to get an additional custom message for the result
+             * @type string
+             */
+            'customMsgKey' => 'diagBrowserOsCheckResult',
+        ],
+
+        /**
+         * Browser fingerprint config
+         * @type array
+         */
+        'fingerprint' => [
+            /**
+             * Allows to disable the test on the platform
+             * @type boolean
+             */
+            'enabled' => false,
+
+            /**
+             * Defines the test level. In case of multiple tests of the same kind, this config allows to compare intensities.
+             * @type boolean
+             */
+            'level' => 1,
+
+            /**
+             * Path to the component that will test the browser compatibility
+             * @type string
+             */
+            'tester' => 'taoClientDiagnostic/tools/fingerprint/tester',
+
+            /**
+             * The key used to get an additional custom message for the result
+             * @type string
+             */
+            'customMsgKey' => 'diagFingerprintCheckResult',
         ],
     ]
 );

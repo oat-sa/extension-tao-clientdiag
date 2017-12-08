@@ -2,13 +2,13 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>Test - Performances Tester</title>
+        <title>Test - Get Labels</title>
         <base href="../../../../../../tao/views/" />
         <link rel="stylesheet" type="text/css" href="js/lib/qunit/qunit.css">
         <script type="text/javascript" src="js/lib/require.js"></script>
         <script type="text/javascript" src="js/lib/qunit/qunit.js"></script>
         <script type="text/javascript" src="js/lib/qunit/qunit-parameterize.js"></script>
-        <script type="text/javascript" src="js/lib/blanket/blanket.min.js" data-cover-flag="branchTracking" data-cover-only="js/tools/performances/tester"></script>
+        <script type="text/javascript" src="js/lib/blanket/blanket.min.js" data-cover-flag="branchTracking" data-cover-only="js/tools/getLabels"></script>
         <script  type="text/javascript">
 
             //don't start the test now
@@ -18,7 +18,7 @@
             require(['/tao/ClientConfig/config'], function(){
 
                 //load the test
-                require(['taoClientDiagnostic/test/tools/performances/test'], function(){
+                require(['taoClientDiagnostic/test/tools/getLabels/test'], function(){
 
                     //Tests loaded, run tests
                     QUnit.start();
