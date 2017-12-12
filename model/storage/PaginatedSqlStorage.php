@@ -28,8 +28,6 @@ use oat\taoClientDiagnostic\exception\StorageException;
  */
 class PaginatedSqlStorage extends Sql implements PaginatedStorage
 {
-    const DIAGNOSTIC_WORKSTATION = 'workstation';
-
     /**
      * Gets an existing record in database by id
      *

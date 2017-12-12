@@ -13,23 +13,97 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2015-2017 (original work) Open Assessment Technologies SA ;
  */
 define(['taoClientDiagnostic/tools/bandwidth/tester'], function(bandwidthTester){
     'use strict';
 
-    var diagnosticTool = {
-        changeStatus : function changeStatus() {}
-    };
-
     QUnit.module('API');
 
     QUnit.test('The tester has the right form', function(assert){
+        QUnit.expect(6);
         assert.ok(typeof bandwidthTester === 'function', 'The module exposes a function');
         assert.ok(typeof bandwidthTester() === 'object', 'bandwidthTester is a factory');
         assert.ok(typeof bandwidthTester().start === 'function', 'the test has a start method');
+        assert.ok(typeof bandwidthTester().getSummary === 'function', 'the test has a getSummary method');
+        assert.ok(typeof bandwidthTester().getFeedback === 'function', 'the test has a getFeedback method');
+        assert.ok(typeof bandwidthTester().labels === 'object', 'the test has a labels objects');
     });
 
+    QUnit.cases([{
+        title: 'no level'
+    }, {
+        title: 'level 0',
+        level: 0
+    }, {
+        title: 'level 1',
+        level: 1
+    }, {
+        title: 'level 2',
+        level: 2
+    }, {
+        title: 'level 3',
+        level: 3
+    }])
+        .test('labels', function(data, assert) {
+            var labels = bandwidthTester({level: data.level}).labels;
+            var labelKeys = [
+                'title',
+                'status',
+                'legend',
+                'bandwidthMin',
+                'bandwidthMax',
+                'bandwidthAverage'
+            ];
+
+            QUnit.expect(labelKeys.length + 1);
+
+            assert.equal(typeof labels, 'object', 'A set of labels is returned');
+            labelKeys.forEach(function(key) {
+                assert.equal(typeof labels[key], 'string', 'The label ' + key + ' exists');
+            });
+        });
+
+    QUnit.test('getSummary', function(assert) {
+        var tester = bandwidthTester({});
+        var results = {
+            min: 30,
+            max: 90,
+            average: 60
+        };
+        var summary = tester.getSummary(results);
+
+        QUnit.expect(10);
+
+        assert.equal(typeof summary, 'object', 'The method has returned the summary');
+
+        assert.equal(typeof summary.bandwidthMin, 'object', 'The summary contains entry for min bandwidth');
+        assert.equal(typeof summary.bandwidthMin.message, 'string', 'The summary contains label for min bandwidth');
+        assert.equal(summary.bandwidthMin.value, results.min + ' Mbps', 'The summary contains the expected value for min bandwidth');
+
+        assert.equal(typeof summary.bandwidthMax, 'object', 'The summary contains entry for max bandwidth');
+        assert.equal(typeof summary.bandwidthMax.message, 'string', 'The summary contains label for max bandwidth');
+        assert.equal(summary.bandwidthMax.value, results.max + ' Mbps', 'The summary contains the expected value for max bandwidth');
+
+        assert.equal(typeof summary.bandwidthAverage, 'object', 'The summary contains entry for average bandwidth');
+        assert.equal(typeof summary.bandwidthAverage.message, 'string', 'The summary contains label for average bandwidth');
+        assert.equal(summary.bandwidthAverage.value, results.average + ' Mbps', 'The summary contains the expected value for average bandwidth');
+    });
+
+    QUnit.test('getFeedback', function(assert) {
+        var tester = bandwidthTester({});
+        var result = 100;
+        var status = tester.getFeedback(result);
+
+        QUnit.expect(6);
+
+        assert.equal(typeof status, 'object', 'The method has returned the status');
+        assert.equal(status.id, 'bandwidth', 'The status contains the tester id');
+        assert.equal(status.percentage, 100, 'The status contains the expected percentage');
+        assert.equal(typeof status.title, 'string', 'The status contains a title');
+        assert.equal(typeof status.quality, 'object', 'The status contains a quality descriptor');
+        assert.equal(typeof status.feedback, 'object', 'The status contains a feedback descriptor');
+    });
 
     QUnit.module('Test');
 
@@ -37,7 +111,7 @@ define(['taoClientDiagnostic/tools/bandwidth/tester'], function(bandwidthTester)
 
         QUnit.expect(13);
 
-        bandwidthTester({}, diagnosticTool).start(function(status, details, results){
+        bandwidthTester({}).start(function(status, details, results){
 
             var toString = {}.toString;
             var speed = results.average;

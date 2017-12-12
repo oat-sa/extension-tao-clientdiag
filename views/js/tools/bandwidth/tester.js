@@ -13,19 +13,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2015-2017 (original work) Open Assessment Technologies SA ;
  */
 define([
     'lodash',
     'i18n',
     'async',
     'context',
-    'taoClientDiagnostic/tools/getconfig',
+    'taoClientDiagnostic/tools/getConfig',
+    'taoClientDiagnostic/tools/getLabels',
     'taoClientDiagnostic/tools/stats',
     'taoClientDiagnostic/tools/fixedDecimals',
-    'taoClientDiagnostic/tools/diagnostic/status',
-    'lib/polyfill/performance-now'
-], function(_, __, async, context, getConfig, stats, fixedDecimals, statusFactory) {
+    'taoClientDiagnostic/tools/getStatus'
+], function(_, __, async, context, getConfig, getLabels, stats, fixedDecimals, getStatus) {
     'use strict';
 
     /**
@@ -56,6 +56,8 @@ define([
      * @private
      */
     var _defaults = {
+        id: 'bandwidth',
+
         // The typical bandwidth needed for a test taker (Mbps)
         unit: 0.16,
 
@@ -65,6 +67,25 @@ define([
         // Maximum number of test takers to display
         max: 100
     };
+
+    /**
+     * A list of thresholds for bandwidth check
+     * @type {Array}
+     * @private
+     */
+    var _thresholds = [{
+        threshold: 0,
+        message: __('Low bandwidth'),
+        type: 'error'
+    }, {
+        threshold: 33,
+        message: __('Average bandwidth'),
+        type: 'warning'
+    }, {
+        threshold: 66,
+        message: __('Good bandwidth'),
+        type: 'success'
+    }];
 
     /**
      * List of descriptors defining the data sets to download.
@@ -103,12 +124,39 @@ define([
     };
 
     /**
+     * List of translated texts per level.
+     * The level is provided through the config as a numeric value, starting from 1.
+     * @type {Object}
+     * @private
+     */
+    var _messages = [
+        // level 1
+        {
+            title: __('Bandwidth'),
+            status: __('Checking the bandwidth...'),
+            legend: __('Number of simultaneous test takers the connection can handle'),
+            bandwidthMin: __('Minimum bandwidth'),
+            bandwidthMax: __('Maximum bandwidth'),
+            bandwidthAverage: __('Average bandwidth')
+        },
+        // level 2
+        {
+            title: __('Media intensive bandwidth'),
+            status: __('Checking the media intensive bandwidth...'),
+            legend: __('Number of simultaneous test takers the connection can handle with media intensive'),
+            bandwidthMin: __('Minimum intensive bandwidth'),
+            bandwidthMax: __('Maximum intensive bandwidth'),
+            bandwidthAverage: __('Average intensive bandwidth')
+        }
+    ];
+
+    /**
      * Download a data set as described by the provided descriptor and compute the duration.
      * @param {Object} data The data set descriptor to use for download
      * @param {Function} cb A callback function called at the end of the download.
      * This callback is also called if a timeout breaks the download;
      */
-    var download = function download(data, cb) {
+    function download(data, cb) {
         var self = this;
         var start, end;
         var timeoutId;
@@ -158,15 +206,22 @@ define([
         timeoutId = _.delay(cb, data.timeout, 'timeout');
         start = window.performance.now();
         request.send();
-    };
+    }
 
     /**
      * Performs a bandwidth test by downloading a bunch of data sets with different sizes
      *
+     * @param {Object} config - Some optional configs
+     * @param {String} [config.id] - The identifier of the test
+     * @param {Number} [config.unit] - The typical bandwidth needed for a test taker (Mbps)
+     * @param {Number} [config.ideal] - The thresholds for optimal bandwidth
+     * @param {Number} [config.max] - Maximum number of test takers to display
+     * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
      * @returns {Object}
      */
-    var bandwidthTester = function bandwidthTester (config, diagnosticTool) {
-        var initConfig = getConfig(config || {}, _defaults);
+    function bandwidthTester (config) {
+        var initConfig = getConfig(config, _defaults);
+        var labels = getLabels(_messages, initConfig.level);
 
         return {
             /**
@@ -176,8 +231,6 @@ define([
             start : function start(done) {
                 var self = this;
                 var tests = [];
-
-                diagnosticTool.changeStatus(__('Checking the bandwidth...'));
 
                 _.forEach(_downloadData, function(data) {
                     var cb = _.bind(download, self, data);
@@ -193,22 +246,11 @@ define([
                     var duration = 0;
                     var size = 0;
                     var decimals = 2;
-                    var getValue;
                     var results;
                     var summary;
                     var status;
-                    var nb;
-                    var bandwidthUnit = initConfig.unit;
-                    var threshold = initConfig.ideal;
-                    var maxTestTakers = initConfig.max;
-                    var max = threshold * bandwidthUnit;
 
-                    if (err && !measures.length) {
-                        //something went wrong
-                        throw err;
-                    }
-
-                    getValue = function(value) {
+                    function getValue(value) {
                         var speed = 0;
 
                         if (value) {
@@ -220,42 +262,76 @@ define([
                         }
 
                         return speed;
-                    };
+                    }
+
+                    if (err && !measures.length) {
+                        //something went wrong
+                        throw err;
+                    }
 
                     results = stats(measures, getValue, decimals);
 
                     results.duration = fixedDecimals(duration / _second, decimals);
                     results.size = size;
 
-                    summary = {
-                        bandwidthMin: {message: __('Minimum bandwidth'), value: results.min + ' Mbps'},
-                        bandwidthMax: {message: __('Maximum bandwidth'), value: results.max + ' Mbps'},
-                        bandwidthAverage: {message: __('Average bandwidth'), value: results.average + ' Mbps'}
-                    };
-
-                    status = statusFactory().getStatus(results.max / max * 100, 'bandwidth');
-                    nb = Math.floor(results.max / bandwidthUnit);
-
-                    if (nb > maxTestTakers) {
-                        nb = '>' + maxTestTakers;
-                    }
-
-                    status.id = 'bandwidth';
-                    status.title = __('Bandwidth');
-                    status.feedback.legend = __('Number of simultaneous test takers the connection can handle');
-                    diagnosticTool.addCustomFeedbackMsg(status, diagnosticTool.getCustomMsg('diagBandwithCheckResult'));
-
-                    status.quality.label = nb;
-
-                    if (nb.toString().length > 2) {
-                        status.quality.wide = true;
-                    }
+                    summary = self.getSummary(results);
+                    status = self.getFeedback(results.max);
 
                     done(status, summary, results);
                 });
+            },
+
+            /**
+             * Gets the labels loaded for the tester
+             * @returns {Object}
+             */
+            get labels() {
+                return labels;
+            },
+
+            /**
+             * Builds the results summary
+             * @param {Object} results
+             * @returns {Object}}
+             */
+            getSummary: function getSummary(results) {
+                return {
+                    bandwidthMin: {message: labels.bandwidthMin, value: results.min + ' Mbps'},
+                    bandwidthMax: {message: labels.bandwidthMax, value: results.max + ' Mbps'},
+                    bandwidthAverage: {message:  labels.bandwidthAverage, value: results.average + ' Mbps'}
+                };
+            },
+
+            /**
+             * Gets the feedback status for the provided result value
+             * @param {Number} result
+             * @returns {Object}}
+             */
+            getFeedback: function getFeedback(result) {
+                var bandwidthUnit = initConfig.unit;
+                var threshold = initConfig.ideal;
+                var maxTestTakers = initConfig.max;
+                var max = threshold * bandwidthUnit;
+                var status = getStatus(result / max * 100, _thresholds);
+                var nb = Math.floor(result / bandwidthUnit);
+
+                if (nb > maxTestTakers) {
+                    nb = '>' + maxTestTakers;
+                }
+
+                status.id = initConfig.id;
+                status.title =  labels.title;
+                status.feedback.legend =  labels.legend;
+                status.quality.label = nb;
+
+                if (nb.toString().length > 2) {
+                    status.quality.wide = true;
+                }
+
+                return status;
             }
         };
-    };
+    }
 
     return bandwidthTester;
 });

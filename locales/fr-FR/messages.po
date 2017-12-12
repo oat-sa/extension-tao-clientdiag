@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.2.0-sprint41\n"
-"PO-Revision-Date: 2016-12-28T10:36:38\n"
+"Project-Id-Version: TAO 3.2.0-sprint63\n"
+"PO-Revision-Date: 2017-11-06T16:06:14\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-FR\n"
@@ -18,6 +18,9 @@ msgstr ""
 
 msgid "Average bandwidth"
 msgstr "Bande passante moyenne"
+
+msgid "Average intensive bandwidth"
+msgstr ""
 
 msgid "Average performances"
 msgstr "Performance moyenne (risque de lenteurs)"
@@ -37,11 +40,17 @@ msgstr "Ces tests peuvent prendre plusieurs minutes."
 msgid "Begin diagnostics"
 msgstr "Démarrer le diagnostic"
 
+msgid "Browser"
+msgstr ""
+
 msgid "Checking the bandwidth..."
 msgstr "Test de bande passante..."
 
 msgid "Checking the browser..."
 msgstr "Test du navigateur..."
+
+msgid "Checking the media intensive bandwidth..."
+msgstr ""
 
 msgid "Checking the performances..."
 msgstr "Test des performances..."
@@ -55,6 +64,9 @@ msgstr "Conforme"
 msgid "Connect to the diagnostic tool"
 msgstr "Accéder à l'outil de diagnostic"
 
+msgid "Date"
+msgstr ""
+
 msgid "Details"
 msgstr "Détails"
 
@@ -63,6 +75,9 @@ msgstr "Outil de diagnostic"
 
 msgid "Done!"
 msgstr "Terminé"
+
+msgid "Exit"
+msgstr ""
 
 msgid "Good bandwidth"
 msgstr "Bande passante correcte"
@@ -76,10 +91,31 @@ msgstr "Bande passante conforme"
 msgid "Hide Details"
 msgstr "Masquer les détails"
 
+msgid "Intensive bandwidth"
+msgstr ""
+
+msgid "Interface not available"
+msgstr ""
+
+msgid "Launch another readiness check"
+msgstr ""
+
+msgid "Launch readiness check"
+msgstr ""
+
+msgid "List of readiness checks"
+msgstr ""
+
+msgid "Loading"
+msgstr ""
+
 msgid "Log in"
 msgstr ""
 
 msgid "Login"
+msgstr ""
+
+msgid "Logout"
 msgstr ""
 
 msgid "Low bandwidth"
@@ -94,17 +130,35 @@ msgstr "Bande passante montante maximale"
 msgid "Maximum bandwidth"
 msgstr "Bande passante maximale"
 
+msgid "Maximum intensive bandwidth"
+msgstr ""
+
 msgid "Maximum rendering time"
 msgstr "Temps de rendu maximal"
+
+msgid "Media intensive bandwidth"
+msgstr ""
 
 msgid "Minimum bandwidth"
 msgstr "Bande passante minimale"
 
+msgid "Minimum intensive bandwidth"
+msgstr ""
+
 msgid "Minimum rendering time"
 msgstr "Temps de rendu minimal"
 
+msgid "No diagnostic service defined"
+msgstr ""
+
+msgid "No readiness checks have been done!"
+msgstr ""
+
 msgid "Number of simultaneous test takers the connection can handle"
 msgstr "Nombre d’élèves pouvant passer l’évaluation en simultané"
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr ""
 
 msgid "Operating system"
 msgstr "Système d'exploitation"
@@ -112,11 +166,59 @@ msgstr "Système d'exploitation"
 msgid "Operating system and web browser"
 msgstr "Navigateur et système d’exploitation"
 
+msgid "OS"
+msgstr ""
+
+msgid "Performances"
+msgstr ""
+
+msgid "Readiness Check"
+msgstr ""
+
+msgid "Readiness checks already done"
+msgstr ""
+
+msgid "Readiness diagnostics"
+msgstr ""
+
+msgid "Refresh"
+msgstr ""
+
+msgid "Refresh the page"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove the readiness check result?"
+msgstr ""
+
+msgid "Remove the selected readiness check results"
+msgstr ""
+
+msgid "Return to the list"
+msgstr ""
+
 msgid "Show Details"
 msgstr "Afficher les détails"
 
+msgid "Something went wrong ..."
+msgstr ""
+
 msgid "Starting..."
 msgstr "Démarrage..."
+
+msgid "The readiness check result have been removed"
+msgstr ""
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr ""
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr ""
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr ""
 
 msgid "This browser is not tested."
 msgstr "Ce navigateur n'est pas testé."
@@ -127,6 +229,12 @@ msgstr "Cet outil va effectuer plusieurs tests pour vérifier la configuration d
 msgid "Total"
 msgstr "Synthèse"
 
+msgid "Try a test delivery"
+msgstr ""
+
+msgid "Unable to get the workstation name!"
+msgstr ""
+
 msgid "Upload speed"
 msgstr "Bande passante montante"
 
@@ -136,11 +244,17 @@ msgstr "Performance faible (lenteurs très importantes)"
 msgid "Web browser"
 msgstr "Navigateur"
 
+msgid "Workstation"
+msgstr ""
+
+msgid "Workstation name"
+msgstr ""
+
 msgid "Workstation performances"
 msgstr "Performance du poste de travail"
 
-msgid "You must activate JavaScript in your browser to run this application."
-msgstr "Vous devez activer JavaScript dans votre navigateur afin d'utiliser cette application."
+msgid "Workstation:"
+msgstr ""
 
 msgid "Your system is fully compliant."
 msgstr "Configuration conforme"

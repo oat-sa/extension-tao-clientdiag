@@ -13,10 +13,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2015-2017 (original work) Open Assessment Technologies SA ;
  */
 /**
- * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
+ * @author Jean-Sébastien Conan <jean-sebastien@taoteting.com>
  */
 define([
     'jquery',
@@ -28,10 +28,10 @@ define([
     'taoClientDiagnostic/tools/stats',
     'taoQtiItem/qtiItem/core/Loader',
     'taoQtiItem/qtiCommonRenderer/renderers/Renderer',
-    'taoClientDiagnostic/tools/getconfig',
-    'taoClientDiagnostic/tools/diagnostic/status',
-    'lib/polyfill/performance-now'
-], function($, _, __, async, context, helpers, stats, Loader, Renderer, getConfig, statusFactory) {
+    'taoClientDiagnostic/tools/getConfig',
+    'taoClientDiagnostic/tools/getLabels',
+    'taoClientDiagnostic/tools/getStatus'
+], function($, _, __, async, context, helpers, stats, Loader, Renderer, getConfig, getLabels, getStatus) {
     'use strict';
 
     /**
@@ -71,12 +71,50 @@ define([
      * @private
      */
     var _defaults = {
+        id: 'performances',
+
         // The threshold for optimal performances
         optimal: 0.025,
 
         // The threshold for minimal performances
         threshold: 0.25
     };
+
+    /**
+     * A list of thresholds for performances check
+     * @type {Array}
+     * @private
+     */
+    var _thresholds = [{
+        threshold: 0,
+        message: __('Very slow performances'),
+        type: 'error'
+    }, {
+        threshold: 33,
+        message: __('Average performances'),
+        type: 'warning'
+    }, {
+        threshold: 66,
+        message: __('Good performances'),
+        type: 'success'
+    }];
+
+    /**
+     * List of translated texts per level.
+     * The level is provided through the config as a numeric value, starting from 1.
+     * @type {Object}
+     * @private
+     */
+    var _messages = [
+        // level 1
+        {
+            title: __('Workstation performances'),
+            status: __('Checking the performances...'),
+            performancesMin: __('Minimum rendering time'),
+            performancesMax: __('Maximum rendering time'),
+            performancesAverage: __('Average rendering time')
+        }
+    ];
 
     /**
      * Base text used to build sample identifiers
@@ -158,13 +196,16 @@ define([
     /**
      * Performs a browser performances test by running a heavy page
      *
-     * @param {Array} [samples]
-     * @param {Number} [occurrences]
-     * @param {Number} [timeout]
+     * @param {Object} config - Some optional configs
+     * @param {String} [config.id] - The identifier of the test
+     * @param {Number} [config.optimal] - The threshold for optimal performances
+     * @param {Number} [config.threshold] - The threshold for minimal performances
+     * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
      * @returns {Object}
      */
-    var performancesTester = function performancesTester(config, diagnosticTool) {
+    function performancesTester(config) {
         var initConfig = getConfig(config, _defaults);
+        var labels = getLabels(_messages, initConfig.level);
         var idx = 0;
         var _samples = _.map(!_.isEmpty(initConfig.samples) && initConfig.samples || _defaultSamples, function(sample) {
             idx ++;
@@ -176,10 +217,6 @@ define([
             };
         });
 
-
-        var optimal = initConfig.optimal;
-        var range = Math.abs(optimal - (initConfig.threshold));
-
         // add one occurrence on the first sample to obfuscate the time needed to load the runner
         _samples[0].nb ++;
 
@@ -190,8 +227,7 @@ define([
              */
             start: function start(done) {
                 var tests = [];
-
-                diagnosticTool.changeStatus(__('Checking the performances...'));
+                var self = this;
 
                 _.forEach(_samples, function(data) {
                     var cb = _.partial(loadItem, data);
@@ -204,7 +240,6 @@ define([
                 async.series(tests, function(err, measures) {
                     var decimals = 2;
                     var results;
-                    var cursor;
                     var status;
                     var summary;
 
@@ -217,24 +252,50 @@ define([
                     measures.shift();
 
                     results = stats(measures, 'duration', decimals);
-
-                    cursor = range - results.average + optimal;
-                    status = statusFactory().getStatus(cursor / range * 100, 'performances');
-                    summary = {
-                        performancesMin: {message: __('Minimum rendering time'), value: results.min + ' s'},
-                        performancesMax: {message: __('Maximum rendering time'), value: results.max + ' s'},
-                        performancesAverage: {message: __('Average rendering time'), value: results.average + ' s'}
-                    };
-
-                    status.title = __('Workstation performances');
-                    status.id = 'performances';
-                    diagnosticTool.addCustomFeedbackMsg(status, diagnosticTool.getCustomMsg('diagPerformancesCheckResult'));
+                    status = self.getFeedback(results.average);
+                    summary = self.getSummary(results);
 
                     done(status, summary, results);
                 });
+            },
+
+            /**
+             * Gets the labels loaded for the tester
+             * @returns {Object}
+             */
+            get labels() {
+                return labels;
+            },
+
+            /**
+             * Builds the results summary
+             * @param {Object} results
+             * @returns {Object}}
+             */
+            getSummary: function getSummary(results) {
+                return {
+                    performancesMin: {message: labels.performancesMin, value: results.min + ' s'},
+                    performancesMax: {message: labels.performancesMax, value: results.max + ' s'},
+                    performancesAverage: {message: labels.performancesAverage, value: results.average + ' s'}
+                };
+            },
+
+            /**
+             * Gets the feedback status for the provided result value
+             * @param {Number} result
+             * @returns {Object}}
+             */
+            getFeedback: function getFeedback(result) {
+                var optimal = initConfig.optimal;
+                var range = Math.abs(optimal - (initConfig.threshold));
+                var status = getStatus((range + optimal - result) / range * 100, _thresholds);
+
+                status.title =  labels.title;
+                status.id = initConfig.id;
+                return status;
             }
         };
-    };
+    }
 
     return performancesTester;
 });

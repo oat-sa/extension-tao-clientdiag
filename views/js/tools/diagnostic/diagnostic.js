@@ -13,10 +13,10 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2016-2017 (original work) Open Assessment Technologies SA ;
  */
 /**
- * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
+ * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
  * @author dieter <dieter@taotesting.com>
  */
 define([
@@ -28,14 +28,17 @@ define([
     'ui/component',
     'core/dataProvider/request',
     'util/url',
-    'taoClientDiagnostic/tools/diagnostic/status',
     'taoClientDiagnostic/tools/performances/tester',
     'taoClientDiagnostic/tools/bandwidth/tester',
     'taoClientDiagnostic/tools/upload/tester',
     'taoClientDiagnostic/tools/browser/tester',
-    'taoClientDiagnostic/tools/getconfig',
+    'taoClientDiagnostic/tools/getStatus',
+    'taoClientDiagnostic/tools/getConfig',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/main',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/result',
+    'tpl!taoClientDiagnostic/tools/diagnostic/tpl/details',
+    'tpl!taoClientDiagnostic/tools/diagnostic/tpl/feedback',
+    'tpl!taoClientDiagnostic/tools/diagnostic/tpl/quality-bar',
     'css!taoClientDiagnosticCss/diagnostics'
 ], function ($,
              _,
@@ -45,14 +48,17 @@ define([
              component,
              request,
              urlUtil,
-             statusFactory,
              performancesTester,
              bandwidthTester,
              uploadTester,
              browserTester,
+             getStatus,
              getConfig,
              mainTpl,
-             resultTpl) {
+             resultTpl,
+             detailsTpl,
+             feedbackTpl,
+             qualityBarTpl) {
     'use strict';
 
     /**
@@ -72,6 +78,25 @@ define([
         storeAllRuns: false,
         configurableText: {}
     };
+
+    /**
+     * A list of thresholds for summary
+     * @type {Array}
+     * @private
+     */
+    var _thresholds = [{
+        threshold: 0,
+        message: __('Your system requires a compatibility update, please contact your system administrator.'),
+        type: 'error'
+    }, {
+        threshold: 33,
+        message: __('Your system is not optimal, please contact your system administrator.'),
+        type: 'warning'
+    }, {
+        threshold: 66,
+        message: __('Your system is fully compliant.'),
+        type: 'success'
+    }];
 
     /**
      * Defines a diagnostic tool
@@ -127,6 +152,10 @@ define([
          */
         addCustomFeedbackMsg: function addCustomFeedbackMsg(status, msg) {
             if (this.hasFailed(status) && msg) {
+                if (_.isFunction(status.customMsgRenderer)) {
+                    msg = status.customMsgRenderer(msg);
+                }
+                status.feedback = status.feedback || {};
                 status.feedback.customMsg = msg;
             }
         },
@@ -150,7 +179,7 @@ define([
          * @returns {diagnostic}
          */
         addResult: function addResult(result) {
-            var $result, $indicator;
+            var $main, $indicator, $result;
 
             if (this.is('rendered')) {
                 // adjust the width of the displayed label, if any, to the text length
@@ -159,15 +188,26 @@ define([
                 }
 
                 // create and append the result to the displayed list
-                $result = $(resultTpl(result));
-                $indicator = $result.find('.quality-indicator');
-                this.controls.$results.append($result);
+                $main = $(resultTpl(result));
+                $result = $main.find('.result');
+                if (result.feedback) {
+                    $result.append($(feedbackTpl(result.feedback)));
+                }
+                if (result.quality) {
+                    $result.append($(qualityBarTpl(result.quality)));
+                }
+                if (result.details) {
+                    $main.find('.details').append($(detailsTpl(result.details)));
+                }
+
+                $indicator = $main.find('.quality-indicator');
+                this.controls.$results.append($main);
 
                 // the result is hidden by default, show it with a little animation
-                $result.fadeIn(function () {
+                $main.fadeIn(function () {
                     if ($indicator.length) {
                         $indicator.animate({
-                            left: (result.percentage * $result.outerWidth() / 100) - ($indicator.outerWidth() / 2)
+                            left: (result.percentage * $main.outerWidth() / 100) - ($indicator.outerWidth() / 2)
                         });
                     }
                 });
@@ -241,36 +281,58 @@ define([
          */
         run: function run() {
             var self = this;
-            var information = {};
+            var information = [];
             var scores = {};
             var testers = [];
 
             // common handling for testers
-            function doCheck(tester, testerName, cb) {
+            function doCheck(testerConfig, cb) {
+                var testerId = testerConfig.id;
+
                 /**
                  * Notifies the start of a tester operation
                  * @event diagnostic#starttester
                  * @param {String} name - The name of the tester
                  */
-                self.trigger('starttester', testerName);
-                self.setState(testerName, true);
-                require([tester.tester], function (testerFactory){
-                    testerFactory(getConfig(tester, self.config), self).start(function (status, details, results) {
-                        // the returned details must be ingested into the main details list
-                        _.assign(information, details);
+                self.trigger('starttester', testerId);
+                self.setState(testerId, true);
 
+                require([testerConfig.tester], function (testerFactory){
+                    var tester = testerFactory(getConfig(testerConfig, self.config), self);
+                    self.changeStatus(tester.labels.status);
+                    tester.start(function (status, details, results) {
+                        var customMsg;
+                        if (testerConfig.customMsgKey) {
+                            customMsg = self.getCustomMsg(testerConfig.customMsgKey);
+                            self.addCustomFeedbackMsg(status, customMsg);
+                        }
+
+                        // the returned details must be ingested into the main details list
+                        _.forEach(details, function(info) {
+                            information.push(info);
+                        });
                         scores[status.id] = status;
 
                         /**
                          * Notifies the end of a tester operation
                          * @event diagnostic#endtester
-                         * @param {String} name - The name of the tester
+                         * @param {String} id - The identifier of the tester
                          * @param {Array} results - The results of the test
                          */
-                        self.trigger('endtester', testerName, status);
-                        self.setState(testerName, false);
+                        self.trigger('endtester', testerId, status);
+                        self.setState(testerId, false);
 
-                        self.store(testerName, results, function () {
+                        // results should be filtered in order to encode complex data
+                        results = _.mapValues(results, function(value) {
+                            switch(typeof(value)) {
+                                case 'boolean': return value ? 1 : 0;
+                                case 'object': return JSON.stringify(value);
+                            }
+                            return value;
+                        });
+
+                        // send the data to store
+                        self.store(testerId, results, function () {
                             self.addResult(status);
                             cb();
                         });
@@ -282,10 +344,13 @@ define([
                 // set up the component to a new run
                 this.prepare();
 
-                _.forEach(this.config.testers, function(tester, testerName) {
-                    testers.push(function (cb) {
-                        doCheck(tester, testerName, cb);
-                    });
+                _.forEach(this.config.testers, function(testerConfig, testerId) {
+                    testerConfig.id = testerConfig.id || testerId;
+                    if (testerConfig.enabled) {
+                        testers.push(function (cb) {
+                            doCheck(testerConfig, cb);
+                        });
+                    }
                 });
 
                 // launch each testers in series, then display the results
@@ -294,7 +359,7 @@ define([
                     var total = _.min(scores, 'percentage');
 
                     // get a status according to the main score
-                    var status = self.status.getStatus(total.percentage, 'summary');
+                    var status = getStatus(total.percentage, _thresholds);
 
                     // display the result
                     status.title = __('Total');
@@ -357,15 +422,11 @@ define([
             // uninstalls the component
             .on('destroy', function () {
                 this.controls = null;
-                this.status = null;
             })
 
             // renders the component
             .on('render', function () {
                 var self = this;
-
-                // use an external component to handle the thresholds and status
-                this.status = statusFactory();
 
                 // get access to all needed placeholders
                 this.controls = {
