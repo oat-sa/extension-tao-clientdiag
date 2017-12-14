@@ -559,8 +559,8 @@ class Updater extends \common_ext_ExtensionUpdater
                 /** @var \Doctrine\DBAL\Schema\Table $tableResults */
                 $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
 
-                $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_UUID, 'string', ['length' => 32]);
-                $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_VALUE, 'string', ['length' => 32]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_UUID, 'string', ['length' => 32, 'notnull' => false]);
+                $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_VALUE, 'string', ['length' => 32, 'notnull' => false]);
                 $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_DETAILS, 'text', ['notnull' => false]);
                 $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_ERRORS, 'integer', ['length' => 1, 'notnull' => false]);
                 $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_CHANGED, 'integer', ['length' => 1, 'notnull' => false]);

@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.2.0-sprint63\n"
-"PO-Revision-Date: 2017-11-07T09:38:53\n"
+"Project-Id-Version: TAO 3.3.0-sprint66\n"
+"PO-Revision-Date: 2017-12-12T08:58:48\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: it-IT\n"
@@ -13,6 +13,9 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
+msgid "%d sources (%s)"
+msgstr ""
+
 msgid "All rights reserved."
 msgstr "Diritti riservati"
 
@@ -20,7 +23,7 @@ msgid "Average bandwidth"
 msgstr "Media della larghezza della banda"
 
 msgid "Average intensive bandwidth"
-msgstr "Media della larghezza di banda"
+msgstr "Media ad elevato impiego di banda"
 
 msgid "Average performances"
 msgstr "Media della performance "
@@ -29,40 +32,49 @@ msgid "Average rendering time"
 msgstr "Media del tempo di rendering"
 
 msgid "Average upload speed"
-msgstr ""
+msgstr "Media della velocita' di upload"
 
 msgid "Bandwidth"
-msgstr "Larghezza banda"
+msgstr "Larghezza di banda"
 
 msgid "Be aware that these tests will take up to several minutes."
-msgstr "Prendete visione che questi test necessita di alcuni minuti"
+msgstr "Attenzione! Questi test necessitano di alcuni minuti"
 
 msgid "Begin diagnostics"
-msgstr "Inizi diagnostica"
+msgstr "Inizio diagnostica"
 
 msgid "Browser"
+msgstr ""
+
+msgid "Cannot get your fingerprint"
+msgstr ""
+
+msgid "Change since last fingerprint"
 msgstr ""
 
 msgid "Checking the bandwidth..."
 msgstr "Controllo di banda"
 
 msgid "Checking the browser..."
-msgstr ""
+msgstr "Controllo del browser"
 
 msgid "Checking the media intensive bandwidth..."
 msgstr "Controllo dei media ad elevato impiego di banda"
 
 msgid "Checking the performances..."
-msgstr ""
+msgstr "Controllo della performance"
 
 msgid "Checking upload speed..."
-msgstr ""
+msgstr "Controllo della velocita' di upload"
 
 msgid "Compatible"
 msgstr "Compatibile"
 
+msgid "Computing the fingerprint..."
+msgstr ""
+
 msgid "Connect to the diagnostic tool"
-msgstr "Connetto allo strumento di diagnostica"
+msgstr "Connesso al Diagnostic Tool"
 
 msgid "Date"
 msgstr ""
@@ -71,28 +83,46 @@ msgid "Details"
 msgstr "Dettagli"
 
 msgid "Diagnostic Tool"
-msgstr ""
+msgstr "Diagnostic Tool"
 
 msgid "Done!"
+msgstr "Fatto"
+
+msgid "Dynamic UID"
+msgstr ""
+
+msgid "Errors occurred! Please see details"
 msgstr ""
 
 msgid "Exit"
 msgstr ""
 
+msgid "Fingerprint"
+msgstr ""
+
+msgid "Fingerprint error"
+msgstr ""
+
+msgid "Fingerprint errors"
+msgstr ""
+
+msgid "Fingerprint sources"
+msgstr ""
+
 msgid "Good bandwidth"
-msgstr "Larghezza banda buona"
+msgstr "Larghezza di banda buona"
 
 msgid "Good performances"
-msgstr "Buone performance"
+msgstr "Buona performance"
 
 msgid "Good upload speed"
-msgstr ""
+msgstr "Buona velocita' di upload"
 
 msgid "Hide Details"
-msgstr ""
+msgstr "Nascondi dettagli"
 
 msgid "Intensive bandwidth"
-msgstr ""
+msgstr "Elevato impiego di banda"
 
 msgid "Interface not available"
 msgstr ""
@@ -119,22 +149,22 @@ msgid "Logout"
 msgstr ""
 
 msgid "Low bandwidth"
-msgstr "Larghezza banda scarsa"
+msgstr "Bassa larghezza di banda"
 
 msgid "Low upload speed"
-msgstr ""
+msgstr "Bassa velocita' di upload"
 
 msgid "Max upload speed"
 msgstr ""
 
 msgid "Maximum bandwidth"
-msgstr "Massima larghezza banda"
+msgstr "Massima larghezza di banda"
 
 msgid "Maximum intensive bandwidth"
 msgstr "Massimo della larghezza di banda"
 
 msgid "Maximum rendering time"
-msgstr "Tempo massimo di rendering"
+msgstr "Tempo massimo di esecuzione"
 
 msgid "Media intensive bandwidth"
 msgstr "Media ad elevato impiego di banda"
@@ -147,6 +177,9 @@ msgstr "Minimo della larghezza di banda"
 
 msgid "Minimum rendering time"
 msgstr "Tempo di esecuzione minimo"
+
+msgid "No"
+msgstr ""
 
 msgid "No diagnostic service defined"
 msgstr ""
@@ -170,7 +203,7 @@ msgid "OS"
 msgstr ""
 
 msgid "Performances"
-msgstr ""
+msgstr "Performance"
 
 msgid "Readiness Check"
 msgstr ""
@@ -202,6 +235,9 @@ msgstr ""
 msgid "Show Details"
 msgstr "Mostra dettagli"
 
+msgid "Show fingerprint details"
+msgstr ""
+
 msgid "Something went wrong ..."
 msgstr ""
 
@@ -221,10 +257,10 @@ msgid "The storage service provided to store the diagnostic results must be upgr
 msgstr ""
 
 msgid "This browser is not tested."
-msgstr ""
+msgstr "Questo browser non e' testato"
 
 msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
-msgstr ""
+msgstr "Questo applicativo stabilisce se il tuo sistema e' compatibile con la piattaforma TAO."
 
 msgid "Total"
 msgstr "Totale"
@@ -236,13 +272,13 @@ msgid "Unable to get the workstation name!"
 msgstr ""
 
 msgid "Upload speed"
-msgstr ""
+msgstr "Velocita' di upload"
 
 msgid "Very slow performances"
-msgstr "Performance veramente basse"
+msgstr "Performance molto bassa"
 
 msgid "Web browser"
-msgstr "Browser web"
+msgstr "Web Browser"
 
 msgid "Workstation"
 msgstr ""
@@ -256,6 +292,18 @@ msgstr "Performance della postazione di lavoro"
 msgid "Workstation:"
 msgstr ""
 
+msgid "Yes"
+msgstr ""
+
+msgid "Your fingerprint is %s"
+msgstr ""
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr ""
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
+msgstr ""
+
 msgid "Your system is fully compliant."
 msgstr "Il tuo sistema è completamente adeguato"
 
@@ -263,5 +311,5 @@ msgid "Your system is not optimal, please contact your system administrator."
 msgstr "Il tuo sistema non è ottimale, si prega di contattare il proprio amministratore di sistema"
 
 msgid "Your system requires a compatibility update, please contact your system administrator."
-msgstr "Il tuo sistema richiede un aggiornamento, prego contatta il tuo amministratore di sistema"
+msgstr "Il tuo sistema richiede un aggiornamento, si prega di contattare il tuo amministratore di sistema"
 

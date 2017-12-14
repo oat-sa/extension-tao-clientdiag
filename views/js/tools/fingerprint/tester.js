@@ -30,9 +30,9 @@ define([
     'lib/uuid',
     'taoClientDiagnostic/tools/getConfig',
     'taoClientDiagnostic/tools/getLabels',
-    'taoClientDiagnostic/tools/fingerprint/fingerprint2',
-    'taoClientDiagnostic/tools/getStatus'
-], function ($, _, __, url, loggerFactory, store, Promise, format, uuid, getConfig, getLabels, Fingerprint2, getStatus) {
+    'taoClientDiagnostic/tools/getStatus',
+    'taoClientDiagnostic/lib/fingerprint/fingerprint2'
+], function ($, _, __, url, loggerFactory, store, Promise, format, uuid, getConfig, getLabels, getStatus, Fingerprint2) {
     'use strict';
 
     /**
