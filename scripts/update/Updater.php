@@ -473,7 +473,6 @@ class Updater extends \common_ext_ExtensionUpdater
 
         $this->skip('2.4.0', '2.6.1');
 
-
         if ($this->isVersion('2.6.1')) {
             $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
             $config = $extension->getConfig('clientDiag');
@@ -575,6 +574,6 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('2.9.0');
         }
 
-        $this->skip('2.9.0', '2.9.2');
+        $this->skip('2.9.0', '2.10.0');
     }
 }
