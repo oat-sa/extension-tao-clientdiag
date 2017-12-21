@@ -21,6 +21,7 @@ namespace oat\taoClientDiagnostic\model\browserDetector;
 
 use core_kernel_classes_Class;
 use core_kernel_classes_Resource;
+use oat\generis\model\OntologyRdfs;
 
 /**
  * Service to manage the authoring of deliveries
@@ -62,7 +63,7 @@ abstract class Base extends \tao_models_classes_ClassService
         $detectedName = $this->getClientName();
 
         $results = $this->makeClass->searchInstances(
-        [ RDFS_LABEL => $detectedName ],
+        [ OntologyRdfs::RDFS_LABEL => $detectedName ],
         [ 'like' => false ]);
 
         $result = array_pop($results);

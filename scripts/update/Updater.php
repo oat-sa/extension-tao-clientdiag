@@ -473,7 +473,6 @@ class Updater extends \common_ext_ExtensionUpdater
 
         $this->skip('2.4.0', '2.6.1');
 
-
         if ($this->isVersion('2.6.1')) {
             $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
             $config = $extension->getConfig('clientDiag');
@@ -526,13 +525,13 @@ class Updater extends \common_ext_ExtensionUpdater
 
             $this->setVersion('2.7.0');
         }
-        
+
         $this->skip('2.7.0', '2.8.1');
 
         if ($this->isVersion('2.8.1')) {
             $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
             $config = $extension->getConfig('clientDiag');
-            
+
             $config['testers']['performance']['customMsgKey'] = 'diagPerformancesCheckResult';
             $config['testers']['bandwidth']['customMsgKey'] = 'diagBandwithCheckResult';
             $config['testers']['intensive_bandwidth']['customMsgKey'] = 'diagBandwithCheckResult';
@@ -571,10 +570,10 @@ class Updater extends \common_ext_ExtensionUpdater
                     $persistence->exec($query);
                 }
             }
-            
+
             $this->setVersion('2.9.0');
         }
-        
-        $this->skip('2.9.0', '2.9.0.1');
+
+        $this->skip('2.9.0', '2.10.0');
     }
 }
