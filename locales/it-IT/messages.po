@@ -155,7 +155,7 @@ msgid "Low upload speed"
 msgstr "Bassa velocita' di upload"
 
 msgid "Max upload speed"
-msgstr ""
+msgstr "Massima velocita' di upload"
 
 msgid "Maximum bandwidth"
 msgstr "Massima larghezza di banda"
