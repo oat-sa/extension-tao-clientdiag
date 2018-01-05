@@ -258,6 +258,14 @@ define([
                 label: __('Workstation')
             });
 
+            // column: School name
+            if (config.requireSchoolName) {
+                model.push({
+                    id: 'school',
+                    label: __('School')
+                });
+            }
+
             // results of fingerprinting
             if (config.testers.fingerprint && config.testers.fingerprint.enabled) {
                 // column: Fingerprint of the workstation
