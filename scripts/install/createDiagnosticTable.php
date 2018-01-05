@@ -49,6 +49,7 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             $tableResults->addColumn(Sql::DIAGNOSTIC_USER_ID, 'string', ['length' => 255, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_IP, 'string', ['length' => 32]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_WORKSTATION, 'string', ['length' => 64, 'notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_SCHOOL, 'string', ['length' => 255, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_UUID, 'string', ['length' => 32, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_VALUE, 'string', ['length' => 32, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_FINGERPRINT_DETAILS, 'text', ['notnull' => false]);
