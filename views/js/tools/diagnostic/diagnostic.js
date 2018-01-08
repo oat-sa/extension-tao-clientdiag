@@ -26,6 +26,8 @@ define([
     'async',
     'ui/feedback',
     'ui/component',
+    'core/logger',
+    'core/store',
     'core/dataProvider/request',
     'util/url',
     'taoClientDiagnostic/tools/performances/tester',
@@ -46,6 +48,8 @@ define([
              async,
              feedback,
              component,
+             loggerFactory,
+             store,
              request,
              urlUtil,
              performancesTester,
@@ -60,6 +64,11 @@ define([
              feedbackTpl,
              qualityBarTpl) {
     'use strict';
+
+    /**
+     * @type {logger}
+     */
+    var logger = loggerFactory('taoClientDiagnostic/diagnostic');
 
     /**
      * Some default values
@@ -390,6 +399,7 @@ define([
      * @param {String} [config.controller] - The name of the controller to call
      * @param {String} [config.extension] - The name of the extension containing the controller
      * @param {Object} [config.storeParams] - A list of additional parameters to send with diagnostic results
+     * @param {Boolean} [config.requireSchoolName] - If `true` require a school name to allow the tests to start
      *
      * @param {String} [config.browser.action] - The name of the action to call to get the browser checker
      * @param {String} [config.browser.controller] - The name of the controller to call to get the browser checker
@@ -428,6 +438,112 @@ define([
             .on('render', function () {
                 var self = this;
 
+                /**
+                 * Gets a control by its registered name
+                 * @param {String} name - the name registered in the collection of controls
+                 */
+                function getControl(name) {
+                    return self.controls['$' + name];
+                }
+
+                /**
+                 * Gets the value of an input field
+                 * @param {String} name - the name registered in the collection of controls
+                 * @returns {String}
+                 */
+                function getInputValue(name) {
+                    var $control = getControl(name);
+                    return ($control && $control.val() || '').trim();
+                }
+
+                /**
+                 * Sets the value of an input field
+                 * @param {String} name - the name registered in the collection of controls
+                 * @param {String} value
+                 */
+                function setInputValue(name, value) {
+                    var $control = getControl(name);
+                    $control && $control.val(value);
+                }
+
+                /**
+                 * Enable/Disable a control
+                 * @param {String} name - the name registered in the collection of controls
+                 * @param {Boolean} [state]
+                 */
+                function toggleControl(name, state) {
+                    var $control = getControl(name);
+                    if ($control) {
+                        if (typeof state === 'undefined') {
+                            state = !$control.is(':enabled');
+                        }
+                        if (state) {
+                            $control.removeProp('disabled');
+                        } else {
+                            $control.prop('disabled', true);
+                        }
+                    }
+                }
+
+                /**
+                 * Install the school name manager.
+                 * @todo: improve this by moving it into a plugin, and obviously implement the plugin handling
+                 */
+                function manageSchoolName() {
+                    // ensure the diagnostic cannot start without a school name
+                    self.controls.$school = self.getElement().find('[data-control="school"]')
+                        .on('keypress', function (e) {
+                            _.defer(function() {
+                                toggleControl('start', !!getInputValue('school'));
+                                if (e.which === 13) {
+                                    e.preventDefault();
+                                    self.controls.$start.click();
+                                }
+                            });
+                        });
+                    toggleControl('start', !!getInputValue('school'));
+
+                    // will store the school name in the browser storage, that will allow to restore it next time
+                    toggleControl('school', false);
+                    store('client-diagnostic')
+                        .then(function (storage) {
+                            // store the school name on test start, to ensure consistency
+                            self.on('start.school', function() {
+                                storage.setItem('school', getInputValue('school'))
+                                    .catch(function(error) {
+                                        logger.error(error);
+                                    });
+                            });
+
+                            // restore the school name on load
+                            return storage.getItem('school').then(function (value) {
+                                setInputValue('school', value);
+                                toggleControl('start', !!getInputValue('school'));
+                                toggleControl('school', true);
+                            });
+                        })
+                        .catch(function(error) {
+                            logger.error(error);
+                            toggleControl('school', true);
+                        });
+
+                    // ensure the school name is properly sent
+                    self
+                        .on('start.school', function() {
+                            // append the school name to the queries
+                            self.config.storeParams = _.assign(self.config.storeParams || {}, {
+                                school: getInputValue('school')
+                            });
+
+                            // disable the input when running the test
+                            toggleControl('school', false);
+                        })
+                        .on('end.school', function() {
+                            // enable the input when the test is complete
+                            toggleControl('school', true);
+                        })
+                }
+
                 // get access to all needed placeholders
                 this.controls = {
                     $start: this.$component.find('[data-action="test-launcher"]'),
@@ -437,8 +553,12 @@ define([
 
                 // start the diagnostic
                 this.controls.$start.on('click', function () {
-                    self.run();
+                    self.controls.$start.is(':enabled') && self.run();
                 });
+
+                if (this.config.requireSchoolName) {
+                    manageSchoolName();
+                }
 
                 // show result details
                 this.controls.$results.on('click', 'button[data-action="show-details"]', function () {
