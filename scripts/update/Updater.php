@@ -575,5 +575,37 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('2.9.0', '2.10.1');
+
+        if ($this->isVersion('2.10.1')) {
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+
+            $config['requireSchoolName'] = false;
+
+            $extension->setConfig('clientDiag', $config);
+
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+            if ($storageService instanceof Sql) {
+                $persistence = $storageService->getPersistence();
+
+                $schemaManager = $persistence->getDriver()->getSchemaManager();
+                $schema = $schemaManager->createSchema();
+
+                $fromSchema = clone $schema;
+
+                /** @var \Doctrine\DBAL\Schema\Table $tableResults */
+                $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
+
+                if (! $tableResults->hasColumn(PaginatedSqlStorage::DIAGNOSTIC_SCHOOL)) {
+                    $tableResults->addColumn(Sql::DIAGNOSTIC_SCHOOL, 'string', ['length' => 255, 'notnull' => false]);
+                    $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+                    foreach ($queries as $query) {
+                        $persistence->exec($query);
+                    }
+                }
+            }
+
+            $this->setVersion('2.11.0');
+        }
     }
 }

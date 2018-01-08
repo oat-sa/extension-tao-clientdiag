@@ -51,7 +51,7 @@ class DiagnosticChecker extends CompatibilityChecker
         $data['login'] = UserHelper::getUserLogin(\common_session_SessionManager::getSession()->getUser());
 
         if ($this->hasRequestParameter('workstation')) {
-            $data[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION] = trim($this->getRequestParameter('workstation'));
+            $data[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('workstation')));
         }
 
         return $data;

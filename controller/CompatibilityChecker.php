@@ -200,6 +200,10 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             unset($data[$type . '_type']);
         }
 
+        if ($this->hasRequestParameter('school')) {
+            $data[Storage::DIAGNOSTIC_SCHOOL] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('school')));
+        }
+
         if ($check) {
             if (!$this->hasRequestParameter('os')) {
                 throw new \common_exception_MissingParameter('os');

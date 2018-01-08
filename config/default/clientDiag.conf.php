@@ -52,6 +52,12 @@ return array(
     'configurableText' => null,
 
     /**
+     * When this option is activated, the diagnostic will require a school name before allowing to start the checks
+     * @type boolean
+     */
+    'requireSchoolName' => false,
+
+    /**
      * List of testers that can be loaded
      * @type array
      */
