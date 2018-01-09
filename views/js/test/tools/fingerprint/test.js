@@ -18,7 +18,7 @@
 define([
     'core/store',
     'taoClientDiagnostic/tools/fingerprint/tester',
-    'taoClientDiagnostic/tools/fingerprint/fingerprint2'
+    'taoClientDiagnostic/lib/fingerprint/fingerprint2'
 ], function (storeMock, fingerprintTester, fingerprintMock) {
     'use strict';
 
