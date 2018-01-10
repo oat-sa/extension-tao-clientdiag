@@ -301,7 +301,6 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             }
         }
 
-        \common_Logger::i(var_export($data, true));
         return $data;
     }
 }
