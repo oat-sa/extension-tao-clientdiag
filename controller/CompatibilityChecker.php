@@ -28,7 +28,6 @@ use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
 use oat\taoClientDiagnostic\model\storage\Storage;
 use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
 use oat\taoClientDiagnostic\model\browserDetector\OSService;
-use qtism\runtime\tests\SessionManager;
 
 /**
  * Class CompatibilityChecker
