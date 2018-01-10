@@ -290,6 +290,12 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         return $config;
     }
 
+    /**
+     * Map custom input data from the 'customInput' configuration.
+     *
+     * @param array $data
+     * @return array
+     */
     protected function mapData(array $data) {
         $config = $this->loadConfig();
 
