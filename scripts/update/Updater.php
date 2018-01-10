@@ -607,5 +607,14 @@ class Updater extends \common_ext_ExtensionUpdater
 
             $this->setVersion('2.11.0');
         }
+
+        if ($this->isVersion('2.11.0')) {
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+            $config['customInput'] = [];
+            $extension->setConfig('clientDiag', $config);
+
+            $this->setVersion('2.12.0');
+        }
     }
 }
