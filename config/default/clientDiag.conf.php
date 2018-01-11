@@ -58,14 +58,6 @@ return array(
     'requireSchoolName' => false,
 
     /**
-     * An array describing how GET parameters in use when invoking the Diagnostic Tool should be transferred
-     * to the server side for storage. Keys describe the GET parameter names, and values describe the name of the
-     * data to be sent to the server side.
-     * @type array
-     */
-    'customInput' => [],
-
-    /**
      * List of testers that can be loaded
      * @type array
      */
@@ -328,6 +320,6 @@ return array(
              * @type string
              */
             'customMsgKey' => 'diagFingerprintCheckResult',
-        ]
+        ],
     ]
 );

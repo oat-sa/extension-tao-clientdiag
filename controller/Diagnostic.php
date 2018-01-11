@@ -88,8 +88,7 @@ class Diagnostic extends \tao_actions_CommonModule
         $this->setData('data', $data);
         $this->setData('content-template', 'pages/index.tpl');
 
-        /** @var \oat\tao\model\theme\ThemeService $themeService */
-        $themeService = $this->getServiceLocator()->get(ThemeService::SERVICE_ID);
+        $themeService = $this->getServiceManager()->get(ThemeService::SERVICE_ID);
         $theme = $themeService->getTheme();
         $configurableText = $theme->getAllTexts();
         $this->setData('configurableText', json_encode($configurableText));
@@ -180,12 +179,13 @@ class Diagnostic extends \tao_actions_CommonModule
      * Get config parameters for compatibility check
      *
      * @return mixed
+     * @throws \common_ext_ExtensionException
      */
     protected function loadConfig()
     {
         /** @var DiagnosticServiceInterface $service */
-        $service = $this->getServiceLocator()->get(DiagnosticServiceInterface::SERVICE_ID);
-        return $service->getDiagnosticJsConfig();
+        $service = $this->getServiceManager()->get(DiagnosticServiceInterface::SERVICE_ID);
+        return $service->getTesters();
     }
 
     /**
@@ -197,7 +197,7 @@ class Diagnostic extends \tao_actions_CommonModule
     {
         if (! $this->dataTable) {
             $diagnosticDatatable = new DiagnosticDataTable();
-            $diagnosticDatatable->setServiceLocator($this->getServiceLocator());
+            $diagnosticDatatable->setServiceLocator($this->getServiceManager());
             $this->dataTable = $diagnosticDatatable;
         }
         return $this->dataTable;

@@ -28,6 +28,7 @@ use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
 use oat\taoClientDiagnostic\model\storage\Storage;
 use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
 use oat\taoClientDiagnostic\model\browserDetector\OSService;
+use qtism\runtime\tests\SessionManager;
 
 /**
  * Class CompatibilityChecker
@@ -44,7 +45,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     public function index()
     {
-        $authorizationService = $this->getServiceLocator()->get(Authorization::SERVICE_ID);
+        $authorizationService = $this->getServiceManager()->get(Authorization::SERVICE_ID);
         if ($authorizationService->isAuthorized()) {
 
             $config = $this->loadConfig();
@@ -55,7 +56,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
 
             $this->setData('client-config-url', $this->getClientConfigUrl());
             $this->setData('content-config', $config);
-            $this->setData('logout', $this->getServiceLocator()->get(DefaultUrlService::SERVICE_ID)->getLogoutUrl());
+            $this->setData('logout', $this->getServiceManager()->get(DefaultUrlService::SERVICE_ID)->getLogoutUrl());
             $this->setData('content-controller', 'taoClientDiagnostic/controller/CompatibilityChecker/diagnostics');
             $this->setData('content-template', 'CompatibilityChecker' . DIRECTORY_SEPARATOR . 'diagnostics.tpl');
             $this->setView('index.tpl');
@@ -97,7 +98,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $data['compatible'] = $isCompatible;
 
             try {
-                $storageService = $this->getServiceLocator()->get(Storage::SERVICE_ID);
+                $storageService = $this->getServiceManager()->get(Storage::SERVICE_ID);
                 $storageService->store($id, $data);
             } catch (StorageException $e) {
                 \common_Logger::i($e->getMessage());
@@ -167,7 +168,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         $id   = $this->getId();
 
         try {
-            $storageService = $this->getServiceLocator()->get(Storage::SERVICE_ID);
+            $storageService = $this->getServiceManager()->get(Storage::SERVICE_ID);
             $storageService->store($id, $data);
             $this->returnJson(array('success' => true, 'type' => 'success'));
         } catch (StorageException $e) {
@@ -192,17 +193,12 @@ class CompatibilityChecker extends \tao_actions_CommonModule
 
         if ($this->hasRequestParameter('type')) {
             $type = $this->getRequestParameter('type');
-            unset($data['type']);
-
-            if ($type !== 'custom_input') {
-                foreach ($data as $key => $value) {
-                    $data[$type . '_' . $key] = $value;
-                    unset($data[$key]);
-                }
+            foreach ($data as $key => $value) {
+                $data[$type . '_' . $key] = $value;
+                unset($data[$key]);
             }
+            unset($data[$type . '_type']);
         }
-
-        $data = $this->mapData($data);
 
         if ($this->hasRequestParameter('school')) {
             $data[Storage::DIAGNOSTIC_SCHOOL] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('school')));
@@ -236,7 +232,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $data['user_id'] = $user->getIdentifier();
         }
 
-        $data['version'] = $this->getServiceLocator()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic')->getVersion();
+        $data['version'] = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getVersion();
 
         $data['ip'] = (!empty($_SERVER['HTTP_X_REAL_IP'])) ? $_SERVER['HTTP_X_REAL_IP'] : ((!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : 'unknown');
         return $data;
@@ -280,32 +276,14 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      * Get config parameters for compatibility check
      *
      * @return mixed
+     * @throws \common_ext_ExtensionException
      */
     protected function loadConfig()
     {
         /** @var DiagnosticServiceInterface $service */
-        $service = $this->getServiceLocator()->get(DiagnosticServiceInterface::SERVICE_ID);
-        $config = $service->getDiagnosticJsConfig();
+        $service = $this->getServiceManager()->get(DiagnosticServiceInterface::SERVICE_ID);
+        $config = $service->getTesters();
         $config['controller'] = 'CompatibilityChecker';
         return $config;
-    }
-
-    /**
-     * Map custom input data from the 'customInput' configuration.
-     *
-     * @param array $data
-     * @return array
-     */
-    protected function mapData(array $data) {
-        $config = $this->loadConfig();
-
-        foreach ($data as $k => $d) {
-            if (!empty($config['customInput'][$k])) {
-                $data[$config['customInput'][$k]] = $d;
-                unset($data[$k]);
-            }
-        }
-
-        return $data;
     }
 }

@@ -293,122 +293,97 @@ define([
             var information = [];
             var scores = {};
             var testers = [];
-            var customInput = self.getCustomInput();
 
-            var doRun = function() {
-                // common handling for testers
-                function doCheck(testerConfig, cb) {
-                    var testerId = testerConfig.id;
+            // common handling for testers
+            function doCheck(testerConfig, cb) {
+                var testerId = testerConfig.id;
 
-                    /**
-                     * Notifies the start of a tester operation
-                     * @event diagnostic#starttester
-                     * @param {String} name - The name of the tester
-                     */
-                    self.trigger('starttester', testerId);
-                    self.setState(testerId, true);
+                /**
+                 * Notifies the start of a tester operation
+                 * @event diagnostic#starttester
+                 * @param {String} name - The name of the tester
+                 */
+                self.trigger('starttester', testerId);
+                self.setState(testerId, true);
 
-                    require([testerConfig.tester], function (testerFactory){
-                        var tester = testerFactory(getConfig(testerConfig, self.config), self);
-                        self.changeStatus(tester.labels.status);
-                        tester.start(function (status, details, results) {
-                            var customMsg;
-                            if (testerConfig.customMsgKey) {
-                                customMsg = self.getCustomMsg(testerConfig.customMsgKey);
-                                self.addCustomFeedbackMsg(status, customMsg);
+                require([testerConfig.tester], function (testerFactory){
+                    var tester = testerFactory(getConfig(testerConfig, self.config), self);
+                    self.changeStatus(tester.labels.status);
+                    tester.start(function (status, details, results) {
+                        var customMsg;
+                        if (testerConfig.customMsgKey) {
+                            customMsg = self.getCustomMsg(testerConfig.customMsgKey);
+                            self.addCustomFeedbackMsg(status, customMsg);
+                        }
+
+                        // the returned details must be ingested into the main details list
+                        _.forEach(details, function(info) {
+                            information.push(info);
+                        });
+                        scores[status.id] = status;
+
+                        /**
+                         * Notifies the end of a tester operation
+                         * @event diagnostic#endtester
+                         * @param {String} id - The identifier of the tester
+                         * @param {Array} results - The results of the test
+                         */
+                        self.trigger('endtester', testerId, status);
+                        self.setState(testerId, false);
+
+                        // results should be filtered in order to encode complex data
+                        results = _.mapValues(results, function(value) {
+                            switch(typeof(value)) {
+                                case 'boolean': return value ? 1 : 0;
+                                case 'object': return JSON.stringify(value);
                             }
+                            return value;
+                        });
 
-                            // the returned details must be ingested into the main details list
-                            _.forEach(details, function(info) {
-                                information.push(info);
-                            });
-                            scores[status.id] = status;
-
-                            /**
-                             * Notifies the end of a tester operation
-                             * @event diagnostic#endtester
-                             * @param {String} id - The identifier of the tester
-                             * @param {Array} results - The results of the test
-                             */
-                            self.trigger('endtester', testerId, status);
-                            self.setState(testerId, false);
-
-                            // results should be filtered in order to encode complex data
-                            results = _.mapValues(results, function(value) {
-                                switch(typeof(value)) {
-                                    case 'boolean': return value ? 1 : 0;
-                                    case 'object': return JSON.stringify(value);
-                                }
-                                return value;
-                            });
-
-                            // send the data to store
-                            self.store(testerId, results, function () {
-                                self.addResult(status);
-                                cb();
-                            });
+                        // send the data to store
+                        self.store(testerId, results, function () {
+                            self.addResult(status);
+                            cb();
                         });
                     });
-                }
-
-                if (self.is('rendered')) {
-                    // set up the component to a new run
-                    self.prepare();
-
-                    _.forEach(self.config.testers, function(testerConfig, testerId) {
-                        testerConfig.id = testerConfig.id || testerId;
-                        if (testerConfig.enabled) {
-                            testers.push(function (cb) {
-                                doCheck(testerConfig, cb);
-                            });
-                        }
-                    });
-
-                    // launch each testers in series, then display the results
-                    async.series(testers, function () {
-                        // pick the lowest percentage as the main score
-                        var total = _.min(scores, 'percentage');
-
-                        // get a status according to the main score
-                        var status = getStatus(total.percentage, _thresholds);
-
-                        // display the result
-                        status.title = __('Total');
-                        status.id = 'total';
-                        self.addCustomFeedbackMsg(status, self.config.configurableText.diagTotalCheckResult);
-
-                        status.details = information;
-                        self.addResult(status);
-
-                        // done !
-                        self.finish();
-                    });
-                }
-            };
-
-            if (_.size(customInput) > 0) {
-                self.store('custom_input', customInput, doRun);
-            } else {
-                doRun();
+                });
             }
 
-            return self;
-        },
+            if (this.is('rendered')) {
+                // set up the component to a new run
+                this.prepare();
 
-        getCustomInput: function() {
-            var vars = {};
-            var self = this;
-
-            window.location.href.replace(location.hash, '').replace(
-                /[?&]+([^=&]+)=?([^&]*)?/gi,
-                function (m, key, value) {
-                    if (_.has(self.config['customInput'], key)) {
-                        vars[key] = typeof value !== 'undefined' ? value : '';
+                _.forEach(this.config.testers, function(testerConfig, testerId) {
+                    testerConfig.id = testerConfig.id || testerId;
+                    if (testerConfig.enabled) {
+                        testers.push(function (cb) {
+                            doCheck(testerConfig, cb);
+                        });
                     }
-                }
-            );
+                });
 
-            return vars;
+                // launch each testers in series, then display the results
+                async.series(testers, function () {
+                    // pick the lowest percentage as the main score
+                    var total = _.min(scores, 'percentage');
+
+                    // get a status according to the main score
+                    var status = getStatus(total.percentage, _thresholds);
+
+                    // display the result
+                    status.title = __('Total');
+                    status.id = 'total';
+                    self.addCustomFeedbackMsg(status, self.config.configurableText.diagTotalCheckResult);
+
+                    status.details = information;
+                    self.addResult(status);
+
+                    // done !
+                    self.finish();
+                });
+            }
+
+            return this;
         }
     };
 
