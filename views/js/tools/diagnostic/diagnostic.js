@@ -384,8 +384,6 @@ define([
                         self.finish();
                     });
                 }
-
-                return self;
             };
 
             if (_.size(customInput) > 0) {
@@ -393,6 +391,8 @@ define([
             } else {
                 doRun();
             }
+
+            return self;
         },
 
         getCustomInput: function() {
