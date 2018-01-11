@@ -403,7 +403,7 @@ define([
                 /[?&]+([^=&]+)=?([^&]*)?/gi,
                 function (m, key, value) {
                     if (_.has(self.config['customInput'], key)) {
-                        vars[key] = value !== undefined ? value : '';
+                        vars[key] = typeof value !== 'undefined' ? value : '';
                     }
                 }
             );

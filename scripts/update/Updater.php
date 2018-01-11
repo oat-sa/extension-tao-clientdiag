@@ -149,7 +149,7 @@ class Updater extends \common_ext_ExtensionUpdater
                 $service = new Csv(array(
                     'filename' => FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'store.csv'
                 ));
-                
+
                 $this->getServiceManager()->register(Storage::SERVICE_ID, $service);
             }
 
