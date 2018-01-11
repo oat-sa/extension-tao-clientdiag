@@ -124,7 +124,6 @@ class Updater extends \common_ext_ExtensionUpdater
 
             if (!$this->getServiceManager()->has(Authorization::SERVICE_ID)) {
                 $service = new RequireUsername();
-                $this->getServiceManager()->propagate($service);
                 $this->getServiceManager()->register(Authorization::SERVICE_ID, $service);
             }
 
@@ -138,7 +137,7 @@ class Updater extends \common_ext_ExtensionUpdater
                 $service = new RequireUsername(array(
                     'regexValidator' => '/^[0-9]{7}[A-Z]$/'
                 ));
-                $this->getServiceManager()->propagate($service);
+
                 $this->getServiceManager()->register(Authorization::SERVICE_ID, $service);
             }
 
@@ -150,7 +149,7 @@ class Updater extends \common_ext_ExtensionUpdater
                 $service = new Csv(array(
                     'filename' => FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'store.csv'
                 ));
-                $this->getServiceManager()->propagate($service);
+                
                 $this->getServiceManager()->register(Storage::SERVICE_ID, $service);
             }
 
