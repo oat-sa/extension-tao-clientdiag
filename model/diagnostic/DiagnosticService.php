@@ -35,7 +35,7 @@ class DiagnosticService extends ConfigurableService implements DiagnosticService
     public function getDiagnosticJsConfig()
     {
         $config = $this->getRawConfig();
-        // override samples based on grafical theme, why not
+        // override samples based on graphical theme, why not
         $config['testers']['performance']['samples'] = $this->getPerformanceSamples();
         return $config;
     }

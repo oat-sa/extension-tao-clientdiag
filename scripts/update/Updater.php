@@ -70,7 +70,7 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         if ($currentVersion == '1.1.1') {
-            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
             $extension->setConfig('clientDiag', array(
                 'footer' => '',
             ));
@@ -79,7 +79,7 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         if ($currentVersion == '1.2.0') {
-            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
             $config = $extension->getConfig('clientDiag');
             $extension->setConfig('clientDiag', array_merge($config, array(
                 'performances' => array(
@@ -106,7 +106,7 @@ class Updater extends \common_ext_ExtensionUpdater
         $this->setVersion($currentVersion);
 
         if($this->isVersion('1.3.0')) {
-            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
             $config = $extension->getConfig('clientDiag');
             $extension->setConfig('clientDiag', array_merge($config, array(
                 'diagHeader' => 'This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform.',
@@ -124,7 +124,6 @@ class Updater extends \common_ext_ExtensionUpdater
 
             if (!$this->getServiceManager()->has(Authorization::SERVICE_ID)) {
                 $service = new RequireUsername();
-                $service->setServiceManager($this->getServiceManager());
                 $this->getServiceManager()->register(Authorization::SERVICE_ID, $service);
             }
 
@@ -138,7 +137,7 @@ class Updater extends \common_ext_ExtensionUpdater
                 $service = new RequireUsername(array(
                     'regexValidator' => '/^[0-9]{7}[A-Z]$/'
                 ));
-                $service->setServiceManager($this->getServiceManager());
+
                 $this->getServiceManager()->register(Authorization::SERVICE_ID, $service);
             }
 
@@ -150,7 +149,7 @@ class Updater extends \common_ext_ExtensionUpdater
                 $service = new Csv(array(
                     'filename' => FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'store.csv'
                 ));
-                $service->setServiceManager($this->getServiceManager());
+
                 $this->getServiceManager()->register(Storage::SERVICE_ID, $service);
             }
 
@@ -299,7 +298,7 @@ class Updater extends \common_ext_ExtensionUpdater
         $this->skip('1.7.1', '1.9.1');
 
         if ($this->isVersion('1.9.1')) {
-            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
             $config = $extension->getConfig('clientDiag');
             $config['upload'] =[
                 'size' => 1 * 1024 * 1024,
@@ -410,7 +409,7 @@ class Updater extends \common_ext_ExtensionUpdater
         $this->skip('1.15.0', '2.0.1');
 
         if ($this->isVersion('2.0.1')) {
-            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
             $config = $extension->getConfig('clientDiag');
             $newConfig = [
                 'diagHeader' => $config['diagHeader'],
@@ -474,7 +473,7 @@ class Updater extends \common_ext_ExtensionUpdater
         $this->skip('2.4.0', '2.6.1');
 
         if ($this->isVersion('2.6.1')) {
-            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
             $config = $extension->getConfig('clientDiag');
 
             if (isset($config['testers'])) {
@@ -529,7 +528,7 @@ class Updater extends \common_ext_ExtensionUpdater
         $this->skip('2.7.0', '2.8.1');
 
         if ($this->isVersion('2.8.1')) {
-            $extension = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic');
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
             $config = $extension->getConfig('clientDiag');
 
             $config['testers']['performance']['customMsgKey'] = 'diagPerformancesCheckResult';
@@ -606,6 +605,17 @@ class Updater extends \common_ext_ExtensionUpdater
             }
 
             $this->setVersion('2.11.0');
+        }
+
+        $this->skip('2.11.0', '2.11.1');
+
+        if ($this->isVersion('2.11.1')) {
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+            $config['customInput'] = [];
+            $extension->setConfig('clientDiag', $config);
+
+            $this->setVersion('2.12.0');
         }
     }
 }
