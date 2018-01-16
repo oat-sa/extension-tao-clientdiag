@@ -30,6 +30,7 @@ $GLOBALS['__l10n']["Average rendering time"]="Tempo médio de rendering";
 $GLOBALS['__l10n']["Average upload speed"]="Velocidade média de upload";
 $GLOBALS['__l10n']["Bandwidth"]="Largura de banda";
 $GLOBALS['__l10n']["Be aware that these tests will take up to several minutes."]="Os testes a realizar podem demorar desde segundos a alguns minutos.";
+$GLOBALS['__l10n']["Begin diagnostics"]="Inicar diagnóstico";
 $GLOBALS['__l10n']["Beta version"]="Versão Beta";
 $GLOBALS['__l10n']["Browse"]="Navegar";
 $GLOBALS['__l10n']["Calendar"]="Calendário";

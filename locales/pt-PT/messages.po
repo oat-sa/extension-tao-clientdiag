@@ -44,7 +44,7 @@ msgid "Be aware that these tests will take up to several minutes."
 msgstr "Os testes a realizar podem demorar desde segundos a alguns minutos."
 
 msgid "Begin diagnostics"
-msgstr ""
+msgstr "Inicar diagnóstico"
 
 msgid "Browser"
 msgstr ""
