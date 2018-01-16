@@ -25,6 +25,7 @@ use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerModel;
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
+use oat\taoClientDiagnostic\model\schoolName\SchoolNameService;
 use oat\taoClientDiagnostic\model\storage\Storage;
 use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
 use oat\taoClientDiagnostic\model\browserDetector\OSService;
@@ -177,6 +178,42 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     }
 
     /**
+     * Retrieve a school name
+     */
+    public function schoolName()
+    {
+        $data = $this->getParameters();
+
+        $required = ['school_number', 'school_pin'];
+
+        $response = [];
+        $success = true;
+
+        foreach($required as $fieldName) {
+            if (!isset($data[$fieldName])) {
+                $success = false;
+                $response['errorCode'] = 400;
+                $response['errorMessage'] = __('Missing field %s', $fieldName);
+                break;
+            }
+        }
+
+        if ($success) {
+            try {
+                $schoolNameProvider = $this->getServiceLocator()->get(SchoolNameService::SERVICE_ID);
+                $response['data'] = $schoolNameProvider->getSchoolName($data['school_number'], $data['school_pin']);
+            } catch(\Exception $e) {
+                $success = false;
+                $response['errorCode'] = 404;
+                $response['errorMessage'] = __('Cannot retrieve the school name. Please verify your input');
+            }
+        }
+
+        $response['success'] = $success;
+        $this->returnJson($response);
+    }
+
+    /**
      * Fetch POST data
      * Get login by cookie
      * Get Ip
@@ -204,8 +241,11 @@ class CompatibilityChecker extends \tao_actions_CommonModule
 
         $data = $this->mapData($data);
 
-        if ($this->hasRequestParameter('school')) {
-            $data[Storage::DIAGNOSTIC_SCHOOL] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('school')));
+        if ($this->hasRequestParameter('school_name')) {
+            $data[Storage::DIAGNOSTIC_SCHOOL_NAME] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('school_name')));
+        }
+        if ($this->hasRequestParameter('school_number')) {
+            $data[Storage::DIAGNOSTIC_SCHOOL_NUMBER] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('school_number')));
         }
 
         if ($check) {
