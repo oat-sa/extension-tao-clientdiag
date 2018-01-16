@@ -34,8 +34,14 @@ return array(
     'storeAllRuns' => false,
 
     /**
+     * A custom name to be displayed as the page title
+     * @type string
+     */
+    'pageTitle' => null,
+
+    /**
      * Custom text for diagnostic header
-     * @string
+     * @type string
      */
     'diagHeader' => 'This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform.',
 

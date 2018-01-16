@@ -54,6 +54,10 @@ class CompatibilityChecker extends \tao_actions_CommonModule
                 unset($config['diagHeader']);
             }
 
+            if (!empty($config['pageTitle'])) {
+                $this->setData('title', $config['pageTitle']);
+            }
+
             $this->setData('client-config-url', $this->getClientConfigUrl());
             $this->setData('content-config', $config);
             $this->setData('logout', $this->getServiceLocator()->get(DefaultUrlService::SERVICE_ID)->getLogoutUrl());
