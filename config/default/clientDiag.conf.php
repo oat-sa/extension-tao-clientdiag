@@ -58,6 +58,13 @@ return array(
     'requireSchoolName' => false,
 
     /**
+     * When this option is activated, in link with `requireSchoolName`, the diagnostic will require a school number and
+     * a 4 digits PIN. Then will retrieve the school name within a list.
+     * @type boolean
+     */
+    'validateSchoolName' => false,
+
+    /**
      * An array describing how GET parameters in use when invoking the Diagnostic Tool should be transferred
      * to the server side for storage. Keys describe the GET parameter names, and values describe the name of the
      * data to be sent to the server side.
