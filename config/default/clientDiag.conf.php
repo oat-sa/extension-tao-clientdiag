@@ -34,8 +34,14 @@ return array(
     'storeAllRuns' => false,
 
     /**
+     * A custom name to be displayed as the page title
+     * @type string
+     */
+    'pageTitle' => null,
+
+    /**
      * Custom text for diagnostic header
-     * @string
+     * @type string
      */
     'diagHeader' => 'This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform.',
 
@@ -56,6 +62,13 @@ return array(
      * @type boolean
      */
     'requireSchoolName' => false,
+
+    /**
+     * When this option is activated, in link with `requireSchoolName`, the diagnostic will require a school number and
+     * a 4 digits PIN. Then will retrieve the school name within a list.
+     * @type boolean
+     */
+    'validateSchoolName' => false,
 
     /**
      * An array describing how GET parameters in use when invoking the Diagnostic Tool should be transferred

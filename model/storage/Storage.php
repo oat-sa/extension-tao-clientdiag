@@ -36,7 +36,8 @@ interface Storage
     const DIAGNOSTIC_LOGIN                = 'login';
     const DIAGNOSTIC_IP                   = 'ip';
     const DIAGNOSTIC_WORKSTATION          = 'workstation';
-    const DIAGNOSTIC_SCHOOL               = 'school';
+    const DIAGNOSTIC_SCHOOL_NAME          = 'school_name';
+    const DIAGNOSTIC_SCHOOL_NUMBER        = 'school_number';
     const DIAGNOSTIC_FINGERPRINT_UUID     = 'fingerprint_uuid';
     const DIAGNOSTIC_FINGERPRINT_VALUE    = 'fingerprint_value';
     const DIAGNOSTIC_FINGERPRINT_DETAILS  = 'fingerprint_details';

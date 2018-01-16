@@ -56,15 +56,21 @@ class Diagnostic extends \tao_actions_CommonModule
     {
         $diagnostics = $this->getDiagnosticDataTable()->getDiagnostics($this->getRequestOptions());
 
+        $config = $this->loadConfig();
         $data = array(
             'title'  => __('Readiness diagnostics'),
             'set'    => json_encode($diagnostics),
-            'config' => json_encode($this->loadConfig()),
+            'config' => json_encode($config),
         );
 
         $userLabel = SessionManager::getSession()->getUserLabel();
 
         $this->defaultData();
+
+        if (!empty($config['pageTitle'])) {
+            $this->setData('title', $config['pageTitle']);
+        }
+
         $this->setData('cls', 'diagnostic-index');
         $this->setData('userLabel', $userLabel);
         $this->setData('data', $data);
@@ -77,9 +83,10 @@ class Diagnostic extends \tao_actions_CommonModule
      */
     public function diagnostic()
     {
+        $config = $this->loadConfig();
         $data = array(
             'title'  => __('Readiness Check'),
-            'config' => json_encode($this->loadConfig()),
+            'config' => json_encode($config),
         );
 
         $this->defaultData();
@@ -87,6 +94,10 @@ class Diagnostic extends \tao_actions_CommonModule
         $this->setData('cls', 'diagnostic-runner');
         $this->setData('data', $data);
         $this->setData('content-template', 'pages/index.tpl');
+
+        if (!empty($config['pageTitle'])) {
+            $this->setData('title', $config['pageTitle']);
+        }
 
         /** @var \oat\tao\model\theme\ThemeService $themeService */
         $themeService = $this->getServiceLocator()->get(ThemeService::SERVICE_ID);

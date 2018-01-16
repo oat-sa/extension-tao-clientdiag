@@ -20,6 +20,7 @@
 
 namespace oat\taoClientDiagnostic\scripts\update;
 
+use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Types\Type;
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\accessControl\func\AclProxy;
@@ -30,6 +31,8 @@ use oat\taoClientDiagnostic\controller\DiagnosticChecker;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
 use oat\taoClientDiagnostic\model\authorization\RequireUsername;
 use oat\taoClientDiagnostic\model\ClientDiagnosticRoles;
+use oat\taoClientDiagnostic\model\schoolName\SchoolNameProvider;
+use oat\taoClientDiagnostic\model\schoolName\SchoolNameService;
 use oat\taoClientDiagnostic\model\storage\Csv;
 use oat\taoClientDiagnostic\model\storage\PaginatedSqlStorage;
 use oat\taoClientDiagnostic\model\storage\PaginatedStorage;
@@ -595,8 +598,8 @@ class Updater extends \common_ext_ExtensionUpdater
                 /** @var \Doctrine\DBAL\Schema\Table $tableResults */
                 $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
 
-                if (! $tableResults->hasColumn(PaginatedSqlStorage::DIAGNOSTIC_SCHOOL)) {
-                    $tableResults->addColumn(Sql::DIAGNOSTIC_SCHOOL, 'string', ['length' => 255, 'notnull' => false]);
+                if (! $tableResults->hasColumn(PaginatedSqlStorage::DIAGNOSTIC_SCHOOL_NAME)) {
+                    $tableResults->addColumn(Sql::DIAGNOSTIC_SCHOOL_NAME, 'string', ['length' => 255, 'notnull' => false]);
                     $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
                     foreach ($queries as $query) {
                         $persistence->exec($query);
@@ -616,6 +619,51 @@ class Updater extends \common_ext_ExtensionUpdater
             $extension->setConfig('clientDiag', $config);
 
             $this->setVersion('2.12.0');
+        }
+
+        if ($this->isVersion('2.12.0')) {
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+
+            $config['validateSchoolName'] = false;
+
+            $extension->setConfig('clientDiag', $config);
+
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+            if ($storageService instanceof Sql) {
+                $persistence = $storageService->getPersistence();
+
+                $schemaManager = $persistence->getDriver()->getSchemaManager();
+                $schema = $schemaManager->createSchema();
+
+                $fromSchema = clone $schema;
+
+                /** @var \Doctrine\DBAL\Schema\Table $tableResults */
+                $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
+                $updateTable = false;
+
+                if (! $tableResults->hasColumn(PaginatedSqlStorage::DIAGNOSTIC_SCHOOL_NAME)) {
+                    if ($tableResults->hasColumn('school')) {
+                        $tableResults->dropColumn('school');
+                    }
+                    $tableResults->addColumn(Sql::DIAGNOSTIC_SCHOOL_NAME, 'string', ['length' => 255, 'notnull' => false]);
+                    $updateTable = true;
+                }
+                if (! $tableResults->hasColumn(PaginatedSqlStorage::DIAGNOSTIC_SCHOOL_NUMBER)) {
+                    $tableResults->addColumn(Sql::DIAGNOSTIC_SCHOOL_NUMBER, 'string', ['length' => 16, 'notnull' => false]);
+                    $updateTable = true;
+                }
+                if ($updateTable) {
+                    $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+                    foreach ($queries as $query) {
+                        $persistence->exec($query);
+                    }
+                }
+            }
+
+            $this->getServiceManager()->register(SchoolNameService::SERVICE_ID, new SchoolNameProvider());
+
+            $this->setVersion('2.13.0');
         }
     }
 }

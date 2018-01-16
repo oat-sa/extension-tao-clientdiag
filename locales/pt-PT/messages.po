@@ -1,0 +1,348 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.3.0-sprint68\n"
+"PO-Revision-Date: 2018-01-16T14:26:52\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: pt-PT\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: pt-PT\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "%d sources (%s)"
+msgstr ""
+
+msgid "All rights reserved."
+msgstr ""
+
+msgid "An error occurred! Please verify your input!"
+msgstr ""
+
+msgid "Average bandwidth"
+msgstr "Largura de banda média"
+
+msgid "Average intensive bandwidth"
+msgstr ""
+
+msgid "Average performances"
+msgstr ""
+
+msgid "Average rendering time"
+msgstr "Tempo médio de rendering"
+
+msgid "Average upload speed"
+msgstr "Velocidade média de upload"
+
+msgid "Bandwidth"
+msgstr "Largura de banda"
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr "Os testes a realizar podem demorar desde segundos a alguns minutos."
+
+msgid "Begin diagnostics"
+msgstr "Inicar diagnóstico"
+
+msgid "Browser"
+msgstr ""
+
+msgid "Cannot get your fingerprint"
+msgstr ""
+
+msgid "Cannot retrieve the school name. Please verify your input"
+msgstr ""
+
+msgid "Change since last fingerprint"
+msgstr "Alterada desde a última identificação"
+
+msgid "Checking the bandwidth..."
+msgstr ""
+
+msgid "Checking the browser..."
+msgstr ""
+
+msgid "Checking the media intensive bandwidth..."
+msgstr ""
+
+msgid "Checking the performances..."
+msgstr "A verificar as performances..."
+
+msgid "Checking upload speed..."
+msgstr ""
+
+msgid "Compatible"
+msgstr "Compatível"
+
+msgid "Computing the fingerprint..."
+msgstr ""
+
+msgid "Connect to the diagnostic tool"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Details"
+msgstr "Detalhes"
+
+msgid "Diagnostic Tool"
+msgstr "Ferramenta de diagnóstico"
+
+msgid "Done!"
+msgstr "Concluído!"
+
+msgid "Dynamic UID"
+msgstr ""
+
+msgid "Errors occurred! Please see details"
+msgstr ""
+
+msgid "Exit"
+msgstr ""
+
+msgid "Failed to get school name"
+msgstr ""
+
+msgid "Fingerprint"
+msgstr "Identificação"
+
+msgid "Fingerprint error"
+msgstr ""
+
+msgid "Fingerprint errors"
+msgstr ""
+
+msgid "Fingerprint sources"
+msgstr "Fontes para a identificação"
+
+msgid "Getting school name..."
+msgstr ""
+
+msgid "Good bandwidth"
+msgstr "Boa largura de banda"
+
+msgid "Good performances"
+msgstr "Boa performance"
+
+msgid "Good upload speed"
+msgstr "Boa velocidade de upload"
+
+msgid "Hide Details"
+msgstr "Esconder os detalhes"
+
+msgid "Intensive bandwidth"
+msgstr ""
+
+msgid "Interface not available"
+msgstr ""
+
+msgid "Launch another readiness check"
+msgstr ""
+
+msgid "Launch readiness check"
+msgstr ""
+
+msgid "List of readiness checks"
+msgstr ""
+
+msgid "Loading"
+msgstr ""
+
+msgid "Log in"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "Low bandwidth"
+msgstr ""
+
+msgid "Low upload speed"
+msgstr ""
+
+msgid "Max upload speed"
+msgstr "Velocidade máxima de upload"
+
+msgid "Maximum bandwidth"
+msgstr "Largura de banda máxima"
+
+msgid "Maximum intensive bandwidth"
+msgstr ""
+
+msgid "Maximum rendering time"
+msgstr "Tempo máximo de rendering"
+
+msgid "Media intensive bandwidth"
+msgstr ""
+
+msgid "Minimum bandwidth"
+msgstr "Largura de banda mínima"
+
+msgid "Minimum intensive bandwidth"
+msgstr ""
+
+msgid "Minimum rendering time"
+msgstr "Tempo mínimo de rendering"
+
+msgid "Missing field %s"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "No diagnostic service defined"
+msgstr ""
+
+msgid "No readiness checks have been done!"
+msgstr ""
+
+msgid "Number of simultaneous test takers the connection can handle"
+msgstr "Número de ligações simultâneas que a ligação suporta"
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr ""
+
+msgid "Operating system"
+msgstr "Sistema operativo"
+
+msgid "Operating system and web browser"
+msgstr "Sistema operativo e navegador de internet (browser)"
+
+msgid "OS"
+msgstr ""
+
+msgid "Performances"
+msgstr ""
+
+msgid "Readiness Check"
+msgstr ""
+
+msgid "Readiness checks already done"
+msgstr ""
+
+msgid "Readiness diagnostics"
+msgstr ""
+
+msgid "Refresh"
+msgstr ""
+
+msgid "Refresh the page"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove the readiness check result?"
+msgstr ""
+
+msgid "Remove the selected readiness check results"
+msgstr ""
+
+msgid "Return to the list"
+msgstr ""
+
+msgid "School name"
+msgstr "Nome da escola"
+
+msgid "School name:"
+msgstr "Nome da escola:"
+
+msgid "School number"
+msgstr "Código da escola"
+
+msgid "School number:"
+msgstr "Código da escola:"
+
+msgid "School PIN code (4 digits)"
+msgstr "Código PIN (4 digitos)"
+
+msgid "School PIN:"
+msgstr "Código PIN:"
+
+msgid "Show Details"
+msgstr "Mostrar os detalhes"
+
+msgid "Show fingerprint details"
+msgstr ""
+
+msgid "Something went wrong ..."
+msgstr ""
+
+msgid "Starting..."
+msgstr ""
+
+msgid "The readiness check result have been removed"
+msgstr ""
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr ""
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr ""
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr ""
+
+msgid "This browser is not tested."
+msgstr ""
+
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
+msgstr "Esta ferramenta vai executar um conjunto de testes."
+
+msgid "Total"
+msgstr ""
+
+msgid "Try a test delivery"
+msgstr ""
+
+msgid "Unable to get the workstation name!"
+msgstr ""
+
+msgid "Upload speed"
+msgstr "Velocidade de upload"
+
+msgid "Very slow performances"
+msgstr ""
+
+msgid "Web browser"
+msgstr "Navegador de internet (browser)"
+
+msgid "Workstation"
+msgstr ""
+
+msgid "Workstation name"
+msgstr ""
+
+msgid "Workstation performances"
+msgstr "Performance da máquina"
+
+msgid "Workstation:"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "Your fingerprint is %s"
+msgstr "A identificação desta máquina é %s"
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr ""
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
+msgstr ""
+
+msgid "Your system is fully compliant."
+msgstr "O seu sistema é totalmente compatível."
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr ""
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr ""
+
