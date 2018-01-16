@@ -261,8 +261,16 @@ define([
             // column: School name
             if (config.requireSchoolName) {
                 model.push({
-                    id: 'school',
-                    label: __('School')
+                    id: 'school_name',
+                    label: __('School name')
+                });
+            }
+
+            // column: School number
+            if (config.validateSchoolName) {
+                model.push({
+                    id: 'school_number',
+                    label: __('School number')
                 });
             }
 

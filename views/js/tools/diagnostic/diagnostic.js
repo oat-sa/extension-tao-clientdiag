@@ -28,7 +28,9 @@ define([
     'ui/component',
     'core/logger',
     'core/store',
+    'core/promise',
     'core/dataProvider/request',
+    'ui/dialog/alert',
     'util/url',
     'taoClientDiagnostic/tools/performances/tester',
     'taoClientDiagnostic/tools/bandwidth/tester',
@@ -50,7 +52,9 @@ define([
              component,
              loggerFactory,
              store,
+             Promise,
              request,
+             dialogAlert,
              urlUtil,
              performancesTester,
              bandwidthTester,
@@ -81,6 +85,7 @@ define([
         info: __('Be aware that these tests will take up to several minutes.'),
         button: __('Begin diagnostics'),
         actionStore: 'storeData',
+        actionSchool: 'schoolName',
         controller: 'DiagnosticChecker',
         extension: 'taoClientDiagnostic',
         actionDropId: 'deleteId',
@@ -226,6 +231,33 @@ define([
         },
 
         /**
+         * Removes the last results if any
+         * @returns {diagnostic}
+         */
+        cleanUp: function cleanUp() {
+            this.controls.$results.empty();
+            return this;
+        },
+
+        /**
+         * Enables the start button
+         * @returns {diagnostic}
+         */
+        enable: function enable() {
+            this.controls.$start.removeClass('hidden');
+            return this;
+        },
+
+        /**
+         * Disables the start button
+         * @returns {diagnostic}
+         */
+        disable: function disable() {
+            this.controls.$start.addClass('hidden');
+            return this;
+        },
+
+        /**
          * Does some preparations before starting the diagnostics
          * @returns {diagnostic}
          * @private
@@ -241,10 +273,10 @@ define([
             this.setState('done', false);
 
             // first we need a clean space to display the results, so remove the last results if any
-            this.controls.$results.empty();
+            this.cleanUp();
 
             // remove the start button during the diagnostic
-            this.controls.$start.addClass('hidden');
+            this.disable();
 
             return this;
         },
@@ -258,7 +290,7 @@ define([
             var config = this.config;
 
             // restore the start button to allow a new diagnostic run
-            this.controls.$start.removeClass('hidden');
+            this.enable();
 
             if (config.storeAllRuns) {
                 this.deleteIdentifier();
@@ -421,10 +453,12 @@ define([
      * @param {String} [config.button] - The caption of the start button
      * @param {String} [config.actionStore] - The name of the action to call to store the results
      * @param {String} [config.actionCheck] - The name of the action to call to check the browser results
+     * @param {String} [config.actionSchool] - The name of the action to call to get the school name
      * @param {String} [config.controller] - The name of the controller to call
      * @param {String} [config.extension] - The name of the extension containing the controller
      * @param {Object} [config.storeParams] - A list of additional parameters to send with diagnostic results
      * @param {Boolean} [config.requireSchoolName] - If `true` require a school name to allow the tests to start
+     * @param {Boolean} [config.validateSchoolName] - If `true` require a school number and a PIN to get the school name and to allow the tests to start
      *
      * @param {String} [config.browser.action] - The name of the action to call to get the browser checker
      * @param {String} [config.browser.controller] - The name of the controller to call to get the browser checker
@@ -462,6 +496,26 @@ define([
             // renders the component
             .on('render', function () {
                 var self = this;
+
+                /**
+                 * Default launcher
+                 */
+                var launch = function launch() {
+                    runDiagnostics();
+                };
+
+                /**
+                 * Starts the tests
+                 * @param {Object} [data]
+                 */
+                function runDiagnostics(data) {
+                    // append the school name to the queries
+                    if (data && _.isPlainObject(data)) {
+                        self.config.storeParams = _.assign(self.config.storeParams || {}, data);
+                    }
+
+                    self.run();
+                }
 
                 /**
                  * Gets a control by its registered name
@@ -511,61 +565,127 @@ define([
                 }
 
                 /**
+                 * Requests the server to get the school name
+                 * @param {Object} values
+                 */
+                function requestSchoolName(values) {
+                    var config = self.config;
+                    return request(urlUtil.route(config.actionSchool, config.controller, config.extension), values, 'POST')
+                        .then(function(data) {
+                            return {
+                                school_name: data,
+                                school_number: values.school_number
+                            };
+                        });
+                }
+
+                /**
                  * Install the school name manager.
                  * @todo: improve this by moving it into a plugin, and obviously implement the plugin handling
                  */
-                function manageSchoolName() {
-                    // ensure the diagnostic cannot start without a school name
-                    self.controls.$school = self.getElement().find('[data-control="school"]')
-                        .on('keypress', function (e) {
-                            _.defer(function() {
-                                toggleControl('start', !!getInputValue('school'));
-                                if (e.which === 13) {
-                                    e.preventDefault();
-                                    self.controls.$start.click();
-                                }
-                            });
+                function manageSchoolName(fields, validate) {
+                    /**
+                     * Checks if the start button can be enabled
+                     * @returns
+                     */
+                    function toggleStart() {
+                        var allow = _.every(fields, getInputValue);
+                        toggleControl('start', allow);
+                        return allow;
+                    }
+
+                    /**
+                     * Enables/Disables the fields
+                     * @param {Boolean} state
+                     */
+                    function toggleFields(state) {
+                        _.forEach(fields, function(fieldName) {
+                            toggleControl(fieldName, state);
                         });
-                    toggleControl('start', !!getInputValue('school'));
+                    }
+
+                    // ensure the diagnostic cannot start without all fields properly input
+                    _.forEach(fields, function(fieldName) {
+                        self.controls['$' + fieldName] = self.getElement().find('[data-control="' + fieldName + '"]')
+                            .on('keypress', function(e) {
+                                var shouldStart = e.which === 13;
+                                if (shouldStart) {
+                                    e.preventDefault();
+                                }
+                                _.defer(function() {
+                                    if (toggleStart() && shouldStart) {
+                                        self.controls.$start.click();
+                                    }
+                                })
+                            });
+                    });
+
+                    toggleStart();
 
                     // will store the school name in the browser storage, that will allow to restore it next time
-                    toggleControl('school', false);
+                    toggleFields(false);
                     store('client-diagnostic')
                         .then(function (storage) {
                             // store the school name on test start, to ensure consistency
                             self.on('start.school', function() {
-                                storage.setItem('school', getInputValue('school'))
-                                    .catch(function(error) {
-                                        logger.error(error);
-                                    });
+                                _.forEach(fields, function(fieldName) {
+                                    storage
+                                        .setItem(fieldName, getInputValue(fieldName))
+                                        .catch(function(error) {
+                                            logger.error(error);
+                                        });
+                                });
                             });
 
                             // restore the school name on load
-                            return storage.getItem('school').then(function (value) {
-                                setInputValue('school', value);
-                                toggleControl('start', !!getInputValue('school'));
-                                toggleControl('school', true);
-                            });
+                            return Promise.all(_.map(fields, function(fieldName) {
+                                return storage.getItem(fieldName).then(function (value) {
+                                    setInputValue(fieldName, value);
+                                });
+                            }));
                         })
                         .catch(function(error) {
                             logger.error(error);
-                            toggleControl('school', true);
+                        })
+                        .then(function() {
+                            toggleFields(true);
+                            toggleStart();
                         });
 
-                    // ensure the school name is properly sent
+                    // ensure the fields are validated and the school name is properly sent before allowing to launch the test
+                    launch = function schoolNameLaunch() {
+                        var values = _.reduce(fields, function(result, fieldName) {
+                            result[fieldName] = getInputValue(fieldName);
+                            return result;
+                        }, {});
+
+                        self.changeStatus(__('Getting school name...'))
+                            .cleanUp()
+                            .disable();
+
+                        if (_.isFunction(validate)) {
+                            validate(values)
+                                .then(runDiagnostics)
+                                .catch(function(error) {
+                                    var response = error.response || {};
+                                    var message = response.errorMsg || response.errorMessage || __('An error occurred! Please verify your input!');
+                                    dialogAlert(message);
+                                    logger.error(error);
+                                    self.changeStatus(__('Failed to get school name'))
+                                        .enable();
+                                })
+                        } else {
+                            runDiagnostics(values);
+                        }
+                    };
+
+                    // ensure the fields are not writable while the test is running
                     self
                         .on('start.school', function() {
-                            // append the school name to the queries
-                            self.config.storeParams = _.assign(self.config.storeParams || {}, {
-                                school: getInputValue('school')
-                            });
-
-                            // disable the input when running the test
-                            toggleControl('school', false);
+                            toggleFields(false);
                         })
                         .on('end.school', function() {
-                            // enable the input when the test is complete
-                            toggleControl('school', true);
+                            toggleFields(true);
                         })
                 }
 
@@ -578,11 +698,15 @@ define([
 
                 // start the diagnostic
                 this.controls.$start.on('click', function () {
-                    self.controls.$start.is(':enabled') && self.run();
+                    self.controls.$start.is(':enabled') && launch();
                 });
 
                 if (this.config.requireSchoolName) {
-                    manageSchoolName();
+                    if (this.config.validateSchoolName) {
+                        manageSchoolName(['school_number', 'school_pin'], requestSchoolName);
+                    } else {
+                        manageSchoolName(['school_name']);
+                    }
                 }
 
                 // show result details

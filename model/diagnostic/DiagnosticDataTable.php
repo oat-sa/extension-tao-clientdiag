@@ -65,7 +65,8 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
             foreach($data as $idx => $row) {
                 $rowData = [
                     'id'          => $row[PaginatedSqlStorage::DIAGNOSTIC_ID],
-                    'school'      => $row[PaginatedSqlStorage::DIAGNOSTIC_SCHOOL],
+                    'school_name' => $row[PaginatedSqlStorage::DIAGNOSTIC_SCHOOL_NAME],
+                    'school_number' => $row[PaginatedSqlStorage::DIAGNOSTIC_SCHOOL_NUMBER],
                     'fingerprint' => [
                         'uuid'    => $row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_UUID],
                         'value'   => $row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_VALUE],
