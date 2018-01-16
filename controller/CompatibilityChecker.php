@@ -182,6 +182,9 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     public function schoolName()
     {
+        // simple counter measure to slow down brute force attack
+        sleep(1);
+
         $data = $this->getParameters();
 
         $required = ['school_number', 'school_pin'];
