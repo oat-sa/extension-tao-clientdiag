@@ -28,8 +28,8 @@ return array(
     'name'        => 'taoClientDiagnostic',
     'label'       => 'Browser and OS diagnostic tool',
     'description' => 'Check compatibility of the os and browser of a client',
-    'license'     => 'GPL-2.0',
-    'version'     => '2.13.0',
+    'license'     => 'GPL-2.0-only',
+    'version'     => '2.13.1',
     'author'      => 'Open Assessment Technologies SA',
     'requires'    => array(
         'tao'        => '>=14.3.1',
