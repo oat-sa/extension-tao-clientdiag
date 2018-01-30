@@ -208,7 +208,7 @@ define([
             /**
              * Builds the results summary
              * @param {Object} results
-             * @returns {Object}}
+             * @returns {Object}
              */
             getSummary: function getSummary(results) {
                 return {
@@ -220,7 +220,7 @@ define([
             /**
              * Gets the feedback status for the provided result value
              * @param {Number} result
-             * @returns {Object}}
+             * @returns {Object}
              */
             getFeedback: function getFeedback(result) {
                 var optimal = initConfig.optimal / _mega;
