@@ -36,7 +36,8 @@ class DiagnosticService extends ConfigurableService implements DiagnosticService
     {
         $config = $this->getRawConfig();
         // override samples based on graphical theme, why not
-        $config['testers']['performance']['samples'] = $this->getPerformanceSamples();
+        $config['testers']['performance']['samples'] = $this->getConfigByTheme($config['testers']['performance']['samples']);
+        $config['testers']['screen']['threshold'] = $this->getConfigByTheme($config['testers']['screen']['threshold']);
         return $config;
     }
 
@@ -46,29 +47,29 @@ class DiagnosticService extends ConfigurableService implements DiagnosticService
      */
     protected function getRawConfig()
     {
-        return $this->getServiceManager()->get('taoClientDiagnostic/clientDiag')->getConfig();
+        return $this->getServiceLocator()->get('taoClientDiagnostic/clientDiag')->getConfig();
     }
 
     /**
-     * Returns the correct samples to be used for the performance tests
-     * @return array
+     * Returns the current theme's related config
+     * @param array $config
+     * @param string $themeId
+     * @return array|mixed
      */
-    protected function getPerformanceSamples()
+    protected function getConfigByTheme(array $config, $themeId = null)
     {
-        $themeService = $this->getServiceManager()->get(ThemeService::SERVICE_ID);
-        $themeId = $themeService->getCurrentThemeId();
-        $config = $this->getRawConfig();
-        $sampleConfig =  $config['testers']['performance']['samples'];
-        if (is_array(reset($sampleConfig))) {
-            if (array_key_exists($themeId, $sampleConfig)) {
-                $sample = $sampleConfig[$themeId];
-            } else {
-                $sample = array_shift($sampleConfig);
-            }
-        } else {
-            $sample = $sampleConfig;
+        if (is_null($themeId)) {
+            $themeService = $this->getServiceLocator()->get(ThemeService::SERVICE_ID);
+            $themeId = $themeService->getCurrentThemeId();
         }
-        return $sample;
+        if (is_array(reset($config))) {
+            if (array_key_exists($themeId, $config)) {
+                $config = $config[$themeId];
+            } else {
+                $config = array_shift($config);
+            }
+        }
+        return $config;
     }
 
     /**
