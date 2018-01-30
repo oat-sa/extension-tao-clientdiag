@@ -663,7 +663,9 @@ class Updater extends \common_ext_ExtensionUpdater
 
             $this->getServiceManager()->register(SchoolNameService::SERVICE_ID, new SchoolNameProvider());
 
-            $this->setVersion('2.13.1');
+            $this->setVersion('2.13.0');
         }
+
+        $this->skip('2.13.0', '2.13.1');
     }
 }
