@@ -1,7 +1,7 @@
 <?php
 use oat\tao\helpers\Template;
 use oat\tao\helpers\Layout;
-use oat\tao\helpers\VersionName;
+use oat\tao\helpers\ApplicationHelper;
 
 $config = get_data('clientDiagConfig');
 ?>
@@ -10,7 +10,7 @@ $config = get_data('clientDiagConfig');
         <?php if (!empty($config['footer'])): ?>
             <?= $config['footer']; ?>
         <?php else: ?>
-            © 2013 - <?= date('Y') ?> · <span class="tao-version"><?=  VersionName::get() ?></span>
+            © 2013 - <?= date('Y') ?> · <span class="tao-version"><?= ApplicationHelper::getVersionName() ?></span>
         <?php endif; ?>
         · <a href="http://taotesting.com" target="_blank">Open Assessment Technologies S.A.</a>
         · <?= __('All rights reserved.') ?>
