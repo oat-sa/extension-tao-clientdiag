@@ -14,22 +14,22 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 msgid "%d sources (%s)"
-msgstr ""
+msgstr "%d fontes (%s)"
 
 msgid "All rights reserved."
-msgstr ""
+msgstr "Todos os direitos reservados"
 
 msgid "An error occurred! Please verify your input!"
-msgstr ""
+msgstr "Ocorreu um erro! Por favor verifique o input"
 
 msgid "Average bandwidth"
 msgstr "Largura de banda média"
 
 msgid "Average intensive bandwidth"
-msgstr ""
+msgstr "Largura de banda média intensiva"
 
 msgid "Average performances"
-msgstr ""
+msgstr "Performances médias"
 
 msgid "Average rendering time"
 msgstr "Tempo médio de rendering"
@@ -47,43 +47,43 @@ msgid "Begin diagnostics"
 msgstr "Inicar diagnóstico"
 
 msgid "Browser"
-msgstr ""
+msgstr "Navegador"
 
 msgid "Cannot get your fingerprint"
-msgstr ""
+msgstr "Não é possivel obter a identificação"
 
 msgid "Cannot retrieve the school name. Please verify your input"
-msgstr ""
+msgstr "Escola não válida. Por favor verifique os dados inseridos"
 
 msgid "Change since last fingerprint"
 msgstr "Alterada desde a última identificação"
 
 msgid "Checking the bandwidth..."
-msgstr ""
+msgstr "A verificar a largura de banda..."
 
 msgid "Checking the browser..."
-msgstr ""
+msgstr "A verificar o navegador..."
 
 msgid "Checking the media intensive bandwidth..."
-msgstr ""
+msgstr "A verificar a largura de banda intensiva... "
 
 msgid "Checking the performances..."
 msgstr "A verificar as performances..."
 
 msgid "Checking upload speed..."
-msgstr ""
+msgstr "A verificar a velocidade de upload"
 
 msgid "Compatible"
 msgstr "Compatível"
 
 msgid "Computing the fingerprint..."
-msgstr ""
+msgstr "A processar a identificação..."
 
 msgid "Connect to the diagnostic tool"
-msgstr ""
+msgstr "A ligar à ferramenta de diagnóstico"
 
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 msgid "Details"
 msgstr "Detalhes"
@@ -95,31 +95,31 @@ msgid "Done!"
 msgstr "Concluído!"
 
 msgid "Dynamic UID"
-msgstr ""
+msgstr "UID dinâmico"
 
 msgid "Errors occurred! Please see details"
-msgstr ""
+msgstr "Ocurreram erros! Por favor veja os detalhes"
 
 msgid "Exit"
-msgstr ""
+msgstr "Sair"
 
 msgid "Failed to get school name"
-msgstr ""
+msgstr "Não foi possível obter os dados da escola"
 
 msgid "Fingerprint"
 msgstr "Identificação"
 
 msgid "Fingerprint error"
-msgstr ""
+msgstr "Erro na identificação"
 
 msgid "Fingerprint errors"
-msgstr ""
+msgstr "Erros na identificação"
 
 msgid "Fingerprint sources"
 msgstr "Fontes para a identificação"
 
 msgid "Getting school name..."
-msgstr ""
+msgstr "A validar os dados de escola..."
 
 msgid "Good bandwidth"
 msgstr "Boa largura de banda"
@@ -134,37 +134,37 @@ msgid "Hide Details"
 msgstr "Esconder os detalhes"
 
 msgid "Intensive bandwidth"
-msgstr ""
+msgstr "Largura de banda intensiva"
 
 msgid "Interface not available"
-msgstr ""
+msgstr "Interface não disponível"
 
 msgid "Launch another readiness check"
-msgstr ""
+msgstr "Lançar outra verificação de prontidão"
 
 msgid "Launch readiness check"
-msgstr ""
+msgstr "Lançar verificação de prontidão"
 
 msgid "List of readiness checks"
-msgstr ""
+msgstr "Lista de verificações de prontidão"
 
 msgid "Loading"
-msgstr ""
+msgstr "A carregar"
 
 msgid "Log in"
-msgstr ""
+msgstr "Entrar"
 
 msgid "Login"
-msgstr ""
+msgstr "Entrar"
 
 msgid "Logout"
-msgstr ""
+msgstr "Sair"
 
 msgid "Low bandwidth"
-msgstr ""
+msgstr "Baixa largura de banda"
 
 msgid "Low upload speed"
-msgstr ""
+msgstr "Baixa velocidade de upload"
 
 msgid "Max upload speed"
 msgstr "Velocidade máxima de upload"
@@ -173,40 +173,40 @@ msgid "Maximum bandwidth"
 msgstr "Largura de banda máxima"
 
 msgid "Maximum intensive bandwidth"
-msgstr ""
+msgstr "Máxima largura de banda intensiva"
 
 msgid "Maximum rendering time"
 msgstr "Tempo máximo de rendering"
 
 msgid "Media intensive bandwidth"
-msgstr ""
+msgstr "Largura de banda intensiva de media"
 
 msgid "Minimum bandwidth"
 msgstr "Largura de banda mínima"
 
 msgid "Minimum intensive bandwidth"
-msgstr ""
+msgstr "Largura de banda intensiva miníma"
 
 msgid "Minimum rendering time"
 msgstr "Tempo mínimo de rendering"
 
 msgid "Missing field %s"
-msgstr ""
+msgstr "Campo %s não encontrado"
 
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 msgid "No diagnostic service defined"
-msgstr ""
+msgstr "Serviço de diagnóstico não definido"
 
 msgid "No readiness checks have been done!"
-msgstr ""
+msgstr "Não foram realizadas verificações de prontidão "
 
 msgid "Number of simultaneous test takers the connection can handle"
 msgstr "Número de ligações simultâneas que a ligação suporta"
 
 msgid "Number of simultaneous test takers the connection can handle with media intensive"
-msgstr ""
+msgstr "Número de ligações simultâneas que a ligação suporta com media intensivo"
 
 msgid "Operating system"
 msgstr "Sistema operativo"
@@ -215,37 +215,37 @@ msgid "Operating system and web browser"
 msgstr "Sistema operativo e navegador de internet (browser)"
 
 msgid "OS"
-msgstr ""
+msgstr "SO"
 
 msgid "Performances"
 msgstr ""
 
 msgid "Readiness Check"
-msgstr ""
+msgstr "Verificação de prontidão"
 
 msgid "Readiness checks already done"
-msgstr ""
+msgstr "Verificação de prontidão já realizada"
 
 msgid "Readiness diagnostics"
-msgstr ""
+msgstr "Diagnóstico preparados"
 
 msgid "Refresh"
-msgstr ""
+msgstr "Refrescar"
 
 msgid "Refresh the page"
-msgstr ""
+msgstr "Refrescar a página"
 
 msgid "Remove"
-msgstr ""
+msgstr "Eliminar"
 
 msgid "Remove the readiness check result?"
-msgstr ""
+msgstr "Eliminar o resultado da verificação de prontidão"
 
 msgid "Remove the selected readiness check results"
-msgstr ""
+msgstr "Eminiar o resultado de verificação de prontidão selecionado"
 
 msgid "Return to the list"
-msgstr ""
+msgstr "Retornar à lista"
 
 msgid "School name"
 msgstr "Nome da escola"
@@ -269,28 +269,28 @@ msgid "Show Details"
 msgstr "Mostrar os detalhes"
 
 msgid "Show fingerprint details"
-msgstr ""
+msgstr "Mostrar os resultados da identificação"
 
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Algo correu mal ..."
 
 msgid "Starting..."
-msgstr ""
+msgstr "A iniciar ..."
 
 msgid "The readiness check result have been removed"
-msgstr ""
+msgstr "O resultado da verificação de prontidão foi removido"
 
 msgid "The readiness check result will be removed. Continue ?"
-msgstr ""
+msgstr "O resultado da verificação de prontidão vai ser removido. Continuar?"
 
 msgid "The selected readiness check results will be removed. Continue ?"
-msgstr ""
+msgstr "O resultado selecionado da verificação de prontidão vai ser removido. Continuar?"
 
 msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
-msgstr ""
+msgstr "O serviço de armazenamento fornecido para guardar os resultados do diagnóstico tem de ser atualizado para suportar leitura!"
 
 msgid "This browser is not tested."
-msgstr ""
+msgstr "Este navegador não é testado."
 
 msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
 msgstr "Esta ferramenta vai executar um conjunto de testes."
@@ -299,50 +299,50 @@ msgid "Total"
 msgstr ""
 
 msgid "Try a test delivery"
-msgstr ""
+msgstr "Testar uma entrega de testes"
 
 msgid "Unable to get the workstation name!"
-msgstr ""
+msgstr "Não foi possível recolher o nome da máquina!"
 
 msgid "Upload speed"
 msgstr "Velocidade de upload"
 
 msgid "Very slow performances"
-msgstr ""
+msgstr "Performances muito baixas"
 
 msgid "Web browser"
 msgstr "Navegador de internet (browser)"
 
 msgid "Workstation"
-msgstr ""
+msgstr "Máquina"
 
 msgid "Workstation name"
-msgstr ""
+msgstr "Nome da máquina"
 
 msgid "Workstation performances"
 msgstr "Performance da máquina"
 
 msgid "Workstation:"
-msgstr ""
+msgstr "Máquina:"
 
 msgid "Yes"
-msgstr ""
+msgstr "Sim"
 
 msgid "Your fingerprint is %s"
 msgstr "A identificação desta máquina é %s"
 
 msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
-msgstr ""
+msgstr "A identificação desta máquina é %s. Contudo foi alterada desde a última verificação. Pode estar relacionado como mudanças no sistema."
 
 msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
-msgstr ""
+msgstr "A identificação desta máquina é %s. Contudo foi encontrado um problema ao recolher os dados. O espaço em disco pode ser muito pequeno"
 
 msgid "Your system is fully compliant."
 msgstr "O seu sistema é totalmente compatível."
 
 msgid "Your system is not optimal, please contact your system administrator."
-msgstr ""
+msgstr "O seu sistema não é óptimo."
 
 msgid "Your system requires a compatibility update, please contact your system administrator."
-msgstr ""
+msgstr "O seu sistema necessita de updates para compatibilidade."
 

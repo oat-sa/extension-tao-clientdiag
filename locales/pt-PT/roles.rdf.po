@@ -13,10 +13,10 @@ msgstr ""
 # http://www.taotesting.com/ontologies/TAOClientDiagnostic.rdf#ReadinessCheckerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Readiness checker"
-msgstr ""
+msgstr "Teste de prontidão"
 
 # http://www.taotesting.com/ontologies/TAOClientDiagnostic.rdf#ReadinessCheckerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Role to check readiness"
-msgstr ""
+msgstr "Papel para verificar a prontidão"
 
