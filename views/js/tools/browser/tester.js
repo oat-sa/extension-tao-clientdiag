@@ -127,7 +127,7 @@ define([
             /**
              * Builds the results summary
              * @param {Object} results
-             * @returns {Object}}
+             * @returns {Object}
              */
             getSummary: function getSummary(results) {
                 var currentBrowser = results.browser + ' ' + results.browserVersion;
@@ -148,7 +148,7 @@ define([
              * Gets the feedback status for the provided result value
              * @param {Number} result
              * @param {Object} data
-             * @returns {Object}}
+             * @returns {Object}
              */
             getFeedback: function getFeedback(result, data) {
                 var status = getStatus(result, data);

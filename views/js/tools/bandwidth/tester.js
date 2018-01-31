@@ -292,7 +292,7 @@ define([
             /**
              * Builds the results summary
              * @param {Object} results
-             * @returns {Object}}
+             * @returns {Object}
              */
             getSummary: function getSummary(results) {
                 return {
@@ -305,7 +305,7 @@ define([
             /**
              * Gets the feedback status for the provided result value
              * @param {Number} result
-             * @returns {Object}}
+             * @returns {Object}
              */
             getFeedback: function getFeedback(result) {
                 var bandwidthUnit = initConfig.unit;
@@ -320,8 +320,8 @@ define([
                 }
 
                 status.id = initConfig.id;
-                status.title =  labels.title;
-                status.feedback.legend =  labels.legend;
+                status.title = labels.title;
+                status.feedback.legend = labels.legend;
                 status.quality.label = nb;
 
                 if (nb.toString().length > 2) {
