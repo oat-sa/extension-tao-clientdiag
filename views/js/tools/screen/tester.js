@@ -63,7 +63,7 @@ define([
     }, {
         threshold: 33,
         message: __('The device screen has the minimum required resolution.'),
-        type: 'success'
+        type: 'warning'
     }, {
         threshold: 66,
         message: __('The device screen resolution meets the requirements.'),
