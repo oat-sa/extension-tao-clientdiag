@@ -299,6 +299,20 @@ define([
                 });
             }
 
+            // results of screen test
+            if (config.testers.screen && config.testers.screen.enabled) {
+                // column: Screen Width and Height
+                model.push({
+                    id: 'screen_size',
+                    label: __('Screen resolution'),
+                    transform: function(value, row) {
+                        if (row.screen && row.screen.width && row.screen.height) {
+                            return row.screen.width + 'x' + row.screen.height;
+                        }
+                    }
+                });
+            }
+
             // results of browser test
             if (config.testers.browser && config.testers.browser.enabled) {
                 // column: Operating system information

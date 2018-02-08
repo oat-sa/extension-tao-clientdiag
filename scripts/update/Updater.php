@@ -663,7 +663,54 @@ class Updater extends \common_ext_ExtensionUpdater
 
             $this->getServiceManager()->register(SchoolNameService::SERVICE_ID, new SchoolNameProvider());
 
-            $this->setVersion('2.13.1');
+            $this->setVersion('2.13.0');
+        }
+
+        $this->skip('2.13.0', '2.14.1');
+
+        if ($this->isVersion('2.14.1')) {
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+
+            $config['testers']['screen'] = [
+                'enabled' => false,
+                'level' => 1,
+                'tester' => 'taoClientDiagnostic/tools/screen/tester',
+                'customMsgKey' => 'diagScreenCheckResult',
+                'threshold' => [
+                    'width' => 1024,
+                    'height' => 768
+                ],
+            ];
+
+            $extension->setConfig('clientDiag', $config);
+
+            $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
+            if ($storageService instanceof Sql) {
+                $persistence = $storageService->getPersistence();
+
+                $schemaManager = $persistence->getDriver()->getSchemaManager();
+                $schema = $schemaManager->createSchema();
+
+                $fromSchema = clone $schema;
+
+                /** @var \Doctrine\DBAL\Schema\Table $tableResults */
+                $tableResults = $schema->getTable(Sql::DIAGNOSTIC_TABLE);
+
+                if (! $tableResults->hasColumn(PaginatedSqlStorage::DIAGNOSTIC_SCREEN_WIDTH)) {
+                    $tableResults->addColumn(Sql::DIAGNOSTIC_SCREEN_WIDTH, 'integer', ['notnull' => false]);
+                }
+                if (! $tableResults->hasColumn(PaginatedSqlStorage::DIAGNOSTIC_SCREEN_HEIGHT)) {
+                    $tableResults->addColumn(Sql::DIAGNOSTIC_SCREEN_HEIGHT, 'integer', ['notnull' => false]);
+                }
+
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql($fromSchema, $schema);
+                foreach ($queries as $query) {
+                    $persistence->exec($query);
+                }
+            }
+
+            $this->setVersion('2.15.0');
         }
 
         $this->skip('2.13.1', '2.14.0');

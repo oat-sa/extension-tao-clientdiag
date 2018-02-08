@@ -62,6 +62,8 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             $tableResults->addColumn(Sql::DIAGNOSTIC_OSVERSION, 'string', ['length' => 32, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_COMPATIBLE, 'integer', ['length' => 1, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_VERSION, 'string', ['length' => 16]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_SCREEN_WIDTH, 'integer', ['notnull' => false]);
+            $tableResults->addColumn(Sql::DIAGNOSTIC_SCREEN_HEIGHT, 'integer', ['notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_BANDWIDTH_MIN, 'float', ['notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_BANDWIDTH_MAX, 'float', ['notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_BANDWIDTH_SUM, 'float', ['notnull' => false]);

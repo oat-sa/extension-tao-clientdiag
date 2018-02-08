@@ -242,7 +242,7 @@ define([
             /**
              * Builds the results summary
              * @param {Object} results
-             * @returns {Object}}
+             * @returns {Object}
              */
             getSummary: function getSummary(results) {
                 var sources = _(results[_storageKeys.details]).map('key').pull('error').value();
@@ -283,7 +283,7 @@ define([
             /**
              * Gets the feedback status for the provided result value
              * @param {Object} results
-             * @returns {Object}}
+             * @returns {Object}
              */
             getFeedback: function getFeedback(results) {
                 var status, percentage;
