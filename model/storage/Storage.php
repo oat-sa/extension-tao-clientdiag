@@ -49,6 +49,8 @@ interface Storage
     const DIAGNOSTIC_OSVERSION            = 'os_version';
     const DIAGNOSTIC_COMPATIBLE           = 'compatible';
     const DIAGNOSTIC_VERSION              = 'version';
+    const DIAGNOSTIC_SCREEN_WIDTH         = 'screen_width';
+    const DIAGNOSTIC_SCREEN_HEIGHT        = 'screen_height';
     const DIAGNOSTIC_BANDWIDTH_MIN        = 'bandwidth_min';
     const DIAGNOSTIC_BANDWIDTH_MAX        = 'bandwidth_max';
     const DIAGNOSTIC_BANDWIDTH_SUM        = 'bandwidth_sum';

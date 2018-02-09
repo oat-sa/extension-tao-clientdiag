@@ -74,6 +74,10 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
                         'errors'  => $row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_ERRORS],
                         'changed' => $row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_CHANGED],
                     ],
+                    'screen'      => [
+                        'width'   => $row[PaginatedSqlStorage::DIAGNOSTIC_SCREEN_WIDTH],
+                        'height'  => $row[PaginatedSqlStorage::DIAGNOSTIC_SCREEN_HEIGHT]
+                    ],
                     'os'          => $row[PaginatedSqlStorage::DIAGNOSTIC_OS] . ' (' . $row[PaginatedSqlStorage::DIAGNOSTIC_OSVERSION] . ')',
                     'browser'     => $row[PaginatedSqlStorage::DIAGNOSTIC_BROWSER] . ' (' . $row[PaginatedSqlStorage::DIAGNOSTIC_BROWSERVERSION] . ')',
                     'performance' => $row[PaginatedSqlStorage::DIAGNOSTIC_PERFORMANCE_AVERAGE],

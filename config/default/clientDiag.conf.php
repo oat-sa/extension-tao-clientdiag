@@ -331,7 +331,7 @@ return array(
             'level' => 1,
 
             /**
-             * Path to the component that will test the browser compatibility
+             * Path to the component that will perform the fingerprint
              * @type string
              */
             'tester' => 'taoClientDiagnostic/tools/fingerprint/tester',
@@ -341,6 +341,45 @@ return array(
              * @type string
              */
             'customMsgKey' => 'diagFingerprintCheckResult',
-        ]
+        ],
+
+        /**
+         * Screen resolution check config
+         * @type array
+         */
+        'screen' => [
+            /**
+             * Allows to disable the test on the platform
+             * @type boolean
+             */
+            'enabled' => false,
+
+            /**
+             * Defines the test level. In case of multiple tests of the same kind, this config allows to compare intensities.
+             * @type boolean
+             */
+            'level' => 1,
+
+            /**
+             * Path to the component that will test the screen resolution
+             * @type string
+             */
+            'tester' => 'taoClientDiagnostic/tools/screen/tester',
+
+            /**
+             * The key used to get an additional custom message for the result
+             * @type string
+             */
+            'customMsgKey' => 'diagScreenCheckResult',
+
+            /**
+             * The threshold for minimal screen resolution
+             * @type array
+             */
+            'threshold' => [
+                'width' => 1024,
+                'height' => 768
+            ],
+        ],
     ]
 );
