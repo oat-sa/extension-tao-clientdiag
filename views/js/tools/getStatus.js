@@ -28,13 +28,22 @@ define(['lodash'], function (_) {
      *                                     Other values will be adjusted to fit the interval.
      * @param {Array|Object} [thresholds] - A list of descriptors for each thresholds.
      *                                      A threshold field must be provided for each.
+     * @param {Object} [opts]
+     * @param {Object} [minimumGlobalPercentage] - lowest value that will be used in the global score computation
      * @returns {Object} Returns the corresponding threshold, or an empty object if none match.
      */
-    return function getStatus(percentage, thresholds) {
+    return function getStatus(percentage, thresholds, opts) {
+        var options = opts || {};
+        var testPercentage = Math.max(0, Math.min(100, Math.round(parseInt(percentage, 10) || 0)));
+        var globalPercentage = (options.minimumGlobalPercentage)
+            ? Math.max(testPercentage, options.minimumGlobalPercentage)
+            : testPercentage;
+
         // need a structure compatible with the handlebars template
         var status = {
             // the percentage is between 0 and 100 and obviously must be a number
-            percentage: Math.max(0, Math.min(100, Math.round(parseInt(percentage, 10) || 0))),
+            percentage: testPercentage,
+            globalPercentage: globalPercentage,
             quality: {}
         };
         var len, feedback, i, step;
