@@ -49,25 +49,6 @@ define([
      */
     var _second = 1000;
 
-
-    /**
-     * Default values for the bandwidth tester
-     * @type {Object}
-     * @private
-     */
-    var _defaults = {
-        id: 'bandwidth',
-
-        // The typical bandwidth needed for a test taker (Mbps)
-        unit: 0.16,
-
-        // The thresholds for optimal bandwidth
-        ideal: 45,
-
-        // Maximum number of test takers to display
-        max: 100
-    };
-
     /**
      * A list of thresholds for bandwidth check
      * @type {Array}
@@ -86,6 +67,30 @@ define([
         message: __('Good bandwidth'),
         type: 'success'
     }];
+
+    /**
+     * Default values for the bandwidth tester
+     * @type {Object}
+     * @private
+     */
+    var _defaults = {
+        id: 'bandwidth',
+
+        // The typical bandwidth needed for a test taker (Mbps)
+        unit: 0.16,
+
+        // The thresholds for optimal bandwidth
+        ideal: 45,
+
+        // Maximum number of test takers to display
+        max: 100,
+
+        // Lowest value that will be used in the global score computation
+        minimumGlobalPercentage: false,
+
+        // A list of thresholds for bandwidth check
+        feedbackThresholds: _thresholds
+    };
 
     /**
      * List of descriptors defining the data sets to download.
@@ -312,7 +317,14 @@ define([
                 var threshold = initConfig.ideal;
                 var maxTestTakers = initConfig.max;
                 var max = threshold * bandwidthUnit;
-                var status = getStatus(result / max * 100, _thresholds);
+                var getStatusOptions = (initConfig.minimumGlobalPercentage)
+                    ? { minimumGlobalPercentage: initConfig.minimumGlobalPercentage }
+                    : {};
+                var status = getStatus(
+                    result / max * 100,
+                    initConfig.feedbackThresholds,
+                    getStatusOptions
+                );
                 var nb = Math.floor(result / bandwidthUnit);
 
                 if (nb > maxTestTakers) {

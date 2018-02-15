@@ -193,6 +193,32 @@ return array(
              * @type int
              */
             'max' => 100,
+
+            /**
+             * Lowest value that will be used in the global score computation.
+             * This can be used to decrease the importance of the present test in the global score.
+             * For example, we can use this to make sure the global score never goes into error mode for a bandwidth issue.
+             * @type boolean|int
+             */
+            'minimumGlobalPercentage' => false,
+
+            /**
+             * Allow override of the defaults thresholds used to provide feedback
+             * @type array
+             * @example
+             * 'feedbackThresholds' => [
+                    [
+                        'threshold' => 0,
+                        'message' => 'This will be displayed as a warning message if percentage < 66',
+                        'type' => 'warning'
+                    ], [
+                        'threshold' => 66,
+                        'message' => 'This will be displayed as a success message if percentage > 66',
+                        'type' => 'success'
+                    ]
+                ]
+             */
+            'feedbackThresholds' => [],
         ),
 
         /**

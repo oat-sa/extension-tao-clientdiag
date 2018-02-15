@@ -32,6 +32,7 @@ define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
         title: 'no percentage, no thresholds',
         expected: {
             percentage: 0,
+            globalPercentage: 0,
             quality: {}
         }
     }, {
@@ -39,6 +40,7 @@ define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
         percentage: 100,
         expected: {
             percentage: 100,
+            globalPercentage: 100,
             quality: {}
         }
     }, {
@@ -47,6 +49,7 @@ define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
         thresholds: {},
         expected: {
             percentage: 0,
+            globalPercentage: 0,
             feedback: {},
             quality: {}
         }
@@ -56,6 +59,7 @@ define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
         thresholds: {},
         expected: {
             percentage: 50,
+            globalPercentage: 50,
             feedback: {},
             quality: {}
         }
@@ -65,6 +69,7 @@ define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
         thresholds: {},
         expected: {
             percentage: 100,
+            globalPercentage: 100,
             feedback: {},
             quality: {}
         }
@@ -76,6 +81,7 @@ define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
         },
         expected: {
             percentage: 10,
+            globalPercentage: 10,
             quality: {}
         }
     }, {
@@ -86,6 +92,7 @@ define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
         },
         expected: {
             percentage: 70,
+            globalPercentage: 70,
             feedback: {
                 threshold: 50
             },
@@ -103,6 +110,7 @@ define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
         }],
         expected: {
             percentage: 20,
+            globalPercentage: 20,
             quality: {}
         }
     }, {
@@ -117,6 +125,7 @@ define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
         }],
         expected: {
             percentage: 30,
+            globalPercentage: 30,
             feedback: {
                 threshold: 25
             },
@@ -134,6 +143,7 @@ define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
         }],
         expected: {
             percentage: 60,
+            globalPercentage: 60,
             feedback: {
                 threshold: 50
             },
@@ -151,13 +161,42 @@ define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
         }],
         expected: {
             percentage: 80,
+            globalPercentage: 80,
             feedback: {
                 threshold: 75
             },
             quality: {}
         }
+    }, {
+        title: 'global percentage should never goes below minimumGlobalPercentage option',
+        percentage: 10,
+        thresholds: {
+            threshold: 50
+        },
+        options: {
+            minimumGlobalPercentage: 50
+        },
+        expected: {
+            percentage: 10,
+            globalPercentage: 50,
+            quality: {}
+        }
+    }, {
+        title: 'global percentage is false per default',
+        percentage: 10,
+        thresholds: {
+            threshold: 50
+        },
+        options: {
+            minimumGlobalPercentage: false
+        },
+        expected: {
+            percentage: 10,
+            globalPercentage: 10,
+            quality: {}
+        }
     }]).test('getStatus ', function(data, assert){
-        var status = getStatus(data.percentage, data.thresholds);
+        var status = getStatus(data.percentage, data.thresholds, data.options);
         QUnit.expect(1);
         assert.deepEqual(status, data.expected, 'The helper has returned the expected data');
     });

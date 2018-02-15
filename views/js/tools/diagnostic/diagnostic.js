@@ -399,10 +399,10 @@ define([
                     // launch each testers in series, then display the results
                     async.series(testers, function () {
                         // pick the lowest percentage as the main score
-                        var total = _.min(scores, 'percentage');
+                        var total = _.min(scores, 'globalPercentage');
 
                         // get a status according to the main score
-                        var status = getStatus(total.percentage, _thresholds);
+                        var status = getStatus(total.globalPercentage, _thresholds);
 
                         // display the result
                         status.title = __('Total');
@@ -616,7 +616,7 @@ define([
                                     if (toggleStart() && shouldStart) {
                                         self.controls.$start.click();
                                     }
-                                })
+                                });
                             });
                     });
 
@@ -673,7 +673,7 @@ define([
                                     logger.error(error);
                                     self.changeStatus(__('Failed to get school name'))
                                         .enable();
-                                })
+                                });
                         } else {
                             runDiagnostics(values);
                         }
@@ -686,7 +686,7 @@ define([
                         })
                         .on('end.school', function() {
                             toggleFields(true);
-                        })
+                        });
                 }
 
                 // get access to all needed placeholders

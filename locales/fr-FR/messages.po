@@ -260,7 +260,7 @@ msgid "Your system is fully compliant."
 msgstr "Configuration conforme"
 
 msgid "Your system is not optimal, please contact your system administrator."
-msgstr "Configuration à risque (contactez votre plateforme académique)"
+msgstr "Configuration à risque (vous pouvez contacter votre plateforme académique pour un accompagnement)"
 
 msgid "Your system requires a compatibility update, please contact your system administrator."
 msgstr "Configuration nécessitant une mise en conformité (contactez votre plateforme académique)"
