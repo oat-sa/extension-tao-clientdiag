@@ -104,7 +104,7 @@ msgid "Errors occurred! Please see details"
 msgstr ""
 
 msgid "Exit"
-msgstr ""
+msgstr "Quitter"
 
 msgid "Failed to get school name"
 msgstr ""
