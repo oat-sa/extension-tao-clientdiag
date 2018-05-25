@@ -123,7 +123,7 @@ define([
             height: 768
         },
         percentage: 50,
-        type: 'success'
+        type: 'warning'
     }, {
         title: 'requirements fully met',
         threshold: {
