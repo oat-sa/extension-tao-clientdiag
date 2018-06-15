@@ -228,6 +228,11 @@ define([
         var initConfig = getConfig(config, _defaults);
         var labels = getLabels(_messages, initConfig.level);
 
+        // override the feedback thresholds given by the config in case it is an empty array
+        if (_.isArray(initConfig.feedbackThresholds) && !initConfig.feedbackThresholds.length) {
+            initConfig.feedbackThresholds = _thresholds;
+        }
+
         return {
             /**
              * Performs a bandwidth test, then call a function to provide the result
