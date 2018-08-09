@@ -19,7 +19,9 @@
  *
  */
 
-namespace oat\taoClientDiagnostic\test\model\authorization;
+namespace oat\taoClientDiagnostic\test\integration\model\authorization;
+
+require_once dirname(__FILE__) .'/../../../../../tao/includes/raw_start.php';
 
 use oat\taoClientDiagnostic\model\authorization\RequireUsername;
 
@@ -88,6 +90,7 @@ class RequireUsernameTest extends \PHPUnit_Framework_TestCase
             $this->setExpectedException($exception);
         }
 
+        // @todo now the exception is thrown out of here, it seems like setExpectedException() doesn't work
         $result = $this->instance->validateLogin($loginFixture);
 
         if (!$hasException) {
