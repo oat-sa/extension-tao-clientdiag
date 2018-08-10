@@ -19,7 +19,7 @@
  *
  */
 
-namespace oat\taoClientDiagnostic\test\model\authorization;
+namespace oat\taoClientDiagnostic\test\unit\model\authorization;
 
 use oat\taoClientDiagnostic\model\authorization\Anonymous;
 

@@ -19,7 +19,7 @@
 
 
 
-namespace oat\taoClientDiagnostic\test;
+namespace oat\taoClientDiagnostic\test\unit;
 
 use oat\taoClientDiagnostic\model\CompatibilityChecker;
 
@@ -46,6 +46,7 @@ class CompatibilityCheckerTest extends \PHPUnit_Framework_TestCase
 
         $return = $checker->isCompatibleConfig();
 
+        // @todo return is actually 2
         $this->assertEquals($return, 1);
 
     }
@@ -93,6 +94,7 @@ class CompatibilityCheckerTest extends \PHPUnit_Framework_TestCase
 
         $return = $checker->isCompatibleConfig();
 
+        // @todo return is actually 2
         $this->assertEquals($return, 0);
     }
 
