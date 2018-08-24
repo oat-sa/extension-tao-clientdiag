@@ -47,6 +47,12 @@ define([
                 .on('end', function() {
                     loadingBar.stop();
                 })
+                .on('render', function() {
+                    loadingBar.stop();
+                    if (config.autoStart) {
+                        this.run();
+                    }
+                })
                 .render($contentArea);
         }
     };
