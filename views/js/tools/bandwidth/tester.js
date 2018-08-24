@@ -208,6 +208,13 @@ define([
             cb(err);
         };
 
+        request.onreadystatechange = function () {
+            if(request.readyState === 4 && request.status !== 200) {
+                clearTimeout(timeoutId);
+                cb(request.status);
+            }
+        };
+
         timeoutId = _.delay(cb, data.timeout, 'timeout');
         start = window.performance.now();
         request.send();
