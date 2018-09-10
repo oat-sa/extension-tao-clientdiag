@@ -715,5 +715,17 @@ class Updater extends \common_ext_ExtensionUpdater
 
         $this->skip('2.15.0', '2.17.8');
 
+        if ($this->isVersion('2.17.8')) {
+            $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
+            $config = $extension->getConfig('clientDiag');
+
+            $config['testers']['bandwidth']['fallbackThreshold'] = 0.2;
+            $config['testers']['intensive_bandwidth']['fallbackThreshold'] = 0.2;
+
+            $extension->setConfig('clientDiag', $config);
+
+            $this->setVersion('2.17.9');
+        }
+
     }
 }
