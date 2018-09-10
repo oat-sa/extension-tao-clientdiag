@@ -292,7 +292,7 @@ define([
                     results.size = size;
 
                     summary = self.getSummary(results);
-                    status = self.getFeedback(results.max);
+                    status = self.getFeedback(results);
 
                     done(status, summary, results);
                 });
@@ -321,10 +321,14 @@ define([
 
             /**
              * Gets the feedback status for the provided result value
-             * @param {Number} result
+             * @param {Object} result
+             * @param {Number} result.max
+             * @param {Number} result.min
+             * @param {Number} result.average
              * @returns {Object}
              */
             getFeedback: function getFeedback(result) {
+                var avgResult = result.average;
                 var bandwidthUnit = initConfig.unit;
                 var threshold = initConfig.ideal;
                 var maxTestTakers = initConfig.max;
@@ -332,12 +336,22 @@ define([
                 var getStatusOptions = (initConfig.minimumGlobalPercentage)
                     ? { minimumGlobalPercentage: initConfig.minimumGlobalPercentage }
                     : {};
-                var status = getStatus(
-                    result / max * 100,
+                var baseBandwidth = avgResult;
+                var status;
+                var nb;
+
+                if (avgResult / result.min > initConfig.fallbackThreshold){
+                    baseBandwidth = result.min;
+                }
+
+                status = getStatus(
+                    baseBandwidth / max * 100,
                     initConfig.feedbackThresholds,
                     getStatusOptions
                 );
-                var nb = Math.floor(result / bandwidthUnit);
+
+                nb = Math.floor(baseBandwidth / bandwidthUnit );
+
 
                 if (nb > maxTestTakers) {
                     nb = '>' + maxTestTakers;
