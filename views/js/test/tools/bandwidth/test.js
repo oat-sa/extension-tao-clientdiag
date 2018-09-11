@@ -92,7 +92,7 @@ define(['taoClientDiagnostic/tools/bandwidth/tester'], function(bandwidthTester)
 
     QUnit.test('getFeedback', function(assert) {
         var tester = bandwidthTester({});
-        var result = 100;
+        var result = {max: 100, min: 10, average: 55};
         var status = tester.getFeedback(result);
 
         QUnit.expect(6);
