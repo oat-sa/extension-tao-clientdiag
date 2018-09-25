@@ -727,5 +727,6 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('2.17.9');
         }
 
+        $this->skip('2.17.9', '2.17.10');
     }
 }
