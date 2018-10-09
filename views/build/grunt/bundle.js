@@ -33,7 +33,7 @@ module.exports = function(grunt) {
                     bundles : [{
                         name : 'taoClientDiagnostic',
                         default : true,
-                        boostrap: true
+                        bootstrap: true
                     }]
                 }
             }

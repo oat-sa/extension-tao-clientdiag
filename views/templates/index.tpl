@@ -15,7 +15,12 @@ use oat\tao\model\theme\Theme;
 
     <?= tao_helpers_Scriptloader::render() ?>
 
-    <?= Layout::getAmdLoader(Template::js('loader/taoClientDiagnostic.min.js', 'taoClientDiagnostic'), get_data('content-controller')) ?>
+    <?= Layout::getAmdLoader(
+        Template::js('loader/taoClientDiagnostic.min.js', 'taoClientDiagnostic'),
+        get_data('content-controller'),
+        get_data('content-config'),
+        true
+    ) ?>
 
     <link rel="stylesheet" href="<?= Layout::getThemeStylesheet(Theme::CONTEXT_FRONTOFFICE) ?>"/>
 </head>
