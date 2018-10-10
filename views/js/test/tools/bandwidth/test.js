@@ -114,7 +114,8 @@ define([
 
         QUnit.expect(13);
 
-        context['root_url'] = '../../';
+        // override root_url to be able to download the files during unit tests
+        context.root_url = '../../';
 
         bandwidthTester({}).start(function(status, details, results){
 
