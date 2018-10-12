@@ -20,6 +20,7 @@
 
 namespace oat\taoClientDiagnostic\model\storage;
 
+use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Driver\PDOStatement;
 use oat\taoClientDiagnostic\exception\StorageException;
 
@@ -43,7 +44,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
 
         try {
             return $this->select(null, [self::DIAGNOSTIC_ID => $id], 1)->fetch(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
+        } catch (DBALException $e) {
             throw new StorageException($e->getMessage());
         }
     }
@@ -61,7 +62,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
         try {
             $offset = ($page - 1) * $size;
             return $this->select(null, $filter, $size, $offset)->fetchAll(\PDO::FETCH_ASSOC);
-        } catch (\PDOException $e) {
+        } catch (DBALException $e) {
             throw new StorageException($e->getMessage());
         }
     }
@@ -76,7 +77,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
     {
         try {
             return $this->select('COUNT(*)', $filter)->fetchColumn();
-        } catch (\PDOException $e) {
+        } catch (DBALException $e) {
             throw new StorageException($e->getMessage());
         }
     }
@@ -104,7 +105,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
             \common_Logger::i('Deleting diagnostic result ' . $id);
             $query = 'DELETE FROM ' . self::DIAGNOSTIC_TABLE;
             return (boolean) $this->query($query, $filter)->rowCount();
-        } catch (\PDOException $e) {
+        } catch (DBALException $e) {
             throw new StorageException($e->getMessage());
         }
     }
