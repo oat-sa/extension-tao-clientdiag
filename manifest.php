@@ -33,7 +33,7 @@ return array(
     'author'      => 'Open Assessment Technologies SA',
     'requires'    => array(
         'tao'        => '>=21.0.0',
-        'taoQtiItem' => '>=17.0.0',
+        'taoQtiItem' => '>=18.0.0',
     ),
     // for compatibility
     'dependencies' => array('tao'),
