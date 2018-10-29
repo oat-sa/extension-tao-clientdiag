@@ -15,7 +15,10 @@
  *
  * Copyright (c) 2015-2017 (original work) Open Assessment Technologies SA ;
  */
-define(['taoClientDiagnostic/tools/bandwidth/tester'], function(bandwidthTester){
+define([
+    'context',
+    'taoClientDiagnostic/tools/bandwidth/tester',
+], function(context, bandwidthTester){
     'use strict';
 
     QUnit.module('API');
@@ -92,7 +95,7 @@ define(['taoClientDiagnostic/tools/bandwidth/tester'], function(bandwidthTester)
 
     QUnit.test('getFeedback', function(assert) {
         var tester = bandwidthTester({});
-        var result = 100;
+        var result = {max: 100, min: 10, average: 55};
         var status = tester.getFeedback(result);
 
         QUnit.expect(6);
@@ -110,6 +113,9 @@ define(['taoClientDiagnostic/tools/bandwidth/tester'], function(bandwidthTester)
     QUnit.asyncTest('The tester runs', function(assert){
 
         QUnit.expect(13);
+
+        // override root_url to be able to download the files during unit tests
+        context.root_url = '../../';
 
         bandwidthTester({}).start(function(status, details, results){
 
