@@ -89,7 +89,9 @@ define([
         minimumGlobalPercentage: false,
 
         // A list of thresholds for bandwidth check
-        feedbackThresholds: _thresholds
+        feedbackThresholds: _thresholds,
+
+        fallbackThreshold: 0.2
     };
 
     /**
@@ -340,7 +342,7 @@ define([
                 var status;
                 var nb;
 
-                if (avgResult / result.min > initConfig.fallbackThreshold){
+                if (result.min / avgResult > initConfig.fallbackThreshold){
                     baseBandwidth = result.min;
                 }
 

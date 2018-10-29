@@ -50,7 +50,7 @@ class ActivateMediaIntensiveCheck extends InstallAction
             }
 
             $config['testers']['intensive_bandwidth']['enabled'] = true;
-
+            $config['testers']['intensive_bandwidth']['fallbackThreshold'] = 0.2;
             $extension->setConfig('clientDiag', $config);
 
             return new \common_report_Report(\common_report_Report::TYPE_SUCCESS, "The Media Intensive check has been activated!");
