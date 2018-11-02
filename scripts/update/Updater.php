@@ -713,7 +713,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('2.15.0');
         }
 
-        $this->skip('2.15.0', '2.17.9');
+        $this->skip('2.15.0', '2.17.8');
 
         if ($this->isVersion('2.17.8')) {
             $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
