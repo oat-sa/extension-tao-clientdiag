@@ -23,6 +23,7 @@ namespace oat\taoClientDiagnostic\test\integration\model\authorization;
 
 require_once dirname(__FILE__) .'/../../../../../tao/includes/raw_start.php';
 
+use oat\taoClientDiagnostic\exception\InvalidLoginException;
 use oat\taoClientDiagnostic\model\authorization\RequireUsername;
 
 class RequireUsernameTest extends \PHPUnit_Framework_TestCase
@@ -61,11 +62,10 @@ class RequireUsernameTest extends \PHPUnit_Framework_TestCase
     public  function getLoginData()
     {
         return [
-            ['', true, '\oat\taoClientDiagnostic\exception\InvalidLoginException'],
-            ['loginFixture', true, '\oat\taoClientDiagnostic\exception\InvalidLoginException'],
+            ['', true, InvalidLoginException::class],
+            ['loginFixture', true, InvalidLoginException::class],
             ['loginFixture', false, '', true, true],
-            ['loginFixture', true, '\oat\taoClientDiagnostic\exception\InvalidLoginException', true],
-
+            ['loginFixture', true, InvalidLoginException::class, true],
         ];
     }
 
@@ -81,6 +81,7 @@ class RequireUsernameTest extends \PHPUnit_Framework_TestCase
             $AclFixture->method('loginExists')
                 ->willReturn($returnACL);
 
+            // @todo fix tao_models_classes_UserService - abstract class
             $ref = new \ReflectionProperty('\tao_models_classes_Service', 'instances');
             $ref->setAccessible(true);
             $ref->setValue(null, array('tao_models_classes_UserService' => $AclFixture));
@@ -90,7 +91,6 @@ class RequireUsernameTest extends \PHPUnit_Framework_TestCase
             $this->setExpectedException($exception);
         }
 
-        // @todo now the exception is thrown out of here, it seems like setExpectedException() doesn't work
         $result = $this->instance->validateLogin($loginFixture);
 
         if (!$hasException) {
