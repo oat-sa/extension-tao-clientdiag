@@ -21,21 +21,27 @@
 
 namespace oat\taoClientDiagnostic\test\integration\model\authorization;
 
-require_once dirname(__FILE__) .'/../../../../../tao/includes/raw_start.php';
-
+use oat\generis\test\TestCase;
 use oat\taoClientDiagnostic\exception\InvalidLoginException;
 use oat\taoClientDiagnostic\model\authorization\RequireUsername;
 
-class RequireUsernameTest extends \PHPUnit_Framework_TestCase
+class RequireUsernameTest extends TestCase
 {
-    /**
-     * @var oat\taoClientDiagnostic\model\authorization\RequireUsername
-     */
+    /** @var RequireUsername */
     private $instance;
 
     public function setUp()
     {
         $this->instance = new RequireUsername();
+        $aclMock = $this->getMockBuilder('\tao_models_classes_UserService')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $aclMock->method('loginExists')
+            ->willReturn(false);
+        $this->instance->setServiceLocator($this->getServiceLocatorMock([
+            \tao_models_classes_UserService::SERVICE_ID => $aclMock
+        ]));
+
     }
 
     public function tearDown()
@@ -59,7 +65,7 @@ class RequireUsernameTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($this->instance->getAuthorizationUrl($urlFixture), $expectedResult);
     }
 
-    public  function getLoginData()
+    public function getLoginData()
     {
         return [
             ['', true, InvalidLoginException::class],
@@ -75,32 +81,25 @@ class RequireUsernameTest extends \PHPUnit_Framework_TestCase
     public function testValidateLogin($loginFixture, $hasException, $exception, $useACLService = false, $returnACL = false)
     {
         if ($useACLService) {
-            $AclFixture = $this->getMockBuilder('\tao_models_classes_UserService')
+            $aclFixture = $this->getMockBuilder('\tao_models_classes_UserService')
                 ->disableOriginalConstructor()
                 ->getMock();
-            $AclFixture->method('loginExists')
+            $aclFixture->method('loginExists')
                 ->willReturn($returnACL);
 
-            // @todo fix tao_models_classes_UserService - abstract class
-            $ref = new \ReflectionProperty('\tao_models_classes_Service', 'instances');
-            $ref->setAccessible(true);
-            $ref->setValue(null, array('tao_models_classes_UserService' => $AclFixture));
+            $this->instance->setServiceLocator($this->getServiceLocatorMock([
+                \tao_models_classes_UserService::SERVICE_ID => $aclFixture
+            ]));
         }
 
         if ($hasException) {
-            $this->setExpectedException($exception);
+            $this->expectException($exception);
         }
 
         $result = $this->instance->validateLogin($loginFixture);
 
         if (!$hasException) {
             $this->assertTrue($result);
-        }
-
-        if ($useACLService) {
-            $ref = new \ReflectionProperty('tao_models_classes_Service', 'instances');
-            $ref->setAccessible(true);
-            $ref->setValue(null, array());
         }
     }
 }
