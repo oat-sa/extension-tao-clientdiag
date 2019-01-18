@@ -47,14 +47,17 @@ class Authenticator extends \tao_actions_CommonModule
             }
 
             if ($this->isRequestPost()) {
-                $authorizationService = $this->getServiceManager()->get(Authorization::SERVICE_ID);
+                $authorizationService = $this->getServiceLocator()->get(Authorization::SERVICE_ID);
 
                 if (!$authorizationService instanceof RequireUsername) {
                     throw new InvalidCallException('Authenticator need to be call by requireusername');
                 }
 
                 if ($authorizationService->validateLogin($this->getRequestParameter('login'))) {
-                    $baseUrl = \common_ext_ExtensionsManager::singleton()->getExtensionById('taoClientDiagnostic')->getConstant('BASE_URL');
+                    $baseUrl = $this->getServiceLocator()
+                        ->get(\common_ext_ExtensionsManager::SERVICE_ID)
+                        ->getExtensionById('taoClientDiagnostic')
+                        ->getConstant('BASE_URL');
                     $elements = parse_url($baseUrl);
                     $this->setCookie('login', $this->getRequestParameter('login'), null, $elements['path']);
                     $this->redirect($this->getRequestParameter('successCallback'));

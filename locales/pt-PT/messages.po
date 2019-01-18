@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint68\n"
-"PO-Revision-Date: 2018-01-16T14:26:52\n"
+"Project-Id-Version: TAO 3.3.0-sprint93\n"
+"PO-Revision-Date: 2019-01-18T12:51:58\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: pt-PT\n"
@@ -69,6 +69,9 @@ msgstr "A verificar a largura de banda intensiva... "
 
 msgid "Checking the performances..."
 msgstr "A verificar as performances..."
+
+msgid "Checking the screen..."
+msgstr ""
 
 msgid "Checking upload speed..."
 msgstr "A verificar a velocidade de upload"
@@ -265,6 +268,15 @@ msgstr "Código PIN (4 digitos)"
 msgid "School PIN:"
 msgstr "Código PIN:"
 
+msgid "Screen Height"
+msgstr ""
+
+msgid "Screen resolution"
+msgstr ""
+
+msgid "Screen Width"
+msgstr ""
+
 msgid "Show Details"
 msgstr "Mostrar os detalhes"
 
@@ -276,6 +288,15 @@ msgstr "Algo correu mal ..."
 
 msgid "Starting..."
 msgstr "A iniciar ..."
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr ""
+
+msgid "The device screen has the minimum required resolution."
+msgstr ""
+
+msgid "The device screen resolution meets the requirements."
+msgstr ""
 
 msgid "The readiness check result have been removed"
 msgstr "O resultado da verificação de prontidão foi removido"
