@@ -15,23 +15,24 @@
  *
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  */
-define([
+define( [
+
     'jquery',
     'ui/feedback',
-    'taoClientDiagnostic/tools/message'], function ($, feedbackMock, message) {
+    'taoClientDiagnostic/tools/message'
+], function(  $, feedbackMock, message ) {
     'use strict';
 
-    QUnit.module('Module');
+    QUnit.module( 'Module' );
 
-    QUnit.test('The helper has the right form', function (assert) {
-        QUnit.expect(1);
-        assert.ok(typeof message === 'function', 'The module exposes a function');
-    });
+    QUnit.test( 'The helper has the right form', function( assert ) {
+        assert.expect( 1 );
+        assert.ok( typeof message === 'function', 'The module exposes a function' );
+    } );
 
+    QUnit.module( 'API' );
 
-    QUnit.module('API');
-
-    QUnit.cases([{
+    QUnit.cases.init( [ {
         title: 'message',
         data: 'message',
         text: 'This is a message'
@@ -41,29 +42,31 @@ define([
         text: 'This is an error'
     }, {
         title: 'nothing'
-    }]).asyncTest('message ', function (data, assert) {
-        var $container = $('#fixture');
-        var delay = setTimeout(function() {
-            assert.ok(!data.data, 'The feedback has not been displayed');
-            QUnit.start();
-        }, 250);
+    } ] ).test( 'message ', function( data, assert ) {
+        var ready = assert.async();
+        var $container = $( '#fixture' );
+        var delay = setTimeout( function() {
+            assert.ok( !data.data, 'The feedback has not been displayed' );
+            ready();
+        }, 250 );
+        assert.expect( 1 );
 
-        feedbackMock.callback = function(text) {
-            clearTimeout(delay);
-            if (data.data) {
-                assert.equal(text, data.text);
+
+        feedbackMock.callback = function( text ) {
+            clearTimeout( delay );
+            if ( data.data ) {
+                assert.equal( text, data.text );
             } else {
-                assert.ok(false, 'The feedback should not have been displayed');
+                assert.ok( false, 'The feedback should not have been displayed' );
             }
-            QUnit.start();
+            ready();
         };
 
-        QUnit.expect(1);
 
-        if (data.data) {
-            $container.data(data.data, data.text);
+        if ( data.data ) {
+            $container.data( data.data, data.text );
         }
-        message($container);
-    });
+        message( $container );
+    } );
 
-});
+} );
