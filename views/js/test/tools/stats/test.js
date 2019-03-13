@@ -15,7 +15,7 @@
  *
  * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
  */
-define( [  'taoClientDiagnostic/tools/stats' ], function(  stats ) {
+define(['taoClientDiagnostic/tools/stats'], function(stats) {
     'use strict';
 
     var listValuesArray;
@@ -25,16 +25,16 @@ define( [  'taoClientDiagnostic/tools/stats' ], function(  stats ) {
     var listValuesCollectionCallbackDataProvider;
     var listValuesObjectCallbackDataProvider;
 
-    QUnit.module( 'API' );
+    QUnit.module('API');
 
-    QUnit.test( 'The tester has the right form', function( assert ) {
-        assert.ok( typeof stats === 'function', 'The module exposes a function' );
-    } );
+    QUnit.test('The tester has the right form', function(assert) {
+        assert.ok(typeof stats === 'function', 'The module exposes a function');
+    });
 
-    QUnit.module( 'Test' );
+    QUnit.module('Test');
 
     /** Stats from a collection **/
-    listValuesArray = [ {
+    listValuesArray = [{
         'totalDuration': 64,
         'networkDuration': 1,
         'requestDuration': 1,
@@ -79,9 +79,9 @@ define( [  'taoClientDiagnostic/tools/stats' ], function(  stats ) {
         'networkDuration': 1,
         'requestDuration': 1,
         'displayDuration': 72
-    } ];
+    }];
 
-    listValuesCollectionDataProvider = [ {
+    listValuesCollectionDataProvider = [{
         title: 'min',
         name: 'min',
         input: listValuesArray,
@@ -129,28 +129,28 @@ define( [  'taoClientDiagnostic/tools/stats' ], function(  stats ) {
         input: listValuesArray,
         field: 'displayDuration',
         expected: listValuesArray
-    } ];
+    }];
 
     QUnit
-        .cases.init( listValuesCollectionDataProvider )
-        .test( 'Stats on a collection', function( data, assert ) {
-            var results = stats( data.input, data.field );
-            var value = results[ data.name ];
-            if ( 'number' === typeof value ) {
-                value = Math.round( value * 100 ) / 100;
+        .cases.init(listValuesCollectionDataProvider)
+        .test('Stats on a collection', function(data, assert) {
+            var results = stats(data.input, data.field);
+            var value = results[data.name];
+            if ('number' === typeof value) {
+                value = Math.round(value * 100) / 100;
             }
-            assert.expect( 1 );
-            assert.strictEqual( value, data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!' );
-        } );
+            assert.expect(1);
+            assert.strictEqual(value, data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!');
+        });
 
     /** Stats from an object **/
     listValuesObject = {
-         'sample0': {
-             'totalDuration': 64,
-             'networkDuration': 1,
-             'requestDuration': 1,
-             'displayDuration': 62
-         },
+        'sample0': {
+            'totalDuration': 64,
+            'networkDuration': 1,
+            'requestDuration': 1,
+            'displayDuration': 62
+        },
         'sample1': {
             'totalDuration': 75,
             'networkDuration': 1,
@@ -201,7 +201,7 @@ define( [  'taoClientDiagnostic/tools/stats' ], function(  stats ) {
         }
     };
 
-    listValuesObjectDataProvider = [ {
+    listValuesObjectDataProvider = [{
         title: 'min',
         name: 'min',
         input: listValuesObject,
@@ -249,26 +249,26 @@ define( [  'taoClientDiagnostic/tools/stats' ], function(  stats ) {
         input: listValuesObject,
         field: 'displayDuration',
         expected: listValuesObject
-    } ];
+    }];
 
     QUnit
-        .cases.init( listValuesObjectDataProvider )
-        .test( 'Stats on an object', function( data, assert ) {
-            var results = stats( data.input, data.field );
-            var value = results[ data.name ];
-            if ( 'number' === typeof value ) {
-                value = Math.round( value * 100 ) / 100;
+        .cases.init(listValuesObjectDataProvider)
+        .test('Stats on an object', function(data, assert) {
+            var results = stats(data.input, data.field);
+            var value = results[data.name];
+            if ('number' === typeof value) {
+                value = Math.round(value * 100) / 100;
             }
-            assert.expect( 1 );
-            assert.strictEqual( value, data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!' );
-        } );
+            assert.expect(1);
+            assert.strictEqual(value, data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!');
+        });
 
-    function getValue( value ) {
+    function getValue(value) {
         return value.displayDuration;
     }
 
     /** Stats from a collection using a callback **/
-    listValuesCollectionCallbackDataProvider = [ {
+    listValuesCollectionCallbackDataProvider = [{
         title: 'min',
         name: 'min',
         input: listValuesArray,
@@ -316,22 +316,22 @@ define( [  'taoClientDiagnostic/tools/stats' ], function(  stats ) {
         input: listValuesArray,
         field: getValue,
         expected: listValuesArray
-    } ];
+    }];
 
     QUnit
-        .cases.init( listValuesCollectionCallbackDataProvider )
-        .test( 'Stats on a collection using a callback', function( data, assert ) {
-            var results = stats( data.input, data.field );
-            var value = results[ data.name ];
-            if ( 'number' === typeof value ) {
-                value = Math.round( value * 100 ) / 100;
+        .cases.init(listValuesCollectionCallbackDataProvider)
+        .test('Stats on a collection using a callback', function(data, assert) {
+            var results = stats(data.input, data.field);
+            var value = results[data.name];
+            if ('number' === typeof value) {
+                value = Math.round(value * 100) / 100;
             }
-            assert.expect( 1 );
-            assert.strictEqual( value, data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!' );
-        } );
+            assert.expect(1);
+            assert.strictEqual(value, data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!');
+        });
 
     /** Stats from an object **/
-    listValuesObjectCallbackDataProvider = [ {
+    listValuesObjectCallbackDataProvider = [{
         title: 'min',
         name: 'min',
         input: listValuesObject,
@@ -379,18 +379,18 @@ define( [  'taoClientDiagnostic/tools/stats' ], function(  stats ) {
         input: listValuesObject,
         field: getValue,
         expected: listValuesObject
-    } ];
+    }];
 
     QUnit
-        .cases.init( listValuesObjectCallbackDataProvider )
-        .test( 'Stats on an object using a callback', function( data, assert ) {
-            var results = stats( data.input, data.field );
-            var value = results[ data.name ];
-            if ( 'number' === typeof value ) {
-                value = Math.round( value * 100 ) / 100;
+        .cases.init(listValuesObjectCallbackDataProvider)
+        .test('Stats on an object using a callback', function(data, assert) {
+            var results = stats(data.input, data.field);
+            var value = results[data.name];
+            if ('number' === typeof value) {
+                value = Math.round(value * 100) / 100;
             }
-            assert.expect( 1 );
-            assert.strictEqual( value, data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!' );
-        } );
+            assert.expect(1);
+            assert.strictEqual(value, data.expected, 'The value of the result field ' + data.name + ' must be equal to expected value!');
+        });
 
-} );
+});

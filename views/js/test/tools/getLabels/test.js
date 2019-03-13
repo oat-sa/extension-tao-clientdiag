@@ -15,19 +15,19 @@
  *
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  */
-define( [  'taoClientDiagnostic/tools/getLabels' ], function(  getLabels ) {
+define(['taoClientDiagnostic/tools/getLabels'], function(getLabels) {
     'use strict';
 
-    QUnit.module( 'Module' );
+    QUnit.module('Module');
 
-    QUnit.test( 'The helper has the right form', function( assert ) {
-        assert.expect( 1 );
-        assert.ok( typeof getLabels === 'function', 'The module exposes a function' );
-    } );
+    QUnit.test('The helper has the right form', function(assert) {
+        assert.expect(1);
+        assert.ok(typeof getLabels === 'function', 'The module exposes a function');
+    });
 
-    QUnit.module( 'API' );
+    QUnit.module('API');
 
-    QUnit.cases.init( [ {
+    QUnit.cases.init([{
         title: 'no messages, no level',
         expected: {}
     }, {
@@ -58,10 +58,10 @@ define( [  'taoClientDiagnostic/tools/getLabels' ], function(  getLabels ) {
     }, {
         title: 'list with 1 message, level 1',
         level: 1,
-        messages: [ {
+        messages: [{
             title: 'foo',
             status: 'bar'
-        } ],
+        }],
         expected: {
             title: 'foo',
             status: 'bar'
@@ -69,10 +69,10 @@ define( [  'taoClientDiagnostic/tools/getLabels' ], function(  getLabels ) {
     }, {
         title: 'list with 1 message, level 2',
         level: 2,
-        messages: [ {
+        messages: [{
             title: 'foo',
             status: 'bar'
-        } ],
+        }],
         expected: {
             title: 'foo',
             status: 'bar'
@@ -80,10 +80,10 @@ define( [  'taoClientDiagnostic/tools/getLabels' ], function(  getLabels ) {
     }, {
         title: 'list with 1 message, level 0',
         level: 0,
-        messages: [ {
+        messages: [{
             title: 'foo',
             status: 'bar'
-        } ],
+        }],
         expected: {
             title: 'foo',
             status: 'bar'
@@ -91,13 +91,13 @@ define( [  'taoClientDiagnostic/tools/getLabels' ], function(  getLabels ) {
     }, {
         title: 'list with 2 messages, level 0',
         level: 0,
-        messages: [ {
+        messages: [{
             title: 'level1',
             status: 'foo bar 1'
         }, {
             title: 'level2',
             status: 'foo bar 2'
-        } ],
+        }],
         expected: {
             title: 'level1',
             status: 'foo bar 1'
@@ -105,13 +105,13 @@ define( [  'taoClientDiagnostic/tools/getLabels' ], function(  getLabels ) {
     }, {
         title: 'list with 2 messages, level 1',
         level: 1,
-        messages: [ {
+        messages: [{
             title: 'level1',
             status: 'foo bar 1'
         }, {
             title: 'level2',
             status: 'foo bar 2'
-        } ],
+        }],
         expected: {
             title: 'level1',
             status: 'foo bar 1'
@@ -119,13 +119,13 @@ define( [  'taoClientDiagnostic/tools/getLabels' ], function(  getLabels ) {
     }, {
         title: 'list with 2 messages, level 2',
         level: 2,
-        messages: [ {
+        messages: [{
             title: 'level1',
             status: 'foo bar 1'
         }, {
             title: 'level2',
             status: 'foo bar 2'
-        } ],
+        }],
         expected: {
             title: 'level2',
             status: 'foo bar 2'
@@ -133,21 +133,21 @@ define( [  'taoClientDiagnostic/tools/getLabels' ], function(  getLabels ) {
     }, {
         title: 'list with 2 messages, level 3',
         level: 3,
-        messages: [ {
+        messages: [{
             title: 'level1',
             status: 'foo bar 1'
         }, {
             title: 'level2',
             status: 'foo bar 2'
-        } ],
+        }],
         expected: {
             title: 'level2',
             status: 'foo bar 2'
         }
-    } ] ).test( 'getLabels ', function( data, assert ) {
-        var labels = getLabels( data.messages, data.level );
-        assert.expect( 1 );
-        assert.deepEqual( labels, data.expected, 'The helper has returned the expected data' );
-    } );
+    }]).test('getLabels ', function(data, assert) {
+        var labels = getLabels(data.messages, data.level);
+        assert.expect(1);
+        assert.deepEqual(labels, data.expected, 'The helper has returned the expected data');
+    });
 
-} );
+});

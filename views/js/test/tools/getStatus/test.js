@@ -15,19 +15,19 @@
  *
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  */
-define( [  'taoClientDiagnostic/tools/getStatus' ], function(  getStatus ) {
+define(['taoClientDiagnostic/tools/getStatus'], function(getStatus) {
     'use strict';
 
-    QUnit.module( 'Module' );
+    QUnit.module('Module');
 
-    QUnit.test( 'The helper has the right form', function( assert ) {
-        assert.expect( 1 );
-        assert.ok( typeof getStatus === 'function', 'The module exposes a function' );
-    } );
+    QUnit.test('The helper has the right form', function(assert) {
+        assert.expect(1);
+        assert.ok(typeof getStatus === 'function', 'The module exposes a function');
+    });
 
-    QUnit.module( 'API' );
+    QUnit.module('API');
 
-    QUnit.cases.init( [ {
+    QUnit.cases.init([{
         title: 'no percentage, no thresholds',
         expected: {
             percentage: 0,
@@ -100,13 +100,13 @@ define( [  'taoClientDiagnostic/tools/getStatus' ], function(  getStatus ) {
     }, {
         title: '20%, threshold 25%, 50%, 75%',
         percentage: 20,
-        thresholds: [ {
+        thresholds: [{
             threshold: 25
         }, {
             threshold: 50
         }, {
             threshold: 75
-        } ],
+        }],
         expected: {
             percentage: 20,
             globalPercentage: 20,
@@ -115,13 +115,13 @@ define( [  'taoClientDiagnostic/tools/getStatus' ], function(  getStatus ) {
     }, {
         title: '30%, threshold 25%, 50%, 75%',
         percentage: 30,
-        thresholds: [ {
+        thresholds: [{
             threshold: 25
         }, {
             threshold: 50
         }, {
             threshold: 75
-        } ],
+        }],
         expected: {
             percentage: 30,
             globalPercentage: 30,
@@ -133,13 +133,13 @@ define( [  'taoClientDiagnostic/tools/getStatus' ], function(  getStatus ) {
     }, {
         title: '60%, threshold 25%, 50%, 75%',
         percentage: 60,
-        thresholds: [ {
+        thresholds: [{
             threshold: 25
         }, {
             threshold: 50
         }, {
             threshold: 75
-        } ],
+        }],
         expected: {
             percentage: 60,
             globalPercentage: 60,
@@ -151,13 +151,13 @@ define( [  'taoClientDiagnostic/tools/getStatus' ], function(  getStatus ) {
     }, {
         title: '60%, threshold 25%, 50%, 75%',
         percentage: 80,
-        thresholds: [ {
+        thresholds: [{
             threshold: 25
         }, {
             threshold: 50
         }, {
             threshold: 75
-        } ],
+        }],
         expected: {
             percentage: 80,
             globalPercentage: 80,
@@ -194,10 +194,10 @@ define( [  'taoClientDiagnostic/tools/getStatus' ], function(  getStatus ) {
             globalPercentage: 10,
             quality: {}
         }
-    } ] ).test( 'getStatus ', function( data, assert ) {
-        var status = getStatus( data.percentage, data.thresholds, data.options );
-        assert.expect( 1 );
-        assert.deepEqual( status, data.expected, 'The helper has returned the expected data' );
-    } );
+    }]).test('getStatus ', function(data, assert) {
+        var status = getStatus(data.percentage, data.thresholds, data.options);
+        assert.expect(1);
+        assert.deepEqual(status, data.expected, 'The helper has returned the expected data');
+    });
 
-} );
+});

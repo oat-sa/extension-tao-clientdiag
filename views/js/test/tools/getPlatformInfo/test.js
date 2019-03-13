@@ -15,19 +15,19 @@
  *
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  */
-define( [
+define([
 
     'jquery',
     'context',
     'util/url',
     'taoClientDiagnostic/tools/getPlatformInfo'
-], function(  $, context, url, getPlatformInfo ) {
+], function($, context, url, getPlatformInfo) {
     'use strict';
 
     var ajaxBackup;
 
     // Hotfix the URL to bring consistency between test platforms (browser and CLI)
-    context[ 'root_url' ] = 'http://tao.lan';
+    context['root_url'] = 'http://tao.lan';
 
     /**
      * A simple AJAX mock factory that fakes a successful ajax call.
@@ -37,10 +37,10 @@ define( [
      * @param {Function} [validator] - An optional function called instead of the ajax method
      * @returns {Function}
      */
-    function ajaxMockSuccess( response, validator ) {
-        var deferred = $.Deferred().resolve( response );
+    function ajaxMockSuccess(response, validator) {
+        var deferred = $.Deferred().resolve(response);
         return function() {
-            validator && validator.apply( this, arguments );
+            validator && validator.apply(this, arguments);
             return deferred.promise();
         };
     }
@@ -53,32 +53,32 @@ define( [
      * @param {Function} [validator] - An optional function called instead of the ajax method
      * @returns {Function}
      */
-    function ajaxMockError( response, validator ) {
-        var deferred = $.Deferred().reject( response );
+    function ajaxMockError(response, validator) {
+        var deferred = $.Deferred().reject(response);
         return function() {
-            validator && validator.apply( this, arguments );
+            validator && validator.apply(this, arguments);
             return deferred.promise();
         };
     }
 
-    QUnit.module( 'Module' );
+    QUnit.module('Module');
 
-    QUnit.test( 'The helper has the right form', function( assert ) {
-        assert.expect( 1 );
-        assert.ok( typeof getPlatformInfo === 'function', 'The module exposes a function' );
-    } );
+    QUnit.test('The helper has the right form', function(assert) {
+        assert.expect(1);
+        assert.ok(typeof getPlatformInfo === 'function', 'The module exposes a function');
+    });
 
-    QUnit.module( 'API' );
+    QUnit.module('API');
 
     // Backup/restore ajax method between each test
-    QUnit.testStart( function() {
+    QUnit.testStart(function() {
         ajaxBackup = $.ajax;
-    } );
-    QUnit.testDone( function() {
+    });
+    QUnit.testDone(function() {
         $.ajax = ajaxBackup;
-    } );
+    });
 
-    QUnit.cases.init( [ {
+    QUnit.cases.init([{
         title: 'success',
         ajaxMock: ajaxMockSuccess,
         window: {
@@ -142,37 +142,37 @@ define( [
             w: 'undefined',
             h: 'undefined'
         }
-    } ] ).test( 'getPlatformInfo ', function( data, assert ) {
+    }]).test('getPlatformInfo ', function(data, assert) {
         var ready = assert.async();
-        $.ajax = data.ajaxMock( data.response, function( config ) {
-            var parsedUrl = url.parse( config.url );
+        $.ajax = data.ajaxMock(data.response, function(config) {
+            var parsedUrl = url.parse(config.url);
 
-            assert.equal( typeof parsedUrl.query.r, 'string', 'The helper has set a cache buster' );
+            assert.equal(typeof parsedUrl.query.r, 'string', 'The helper has set a cache buster');
             delete parsedUrl.query.r;
-            assert.equal( parsedUrl.path, data.urlPath, 'The helper has called the right service' );
-            assert.deepEqual( parsedUrl.query, data.urlParams, 'The helper has provided the expected params' );
-        } );
+            assert.equal(parsedUrl.path, data.urlPath, 'The helper has called the right service');
+            assert.deepEqual(parsedUrl.query, data.urlParams, 'The helper has provided the expected params');
+        });
 
-        assert.expect( 4 );
+        assert.expect(4);
 
-        getPlatformInfo( data.window, data.config )
-            .then( function( result ) {
-                if ( data.failed ) {
-                    assert.ok( false, 'The helper should fail!' );
+        getPlatformInfo(data.window, data.config)
+            .then(function(result) {
+                if (data.failed) {
+                    assert.ok(false, 'The helper should fail!');
                 } else {
-                    assert.deepEqual( result, data.response, 'The helper has returned the expected result' );
+                    assert.deepEqual(result, data.response, 'The helper has returned the expected result');
                 }
                 ready();
-            } )
-            .catch( function( err ) {
-                if ( data.failed ) {
-                    assert.deepEqual( err, data.response, 'The helper has provided the expected error' );
+            })
+            .catch(function(err) {
+                if (data.failed) {
+                    assert.deepEqual(err, data.response, 'The helper has provided the expected error');
                 } else {
-                    console.error( err );
-                    assert.ok( false, 'The helper should not fail!' );
+                    console.error(err);
+                    assert.ok(false, 'The helper should not fail!');
                 }
                 ready();
-            } );
-    } );
+            });
+    });
 
-} );
+});
