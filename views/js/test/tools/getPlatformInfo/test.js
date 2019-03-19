@@ -16,16 +16,17 @@
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  */
 define([
+
     'jquery',
     'context',
     'util/url',
     'taoClientDiagnostic/tools/getPlatformInfo'
-], function ($, context, url, getPlatformInfo) {
+], function($, context, url, getPlatformInfo) {
     'use strict';
 
     var ajaxBackup;
 
-    // hotfix the URL to bring consistency between test platforms (browser and CLI)
+    // Hotfix the URL to bring consistency between test platforms (browser and CLI)
     context['root_url'] = 'http://tao.lan';
 
     /**
@@ -38,12 +39,11 @@ define([
      */
     function ajaxMockSuccess(response, validator) {
         var deferred = $.Deferred().resolve(response);
-        return function () {
+        return function() {
             validator && validator.apply(this, arguments);
             return deferred.promise();
         };
     }
-
 
     /**
      * A simple AJAX mock factory that fakes a failing ajax call.
@@ -55,7 +55,7 @@ define([
      */
     function ajaxMockError(response, validator) {
         var deferred = $.Deferred().reject(response);
-        return function () {
+        return function() {
             validator && validator.apply(this, arguments);
             return deferred.promise();
         };
@@ -63,29 +63,28 @@ define([
 
     QUnit.module('Module');
 
-    QUnit.test('The helper has the right form', function (assert) {
-        QUnit.expect(1);
+    QUnit.test('The helper has the right form', function(assert) {
+        assert.expect(1);
         assert.ok(typeof getPlatformInfo === 'function', 'The module exposes a function');
     });
 
-
     QUnit.module('API');
 
-    // backup/restore ajax method between each test
-    QUnit.testStart(function () {
+    // Backup/restore ajax method between each test
+    QUnit.testStart(function() {
         ajaxBackup = $.ajax;
     });
-    QUnit.testDone(function () {
+    QUnit.testDone(function() {
         $.ajax = ajaxBackup;
     });
 
-    QUnit.cases([{
+    QUnit.cases.init([{
         title: 'success',
         ajaxMock: ajaxMockSuccess,
         window: {
             document: {
                 documentElement: {},
-                createElement: function () {
+                createElement: function() {
                     return {};
                 }
             },
@@ -117,7 +116,7 @@ define([
         window: {
             document: {
                 documentElement: {},
-                createElement: function () {
+                createElement: function() {
                     return {};
                 }
             },
@@ -143,8 +142,9 @@ define([
             w: 'undefined',
             h: 'undefined'
         }
-    }]).asyncTest('getPlatformInfo ', function (data, assert) {
-        $.ajax = data.ajaxMock(data.response, function (config) {
+    }]).test('getPlatformInfo ', function(data, assert) {
+        var ready = assert.async();
+        $.ajax = data.ajaxMock(data.response, function(config) {
             var parsedUrl = url.parse(config.url);
 
             assert.equal(typeof parsedUrl.query.r, 'string', 'The helper has set a cache buster');
@@ -153,26 +153,25 @@ define([
             assert.deepEqual(parsedUrl.query, data.urlParams, 'The helper has provided the expected params');
         });
 
-        QUnit.expect(4);
-
+        assert.expect(4);
 
         getPlatformInfo(data.window, data.config)
-            .then(function (result) {
+            .then(function(result) {
                 if (data.failed) {
                     assert.ok(false, 'The helper should fail!');
                 } else {
                     assert.deepEqual(result, data.response, 'The helper has returned the expected result');
                 }
-                QUnit.start();
+                ready();
             })
-            .catch(function (err) {
+            .catch(function(err) {
                 if (data.failed) {
                     assert.deepEqual(err, data.response, 'The helper has provided the expected error');
                 } else {
                     console.error(err);
                     assert.ok(false, 'The helper should not fail!');
                 }
-                QUnit.start();
+                ready();
             });
     });
 
