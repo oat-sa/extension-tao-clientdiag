@@ -15,20 +15,19 @@
  *
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  */
-define(['taoClientDiagnostic/tools/getLabels'], function(getLabels){
+define(['taoClientDiagnostic/tools/getLabels'], function(getLabels) {
     'use strict';
 
     QUnit.module('Module');
 
-    QUnit.test('The helper has the right form', function(assert){
-        QUnit.expect(1);
+    QUnit.test('The helper has the right form', function(assert) {
+        assert.expect(1);
         assert.ok(typeof getLabels === 'function', 'The module exposes a function');
     });
 
-
     QUnit.module('API');
 
-    QUnit.cases([{
+    QUnit.cases.init([{
         title: 'no messages, no level',
         expected: {}
     }, {
@@ -145,9 +144,9 @@ define(['taoClientDiagnostic/tools/getLabels'], function(getLabels){
             title: 'level2',
             status: 'foo bar 2'
         }
-    }]).test('getLabels ', function(data, assert){
+    }]).test('getLabels ', function(data, assert) {
         var labels = getLabels(data.messages, data.level);
-        QUnit.expect(1);
+        assert.expect(1);
         assert.deepEqual(labels, data.expected, 'The helper has returned the expected data');
     });
 

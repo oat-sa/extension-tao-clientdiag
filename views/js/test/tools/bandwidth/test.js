@@ -15,16 +15,13 @@
  *
  * Copyright (c) 2015-2017 (original work) Open Assessment Technologies SA ;
  */
-define([
-    'context',
-    'taoClientDiagnostic/tools/bandwidth/tester',
-], function(context, bandwidthTester){
+define(['context', 'taoClientDiagnostic/tools/bandwidth/tester'], function(context, bandwidthTester) {
     'use strict';
 
     QUnit.module('API');
 
-    QUnit.test('The tester has the right form', function(assert){
-        QUnit.expect(6);
+    QUnit.test('The tester has the right form', function(assert) {
+        assert.expect(6);
         assert.ok(typeof bandwidthTester === 'function', 'The module exposes a function');
         assert.ok(typeof bandwidthTester() === 'object', 'bandwidthTester is a factory');
         assert.ok(typeof bandwidthTester().start === 'function', 'the test has a start method');
@@ -33,7 +30,7 @@ define([
         assert.ok(typeof bandwidthTester().labels === 'object', 'the test has a labels objects');
     });
 
-    QUnit.cases([{
+    QUnit.cases.init([{
         title: 'no level'
     }, {
         title: 'level 0',
@@ -59,7 +56,7 @@ define([
                 'bandwidthAverage'
             ];
 
-            QUnit.expect(labelKeys.length + 1);
+            assert.expect(labelKeys.length + 1);
 
             assert.equal(typeof labels, 'object', 'A set of labels is returned');
             labelKeys.forEach(function(key) {
@@ -76,7 +73,7 @@ define([
         };
         var summary = tester.getSummary(results);
 
-        QUnit.expect(10);
+        assert.expect(10);
 
         assert.equal(typeof summary, 'object', 'The method has returned the summary');
 
@@ -98,7 +95,7 @@ define([
         var result = {max: 100, min: 10, average: 55};
         var status = tester.getFeedback(result);
 
-        QUnit.expect(6);
+        assert.expect(6);
 
         assert.equal(typeof status, 'object', 'The method has returned the status');
         assert.equal(status.id, 'bandwidth', 'The status contains the tester id');
@@ -110,14 +107,15 @@ define([
 
     QUnit.module('Test');
 
-    QUnit.asyncTest('The tester runs', function(assert){
+    QUnit.test('The tester runs', function(assert) {
+        var ready = assert.async();
 
-        QUnit.expect(13);
+        assert.expect(13);
 
-        // override root_url to be able to download the files during unit tests
+        // Override root_url to be able to download the files during unit tests
         context.root_url = '../../';
 
-        bandwidthTester({}).start(function(status, details, results){
+        bandwidthTester({}).start(function(status, details, results) {
 
             var toString = {}.toString;
             var speed = results.average;
@@ -136,9 +134,8 @@ define([
             assert.equal(speed, results.average, 'The speed provided inside the details must be equal to provided speed');
             assert.ok(toString.call(results.values) === '[object Array]', 'The detailed measures are provided inside the details');
 
-            QUnit.start();
+            ready();
         });
-
     });
 
 });
