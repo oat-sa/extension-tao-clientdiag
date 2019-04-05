@@ -36,7 +36,7 @@ define([
         var api = {};
         var component = componentFactory(api, defaults)
         // set the component's layout
-        .setTemplate(componentTpl)
+            .setTemplate(componentTpl)
 
         // auto render on init
             .on('init', function(){
