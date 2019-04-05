@@ -728,5 +728,40 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('2.17.9', '4.1.0');
+
+        if ($this->isVersion('4.1.0')) {
+
+            // Update client_lib_config_registry.conf.php
+            $extension = $this->getServiceManager()
+                ->get(\common_ext_ExtensionsManager::SERVICE_ID)
+                ->getExtensionById('tao');
+            $clientLibConfig = $extension->getConfig('client_lib_config_registry');
+            $clientLibConfig['taoClientDiagnostic/component/diagnostic/diagnosticLoader']['diagnostics']['taoClientDiagnostic/tools/diagnostic/diagnostic'] = [
+                'id' => 'default',
+                'module' => 'taoClientDiagnostic/tools/diagnostic/diagnostic',
+                'bundle' => 'taoClientDiagnostic/loader/diagnostic.min',
+                'position' => null,
+                'name' => 'diagnostic',
+                'description' => 'default diagnostic',
+                'category' => 'diagnostic',
+                'active' => true,
+                'tags' => []
+            ];
+            $extension->setConfig('client_lib_config_registry', $clientLibConfig);
+
+            // Update clientDiag.conf.php
+            $extension = $this->getServiceManager()
+                ->get(\common_ext_ExtensionsManager::SERVICE_ID)
+                ->getExtensionById('taoClientDiagnostic');
+            $oldClientDiagConfig = $extension->getConfig('clientDiag');
+            $newClientDiagConfig = [
+                'diagnostic' => $oldClientDiagConfig,
+                'audio' => []
+            ];
+
+            $extension->setConfig('clientDiag', $newClientDiagConfig);
+
+            $this->setVersion('4.2.0');
+        }
     }
 }
