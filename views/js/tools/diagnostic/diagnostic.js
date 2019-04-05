@@ -732,7 +732,7 @@ define([
     }
 
     /**
-     * Wraps the legacy item previewer in order to be loaded by the taoItems previewer factory
+     * Wraps the diagnostic factory to be loaded in diagnostic component as a module
      */
     return {
         name: 'diagnostic',
