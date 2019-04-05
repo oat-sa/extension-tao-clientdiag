@@ -476,6 +476,7 @@ define([
      */
     function diagnosticFactory(config) {
         // fix the translations for content loaded from config files
+        console.log(config);
         if (config) {
             _.forEach(['title', 'header', 'footer', 'info', 'button'], function(name) {
                 if (config[name]) {

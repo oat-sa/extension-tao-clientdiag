@@ -36,8 +36,8 @@ class DiagnosticService extends ConfigurableService implements DiagnosticService
     {
         $config = $this->getRawConfig();
         // override samples based on graphical theme, why not
-        $config['default']['testers']['performance']['samples'] = $this->getConfigByTheme($config['default']['testers']['performance']['samples']);
-        $config['default']['testers']['screen']['threshold'] = $this->getConfigByTheme($config['default']['testers']['screen']['threshold']);
+        $config['diagnostic']['testers']['performance']['samples'] = $this->getConfigByTheme($config['diagnostic']['testers']['performance']['samples']);
+        $config['diagnostic']['testers']['screen']['threshold'] = $this->getConfigByTheme($config['diagnostic']['testers']['screen']['threshold']);
         return $config;
     }
 

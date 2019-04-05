@@ -21,7 +21,7 @@
  * Default client diagnostic config
  */
 return array(
-    'default' => array(
+    'diagnostic' => array(
 
         /**
          * Diagnostic will be run on the page load
