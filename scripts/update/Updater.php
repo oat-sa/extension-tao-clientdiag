@@ -758,8 +758,8 @@ class Updater extends \common_ext_ExtensionUpdater
             $diagnostic['header'] = $oldClientDiagConfig['diagHeader'];
             unset($oldClientDiagConfig['diagHeader']);
             $newClientDiagConfig = [
-                'diagnostic' => array_merge($diagnostic, $oldClientDiagConfig),
-                'audio' => []
+                'default' => array_merge($diagnostic, $oldClientDiagConfig),
+                'audiorecording' => []
             ];
 
             $extension->setConfig('clientDiag', $newClientDiagConfig);

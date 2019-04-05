@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2017-2019 (original work) Open Assessment Technologies SA ;
  *
  */
 
@@ -36,8 +36,8 @@ class DiagnosticService extends ConfigurableService implements DiagnosticService
     {
         $config = $this->getRawConfig();
         // override samples based on graphical theme, why not
-        $config['diagnostic']['testers']['performance']['samples'] = $this->getConfigByTheme($config['diagnostic']['testers']['performance']['samples']);
-        $config['diagnostic']['testers']['screen']['threshold'] = $this->getConfigByTheme($config['diagnostic']['testers']['screen']['threshold']);
+        $config['default']['testers']['performance']['samples'] = $this->getConfigByTheme($config['default']['testers']['performance']['samples']);
+        $config['default']['testers']['screen']['threshold'] = $this->getConfigByTheme($config['default']['testers']['screen']['threshold']);
         return $config;
     }
 

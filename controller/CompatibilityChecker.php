@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2015-2019 (original work) Open Assessment Technologies SA;
  *
  */
 
@@ -49,8 +49,8 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         if ($authorizationService->isAuthorized()) {
             $config = $this->loadConfig();
 
-            if (!empty($config['diagnostic']['pageTitle'])) {
-                $this->setData('title', $config['diagnostic']['pageTitle']);
+            if (!empty($config['default']['pageTitle'])) {
+                $this->setData('title', $config['default']['pageTitle']);
             }
 
             $this->setData('client_config_url', $this->getClientConfigUrl());
@@ -339,8 +339,8 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         $config = $this->loadConfig();
 
         foreach ($data as $k => $d) {
-            if (!empty($config['diagnostic']['customInput'][$k])) {
-                $data[$config['diagnostic']['customInput'][$k]] = $d;
+            if (!empty($config['default']['customInput'][$k])) {
+                $data[$config['default']['customInput'][$k]] = $d;
                 unset($data[$k]);
             }
         }
