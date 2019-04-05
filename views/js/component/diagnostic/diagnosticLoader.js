@@ -51,8 +51,7 @@ define([
                     .load(context.bundle)
                     .then(function(factories) {
                         _.forEach(factories, function (factory) {
-                            console.log(self.getConfig(), factory);
-                            var diagComponent = factory.init(self.getConfig());
+                            var diagComponent = factory.init(self.getConfig()[factory.name]);
                             diagComponent.render(self.getElement());
                         });
 
