@@ -49,13 +49,13 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         if ($authorizationService->isAuthorized()) {
 
             $config = $this->loadConfig();
-            if (isset($config['diagHeader'])) {
-                $config['header'] = $config['diagHeader'];
-                unset($config['diagHeader']);
+            if (isset($config['diagnostic']['diagHeader'])) {
+                $config['header'] = $config['diagnostic']['diagHeader'];
+                unset($config['diagnostic']['diagHeader']);
             }
 
-            if (!empty($config['pageTitle'])) {
-                $this->setData('title', $config['pageTitle']);
+            if (!empty($config['diagnostic']['pageTitle'])) {
+                $this->setData('title', $config['diagnostic']['pageTitle']);
             }
 
             $this->setData('client_config_url', $this->getClientConfigUrl());
@@ -344,8 +344,8 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         $config = $this->loadConfig();
 
         foreach ($data as $k => $d) {
-            if (!empty($config['customInput'][$k])) {
-                $data[$config['customInput'][$k]] = $d;
+            if (!empty($config['diagnostic']['customInput'][$k])) {
+                $data[$config['diagnostic']['customInput'][$k]] = $d;
                 unset($data[$k]);
             }
         }
