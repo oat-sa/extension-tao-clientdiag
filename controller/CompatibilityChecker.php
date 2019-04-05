@@ -47,12 +47,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     {
         $authorizationService = $this->getServiceLocator()->get(Authorization::SERVICE_ID);
         if ($authorizationService->isAuthorized()) {
-
             $config = $this->loadConfig();
-            if (isset($config['diagnostic']['diagHeader'])) {
-                $config['header'] = $config['diagnostic']['diagHeader'];
-                unset($config['diagnostic']['diagHeader']);
-            }
 
             if (!empty($config['diagnostic']['pageTitle'])) {
                 $this->setData('title', $config['diagnostic']['pageTitle']);

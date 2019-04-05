@@ -754,8 +754,11 @@ class Updater extends \common_ext_ExtensionUpdater
                 ->get(\common_ext_ExtensionsManager::SERVICE_ID)
                 ->getExtensionById('taoClientDiagnostic');
             $oldClientDiagConfig = $extension->getConfig('clientDiag');
+            // move value of diagHeader key under header
+            $diagnostic['header'] = $oldClientDiagConfig['diagHeader'];
+            unset($oldClientDiagConfig['diagHeader']);
             $newClientDiagConfig = [
-                'diagnostic' => $oldClientDiagConfig,
+                'diagnostic' => array_merge($diagnostic, $oldClientDiagConfig),
                 'audio' => []
             ];
 
