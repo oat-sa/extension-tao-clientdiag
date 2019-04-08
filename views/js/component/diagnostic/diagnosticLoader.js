@@ -24,8 +24,6 @@ define([
     'tpl!taoClientDiagnostic/component/diagnostic/tpl/component'
 ], function (_, componentFactory, moduleLoader, context, module, componentTpl) {
     'use strict';
-
-    console.log(context, module.config() );
     /**
      * Some default values.
      * @type {Object}
