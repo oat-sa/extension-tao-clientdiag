@@ -23,6 +23,7 @@
 .diagnostics-content-area {
     max-width: 768px;
     margin: 40px auto 0 auto;
+}
 
     .diagnostics-main-area {
         margin: 40px auto 0 auto;
@@ -135,7 +136,6 @@
             }
         }
     }
-}
 
 
 
@@ -215,7 +215,6 @@ table.datatable {
     .diagnostic-index, .diagnostic-runner {
         .content {
             width: 100%;
-            padding: 0 20px;
         }
         .message {
             padding: 8px;
@@ -229,7 +228,6 @@ table.datatable {
             padding: 3px;
             overflow: hidden;
             color: whiten($info, .9);
-            margin: 40px 0 10px 0;
 
             .btn-info {
                 overflow: hidden;

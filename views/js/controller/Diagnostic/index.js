@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2015-2019 (original work) Open Assessment Technologies SA ;
  */
 /**
  * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
@@ -118,7 +118,7 @@ define([
             var extension = $container.data('extension') || 'taoClientDiagnostic';
             var $list = $container.find('.list');
             var dataset = $container.data('set');
-            var config = $container.data('config') || {};
+            var config = $container.data('config')['diagnostic'] || {};
             var installedExtension = $container.data('installedextension') || false;
             var diagnosticUrl = helpers._url('diagnostic', 'Diagnostic', extension);
             var removeUrl = helpers._url('remove', 'Diagnostic', extension);

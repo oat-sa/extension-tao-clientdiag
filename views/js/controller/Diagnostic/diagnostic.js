@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2017-2019 (original work) Open Assessment Technologies SA;
  *
  */
 
@@ -55,7 +55,7 @@ define([
             var extension = $container.data('extension') || 'taoClientDiagnostic';
             var $list = $container.find('.list');
             var $panel = $('.panel');
-            var config = $container.data('config');
+            var config = $container.data('config')['diagnostic'];
             var indexUrl = helpers._url('index', 'Diagnostic', extension);
             var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', extension);
             var buttons = [];
@@ -68,7 +68,7 @@ define([
              * @param {String} [workstation]
              */
             function installTester(workstation) {
-                diagnosticFactory(config)
+                diagnosticFactory.init(config)
                     .setTemplate(diagnosticTpl)
                     .on('render', function() {
                         var self = this;
