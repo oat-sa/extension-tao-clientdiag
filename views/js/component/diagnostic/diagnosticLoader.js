@@ -59,7 +59,10 @@ define([
                     .then(function(factories) {
                         _.forEach(factories, function (factory) {
                             var componentConfig = self.getConfig();
-                            factory.init(self.getElement(), componentConfig[factory.name]);
+                            var factoryConfig =  componentConfig[factory.name];
+                            factoryConfig.controller = componentConfig.controller;
+
+                            factory.init(self.getElement(), factoryConfig);
                         });
 
                         /**

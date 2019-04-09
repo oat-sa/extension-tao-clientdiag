@@ -485,8 +485,9 @@ define([
                 }
             });
         }
+        this.config = getConfig(config, _defaults);
 
-        diagComponent = component(diagnostic, _defaults)
+        diagComponent = component(diagnostic, this.config)
             .setTemplate(mainTpl)
 
             // uninstalls the component
@@ -736,8 +737,10 @@ define([
             });
 
         _.defer(function() {
-            diagComponent.init(config);
+            diagComponent.init();
         });
+
+        return diagComponent;
     }
 
     /**
