@@ -24,6 +24,7 @@ use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Types\Type;
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\accessControl\func\AclProxy;
+use oat\tao\model\ClientLibConfigRegistry;
 use oat\tao\model\user\TaoRoles;
 use oat\tao\scripts\update\OntologyUpdater;
 use oat\taoClientDiagnostic\controller\Diagnostic;
@@ -730,24 +731,23 @@ class Updater extends \common_ext_ExtensionUpdater
         $this->skip('2.17.9', '4.1.0');
 
         if ($this->isVersion('4.1.0')) {
-
             // Update client_lib_config_registry.conf.php
-            $extension = $this->getServiceManager()
-                ->get(\common_ext_ExtensionsManager::SERVICE_ID)
-                ->getExtensionById('tao');
-            $clientLibConfig = $extension->getConfig('client_lib_config_registry');
-            $clientLibConfig['taoClientDiagnostic/component/diagnostic/diagnosticLoader']['diagnostics']['taoClientDiagnostic/tools/diagnostic/diagnostic'] = [
-                'id' => 'default',
-                'module' => 'taoClientDiagnostic/tools/diagnostic/diagnostic',
-                'bundle' => 'taoClientDiagnostic/loader/diagnostic.min',
-                'position' => null,
-                'name' => 'diagnostic',
-                'description' => 'default diagnostic',
-                'category' => 'diagnostic',
-                'active' => true,
-                'tags' => []
-            ];
-            $extension->setConfig('client_lib_config_registry', $clientLibConfig);
+            ClientLibConfigRegistry::getRegistry()
+                ->register('taoClientDiagnostic/component/diagnostic/diagnosticLoader', [
+                    'diagnostics' => [
+                        'taoClientDiagnostic/tools/diagnostic/diagnostic' => [
+                            'id' => 'default',
+                            'module' => 'taoClientDiagnostic/tools/diagnostic/diagnostic',
+                            'bundle' => 'taoClientDiagnostic/loader/diagnostic.min',
+                            'position' => null,
+                            'name' => 'diagnostic',
+                            'description' => 'default diagnostic',
+                            'category' => 'diagnostic',
+                            'active' => true,
+                            'tags' => []
+                        ]
+                    ]
+                ]);
 
             // Update clientDiag.conf.php
             $extension = $this->getServiceManager()
@@ -755,16 +755,13 @@ class Updater extends \common_ext_ExtensionUpdater
                 ->getExtensionById('taoClientDiagnostic');
             $oldClientDiagConfig = $extension->getConfig('clientDiag');
             // move value of diagHeader key under header
-            $diagnostic['header'] = $oldClientDiagConfig['diagHeader'];
+            $oldDiagHeader = $oldClientDiagConfig['diagHeader'];
             unset($oldClientDiagConfig['diagHeader']);
-            $newClientDiagConfig = [
-                'diagnostic' => array_merge($diagnostic, $oldClientDiagConfig),
-                'audioDiagnostic' => []
-            ];
+            $extension->setConfig('clientDiag', [
+                'diagnostic' => array_merge(['header' => $oldDiagHeader], $oldClientDiagConfig),
+            ]);
 
-            $extension->setConfig('clientDiag', $newClientDiagConfig);
-
-            $this->setVersion('4.2.0');
+            $this->setVersion('5.0.0');
         }
     }
 }

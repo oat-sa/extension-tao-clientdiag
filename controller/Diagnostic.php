@@ -67,8 +67,8 @@ class Diagnostic extends \tao_actions_CommonModule
 
         $this->defaultData();
 
-        if (!empty($config['pageTitle'])) {
-            $this->setData('title', $config['pageTitle']);
+        if (!empty($config['diagnostic']['pageTitle'])) {
+            $this->setData('title', $config['diagnostic']['pageTitle']);
         }
 
         $this->setData('cls', 'diagnostic-index');
@@ -95,8 +95,8 @@ class Diagnostic extends \tao_actions_CommonModule
         $this->setData('data', $data);
         $this->setData('content-template', 'pages/index.tpl');
 
-        if (!empty($config['pageTitle'])) {
-            $this->setData('title', $config['pageTitle']);
+        if (!empty($config['diagnostic']['pageTitle'])) {
+            $this->setData('title', $config['diagnostic']['pageTitle']);
         }
 
         /** @var \oat\tao\model\theme\ThemeService $themeService */

@@ -23,13 +23,14 @@ use oat\taoClientDiagnostic\controller\DiagnosticChecker;
 use oat\taoClientDiagnostic\controller\Diagnostic;
 use oat\taoClientDiagnostic\scripts\install\createDiagnosticTable;
 use oat\tao\model\accessControl\func\AccessRule;
+use oat\taoClientDiagnostic\scripts\install\RegisterDiagnosticComponent;
 
 return array(
     'name'        => 'taoClientDiagnostic',
     'label'       => 'Browser and OS diagnostic tool',
     'description' => 'Check compatibility of the os and browser of a client',
     'license'     => 'GPL-2.0',
-    'version'     => '4.2.0',
+    'version'     => '5.0.0',
     'author'      => 'Open Assessment Technologies SA',
     'requires'    => array(
         'tao'        => '>=30.0.0',
@@ -50,7 +51,8 @@ return array(
             __DIR__ . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR . 'ontology' . DIRECTORY_SEPARATOR . 'roles.rdf',
         ),
         'php' => array(
-            createDiagnosticTable::class
+            createDiagnosticTable::class,
+            RegisterDiagnosticComponent::class
         )
     ),
     'uninstall' => array(

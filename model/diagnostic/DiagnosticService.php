@@ -58,7 +58,7 @@ class DiagnosticService extends ConfigurableService implements DiagnosticService
      */
     protected function getConfigByTheme(array $config, $themeId = null)
     {
-        if (is_null($themeId)) {
+        if (null === $themeId) {
             $themeService = $this->getServiceLocator()->get(ThemeService::SERVICE_ID);
             $themeId = $themeService->getCurrentThemeId();
         }
