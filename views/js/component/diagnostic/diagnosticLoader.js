@@ -30,6 +30,11 @@ define([
      */
     var defaults = {};
 
+    /*
+     * This component factory is loading diagnostic tool modules and initialising with their configuration.
+     * @param {Object} container - Container in which the module will render diagnostic check
+     * @param {Object} config
+     */
     return function diagnosticLoaderFactory(container, config) {
         var api = {};
         var component = componentFactory(api, defaults)
@@ -44,6 +49,10 @@ define([
             .on('render', function () {
                 var self = this;
                 var moduleConfig = module.config();
+
+                /*
+                 * This loads all the modules from module configuration, which are in the `diagnostics` array.
+                 */
                 moduleLoader()
                     .addList(moduleConfig.diagnostics)
                     .load(context.bundle)
