@@ -68,7 +68,6 @@ define([
              * @param {String} [workstation]
              */
             function installTester(workstation) {
-                console.log($list, config);
                 diagnosticFactory.init($list, config)
                     .setTemplate(diagnosticTpl)
                     .on('render', function() {
