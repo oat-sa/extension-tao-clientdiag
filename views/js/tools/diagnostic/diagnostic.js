@@ -445,6 +445,7 @@ define([
 
     /**
      * Builds an instance of the diagnostic tool
+     * @param {Object} container - Container in which the initialisation will render the diagnostic
      * @param {Object} config
      * @param {String} [config.title] - The displayed title
      * @param {String} [config.header] - A header text displayed to describe the component
@@ -474,7 +475,8 @@ define([
      * @param {Number} [config.performances.threshold] - The threshold for minimal performances
      * @returns {diagnostic}
      */
-    function diagnosticFactory(config) {
+    function diagnosticFactory(container, config) {
+        var diagComponent;
         // fix the translations for content loaded from config files
         if (config) {
             _.forEach(['title', 'header', 'footer', 'info', 'button'], function(name) {
@@ -484,7 +486,7 @@ define([
             });
         }
 
-        return component(diagnostic, _defaults)
+        diagComponent = component(diagnostic, _defaults)
             .setTemplate(mainTpl)
 
             // uninstalls the component
@@ -492,6 +494,10 @@ define([
                 this.controls = null;
             })
 
+            // initialise component
+            .on('init', function(){
+                this.render(container);
+            })
             // renders the component
             .on('render', function () {
                 var self = this;
@@ -727,8 +733,11 @@ define([
                     $btn.addClass('hidden');
                     $result.find('[data-action="show-details"]').removeClass('hidden');
                 });
-            })
-            .init(config);
+            });
+
+        _.defer(function() {
+            diagComponent.init(config);
+        });
     }
 
     /**
