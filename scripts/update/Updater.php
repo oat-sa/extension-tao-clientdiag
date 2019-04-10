@@ -761,7 +761,9 @@ class Updater extends \common_ext_ExtensionUpdater
                 'diagnostic' => array_merge(['header' => $oldDiagHeader], $oldClientDiagConfig),
             ]);
 
-            $this->setVersion('5.0.1');
+            $this->setVersion('5.0.0');
         }
+
+        $this->skip('5.0.0', '5.0.1');
     }
 }
