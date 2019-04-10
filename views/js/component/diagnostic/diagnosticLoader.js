@@ -50,7 +50,6 @@ define([
                 var self = this;
                 var moduleConfig = module.config();
                 var identifiers = _.keys(moduleConfig.diagnostics);
-
                 /*
                  * This loads all the modules from module configuration, which are in the `diagnostics` array.
                  */
@@ -58,7 +57,7 @@ define([
                     .addList(moduleConfig.diagnostics)
                     .load(context.bundle)
                     .then(function(factories) {
-                        var componentConfig;
+                        var componentConfig = self.getConfig();
                         var factoryConfig;
                         var factoryName;
 
@@ -66,7 +65,6 @@ define([
                          * Read all factories and initialise them with their config from component.
                          */
                         _.forEach(factories, function (factory, index) {
-                            componentConfig = self.getConfig();
                             factoryName = identifiers[index];
                             factoryConfig = componentConfig[factoryName];
                             factoryConfig.controller = componentConfig.controller;
