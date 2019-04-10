@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2015-2019 (original work) Open Assessment Technologies SA;
  *
  */
 
@@ -27,7 +27,7 @@ define([
     'layout/loading-bar',
     'ui/feedback',
     'taoClientDiagnostic/tools/message',
-    'taoClientDiagnostic/tools/diagnostic/diagnostic'
+    'taoClientDiagnostic/component/diagnostic/diagnosticLoader'
 ], function ($, loadingBar, feedback, showMessage, diagnosticFactory) {
     'use strict';
 
@@ -40,7 +40,7 @@ define([
 
             showMessage('#feedback-box');
 
-            diagnosticFactory(config)
+            diagnosticFactory($contentArea, config)
                 .on('start', function() {
                     loadingBar.start();
                 })
@@ -52,8 +52,7 @@ define([
                     if (config.autoStart) {
                         this.run();
                     }
-                })
-                .render($contentArea);
+                });
         }
     };
 });

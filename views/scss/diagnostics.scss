@@ -13,120 +13,125 @@
 /// along with this program; if not, write to the Free Software
 /// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ///
-/// Copyright (c) 2015 Open Assessment Technologies SA
+/// Copyright (c) 2015-2019 Open Assessment Technologies SA
 ///
 
 
 @import "inc/bootstrap";
 
 
-.diagnostics-main-area {
+.diagnostics-content-area {
     max-width: 768px;
     margin: 40px auto 0 auto;
-    background: $canvas;
-    @include simple-border();
-    padding: 20px;
-
-    h1, h2, h3 {
-        font-style: normal;
-        font-family: $headingFont;
-    }
-
-    h1 {
-        margin-bottom: 20px;
-        @include font-size(20);
-    }
-
-    h2 {
-        margin: 0;
-        @include font-size(14);
-    }
-
-    h3 {
-        margin-top: 10px;
-        margin-bottom: 5px;
-        @include font-size(12);
-    }
-
-    .status, .details {
-        h2 {
-            margin: 1rem 0;
-        }
-    }
-
-    .legend {
-        font-style: italic;
-        font-weight: normal;
-        font-family: $headingFont;
-        @include font-size(11);
-    }
-
-    .customMsg {
-        margin-top: 10px;
-    }
-
-    .quality-bar {
-        height: 15px;
-       @include linear-gradient(#CE1431 #D57915 #D5A215 #D5CB15 #36B111);
-//        @include linear-gradient(#36B111  #D5A215 #CE1431 );
-        opacity: .8;
-        @include border-radius(2);
-        margin: 5px 0 10px;
-        position: relative;
-    }
-
-    .quality-indicator {
-        position: absolute;
-        border-width: 10px 8px;
-        border-style: solid;
-        border-color: $darkBar transparent transparent;
-        top: -1px;
-        height: 25px;
-        width: 0;
-
-        &[title]:before {
-            @include font-size(11);
-            content: attr(title);
-            position: absolute;
-            top: -36px;
-            left: -12px;
-            text-align: center;
-            width: 24px;
-            height: 24px;
-            line-height: 24px;
-            display: inline-block;
-            background-color: $info;
-            color: white(.9);
-            @include border-radius(12);
-        }
-
-        &.wide[title]:before {
-            left: -16px;
-            width: 32px;
-        }
-    }
-
-    [data-result], .bandwidth-box {
-        display: none;
-    }
-
-    [data-action=bandwidth-launcher] {
-      margin: 5px 0 10px;
-    }
-
-    li {
-        padding-bottom: 10px;
-    }
-
-    .intro {
-        margin-bottom: 20px;
-
-        label {
-            display: inline-block;
-            width: 150px;
-        }
-    }
 }
+
+    .diagnostics-main-area {
+        margin: 40px auto 0 auto;
+        background: $canvas;
+        @include simple-border();
+        padding: 20px;
+
+        h1, h2, h3 {
+            font-style: normal;
+            font-family: $headingFont;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            @include font-size(20);
+        }
+
+        h2 {
+            margin: 0;
+            @include font-size(14);
+        }
+
+        h3 {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            @include font-size(12);
+        }
+
+        .status, .details {
+            h2 {
+                margin: 1rem 0;
+            }
+        }
+
+        .legend {
+            font-style: italic;
+            font-weight: normal;
+            font-family: $headingFont;
+            @include font-size(11);
+        }
+
+        .customMsg {
+            margin-top: 10px;
+        }
+
+        .quality-bar {
+            height: 15px;
+            @include linear-gradient(#CE1431 #D57915 #D5A215 #D5CB15 #36B111);
+            //        @include linear-gradient(#36B111  #D5A215 #CE1431 );
+            opacity: .8;
+            @include border-radius(2);
+            margin: 5px 0 10px;
+            position: relative;
+        }
+
+        .quality-indicator {
+            position: absolute;
+            border-width: 10px 8px;
+            border-style: solid;
+            border-color: $darkBar transparent transparent;
+            top: -1px;
+            height: 25px;
+            width: 0;
+
+            &[title]:before {
+                @include font-size(11);
+                content: attr(title);
+                position: absolute;
+                top: -36px;
+                left: -12px;
+                text-align: center;
+                width: 24px;
+                height: 24px;
+                line-height: 24px;
+                display: inline-block;
+                background-color: $info;
+                color: white(.9);
+                @include border-radius(12);
+            }
+
+            &.wide[title]:before {
+                left: -16px;
+                width: 32px;
+            }
+        }
+
+        [data-result], .bandwidth-box {
+            display: none;
+        }
+
+        [data-action=bandwidth-launcher] {
+            margin: 5px 0 10px;
+        }
+
+        li {
+            padding-bottom: 10px;
+        }
+
+        .intro {
+            margin-bottom: 20px;
+
+            label {
+                display: inline-block;
+                width: 150px;
+            }
+        }
+    }
+
 
 
 table.datatable {
@@ -205,7 +210,6 @@ table.datatable {
     .diagnostic-index, .diagnostic-runner {
         .content {
             width: 100%;
-            padding: 0 20px;
         }
         .message {
             padding: 8px;
@@ -219,7 +223,6 @@ table.datatable {
             padding: 3px;
             overflow: hidden;
             color: whiten($info, .9);
-            margin: 40px 0 10px 0;
 
             .btn-info {
                 overflow: hidden;
