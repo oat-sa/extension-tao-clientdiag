@@ -57,9 +57,15 @@ define([
                     .addList(moduleConfig.diagnostics)
                     .load(context.bundle)
                     .then(function(factories) {
+                        var componentConfig;
+                        var factoryConfig;
+
+                        /*
+                         * Read all factories and initialise them with their config from component.
+                         */
                         _.forEach(factories, function (factory) {
-                            var componentConfig = self.getConfig();
-                            var factoryConfig =  componentConfig[factory.name];
+                            componentConfig = self.getConfig();
+                            factoryConfig = componentConfig[factory.name];
                             factoryConfig.controller = componentConfig.controller;
 
                             factory.init(self.getElement(), factoryConfig);

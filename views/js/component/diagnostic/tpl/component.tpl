@@ -1,3 +1,3 @@
 <div class="diagnostics-content-area">
-    <h1>Diagnostic Tool</h1>
+    <h1>{{__ 'Diagnostic Tool'}}</h1>
 </div>
