@@ -89,7 +89,7 @@ msgid "Details"
 msgstr "Détails"
 
 msgid "Diagnostic Tool"
-msgstr ""
+msgstr "Outil de diagnostic"
 
 msgid "Done!"
 msgstr "Terminé"
