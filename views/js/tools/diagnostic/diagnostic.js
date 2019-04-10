@@ -475,7 +475,7 @@ define([
      * @param {Number} [config.performances.threshold] - The threshold for minimal performances
      * @returns {diagnostic}
      */
-    function diagnosticFactory(container, config) {
+    return function diagnosticFactory(container, config) {
         var diagComponent;
         // fix the translations for content loaded from config files
         if (config) {
@@ -740,13 +740,5 @@ define([
         });
 
         return diagComponent;
-    }
-
-    /**
-     * Wraps the diagnostic factory to be loaded in diagnostic component as a module
-     */
-    return {
-        name: 'diagnostic',
-        init: diagnosticFactory
     };
 });

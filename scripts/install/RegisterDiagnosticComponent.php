@@ -34,7 +34,7 @@ class RegisterDiagnosticComponent extends InstallAction
         ClientLibConfigRegistry::getRegistry()
             ->register('taoClientDiagnostic/component/diagnostic/diagnosticLoader', [
                 'diagnostics' => [
-                    'taoClientDiagnostic/tools/diagnostic/diagnostic' => [
+                    'diagnostic' => [
                         'id' => 'default',
                         'module' => 'taoClientDiagnostic/tools/diagnostic/diagnostic',
                         'bundle' => 'taoClientDiagnostic/loader/diagnostic.min',

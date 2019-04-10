@@ -49,26 +49,29 @@ define([
             .on('render', function () {
                 var self = this;
                 var moduleConfig = module.config();
+                var identifiers = _.keys(moduleConfig.diagnostics);
 
                 /*
                  * This loads all the modules from module configuration, which are in the `diagnostics` array.
                  */
-                moduleLoader()
+                moduleLoader({}, _.isFunction)
                     .addList(moduleConfig.diagnostics)
                     .load(context.bundle)
                     .then(function(factories) {
                         var componentConfig;
                         var factoryConfig;
+                        var factoryName;
 
                         /*
                          * Read all factories and initialise them with their config from component.
                          */
-                        _.forEach(factories, function (factory) {
+                        _.forEach(factories, function (factory, index) {
                             componentConfig = self.getConfig();
-                            factoryConfig = componentConfig[factory.name];
+                            factoryName = identifiers[index];
+                            factoryConfig = componentConfig[factoryName];
                             factoryConfig.controller = componentConfig.controller;
 
-                            factory.init(self.getElement(), factoryConfig);
+                            factory(self.getElement(), factoryConfig);
                         });
 
                         /**
