@@ -60,7 +60,7 @@ class Diagnostic extends \tao_actions_CommonModule
         $data = array(
             'title'  => __('Readiness diagnostics'),
             'set'    => json_encode($diagnostics),
-            'config' => json_encode($config),
+            'config' => json_encode($config['diagnostic']),
         );
 
         $userLabel = SessionManager::getSession()->getUserLabel();
@@ -86,7 +86,7 @@ class Diagnostic extends \tao_actions_CommonModule
         $config = $this->loadConfig();
         $data = array(
             'title'  => __('Readiness Check'),
-            'config' => json_encode($config),
+            'config' => json_encode($config['diagnostic']),
         );
 
         $this->defaultData();

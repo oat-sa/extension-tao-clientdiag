@@ -118,7 +118,7 @@ define([
             var extension = $container.data('extension') || 'taoClientDiagnostic';
             var $list = $container.find('.list');
             var dataset = $container.data('set');
-            var config = $container.data('config')['diagnostic'] || {};
+            var config = $container.data('config') || {};
             var installedExtension = $container.data('installedextension') || false;
             var diagnosticUrl = helpers._url('diagnostic', 'Diagnostic', extension);
             var removeUrl = helpers._url('remove', 'Diagnostic', extension);
