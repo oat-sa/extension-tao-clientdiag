@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016-2017 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2016-2019 (original work) Open Assessment Technologies SA ;
  */
 /**
  * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
@@ -68,7 +68,6 @@ define([
              feedbackTpl,
              qualityBarTpl) {
     'use strict';
-
     /**
      * @type {logger}
      */
@@ -80,10 +79,10 @@ define([
      * @private
      */
     var _defaults = {
-        title: __('Diagnostic Tool'),
+        title: __('System Compatibility'),
         header: __('This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform.'),
         info: __('Be aware that these tests will take up to several minutes.'),
-        button: __('Begin diagnostics'),
+        button: __('Test system compatibility'),
         actionStore: 'storeData',
         actionSchool: 'schoolName',
         controller: 'DiagnosticChecker',
@@ -446,6 +445,7 @@ define([
 
     /**
      * Builds an instance of the diagnostic tool
+     * @param {Object} container - Container in which the initialisation will render the diagnostic
      * @param {Object} config
      * @param {String} [config.title] - The displayed title
      * @param {String} [config.header] - A header text displayed to describe the component
@@ -475,7 +475,8 @@ define([
      * @param {Number} [config.performances.threshold] - The threshold for minimal performances
      * @returns {diagnostic}
      */
-    function diagnosticFactory(config) {
+    return function diagnosticFactory(container, config) {
+        var diagComponent;
         // fix the translations for content loaded from config files
         if (config) {
             _.forEach(['title', 'header', 'footer', 'info', 'button'], function(name) {
@@ -485,7 +486,7 @@ define([
             });
         }
 
-        return component(diagnostic, _defaults)
+        diagComponent = component(diagnostic, _defaults)
             .setTemplate(mainTpl)
 
             // uninstalls the component
@@ -493,6 +494,10 @@ define([
                 this.controls = null;
             })
 
+            // initialise component
+            .on('init', function(){
+                this.render(container);
+            })
             // renders the component
             .on('render', function () {
                 var self = this;
@@ -569,8 +574,8 @@ define([
                  * @param {Object} values
                  */
                 function requestSchoolName(values) {
-                    var config = self.config;
-                    return request(urlUtil.route(config.actionSchool, config.controller, config.extension), values, 'POST')
+                    var componentConfig = self.config;
+                    return request(urlUtil.route(componentConfig.actionSchool, componentConfig.controller, componentConfig.extension), values, 'POST')
                         .then(function(data) {
                             return {
                                 school_name: data,
@@ -728,9 +733,12 @@ define([
                     $btn.addClass('hidden');
                     $result.find('[data-action="show-details"]').removeClass('hidden');
                 });
-            })
-            .init(config);
-    }
+            });
 
-    return diagnosticFactory;
+        _.defer(function() {
+            diagComponent.init(config);
+        });
+
+        return diagComponent;
+    };
 });
