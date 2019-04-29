@@ -1,0 +1,369 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:14:02\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: lt-LT\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: lt-LT\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "%d sources (%s)"
+msgstr ""
+
+msgid "All rights reserved."
+msgstr "Visos teisės saugomos."
+
+msgid "An error occurred! Please verify your input!"
+msgstr ""
+
+msgid "Average bandwidth"
+msgstr "Vidutinis pralaidumas"
+
+msgid "Average intensive bandwidth"
+msgstr ""
+
+msgid "Average performances"
+msgstr "Vidutinis našumas"
+
+msgid "Average rendering time"
+msgstr "Vidutinis atvaizdavimo laikas"
+
+msgid "Average upload speed"
+msgstr "Vidutinis įkėlimo greitis"
+
+msgid "Bandwidth"
+msgstr "Pralaidumas"
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr "Atkreipkite dėmesį, jog šie testai užtrunka iki keliolikos minučių."
+
+msgid "Begin diagnostics"
+msgstr "Pradėti diagnostiką"
+
+msgid "Browser"
+msgstr "Naršyklė"
+
+msgid "Cannot get your fingerprint"
+msgstr ""
+
+msgid "Cannot retrieve the school name. Please verify your input"
+msgstr ""
+
+msgid "Change since last fingerprint"
+msgstr ""
+
+msgid "Checking the bandwidth..."
+msgstr "Tikrinti pralaidumą..."
+
+msgid "Checking the browser..."
+msgstr "Tikrinti naršklę..."
+
+msgid "Checking the media intensive bandwidth..."
+msgstr ""
+
+msgid "Checking the performances..."
+msgstr "Tikrinamas našumas..."
+
+msgid "Checking the screen..."
+msgstr ""
+
+msgid "Checking upload speed..."
+msgstr "Skaičiuojamas įkėlimo greitis..."
+
+msgid "Compatible"
+msgstr "Suderinamas"
+
+msgid "Computing the fingerprint..."
+msgstr ""
+
+msgid "Connect to the diagnostic tool"
+msgstr "Prisijungti prie diagnostikos įrankio"
+
+msgid "Date"
+msgstr "Data"
+
+msgid "Details"
+msgstr "Informacija"
+
+msgid "Diagnostic Tool"
+msgstr "Diagnostikos Įrankis"
+
+msgid "Done!"
+msgstr "Baigta!"
+
+msgid "Dynamic UID"
+msgstr ""
+
+msgid "Errors occurred! Please see details"
+msgstr ""
+
+msgid "Exit"
+msgstr "Išeiti"
+
+msgid "Failed to get school name"
+msgstr ""
+
+msgid "Fingerprint"
+msgstr ""
+
+msgid "Fingerprint error"
+msgstr ""
+
+msgid "Fingerprint errors"
+msgstr ""
+
+msgid "Fingerprint sources"
+msgstr ""
+
+msgid "Getting school name..."
+msgstr ""
+
+msgid "Good bandwidth"
+msgstr "Geras pralaidumas"
+
+msgid "Good performances"
+msgstr "Geras našumas"
+
+msgid "Good upload speed"
+msgstr "Geras įkėlimo greitis"
+
+msgid "Hide Details"
+msgstr "Slėpti Informaciją"
+
+msgid "Intensive bandwidth"
+msgstr ""
+
+msgid "Interface not available"
+msgstr "Sąsaja nėra galima"
+
+msgid "Launch another readiness check"
+msgstr ""
+
+msgid "Launch readiness check"
+msgstr ""
+
+msgid "List of readiness checks"
+msgstr ""
+
+msgid "Loading"
+msgstr "Įkeliama"
+
+msgid "Log in"
+msgstr "Prisijungti"
+
+msgid "Login"
+msgstr "Prisijungimas"
+
+msgid "Logout"
+msgstr "Atsijungti"
+
+msgid "Low bandwidth"
+msgstr "Prastas pralaidumas"
+
+msgid "Low upload speed"
+msgstr "Lėtas įkėlimo greitis"
+
+msgid "Max upload speed"
+msgstr "Maksimalus įkėlimo greitis"
+
+msgid "Maximum bandwidth"
+msgstr "Maksimalus pralaidumas"
+
+msgid "Maximum intensive bandwidth"
+msgstr ""
+
+msgid "Maximum rendering time"
+msgstr "Maksimalus atvaizdavimo laikas"
+
+msgid "Media intensive bandwidth"
+msgstr ""
+
+msgid "Minimum bandwidth"
+msgstr "Minimalus pralaidumas"
+
+msgid "Minimum intensive bandwidth"
+msgstr ""
+
+msgid "Minimum rendering time"
+msgstr "Minimalus atvaizdavimo laikas"
+
+msgid "Missing field %s"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "No diagnostic service defined"
+msgstr "Nenustatytas diagnostikos servisas"
+
+msgid "No readiness checks have been done!"
+msgstr ""
+
+msgid "Number of simultaneous test takers the connection can handle"
+msgstr "Vienu metu prisijungusių testo laikytojų kiekis, kurį ryšys gali atlaikyti"
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr ""
+
+msgid "Operating system"
+msgstr "Operacinė sistema"
+
+msgid "Operating system and web browser"
+msgstr "Operacinė sistema ir interneto naršyklė"
+
+msgid "OS"
+msgstr "OS"
+
+msgid "Performances"
+msgstr "Našumas"
+
+msgid "Readiness Check"
+msgstr ""
+
+msgid "Readiness checks already done"
+msgstr ""
+
+msgid "Readiness diagnostics"
+msgstr ""
+
+msgid "Refresh"
+msgstr "Atnaujinti"
+
+msgid "Refresh the page"
+msgstr "Atnaujinti puslapį"
+
+msgid "Remove"
+msgstr "Ištrinti"
+
+msgid "Remove the readiness check result?"
+msgstr ""
+
+msgid "Remove the selected readiness check results"
+msgstr ""
+
+msgid "Return to the list"
+msgstr "Grįžti į sąrašą"
+
+msgid "School name"
+msgstr ""
+
+msgid "School name:"
+msgstr ""
+
+msgid "School number"
+msgstr ""
+
+msgid "School number:"
+msgstr ""
+
+msgid "School PIN code (4 digits)"
+msgstr ""
+
+msgid "School PIN:"
+msgstr ""
+
+msgid "Screen Height"
+msgstr ""
+
+msgid "Screen resolution"
+msgstr ""
+
+msgid "Screen Width"
+msgstr ""
+
+msgid "Show Details"
+msgstr "Rodyti Informaciją"
+
+msgid "Show fingerprint details"
+msgstr ""
+
+msgid "Something went wrong ..."
+msgstr "Kažkas blogai įvyko..."
+
+msgid "Starting..."
+msgstr "Pradedama..."
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr ""
+
+msgid "The device screen has the minimum required resolution."
+msgstr ""
+
+msgid "The device screen resolution meets the requirements."
+msgstr ""
+
+msgid "The readiness check result have been removed"
+msgstr ""
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr ""
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr ""
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr ""
+
+msgid "This browser is not tested."
+msgstr "Ši naršyklė netikrinta."
+
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
+msgstr "Šis įrankis vykdys testų kiekį, kad įvertintų, kaip gerai jūsų aplinka tinkama TAO platformai."
+
+msgid "Total"
+msgstr "Iš viso"
+
+msgid "Try a test delivery"
+msgstr "Bandyti testo pateiktį"
+
+msgid "Unable to get the workstation name!"
+msgstr "Nepavyko gauti darbo stoties pavadinimą!"
+
+msgid "Upload speed"
+msgstr "Įkėlimo greitis"
+
+msgid "Very slow performances"
+msgstr "Lėtas našumas"
+
+msgid "Web browser"
+msgstr "Interneto naršyklė"
+
+msgid "Workstation"
+msgstr "Darbo stotis"
+
+msgid "Workstation name"
+msgstr "Darbo stoties pavadinimas"
+
+msgid "Workstation performances"
+msgstr "Darbo stoties našumas"
+
+msgid "Workstation:"
+msgstr "Darbo stotis:"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Your fingerprint is %s"
+msgstr ""
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr ""
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
+msgstr ""
+
+msgid "Your system is fully compliant."
+msgstr "Sistema pilnai suderinama."
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr "Jūsų sistema nėra optimali, prašome susisiekti su jūsų sistemos valdytoju."
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr "Jūsų sistema reikalauja suderinamumo atnaujinimo. Prašome susisiekti su jūsų sistemos valdytoju."
+

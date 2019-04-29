@@ -1,0 +1,369 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:07:39\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: vi-VN\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: vi-VN\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "%d sources (%s)"
+msgstr ""
+
+msgid "All rights reserved."
+msgstr "Tất cả các quyền được bảo lưu."
+
+msgid "An error occurred! Please verify your input!"
+msgstr ""
+
+msgid "Average bandwidth"
+msgstr "Băng thông trung bình"
+
+msgid "Average intensive bandwidth"
+msgstr ""
+
+msgid "Average performances"
+msgstr ""
+
+msgid "Average rendering time"
+msgstr "Thời gian hiển thị trung bình"
+
+msgid "Average upload speed"
+msgstr "Tốc độ tải lên trung bình"
+
+msgid "Bandwidth"
+msgstr "Băng thông"
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr "Lưu ý rằng những kiểm tra này sẽ mất vài phút."
+
+msgid "Begin diagnostics"
+msgstr "Bắt đầu chẩn đoán"
+
+msgid "Browser"
+msgstr "Trình duyệt"
+
+msgid "Cannot get your fingerprint"
+msgstr ""
+
+msgid "Cannot retrieve the school name. Please verify your input"
+msgstr ""
+
+msgid "Change since last fingerprint"
+msgstr ""
+
+msgid "Checking the bandwidth..."
+msgstr "Kiểm tra băng thông ..."
+
+msgid "Checking the browser..."
+msgstr "Đang kiểm tra trình duyệt ..."
+
+msgid "Checking the media intensive bandwidth..."
+msgstr ""
+
+msgid "Checking the performances..."
+msgstr ""
+
+msgid "Checking the screen..."
+msgstr ""
+
+msgid "Checking upload speed..."
+msgstr "Đang kiểm tra tốc độ tải lên ..."
+
+msgid "Compatible"
+msgstr "Tương thích"
+
+msgid "Computing the fingerprint..."
+msgstr ""
+
+msgid "Connect to the diagnostic tool"
+msgstr "Kết nối với công cụ chẩn đoán"
+
+msgid "Date"
+msgstr "Ngày"
+
+msgid "Details"
+msgstr "Chi tiết"
+
+msgid "Diagnostic Tool"
+msgstr "Công cụ Chẩn đoán"
+
+msgid "Done!"
+msgstr "Làm xong!"
+
+msgid "Dynamic UID"
+msgstr ""
+
+msgid "Errors occurred! Please see details"
+msgstr ""
+
+msgid "Exit"
+msgstr "Thoát"
+
+msgid "Failed to get school name"
+msgstr ""
+
+msgid "Fingerprint"
+msgstr ""
+
+msgid "Fingerprint error"
+msgstr ""
+
+msgid "Fingerprint errors"
+msgstr ""
+
+msgid "Fingerprint sources"
+msgstr ""
+
+msgid "Getting school name..."
+msgstr ""
+
+msgid "Good bandwidth"
+msgstr "Băng thông tốt"
+
+msgid "Good performances"
+msgstr ""
+
+msgid "Good upload speed"
+msgstr "Tốc độ tải lên tốt"
+
+msgid "Hide Details"
+msgstr "Ẩn chi tiết"
+
+msgid "Intensive bandwidth"
+msgstr ""
+
+msgid "Interface not available"
+msgstr "Giao diện không có sẵn"
+
+msgid "Launch another readiness check"
+msgstr ""
+
+msgid "Launch readiness check"
+msgstr ""
+
+msgid "List of readiness checks"
+msgstr ""
+
+msgid "Loading"
+msgstr ""
+
+msgid "Log in"
+msgstr "Đăng nhập"
+
+msgid "Login"
+msgstr "Đăng nhập"
+
+msgid "Logout"
+msgstr "Đăng xuất"
+
+msgid "Low bandwidth"
+msgstr "Băng thông thấp"
+
+msgid "Low upload speed"
+msgstr "Tốc độ tải lên thấp"
+
+msgid "Max upload speed"
+msgstr "Tốc độ tải lên cao nhất"
+
+msgid "Maximum bandwidth"
+msgstr ""
+
+msgid "Maximum intensive bandwidth"
+msgstr ""
+
+msgid "Maximum rendering time"
+msgstr ""
+
+msgid "Media intensive bandwidth"
+msgstr ""
+
+msgid "Minimum bandwidth"
+msgstr ""
+
+msgid "Minimum intensive bandwidth"
+msgstr ""
+
+msgid "Minimum rendering time"
+msgstr ""
+
+msgid "Missing field %s"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "No diagnostic service defined"
+msgstr ""
+
+msgid "No readiness checks have been done!"
+msgstr ""
+
+msgid "Number of simultaneous test takers the connection can handle"
+msgstr ""
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr ""
+
+msgid "Operating system"
+msgstr "Hệ điều hành"
+
+msgid "Operating system and web browser"
+msgstr "Hệ điều hành và trình duyệt web"
+
+msgid "OS"
+msgstr "OS"
+
+msgid "Performances"
+msgstr ""
+
+msgid "Readiness Check"
+msgstr ""
+
+msgid "Readiness checks already done"
+msgstr ""
+
+msgid "Readiness diagnostics"
+msgstr ""
+
+msgid "Refresh"
+msgstr "Làm mới"
+
+msgid "Refresh the page"
+msgstr "Làm mới trang"
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove the readiness check result?"
+msgstr ""
+
+msgid "Remove the selected readiness check results"
+msgstr ""
+
+msgid "Return to the list"
+msgstr ""
+
+msgid "School name"
+msgstr ""
+
+msgid "School name:"
+msgstr ""
+
+msgid "School number"
+msgstr ""
+
+msgid "School number:"
+msgstr ""
+
+msgid "School PIN code (4 digits)"
+msgstr ""
+
+msgid "School PIN:"
+msgstr ""
+
+msgid "Screen Height"
+msgstr ""
+
+msgid "Screen resolution"
+msgstr ""
+
+msgid "Screen Width"
+msgstr ""
+
+msgid "Show Details"
+msgstr ""
+
+msgid "Show fingerprint details"
+msgstr ""
+
+msgid "Something went wrong ..."
+msgstr ""
+
+msgid "Starting..."
+msgstr ""
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr ""
+
+msgid "The device screen has the minimum required resolution."
+msgstr ""
+
+msgid "The device screen resolution meets the requirements."
+msgstr ""
+
+msgid "The readiness check result have been removed"
+msgstr ""
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr ""
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr ""
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr ""
+
+msgid "This browser is not tested."
+msgstr ""
+
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
+msgstr ""
+
+msgid "Total"
+msgstr "Tổng"
+
+msgid "Try a test delivery"
+msgstr ""
+
+msgid "Unable to get the workstation name!"
+msgstr ""
+
+msgid "Upload speed"
+msgstr "Tốc độ tải lên"
+
+msgid "Very slow performances"
+msgstr ""
+
+msgid "Web browser"
+msgstr "Trình duyệt Web"
+
+msgid "Workstation"
+msgstr ""
+
+msgid "Workstation name"
+msgstr ""
+
+msgid "Workstation performances"
+msgstr ""
+
+msgid "Workstation:"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "Your fingerprint is %s"
+msgstr ""
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr ""
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
+msgstr ""
+
+msgid "Your system is fully compliant."
+msgstr "Hệ thống của bạn hoàn toàn tương thích."
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr ""
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr "Hệ thống của bạn yêu cầu cập nhật tính tương thích, vui lòng liên hệ với quản trị viên hệ thống của bạn."
+

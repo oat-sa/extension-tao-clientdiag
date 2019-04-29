@@ -1,0 +1,369 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:16:12\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: mn-MN\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: mn-MN\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "%d sources (%s)"
+msgstr ""
+
+msgid "All rights reserved."
+msgstr ""
+
+msgid "An error occurred! Please verify your input!"
+msgstr ""
+
+msgid "Average bandwidth"
+msgstr ""
+
+msgid "Average intensive bandwidth"
+msgstr ""
+
+msgid "Average performances"
+msgstr ""
+
+msgid "Average rendering time"
+msgstr ""
+
+msgid "Average upload speed"
+msgstr ""
+
+msgid "Bandwidth"
+msgstr ""
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr ""
+
+msgid "Begin diagnostics"
+msgstr ""
+
+msgid "Browser"
+msgstr ""
+
+msgid "Cannot get your fingerprint"
+msgstr ""
+
+msgid "Cannot retrieve the school name. Please verify your input"
+msgstr ""
+
+msgid "Change since last fingerprint"
+msgstr ""
+
+msgid "Checking the bandwidth..."
+msgstr ""
+
+msgid "Checking the browser..."
+msgstr ""
+
+msgid "Checking the media intensive bandwidth..."
+msgstr ""
+
+msgid "Checking the performances..."
+msgstr ""
+
+msgid "Checking the screen..."
+msgstr ""
+
+msgid "Checking upload speed..."
+msgstr ""
+
+msgid "Compatible"
+msgstr ""
+
+msgid "Computing the fingerprint..."
+msgstr ""
+
+msgid "Connect to the diagnostic tool"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Details"
+msgstr ""
+
+msgid "Diagnostic Tool"
+msgstr ""
+
+msgid "Done!"
+msgstr ""
+
+msgid "Dynamic UID"
+msgstr ""
+
+msgid "Errors occurred! Please see details"
+msgstr ""
+
+msgid "Exit"
+msgstr ""
+
+msgid "Failed to get school name"
+msgstr ""
+
+msgid "Fingerprint"
+msgstr ""
+
+msgid "Fingerprint error"
+msgstr ""
+
+msgid "Fingerprint errors"
+msgstr ""
+
+msgid "Fingerprint sources"
+msgstr ""
+
+msgid "Getting school name..."
+msgstr ""
+
+msgid "Good bandwidth"
+msgstr ""
+
+msgid "Good performances"
+msgstr ""
+
+msgid "Good upload speed"
+msgstr ""
+
+msgid "Hide Details"
+msgstr ""
+
+msgid "Intensive bandwidth"
+msgstr ""
+
+msgid "Interface not available"
+msgstr ""
+
+msgid "Launch another readiness check"
+msgstr ""
+
+msgid "Launch readiness check"
+msgstr ""
+
+msgid "List of readiness checks"
+msgstr ""
+
+msgid "Loading"
+msgstr ""
+
+msgid "Log in"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Logout"
+msgstr ""
+
+msgid "Low bandwidth"
+msgstr ""
+
+msgid "Low upload speed"
+msgstr ""
+
+msgid "Max upload speed"
+msgstr ""
+
+msgid "Maximum bandwidth"
+msgstr ""
+
+msgid "Maximum intensive bandwidth"
+msgstr ""
+
+msgid "Maximum rendering time"
+msgstr ""
+
+msgid "Media intensive bandwidth"
+msgstr ""
+
+msgid "Minimum bandwidth"
+msgstr ""
+
+msgid "Minimum intensive bandwidth"
+msgstr ""
+
+msgid "Minimum rendering time"
+msgstr ""
+
+msgid "Missing field %s"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "No diagnostic service defined"
+msgstr ""
+
+msgid "No readiness checks have been done!"
+msgstr ""
+
+msgid "Number of simultaneous test takers the connection can handle"
+msgstr ""
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr ""
+
+msgid "Operating system"
+msgstr ""
+
+msgid "Operating system and web browser"
+msgstr ""
+
+msgid "OS"
+msgstr ""
+
+msgid "Performances"
+msgstr ""
+
+msgid "Readiness Check"
+msgstr ""
+
+msgid "Readiness checks already done"
+msgstr ""
+
+msgid "Readiness diagnostics"
+msgstr ""
+
+msgid "Refresh"
+msgstr ""
+
+msgid "Refresh the page"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove the readiness check result?"
+msgstr ""
+
+msgid "Remove the selected readiness check results"
+msgstr ""
+
+msgid "Return to the list"
+msgstr ""
+
+msgid "School name"
+msgstr ""
+
+msgid "School name:"
+msgstr ""
+
+msgid "School number"
+msgstr ""
+
+msgid "School number:"
+msgstr ""
+
+msgid "School PIN code (4 digits)"
+msgstr ""
+
+msgid "School PIN:"
+msgstr ""
+
+msgid "Screen Height"
+msgstr ""
+
+msgid "Screen resolution"
+msgstr ""
+
+msgid "Screen Width"
+msgstr ""
+
+msgid "Show Details"
+msgstr ""
+
+msgid "Show fingerprint details"
+msgstr ""
+
+msgid "Something went wrong ..."
+msgstr ""
+
+msgid "Starting..."
+msgstr ""
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr ""
+
+msgid "The device screen has the minimum required resolution."
+msgstr ""
+
+msgid "The device screen resolution meets the requirements."
+msgstr ""
+
+msgid "The readiness check result have been removed"
+msgstr ""
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr ""
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr ""
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr ""
+
+msgid "This browser is not tested."
+msgstr ""
+
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Try a test delivery"
+msgstr ""
+
+msgid "Unable to get the workstation name!"
+msgstr ""
+
+msgid "Upload speed"
+msgstr ""
+
+msgid "Very slow performances"
+msgstr ""
+
+msgid "Web browser"
+msgstr ""
+
+msgid "Workstation"
+msgstr ""
+
+msgid "Workstation name"
+msgstr ""
+
+msgid "Workstation performances"
+msgstr ""
+
+msgid "Workstation:"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "Your fingerprint is %s"
+msgstr ""
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr ""
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
+msgstr ""
+
+msgid "Your system is fully compliant."
+msgstr ""
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr ""
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr ""
+

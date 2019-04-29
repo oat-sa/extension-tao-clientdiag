@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint93\n"
-"PO-Revision-Date: 2019-01-18T12:51:57\n"
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:08:51\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-FR\n"
@@ -17,7 +17,7 @@ msgid "%d sources (%s)"
 msgstr ""
 
 msgid "All rights reserved."
-msgstr ""
+msgstr "Tous droits réservés."
 
 msgid "An error occurred! Please verify your input!"
 msgstr ""
@@ -155,10 +155,10 @@ msgid "Loading"
 msgstr ""
 
 msgid "Log in"
-msgstr ""
+msgstr "Connexion"
 
 msgid "Login"
-msgstr ""
+msgstr "Nom d'utilisateur"
 
 msgid "Logout"
 msgstr ""
@@ -362,7 +362,7 @@ msgid "Your system is fully compliant."
 msgstr "Configuration conforme"
 
 msgid "Your system is not optimal, please contact your system administrator."
-msgstr "Configuration à risque (vous pouvez contacter votre plateforme académique pour un accompagnement)"
+msgstr "Configuration à risque (contactez votre plateforme académique)"
 
 msgid "Your system requires a compatibility update, please contact your system administrator."
 msgstr "Configuration nécessitant une mise en conformité (contactez votre plateforme académique)"

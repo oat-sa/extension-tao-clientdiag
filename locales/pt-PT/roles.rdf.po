@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint93\n"
-"PO-Revision-Date: 2019-01-18T12:51:58\n"
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:09:39\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: pt-PT\n"
@@ -13,10 +13,10 @@ msgstr ""
 # http://www.taotesting.com/ontologies/TAOClientDiagnostic.rdf#ReadinessCheckerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Readiness checker"
-msgstr "Teste de prontidão"
+msgstr ""
 
 # http://www.taotesting.com/ontologies/TAOClientDiagnostic.rdf#ReadinessCheckerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Role to check readiness"
-msgstr "Papel para verificar a prontidão"
+msgstr ""
 

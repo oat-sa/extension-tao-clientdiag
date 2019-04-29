@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint93\n"
-"PO-Revision-Date: 2019-01-18T12:51:57\n"
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:04:23\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: it-IT\n"
@@ -17,7 +17,7 @@ msgid "%d sources (%s)"
 msgstr ""
 
 msgid "All rights reserved."
-msgstr "Diritti riservati"
+msgstr "Diritti riservati."
 
 msgid "An error occurred! Please verify your input!"
 msgstr ""
@@ -26,22 +26,22 @@ msgid "Average bandwidth"
 msgstr "Media della larghezza della banda"
 
 msgid "Average intensive bandwidth"
-msgstr "Media ad elevato impiego di banda"
+msgstr ""
 
 msgid "Average performances"
-msgstr "Media della performance "
+msgstr ""
 
 msgid "Average rendering time"
 msgstr "Media del tempo di rendering"
 
 msgid "Average upload speed"
-msgstr "Media della velocita' di upload"
+msgstr ""
 
 msgid "Bandwidth"
-msgstr "Larghezza di banda"
+msgstr "Larghezza banda"
 
 msgid "Be aware that these tests will take up to several minutes."
-msgstr "Attenzione! Questi test necessitano di alcuni minuti"
+msgstr "Tenere presente che questi test possono richiedere diversi minuti."
 
 msgid "Begin diagnostics"
 msgstr "Inizio diagnostica"
@@ -59,22 +59,22 @@ msgid "Change since last fingerprint"
 msgstr ""
 
 msgid "Checking the bandwidth..."
-msgstr "Controllo di banda"
+msgstr ""
 
 msgid "Checking the browser..."
-msgstr "Controllo del browser"
+msgstr ""
 
 msgid "Checking the media intensive bandwidth..."
-msgstr "Controllo dei media ad elevato impiego di banda"
+msgstr ""
 
 msgid "Checking the performances..."
-msgstr "Controllo della performance"
+msgstr ""
 
 msgid "Checking the screen..."
 msgstr ""
 
 msgid "Checking upload speed..."
-msgstr "Controllo della velocita' di upload"
+msgstr ""
 
 msgid "Compatible"
 msgstr "Compatibile"
@@ -83,7 +83,7 @@ msgid "Computing the fingerprint..."
 msgstr ""
 
 msgid "Connect to the diagnostic tool"
-msgstr "Connesso al Diagnostic Tool"
+msgstr "Collegamento allo strumento diagnostico"
 
 msgid "Date"
 msgstr ""
@@ -92,10 +92,10 @@ msgid "Details"
 msgstr "Dettagli"
 
 msgid "Diagnostic Tool"
-msgstr "Diagnostic Tool"
+msgstr "Tool Diagnostico"
 
 msgid "Done!"
-msgstr "Fatto"
+msgstr ""
 
 msgid "Dynamic UID"
 msgstr ""
@@ -125,19 +125,19 @@ msgid "Getting school name..."
 msgstr ""
 
 msgid "Good bandwidth"
-msgstr "Larghezza di banda buona"
+msgstr "Buona larghezza di banda"
 
 msgid "Good performances"
-msgstr "Buona performance"
+msgstr ""
 
 msgid "Good upload speed"
-msgstr "Buona velocita' di upload"
+msgstr ""
 
 msgid "Hide Details"
-msgstr "Nascondi dettagli"
+msgstr ""
 
 msgid "Intensive bandwidth"
-msgstr "Elevato impiego di banda"
+msgstr ""
 
 msgid "Interface not available"
 msgstr ""
@@ -164,34 +164,34 @@ msgid "Logout"
 msgstr ""
 
 msgid "Low bandwidth"
-msgstr "Bassa larghezza di banda"
+msgstr "Larghezza di banda ridotta"
 
 msgid "Low upload speed"
-msgstr "Bassa velocita' di upload"
+msgstr ""
 
 msgid "Max upload speed"
-msgstr "Massima velocita' di upload"
+msgstr ""
 
 msgid "Maximum bandwidth"
-msgstr "Massima larghezza di banda"
+msgstr "Larghezza di banda massima"
 
 msgid "Maximum intensive bandwidth"
-msgstr "Massimo della larghezza di banda"
+msgstr ""
 
 msgid "Maximum rendering time"
-msgstr "Tempo massimo di esecuzione"
+msgstr "Tempo massimo di rendering"
 
 msgid "Media intensive bandwidth"
-msgstr "Media ad elevato impiego di banda"
+msgstr ""
 
 msgid "Minimum bandwidth"
 msgstr "Larghezza di banda minima"
 
 msgid "Minimum intensive bandwidth"
-msgstr "Minimo della larghezza di banda"
+msgstr ""
 
 msgid "Minimum rendering time"
-msgstr "Tempo di esecuzione minimo"
+msgstr "Tempo minimo di rendering"
 
 msgid "Missing field %s"
 msgstr ""
@@ -206,10 +206,10 @@ msgid "No readiness checks have been done!"
 msgstr ""
 
 msgid "Number of simultaneous test takers the connection can handle"
-msgstr "Numero di partecipanti simultaneo che la connessione può gestire."
+msgstr "Numero di partecipanti simultaneo che la connessione può gestire"
 
 msgid "Number of simultaneous test takers the connection can handle with media intensive"
-msgstr "Numero di partecipanti simultanei consentiti dalla connessione in funzione dei media ad elevato impiego di banda"
+msgstr ""
 
 msgid "Operating system"
 msgstr "Sistema operativo"
@@ -221,7 +221,7 @@ msgid "OS"
 msgstr ""
 
 msgid "Performances"
-msgstr "Performance"
+msgstr ""
 
 msgid "Readiness Check"
 msgstr ""
@@ -311,10 +311,10 @@ msgid "The storage service provided to store the diagnostic results must be upgr
 msgstr ""
 
 msgid "This browser is not tested."
-msgstr "Questo browser non e' testato"
+msgstr "Questo browser non è testato."
 
 msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
-msgstr "Questo applicativo stabilisce se il tuo sistema e' compatibile con la piattaforma TAO."
+msgstr ""
 
 msgid "Total"
 msgstr "Totale"
@@ -326,13 +326,13 @@ msgid "Unable to get the workstation name!"
 msgstr ""
 
 msgid "Upload speed"
-msgstr "Velocita' di upload"
+msgstr ""
 
 msgid "Very slow performances"
-msgstr "Performance molto bassa"
+msgstr ""
 
 msgid "Web browser"
-msgstr "Web Browser"
+msgstr "Browser web"
 
 msgid "Workstation"
 msgstr ""
@@ -341,7 +341,7 @@ msgid "Workstation name"
 msgstr ""
 
 msgid "Workstation performances"
-msgstr "Performance della postazione di lavoro"
+msgstr ""
 
 msgid "Workstation:"
 msgstr ""
@@ -359,11 +359,11 @@ msgid "Your fingerprint is %s. However we encountered issue while retrieving the
 msgstr ""
 
 msgid "Your system is fully compliant."
-msgstr "Il tuo sistema è completamente adeguato"
+msgstr "Il tuo sistema è completamente conforme."
 
 msgid "Your system is not optimal, please contact your system administrator."
-msgstr "Il tuo sistema non è ottimale, si prega di contattare il proprio amministratore di sistema"
+msgstr "Il sistema non è ottimale, si prega di contattare l'amministratore di sistema."
 
 msgid "Your system requires a compatibility update, please contact your system administrator."
-msgstr "Il tuo sistema richiede un aggiornamento, si prega di contattare il tuo amministratore di sistema"
+msgstr "Il sistema richiede un aggiornamento di compatibilità, rivolgersi all'amministratore di sistema."
 

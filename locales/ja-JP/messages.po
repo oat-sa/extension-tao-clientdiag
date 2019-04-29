@@ -1,0 +1,369 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:06:30\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: ja-JP\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: ja-JP\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "%d sources (%s)"
+msgstr ""
+
+msgid "All rights reserved."
+msgstr "All rights reserved."
+
+msgid "An error occurred! Please verify your input!"
+msgstr ""
+
+msgid "Average bandwidth"
+msgstr "平均帯域"
+
+msgid "Average intensive bandwidth"
+msgstr ""
+
+msgid "Average performances"
+msgstr "平均パフォーマンス"
+
+msgid "Average rendering time"
+msgstr "平均レンダリング時間"
+
+msgid "Average upload speed"
+msgstr "平均アップロード速度"
+
+msgid "Bandwidth"
+msgstr "帯域幅"
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr "これらのテストには数分かかりますのでご注意ください。"
+
+msgid "Begin diagnostics"
+msgstr "診断開始"
+
+msgid "Browser"
+msgstr "ブラウザー"
+
+msgid "Cannot get your fingerprint"
+msgstr ""
+
+msgid "Cannot retrieve the school name. Please verify your input"
+msgstr ""
+
+msgid "Change since last fingerprint"
+msgstr ""
+
+msgid "Checking the bandwidth..."
+msgstr "帯域チェック中..."
+
+msgid "Checking the browser..."
+msgstr "ブラウザーチェック中..."
+
+msgid "Checking the media intensive bandwidth..."
+msgstr ""
+
+msgid "Checking the performances..."
+msgstr "パフォーマンスチェック中..."
+
+msgid "Checking the screen..."
+msgstr ""
+
+msgid "Checking upload speed..."
+msgstr "スピードチェック中..."
+
+msgid "Compatible"
+msgstr "互換性"
+
+msgid "Computing the fingerprint..."
+msgstr ""
+
+msgid "Connect to the diagnostic tool"
+msgstr "診断ツールに接続"
+
+msgid "Date"
+msgstr "日付"
+
+msgid "Details"
+msgstr "詳細"
+
+msgid "Diagnostic Tool"
+msgstr "診断ツール"
+
+msgid "Done!"
+msgstr "完了！"
+
+msgid "Dynamic UID"
+msgstr ""
+
+msgid "Errors occurred! Please see details"
+msgstr ""
+
+msgid "Exit"
+msgstr "終了"
+
+msgid "Failed to get school name"
+msgstr ""
+
+msgid "Fingerprint"
+msgstr ""
+
+msgid "Fingerprint error"
+msgstr ""
+
+msgid "Fingerprint errors"
+msgstr ""
+
+msgid "Fingerprint sources"
+msgstr ""
+
+msgid "Getting school name..."
+msgstr ""
+
+msgid "Good bandwidth"
+msgstr "帯域良好"
+
+msgid "Good performances"
+msgstr "パフォーマンス良好"
+
+msgid "Good upload speed"
+msgstr "アップロード速度良好"
+
+msgid "Hide Details"
+msgstr "詳細を隠す"
+
+msgid "Intensive bandwidth"
+msgstr ""
+
+msgid "Interface not available"
+msgstr "インターフェースは利用できません"
+
+msgid "Launch another readiness check"
+msgstr "他の準備チェックを開始"
+
+msgid "Launch readiness check"
+msgstr "準備チェックの開始"
+
+msgid "List of readiness checks"
+msgstr "準備チェックのリスト"
+
+msgid "Loading"
+msgstr "読み込み"
+
+msgid "Log in"
+msgstr "ログイン"
+
+msgid "Login"
+msgstr "ログイン"
+
+msgid "Logout"
+msgstr "ログアウト"
+
+msgid "Low bandwidth"
+msgstr "帯域が狭い"
+
+msgid "Low upload speed"
+msgstr "アップロード速度が低い"
+
+msgid "Max upload speed"
+msgstr "最大アップロード速度"
+
+msgid "Maximum bandwidth"
+msgstr "最大帯域"
+
+msgid "Maximum intensive bandwidth"
+msgstr ""
+
+msgid "Maximum rendering time"
+msgstr "最大レンダリング時間"
+
+msgid "Media intensive bandwidth"
+msgstr ""
+
+msgid "Minimum bandwidth"
+msgstr "最小帯域"
+
+msgid "Minimum intensive bandwidth"
+msgstr ""
+
+msgid "Minimum rendering time"
+msgstr "最小レンダリング時間"
+
+msgid "Missing field %s"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "No diagnostic service defined"
+msgstr "診断サービスが定義されていません"
+
+msgid "No readiness checks have been done!"
+msgstr "完了した準備チェックはありません"
+
+msgid "Number of simultaneous test takers the connection can handle"
+msgstr "同時に接続できる受験者の数"
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr ""
+
+msgid "Operating system"
+msgstr "オペレーティングシステム"
+
+msgid "Operating system and web browser"
+msgstr "オペレーティングシステムとWebブラウザー"
+
+msgid "OS"
+msgstr "OS"
+
+msgid "Performances"
+msgstr "パフォーマンス"
+
+msgid "Readiness Check"
+msgstr "準備チェック"
+
+msgid "Readiness checks already done"
+msgstr "準備チェックはすでに完了しています"
+
+msgid "Readiness diagnostics"
+msgstr "診断準備"
+
+msgid "Refresh"
+msgstr "更新"
+
+msgid "Refresh the page"
+msgstr "ページ更新"
+
+msgid "Remove"
+msgstr "削除"
+
+msgid "Remove the readiness check result?"
+msgstr "準備チェックの結果を削除しますか？"
+
+msgid "Remove the selected readiness check results"
+msgstr "選択した準備チェックの結果を削除"
+
+msgid "Return to the list"
+msgstr "リストに戻る"
+
+msgid "School name"
+msgstr ""
+
+msgid "School name:"
+msgstr ""
+
+msgid "School number"
+msgstr ""
+
+msgid "School number:"
+msgstr ""
+
+msgid "School PIN code (4 digits)"
+msgstr ""
+
+msgid "School PIN:"
+msgstr ""
+
+msgid "Screen Height"
+msgstr ""
+
+msgid "Screen resolution"
+msgstr ""
+
+msgid "Screen Width"
+msgstr ""
+
+msgid "Show Details"
+msgstr "詳細を表示"
+
+msgid "Show fingerprint details"
+msgstr ""
+
+msgid "Something went wrong ..."
+msgstr "不具合発生..."
+
+msgid "Starting..."
+msgstr "開始中..."
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr ""
+
+msgid "The device screen has the minimum required resolution."
+msgstr ""
+
+msgid "The device screen resolution meets the requirements."
+msgstr ""
+
+msgid "The readiness check result have been removed"
+msgstr "準備チェックの結果は削除されました。"
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr "準備チェックの結果を削除しますか？"
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr "選択した準備チェックの結果を削除しますか？"
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr "診断結果を保存するために提供されたストレージサービスをアップグレードする必要があります。"
+
+msgid "This browser is not tested."
+msgstr "このブラウザーはテストされていません。"
+
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
+msgstr "このツールは、現在の環境がTAOプラットフォームの実行にどの程度適しているかを確認するために、多数のテストを実行します。"
+
+msgid "Total"
+msgstr "合計"
+
+msgid "Try a test delivery"
+msgstr "テストデリバリーを試す"
+
+msgid "Unable to get the workstation name!"
+msgstr "ワークステーション名が取得できません!"
+
+msgid "Upload speed"
+msgstr "アップロード速度"
+
+msgid "Very slow performances"
+msgstr "パフォーマンス低下"
+
+msgid "Web browser"
+msgstr "Webブラウザー"
+
+msgid "Workstation"
+msgstr "ワークステーション"
+
+msgid "Workstation name"
+msgstr "ワークステーション名"
+
+msgid "Workstation performances"
+msgstr "ワークステーションパフォーマンス"
+
+msgid "Workstation:"
+msgstr "ワークステーション:"
+
+msgid "Yes"
+msgstr ""
+
+msgid "Your fingerprint is %s"
+msgstr ""
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr ""
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
+msgstr ""
+
+msgid "Your system is fully compliant."
+msgstr "システムは完全に適合しています。"
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr "システムが最適化されていません。システム管理者に問い合わせてください。"
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr "システムの互換性更新が必要です。システム管理者に問い合わせてください。"
+

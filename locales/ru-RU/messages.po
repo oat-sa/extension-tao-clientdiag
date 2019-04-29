@@ -1,0 +1,369 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 3.3.0-sprint96\n"
+"PO-Revision-Date: 2019-04-25T01:12:44\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: ru-RU\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: ru-RU\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "%d sources (%s)"
+msgstr ""
+
+msgid "All rights reserved."
+msgstr "Все права защищены."
+
+msgid "An error occurred! Please verify your input!"
+msgstr ""
+
+msgid "Average bandwidth"
+msgstr "Средняя пропускная способность"
+
+msgid "Average intensive bandwidth"
+msgstr ""
+
+msgid "Average performances"
+msgstr "Средние показатели выполнения заданий"
+
+msgid "Average rendering time"
+msgstr "Среднее время визуализации"
+
+msgid "Average upload speed"
+msgstr "Средняя скорость загрузки"
+
+msgid "Bandwidth"
+msgstr "Пропускная способность"
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr "Имейте в виду, что эти тесты займет несколько минут."
+
+msgid "Begin diagnostics"
+msgstr "Начать диагностику"
+
+msgid "Browser"
+msgstr "Браузер"
+
+msgid "Cannot get your fingerprint"
+msgstr ""
+
+msgid "Cannot retrieve the school name. Please verify your input"
+msgstr ""
+
+msgid "Change since last fingerprint"
+msgstr ""
+
+msgid "Checking the bandwidth..."
+msgstr "Проверка пропускной способности..."
+
+msgid "Checking the browser..."
+msgstr "Проверка браузера..."
+
+msgid "Checking the media intensive bandwidth..."
+msgstr ""
+
+msgid "Checking the performances..."
+msgstr ""
+
+msgid "Checking the screen..."
+msgstr ""
+
+msgid "Checking upload speed..."
+msgstr "Проверка скорости загрузки..."
+
+msgid "Compatible"
+msgstr "Совместимый"
+
+msgid "Computing the fingerprint..."
+msgstr ""
+
+msgid "Connect to the diagnostic tool"
+msgstr "Подключение к инструменту диагностики"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Details"
+msgstr "Детали"
+
+msgid "Diagnostic Tool"
+msgstr "Инструмент диагностики"
+
+msgid "Done!"
+msgstr "Завершено!"
+
+msgid "Dynamic UID"
+msgstr ""
+
+msgid "Errors occurred! Please see details"
+msgstr ""
+
+msgid "Exit"
+msgstr "Выход"
+
+msgid "Failed to get school name"
+msgstr ""
+
+msgid "Fingerprint"
+msgstr ""
+
+msgid "Fingerprint error"
+msgstr ""
+
+msgid "Fingerprint errors"
+msgstr ""
+
+msgid "Fingerprint sources"
+msgstr ""
+
+msgid "Getting school name..."
+msgstr ""
+
+msgid "Good bandwidth"
+msgstr "Хорошая пропускная способность"
+
+msgid "Good performances"
+msgstr ""
+
+msgid "Good upload speed"
+msgstr "Хорошая скорость загрузки"
+
+msgid "Hide Details"
+msgstr "Скрыть детали"
+
+msgid "Intensive bandwidth"
+msgstr ""
+
+msgid "Interface not available"
+msgstr "Интерфейс недоступен"
+
+msgid "Launch another readiness check"
+msgstr "Запуск другой проверки готовности"
+
+msgid "Launch readiness check"
+msgstr "Проверка готовности к запуску"
+
+msgid "List of readiness checks"
+msgstr "Список проверок готовности"
+
+msgid "Loading"
+msgstr "Загрузка"
+
+msgid "Log in"
+msgstr "Войти"
+
+msgid "Login"
+msgstr "Логин"
+
+msgid "Logout"
+msgstr "Выход"
+
+msgid "Low bandwidth"
+msgstr "Низкая пропускная способность"
+
+msgid "Low upload speed"
+msgstr "Низкая скорость загрузки"
+
+msgid "Max upload speed"
+msgstr "Максимальная скорость загрузки"
+
+msgid "Maximum bandwidth"
+msgstr "Максимальная пропускная способность"
+
+msgid "Maximum intensive bandwidth"
+msgstr ""
+
+msgid "Maximum rendering time"
+msgstr ""
+
+msgid "Media intensive bandwidth"
+msgstr ""
+
+msgid "Minimum bandwidth"
+msgstr "Минимальная пропускная способность"
+
+msgid "Minimum intensive bandwidth"
+msgstr ""
+
+msgid "Minimum rendering time"
+msgstr ""
+
+msgid "Missing field %s"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
+msgid "No diagnostic service defined"
+msgstr "Диагностическая служба не определена"
+
+msgid "No readiness checks have been done!"
+msgstr "Проверка готовности не выполнена!"
+
+msgid "Number of simultaneous test takers the connection can handle"
+msgstr "Количество одновременных тестов, которые может обработать соединение"
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr ""
+
+msgid "Operating system"
+msgstr "Операционная система"
+
+msgid "Operating system and web browser"
+msgstr "Операционная система и веб-браузер"
+
+msgid "OS"
+msgstr "Операционная система"
+
+msgid "Performances"
+msgstr ""
+
+msgid "Readiness Check"
+msgstr "Проверка готовности"
+
+msgid "Readiness checks already done"
+msgstr "Проверка готовности уже выполнена"
+
+msgid "Readiness diagnostics"
+msgstr "Диагностика готовности"
+
+msgid "Refresh"
+msgstr "Обновить"
+
+msgid "Refresh the page"
+msgstr "Обновить страницу"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Remove the readiness check result?"
+msgstr "Удалить результат проверки готовности?"
+
+msgid "Remove the selected readiness check results"
+msgstr "Удаление выбранных результатов проверки готовности"
+
+msgid "Return to the list"
+msgstr "Вернуться к списку"
+
+msgid "School name"
+msgstr ""
+
+msgid "School name:"
+msgstr ""
+
+msgid "School number"
+msgstr ""
+
+msgid "School number:"
+msgstr ""
+
+msgid "School PIN code (4 digits)"
+msgstr ""
+
+msgid "School PIN:"
+msgstr ""
+
+msgid "Screen Height"
+msgstr ""
+
+msgid "Screen resolution"
+msgstr ""
+
+msgid "Screen Width"
+msgstr ""
+
+msgid "Show Details"
+msgstr "Показать подробности"
+
+msgid "Show fingerprint details"
+msgstr ""
+
+msgid "Something went wrong ..."
+msgstr ""
+
+msgid "Starting..."
+msgstr ""
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr ""
+
+msgid "The device screen has the minimum required resolution."
+msgstr ""
+
+msgid "The device screen resolution meets the requirements."
+msgstr ""
+
+msgid "The readiness check result have been removed"
+msgstr "Результат проверки готовности был удален"
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr "Результат проверки готовности будет удален. Продолжить?"
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr "Выбранные результаты проверки готовности будут удалены. Продолжить?"
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr "Служба хранения, предоставляемая для хранения диагностических результатов, должна быть обновлена для поддержки операций чтения!"
+
+msgid "This browser is not tested."
+msgstr ""
+
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
+msgstr "Этот инструмент будет выполнять ряд тестов для того, чтобы установить, насколько хорошо ваша текущая среда подходит для запуска платформы TАО."
+
+msgid "Total"
+msgstr "Всего"
+
+msgid "Try a test delivery"
+msgstr "Попробуйте тестовую доставку"
+
+msgid "Unable to get the workstation name!"
+msgstr "Не удается получить имя рабочей станции!"
+
+msgid "Upload speed"
+msgstr "Скорость загрузки"
+
+msgid "Very slow performances"
+msgstr ""
+
+msgid "Web browser"
+msgstr "Веб-браузер"
+
+msgid "Workstation"
+msgstr "Рабочая станция"
+
+msgid "Workstation name"
+msgstr "Название рабочей станции"
+
+msgid "Workstation performances"
+msgstr "Производительность рабочей станции"
+
+msgid "Workstation:"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "Your fingerprint is %s"
+msgstr ""
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr ""
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
+msgstr ""
+
+msgid "Your system is fully compliant."
+msgstr "Ваша система полностью соответствует требованиям."
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr "Ваша система не является оптимальной, обратитесь к системному администратору."
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr "Система требует обновления совместимости, обратитесь к системному администратору."
+
