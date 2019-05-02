@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2014-2018 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2014-2019 (original work) Open Assessment Technologies SA;
  */
 
 /**
@@ -34,6 +34,10 @@ module.exports = function(grunt) {
                         name : 'taoClientDiagnostic',
                         default : true,
                         bootstrap: true
+                    }, {
+                        name : 'diagnostic',
+                        entryPoint: 'taoClientDiagnostic/tools/diagnostic/diagnostic',
+                        bootstrap : true
                     }]
                 }
             }
