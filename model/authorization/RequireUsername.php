@@ -41,8 +41,8 @@ class RequireUsername extends ConfigurableService implements Authorization
 
     /**
      * Redirect to authentifier controller to process login
-     * @param URL $url
-     * @return url to oat\taoClientDiagnostic\controller\Authenticator:login
+     * @param $url
+     * @return string to oat\taoClientDiagnostic\controller\Authenticator:login
      */
     public function getAuthorizationUrl($url)
     {
@@ -53,6 +53,9 @@ class RequireUsername extends ConfigurableService implements Authorization
      * Check if login is valid
      *  - not empty
      *  - exists in TAO ACL -OR- match with regex
+     * @param $login
+     * @return bool
+     *
      * @throws InvalidLoginException
      */
     public function validateLogin($login = null)
@@ -61,7 +64,7 @@ class RequireUsername extends ConfigurableService implements Authorization
             throw new InvalidLoginException('No login found');
         }
 
-        if (\tao_models_classes_UserService::singleton()->loginExists($login)
+        if ($this->getServiceLocator()->get(\tao_models_classes_UserService::SERVICE_ID)->loginExists($login)
             || ($this->hasOption('regexValidator') &&  preg_match($this->getOption('regexValidator'), $login) === 1)
         ) {
             return true;

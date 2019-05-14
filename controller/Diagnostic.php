@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2017-2019 (original work) Open Assessment Technologies SA ;
  *
  */
 
@@ -60,15 +60,15 @@ class Diagnostic extends \tao_actions_CommonModule
         $data = array(
             'title'  => __('Readiness diagnostics'),
             'set'    => json_encode($diagnostics),
-            'config' => json_encode($config),
+            'config' => json_encode($config['diagnostic']),
         );
 
         $userLabel = SessionManager::getSession()->getUserLabel();
 
         $this->defaultData();
 
-        if (!empty($config['pageTitle'])) {
-            $this->setData('title', $config['pageTitle']);
+        if (!empty($config['diagnostic']['pageTitle'])) {
+            $this->setData('title', $config['diagnostic']['pageTitle']);
         }
 
         $this->setData('cls', 'diagnostic-index');
@@ -86,7 +86,7 @@ class Diagnostic extends \tao_actions_CommonModule
         $config = $this->loadConfig();
         $data = array(
             'title'  => __('Readiness Check'),
-            'config' => json_encode($config),
+            'config' => json_encode($config['diagnostic']),
         );
 
         $this->defaultData();
@@ -95,8 +95,8 @@ class Diagnostic extends \tao_actions_CommonModule
         $this->setData('data', $data);
         $this->setData('content-template', 'pages/index.tpl');
 
-        if (!empty($config['pageTitle'])) {
-            $this->setData('title', $config['pageTitle']);
+        if (!empty($config['diagnostic']['pageTitle'])) {
+            $this->setData('title', $config['diagnostic']['pageTitle']);
         }
 
         /** @var \oat\tao\model\theme\ThemeService $themeService */

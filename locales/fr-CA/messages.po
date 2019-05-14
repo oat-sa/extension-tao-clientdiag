@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint72-½\n"
-"PO-Revision-Date: 2018-03-21T13:45:58\n"
+"Project-Id-Version: TAO 3.3.0-sprint99\n"
+"PO-Revision-Date: 2019-04-10T00:22:17\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-CA\n"
@@ -42,9 +42,6 @@ msgstr "Bande passante"
 
 msgid "Be aware that these tests will take up to several minutes."
 msgstr "Ces tests peuvent prendre plusieurs minutes."
-
-msgid "Begin diagnostics"
-msgstr "Démarrer le diagnostic"
 
 msgid "Browser"
 msgstr ""
@@ -288,6 +285,12 @@ msgstr ""
 
 msgid "Starting..."
 msgstr "Démarrage..."
+
+msgid "System Compatibility"
+msgstr ""
+
+msgid "Test system compatibility"
+msgstr ""
 
 msgid "The device screen does not meet the minimum resolution of %s!"
 msgstr ""

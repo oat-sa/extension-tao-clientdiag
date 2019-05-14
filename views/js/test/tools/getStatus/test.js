@@ -15,20 +15,19 @@
  *
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  */
-define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
+define(['taoClientDiagnostic/tools/getStatus'], function(getStatus) {
     'use strict';
 
     QUnit.module('Module');
 
-    QUnit.test('The helper has the right form', function(assert){
-        QUnit.expect(1);
+    QUnit.test('The helper has the right form', function(assert) {
+        assert.expect(1);
         assert.ok(typeof getStatus === 'function', 'The module exposes a function');
     });
 
-
     QUnit.module('API');
 
-    QUnit.cases([{
+    QUnit.cases.init([{
         title: 'no percentage, no thresholds',
         expected: {
             percentage: 0,
@@ -195,9 +194,9 @@ define(['taoClientDiagnostic/tools/getStatus'], function(getStatus){
             globalPercentage: 10,
             quality: {}
         }
-    }]).test('getStatus ', function(data, assert){
+    }]).test('getStatus ', function(data, assert) {
         var status = getStatus(data.percentage, data.thresholds, data.options);
-        QUnit.expect(1);
+        assert.expect(1);
         assert.deepEqual(status, data.expected, 'The helper has returned the expected data');
     });
 

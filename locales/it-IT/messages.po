@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint66\n"
-"PO-Revision-Date: 2017-12-12T08:58:48\n"
+"Project-Id-Version: TAO 3.3.0-sprint99\n"
+"PO-Revision-Date: 2019-04-10T00:22:17\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: it-IT\n"
@@ -18,6 +18,9 @@ msgstr ""
 
 msgid "All rights reserved."
 msgstr "Diritti riservati"
+
+msgid "An error occurred! Please verify your input!"
+msgstr ""
 
 msgid "Average bandwidth"
 msgstr "Media della larghezza della banda"
@@ -40,13 +43,13 @@ msgstr "Larghezza di banda"
 msgid "Be aware that these tests will take up to several minutes."
 msgstr "Attenzione! Questi test necessitano di alcuni minuti"
 
-msgid "Begin diagnostics"
-msgstr "Inizio diagnostica"
-
 msgid "Browser"
 msgstr ""
 
 msgid "Cannot get your fingerprint"
+msgstr ""
+
+msgid "Cannot retrieve the school name. Please verify your input"
 msgstr ""
 
 msgid "Change since last fingerprint"
@@ -63,6 +66,9 @@ msgstr "Controllo dei media ad elevato impiego di banda"
 
 msgid "Checking the performances..."
 msgstr "Controllo della performance"
+
+msgid "Checking the screen..."
+msgstr ""
 
 msgid "Checking upload speed..."
 msgstr "Controllo della velocita' di upload"
@@ -97,6 +103,9 @@ msgstr ""
 msgid "Exit"
 msgstr ""
 
+msgid "Failed to get school name"
+msgstr ""
+
 msgid "Fingerprint"
 msgstr ""
 
@@ -107,6 +116,9 @@ msgid "Fingerprint errors"
 msgstr ""
 
 msgid "Fingerprint sources"
+msgstr ""
+
+msgid "Getting school name..."
 msgstr ""
 
 msgid "Good bandwidth"
@@ -178,6 +190,9 @@ msgstr "Minimo della larghezza di banda"
 msgid "Minimum rendering time"
 msgstr "Tempo di esecuzione minimo"
 
+msgid "Missing field %s"
+msgstr ""
+
 msgid "No"
 msgstr ""
 
@@ -232,6 +247,33 @@ msgstr ""
 msgid "Return to the list"
 msgstr ""
 
+msgid "School name"
+msgstr ""
+
+msgid "School name:"
+msgstr ""
+
+msgid "School number"
+msgstr ""
+
+msgid "School number:"
+msgstr ""
+
+msgid "School PIN code (4 digits)"
+msgstr ""
+
+msgid "School PIN:"
+msgstr ""
+
+msgid "Screen Height"
+msgstr ""
+
+msgid "Screen resolution"
+msgstr ""
+
+msgid "Screen Width"
+msgstr ""
+
 msgid "Show Details"
 msgstr "Mostra dettagli"
 
@@ -242,6 +284,21 @@ msgid "Something went wrong ..."
 msgstr ""
 
 msgid "Starting..."
+msgstr ""
+
+msgid "System Compatibility"
+msgstr ""
+
+msgid "Test system compatibility"
+msgstr ""
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr ""
+
+msgid "The device screen has the minimum required resolution."
+msgstr ""
+
+msgid "The device screen resolution meets the requirements."
 msgstr ""
 
 msgid "The readiness check result have been removed"

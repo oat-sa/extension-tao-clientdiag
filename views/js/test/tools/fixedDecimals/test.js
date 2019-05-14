@@ -15,19 +15,18 @@
  *
  * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
  */
-define(['taoClientDiagnostic/tools/fixedDecimals'], function(fixedDecimals){
+define(['taoClientDiagnostic/tools/fixedDecimals'], function(fixedDecimals) {
     'use strict';
 
     QUnit.module('API');
 
-    QUnit.test('The tester has the right form', function(assert){
+    QUnit.test('The tester has the right form', function(assert) {
         assert.ok(typeof fixedDecimals === 'function', 'The module exposes a function');
     });
 
-
     QUnit.module('Test');
 
-    QUnit.test('Conversions', function(assert){
+    QUnit.test('Conversions', function(assert) {
 
         assert.equal(fixedDecimals(10, 2), 10, 'Fix decimals on an integer');
         assert.equal(fixedDecimals(10.6, 2), 10.6, 'Fix decimals on an already fixed decimals');
@@ -45,7 +44,7 @@ define(['taoClientDiagnostic/tools/fixedDecimals'], function(fixedDecimals){
         assert.equal(fixedDecimals(10.111111111111), 10.1, 'Fix decimals on an irrational value with the default number of decimals');
         assert.equal(fixedDecimals(10.111111111111), 10.1, 'Fix decimals on an irrational value with the default number of decimals');
 
-        assert.equal(fixedDecimals("one"), 0, 'Fix decimals on a string');
+        assert.equal(fixedDecimals('one'), 0, 'Fix decimals on a string');
 
     });
 

@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2015-2019 (original work) Open Assessment Technologies SA;
  *
  */
 
@@ -27,8 +27,8 @@ use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerMo
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
 use oat\taoClientDiagnostic\model\schoolName\SchoolNameService;
 use oat\taoClientDiagnostic\model\storage\Storage;
-use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
-use oat\taoClientDiagnostic\model\browserDetector\OSService;
+use Sinergi\BrowserDetector\Browser;
+use Sinergi\BrowserDetector\Os;
 
 /**
  * Class CompatibilityChecker
@@ -47,15 +47,10 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     {
         $authorizationService = $this->getServiceLocator()->get(Authorization::SERVICE_ID);
         if ($authorizationService->isAuthorized()) {
-
             $config = $this->loadConfig();
-            if (isset($config['diagHeader'])) {
-                $config['header'] = $config['diagHeader'];
-                unset($config['diagHeader']);
-            }
 
-            if (!empty($config['pageTitle'])) {
-                $this->setData('title', $config['pageTitle']);
+            if (!empty($config['diagnostic']['pageTitle'])) {
+                $this->setData('title', $config['diagnostic']['pageTitle']);
             }
 
             $this->setData('client_config_url', $this->getClientConfigUrl());
@@ -74,14 +69,11 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     public function whichBrowser()
     {
-        $osService = OSService::singleton();
-        $browserService = WebBrowserService::singleton();
-
         $result = [
-            'browser' =>  $browserService->getClientName(),
-            'browserVersion' => $browserService->getClientVersion(),
-            'os' => $osService->getClientName(),
-            'osVersion' => $osService->getClientVersion()
+            'browser' =>  $this->getBrowserDetector()->getName(),
+            'browserVersion' => $this->getBrowserDetector()->getVersion(),
+            'os' => $this->getOsDetector()->getName(),
+            'osVersion' => $this->getOsDetector()->getVersion()
         ];
         $this->returnJson($result);
     }
@@ -105,7 +97,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
                 $storageService = $this->getServiceLocator()->get(Storage::SERVICE_ID);
                 $storageService->store($id, $data);
             } catch (StorageException $e) {
-                \common_Logger::i($e->getMessage());
+                $this->logInfo($e->getMessage());
             }
 
             $compatibilityMessage = [
@@ -152,13 +144,13 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $result = ['success' => true, 'size' => $size];
         } catch (\common_exception_NotImplemented $e) {
             $result = ['success' => false, 'error' => $e->getMessage()];
-            \common_Logger::w($e->getMessage());
+            $this->logWarning($e->getMessage());
         } catch (\common_exception_InconsistentData $e) {
             $result = ['success' => false, 'error' => $e->getMessage()];
-            \common_Logger::w($e->getMessage());
+            $this->logWarning($e->getMessage());
         } catch (\Exception $e) {
             $result = ['success' => false, 'type' => 'error', 'message' => 'Please contact administrator'];
-            \common_Logger::w($e->getMessage());
+            $this->logWarning($e->getMessage());
         }
         $this->returnJson($result);
     }
@@ -176,7 +168,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $storageService->store($id, $data);
             $this->returnJson(array('success' => true, 'type' => 'success'));
         } catch (StorageException $e) {
-            \common_Logger::i($e->getMessage());
+            $this->logInfo($e->getMessage());
             $this->returnJson(array('success' => false, 'type' => 'error'));
         }
     }
@@ -347,12 +339,32 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         $config = $this->loadConfig();
 
         foreach ($data as $k => $d) {
-            if (!empty($config['customInput'][$k])) {
-                $data[$config['customInput'][$k]] = $d;
+            if (!empty($config['diagnostic']['customInput'][$k])) {
+                $data[$config['diagnostic']['customInput'][$k]] = $d;
                 unset($data[$k]);
             }
         }
 
         return $data;
+    }
+
+    /**
+     * Get the browser detector
+     *
+     * @return Browser
+     */
+    protected function getBrowserDetector()
+    {
+        return new Browser();
+    }
+
+    /**
+     * Get the operating system detector
+     *
+     * @return Os
+     */
+    protected function getOsDetector()
+    {
+        return new Os();
     }
 }

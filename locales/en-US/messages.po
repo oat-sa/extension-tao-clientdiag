@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.2.0-sprint63\n"
-"PO-Revision-Date: 2017-11-06T16:06:08\n"
+"Project-Id-Version: TAO 3.3.0-sprint99\n"
+"PO-Revision-Date: 2019-04-10T00:22:16\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: en-US\n"
@@ -13,7 +13,13 @@ msgstr ""
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
 
+msgid "%d sources (%s)"
+msgstr ""
+
 msgid "All rights reserved."
+msgstr ""
+
+msgid "An error occurred! Please verify your input!"
 msgstr ""
 
 msgid "Average bandwidth"
@@ -37,10 +43,16 @@ msgstr ""
 msgid "Be aware that these tests will take up to several minutes."
 msgstr ""
 
-msgid "Begin diagnostics"
+msgid "Browser"
 msgstr ""
 
-msgid "Browser"
+msgid "Cannot get your fingerprint"
+msgstr ""
+
+msgid "Cannot retrieve the school name. Please verify your input"
+msgstr ""
+
+msgid "Change since last fingerprint"
 msgstr ""
 
 msgid "Checking the bandwidth..."
@@ -55,10 +67,16 @@ msgstr ""
 msgid "Checking the performances..."
 msgstr ""
 
+msgid "Checking the screen..."
+msgstr ""
+
 msgid "Checking upload speed..."
 msgstr ""
 
 msgid "Compatible"
+msgstr ""
+
+msgid "Computing the fingerprint..."
 msgstr ""
 
 msgid "Connect to the diagnostic tool"
@@ -76,7 +94,31 @@ msgstr ""
 msgid "Done!"
 msgstr ""
 
+msgid "Dynamic UID"
+msgstr ""
+
+msgid "Errors occurred! Please see details"
+msgstr ""
+
 msgid "Exit"
+msgstr ""
+
+msgid "Failed to get school name"
+msgstr ""
+
+msgid "Fingerprint"
+msgstr ""
+
+msgid "Fingerprint error"
+msgstr ""
+
+msgid "Fingerprint errors"
+msgstr ""
+
+msgid "Fingerprint sources"
+msgstr ""
+
+msgid "Getting school name..."
 msgstr ""
 
 msgid "Good bandwidth"
@@ -148,6 +190,12 @@ msgstr ""
 msgid "Minimum rendering time"
 msgstr ""
 
+msgid "Missing field %s"
+msgstr ""
+
+msgid "No"
+msgstr ""
+
 msgid "No diagnostic service defined"
 msgstr ""
 
@@ -199,13 +247,58 @@ msgstr ""
 msgid "Return to the list"
 msgstr ""
 
+msgid "School name"
+msgstr ""
+
+msgid "School name:"
+msgstr ""
+
+msgid "School number"
+msgstr ""
+
+msgid "School number:"
+msgstr ""
+
+msgid "School PIN code (4 digits)"
+msgstr ""
+
+msgid "School PIN:"
+msgstr ""
+
+msgid "Screen Height"
+msgstr ""
+
+msgid "Screen resolution"
+msgstr ""
+
+msgid "Screen Width"
+msgstr ""
+
 msgid "Show Details"
+msgstr ""
+
+msgid "Show fingerprint details"
 msgstr ""
 
 msgid "Something went wrong ..."
 msgstr ""
 
 msgid "Starting..."
+msgstr ""
+
+msgid "System Compatibility"
+msgstr ""
+
+msgid "Test system compatibility"
+msgstr ""
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr ""
+
+msgid "The device screen has the minimum required resolution."
+msgstr ""
+
+msgid "The device screen resolution meets the requirements."
 msgstr ""
 
 msgid "The readiness check result have been removed"
@@ -254,6 +347,18 @@ msgid "Workstation performances"
 msgstr ""
 
 msgid "Workstation:"
+msgstr ""
+
+msgid "Yes"
+msgstr ""
+
+msgid "Your fingerprint is %s"
+msgstr ""
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr ""
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
 msgstr ""
 
 msgid "Your system is fully compliant."

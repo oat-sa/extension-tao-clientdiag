@@ -14,39 +14,27 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2015-2019 (original work) Open Assessment Technologies SA;
  *
  */
 
 namespace oat\taoClientDiagnostic\model;
 
-use oat\taoClientDiagnostic\model\browserDetector\WebBrowserService;
-use oat\taoClientDiagnostic\model\browserDetector\OSService;
-
+use Sinergi\BrowserDetector\Browser;
+use Sinergi\BrowserDetector\Os;
 
 class CompatibilityChecker
 {
-
-    private $os, $osVersion, $browser, $browserVersion, $compatibility;
+    protected $compatibility;
 
     /**
      * CompatibilityChecker constructor
      * Check parameter required
      * Extract compatibility file
-     * @throws \common_exception_MissingParameter
      * @throws \tao_models_classes_FileNotFoundException
      */
     function __construct()
     {
-        $osService = OSService::singleton();
-        $browserService = WebBrowserService::singleton();
-
-        $this->browser        = $browserService->getClientName();
-        $this->browserVersion = $browserService->getClientVersion();
-        $this->os             = $osService->getClientName();
-        $this->osVersion      = $osService->getClientVersion();
-
         $compatibilityFile = __DIR__ . '/../include/compatibility.json';
 
         if (!file_exists($compatibilityFile)) {
@@ -65,12 +53,15 @@ class CompatibilityChecker
      */
     public function isCompatibleConfig()
     {
-        $browserVersion = explode('.', $this->browserVersion);
+        $browser = $this->getBrowserDetector()->getName();
+        $browserVersion = explode('.', $this->getBrowserDetector()->getVersion())[0];
+        $os = $this->getOsDetector()->getName();
+        $osVersion = $this->getOsDetector()->getVersion();
+        $osVersion = explode('.', $osVersion);
 
-        $osVersion = explode('.', $this->osVersion);
         foreach ($this->compatibility as $rule) {
             //os name
-            if ($rule->os === $this->os) {
+            if ($rule->os === $os) {
                 //os Version
                 $validOs = true;
                 if ($rule->osVersion !== "") {
@@ -88,18 +79,39 @@ class CompatibilityChecker
                 } else {
                     // it is valid if the version is in the array
                     // OR if the browser is chrome or firefox and it is a newer version than those in the array
-                    $isValid = in_array($browserVersion[0], $rule->versions)
+                    $isValid = in_array($browserVersion, $rule->versions)
                         || (in_array($rule->browser,
-                                array('Chrome', 'Firefox')) && $browserVersion[0] > max($rule->versions));
+                                array('Chrome', 'Firefox')) && $browserVersion > max($rule->versions));
                 }
 
                 if ($validOs && ($rule->browser === ""
-                        || $rule->browser === $this->browser && $isValid)
+                        || $rule->browser === $browser && $isValid)
                 ) {
                     return $rule->compatible;
                 }
             }
         }
         return 2;
+    }
+
+
+    /**
+     * Get the browser detector
+     *
+     * @return Browser
+     */
+    protected function getBrowserDetector()
+    {
+        return new Browser();
+    }
+
+    /**
+     * Get the operating system detector
+     *
+     * @return Os
+     */
+    protected function getOsDetector()
+    {
+        return new Os();
     }
 }

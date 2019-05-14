@@ -15,15 +15,13 @@
  *
  * Copyright (c) 2018 (original work) Open Assessment Technologies SA ;
  */
-define([
-    'taoClientDiagnostic/tools/screen/tester'
-], function (screenTester) {
+define(['taoClientDiagnostic/tools/screen/tester'], function(screenTester) {
     'use strict';
 
     QUnit.module('API');
 
-    QUnit.test('The tester has the right form', function (assert) {
-        QUnit.expect(6);
+    QUnit.test('The tester has the right form', function(assert) {
+        assert.expect(6);
         assert.ok(typeof screenTester === 'function', 'The module exposes a function');
         assert.ok(typeof screenTester() === 'object', 'screenTester is a factory');
         assert.ok(typeof screenTester().start === 'function', 'the test has a start method');
@@ -32,8 +30,7 @@ define([
         assert.ok(typeof screenTester().labels === 'object', 'the test has a labels objects');
     });
 
-
-    QUnit.cases([{
+    QUnit.cases.init([{
         title: 'no level'
     }, {
         title: 'level 0',
@@ -48,7 +45,7 @@ define([
         title: 'level 3',
         level: 3
     }])
-        .test('labels', function (data, assert) {
+        .test('labels', function(data, assert) {
             var labels = screenTester({level: data.level}).labels;
             var labelKeys = [
                 'title',
@@ -57,14 +54,13 @@ define([
                 'height'
             ];
 
-            QUnit.expect(labelKeys.length + 1);
+            assert.expect(labelKeys.length + 1);
 
             assert.equal(typeof labels, 'object', 'A set of labels is returned');
-            labelKeys.forEach(function (key) {
+            labelKeys.forEach(function(key) {
                 assert.equal(typeof labels[key], 'string', 'The label ' + key + ' exists');
             });
         });
-
 
     QUnit.test('getSummary', function(assert) {
         var tester = screenTester({});
@@ -74,7 +70,7 @@ define([
         };
         var summary = tester.getSummary(results);
 
-        QUnit.expect(7);
+        assert.expect(7);
 
         assert.equal(typeof summary, 'object', 'The method has returned the summary');
 
@@ -87,8 +83,7 @@ define([
         assert.equal(summary.height.value, results.height, 'The summary contains the expected value for the screen height');
     });
 
-
-    QUnit.cases([{
+    QUnit.cases.init([{
         title: 'requirements not met (width)',
         threshold: {
             width: 1024,
@@ -137,11 +132,11 @@ define([
         percentage: 100,
         type: 'success'
     }])
-        .test('getFeedback', function (data, assert) {
+        .test('getFeedback', function(data, assert) {
             var tester = screenTester({threshold: data.threshold});
             var status = tester.getFeedback(data.results);
 
-            QUnit.expect(6);
+            assert.expect(6);
 
             assert.equal(typeof status, 'object', 'The method has returned the status');
             assert.equal(status.id, 'screen', 'The status contains the tester id');
@@ -151,15 +146,14 @@ define([
             assert.equal(status.feedback.type, data.type, 'The status contains the expected feedback type');
         });
 
-
     QUnit.module('Test');
 
+    QUnit.test('The tester runs', function(assert) {
+        var ready = assert.async();
 
-    QUnit.asyncTest('The tester runs', function (assert) {
+        assert.expect(5);
 
-        QUnit.expect(5);
-
-        screenTester({}).start(function (status, details, results) {
+        screenTester({}).start(function(status, details, results) {
 
             assert.equal(typeof status, 'object', 'The status is an object');
             assert.equal(typeof details, 'object', 'The details is an object');
@@ -167,10 +161,8 @@ define([
             assert.equal(results.width, window.screen.width, 'The screen width is provided');
             assert.equal(results.height, window.screen.height, 'The screen height is provided');
 
-            QUnit.start();
+            ready();
         });
-
     });
-
 
 });

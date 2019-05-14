@@ -15,13 +15,13 @@
  *
  * Copyright (c) 2015-2017 (original work) Open Assessment Technologies SA ;
  */
-define(['taoClientDiagnostic/tools/performances/tester'], function(performancesTester){
+define(['taoClientDiagnostic/tools/performances/tester'], function(performancesTester) {
     'use strict';
 
     QUnit.module('API');
 
-    QUnit.test('The tester has the right form', function(assert){
-        QUnit.expect(6);
+    QUnit.test('The tester has the right form', function(assert) {
+        assert.expect(6);
         assert.ok(typeof performancesTester === 'function', 'The module exposes a function');
         assert.ok(typeof performancesTester() === 'object', 'performancesTester is a factory');
         assert.ok(typeof performancesTester().start === 'function', 'the test has a start method');
@@ -30,7 +30,7 @@ define(['taoClientDiagnostic/tools/performances/tester'], function(performancesT
         assert.ok(typeof performancesTester().labels === 'object', 'the test has a labels objects');
     });
 
-    QUnit.cases([{
+    QUnit.cases.init([{
         title: 'no level'
     }, {
         title: 'level 0',
@@ -55,7 +55,7 @@ define(['taoClientDiagnostic/tools/performances/tester'], function(performancesT
                 'performancesAverage'
             ];
 
-            QUnit.expect(labelKeys.length + 1);
+            assert.expect(labelKeys.length + 1);
 
             assert.equal(typeof labels, 'object', 'A set of labels is returned');
             labelKeys.forEach(function(key) {
@@ -72,7 +72,7 @@ define(['taoClientDiagnostic/tools/performances/tester'], function(performancesT
         };
         var summary = tester.getSummary(results);
 
-        QUnit.expect(10);
+        assert.expect(10);
 
         assert.equal(typeof summary, 'object', 'The method has returned the summary');
 
@@ -96,7 +96,7 @@ define(['taoClientDiagnostic/tools/performances/tester'], function(performancesT
         var result = optimal;
         var status = tester.getFeedback(result);
 
-        QUnit.expect(6);
+        assert.expect(6);
 
         assert.equal(typeof status, 'object', 'The method has returned the status');
         assert.equal(status.id, 'performances', 'The status contains the tester id');
@@ -106,12 +106,12 @@ define(['taoClientDiagnostic/tools/performances/tester'], function(performancesT
         assert.equal(typeof status.feedback, 'object', 'The status contains a feedback descriptor');
     });
 
-
     QUnit.module('Test');
 
-    QUnit.asyncTest('The tester runs', function(assert){
+    QUnit.test('The tester runs', function(assert) {
+        var ready = assert.async();
 
-        QUnit.expect(10);
+        assert.expect(10);
 
         performancesTester({}).start(function(status, details, results) {
             var duration = results.average;
@@ -128,9 +128,8 @@ define(['taoClientDiagnostic/tools/performances/tester'], function(performancesT
             assert.equal(duration, results.average, 'The total duration provided inside the details must be equal to provided duration');
             assert.ok(toString.call(results.values) === '[object Array]', 'The detailed measures are provided inside the details');
 
-            QUnit.start();
+            ready();
         });
-
     });
 
 });

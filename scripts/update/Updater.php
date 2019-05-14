@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2015-2019 (original work) Open Assessment Technologies SA;
  *
  */
 
@@ -24,6 +24,7 @@ use Doctrine\DBAL\DBALException;
 use Doctrine\DBAL\Types\Type;
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\tao\model\accessControl\func\AclProxy;
+use oat\tao\model\ClientLibConfigRegistry;
 use oat\tao\model\user\TaoRoles;
 use oat\tao\scripts\update\OntologyUpdater;
 use oat\taoClientDiagnostic\controller\Diagnostic;
@@ -727,6 +728,42 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('2.17.9');
         }
 
-        $this->skip('2.17.9', '4.0.0');
+        $this->skip('2.17.9', '4.1.0');
+
+        if ($this->isVersion('4.1.0')) {
+            // Update client_lib_config_registry.conf.php
+            ClientLibConfigRegistry::getRegistry()
+                ->register('taoClientDiagnostic/component/diagnostic/diagnosticLoader', [
+                    'diagnostics' => [
+                        'diagnostic' => [
+                            'id' => 'default',
+                            'module' => 'taoClientDiagnostic/tools/diagnostic/diagnostic',
+                            'bundle' => 'taoClientDiagnostic/loader/diagnostic.min',
+                            'position' => null,
+                            'name' => 'diagnostic',
+                            'description' => 'default diagnostic',
+                            'category' => 'diagnostic',
+                            'active' => true,
+                            'tags' => []
+                        ]
+                    ]
+                ]);
+
+            // Update clientDiag.conf.php
+            $extension = $this->getServiceManager()
+                ->get(\common_ext_ExtensionsManager::SERVICE_ID)
+                ->getExtensionById('taoClientDiagnostic');
+            $oldClientDiagConfig = $extension->getConfig('clientDiag');
+            // move value of diagHeader key under header
+            $oldDiagHeader = $oldClientDiagConfig['diagHeader'];
+            unset($oldClientDiagConfig['diagHeader']);
+            $extension->setConfig('clientDiag', [
+                'diagnostic' => array_merge(['header' => $oldDiagHeader], $oldClientDiagConfig),
+            ]);
+
+            $this->setVersion('5.0.0');
+        }
+
+        $this->skip('5.0.0', '6.0.0');
     }
 }

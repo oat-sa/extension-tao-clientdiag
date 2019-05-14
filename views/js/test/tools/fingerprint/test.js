@@ -16,10 +16,11 @@
  * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
  */
 define([
+
     'core/store',
     'taoClientDiagnostic/tools/fingerprint/tester',
     'taoClientDiagnostic/lib/fingerprint/fingerprint2'
-], function (storeMock, fingerprintTester, fingerprintMock) {
+], function(storeMock, fingerprintTester, fingerprintMock) {
     'use strict';
 
     var fingerprint = 'foo123bar456';
@@ -27,11 +28,10 @@ define([
         foo: 'bar'
     }];
 
-
     QUnit.module('API');
 
-    QUnit.test('The tester has the right form', function (assert) {
-        QUnit.expect(6);
+    QUnit.test('The tester has the right form', function(assert) {
+        assert.expect(6);
         assert.ok(typeof fingerprintTester === 'function', 'The module exposes a function');
         assert.ok(typeof fingerprintTester() === 'object', 'fingerprintTester is a factory');
         assert.ok(typeof fingerprintTester().start === 'function', 'the test has a start method');
@@ -40,8 +40,7 @@ define([
         assert.ok(typeof fingerprintTester().labels === 'object', 'the test has a labels objects');
     });
 
-
-    QUnit.cases([{
+    QUnit.cases.init([{
         title: 'no level'
     }, {
         title: 'level 0',
@@ -56,7 +55,7 @@ define([
         title: 'level 3',
         level: 3
     }])
-        .test('labels', function (data, assert) {
+        .test('labels', function(data, assert) {
             var labels = fingerprintTester({level: data.level}).labels;
             var labelKeys = [
                 'title',
@@ -68,16 +67,15 @@ define([
                 'fingerprintErrors'
             ];
 
-            QUnit.expect(labelKeys.length + 1);
+            assert.expect(labelKeys.length + 1);
 
             assert.equal(typeof labels, 'object', 'A set of labels is returned');
-            labelKeys.forEach(function (key) {
+            labelKeys.forEach(function(key) {
                 assert.equal(typeof labels[key], 'string', 'The label ' + key + ' exists');
             });
         });
 
-
-    QUnit.cases([{
+    QUnit.cases.init([{
         title: 'no errors',
         errors: false,
         results: {
@@ -101,11 +99,11 @@ define([
             errors: 1
         }
     }])
-        .test('getSummary', function (data, assert) {
+        .test('getSummary', function(data, assert) {
             var tester = fingerprintTester({});
             var summary = tester.getSummary(data.results);
 
-            QUnit.expect(10 + (data.errors ? 3 : 0));
+            assert.expect(10 + (data.errors ? 3 : 0));
 
             assert.equal(typeof summary, 'object', 'The method has returned the summary');
 
@@ -128,8 +126,7 @@ define([
             }
         });
 
-
-    QUnit.cases([{
+    QUnit.cases.init([{
         title: 'error no results',
         percentage: 0,
         type: 'error',
@@ -190,11 +187,11 @@ define([
             }]
         }
     }])
-        .test('getFeedback', function (data, assert) {
+        .test('getFeedback', function(data, assert) {
             var tester = fingerprintTester({});
             var status = tester.getFeedback(data.results);
 
-            QUnit.expect(6);
+            assert.expect(6);
 
             assert.equal(typeof status, 'object', 'The method has returned the status');
             assert.equal(status.id, 'fingerprint', 'The status contains the tester id');
@@ -204,68 +201,70 @@ define([
             assert.equal(status.feedback.type, data.type, 'The status contains the expected feedback type');
         });
 
-
     QUnit.module('Test');
 
-    // cleans up the storage between each test
-    QUnit.testStart(function () {
-        storeMock('client-diagnostic').then(function (storage) {
-            storage.clear();
-        });
-    });
 
-    QUnit.asyncTest('The tester runs', function (assert) {
 
-        QUnit.expect(6);
+    QUnit.test('The tester runs', function(assert) {
+        var ready = assert.async();
+
+        assert.expect(6);
 
         fingerprintMock.fails = false;
         fingerprintMock.result = fingerprint;
         fingerprintMock.components = components;
         storeMock.setConfig('client-diagnostic', {});
+        storeMock('client-diagnostic').then(function(storage) {
+            storage.clear();
 
-        fingerprintTester({}).start(function (status, details, results) {
+            fingerprintTester({}).start(function(status, details, results) {
 
-            assert.equal(typeof status, 'object', 'The status is a object');
-            assert.equal(typeof details, 'object', 'The details is a object');
-            assert.equal(typeof results, 'object', 'The details are provided inside an object');
-            assert.equal(results.value, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
-            assert.equal(results.details, components, 'The fingerprint details are provided inside the results');
-            assert.equal(typeof results.errors, 'undefined', 'No errors should be found');
+                assert.equal(typeof status, 'object', 'The status is a object');
+                assert.equal(typeof details, 'object', 'The details is a object');
+                assert.equal(typeof results, 'object', 'The details are provided inside an object');
+                assert.equal(results.value, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
+                assert.equal(results.details, components, 'The fingerprint details are provided inside the results');
+                assert.equal(typeof results.errors, 'undefined', 'No errors should be found');
 
-            QUnit.start();
+                ready();
+            });
         });
 
     });
 
-    QUnit.asyncTest('The tester runs, even if storage is not available', function (assert) {
+    QUnit.test('The tester runs, even if storage is not available', function(assert) {
+        var ready = assert.async();
 
-        QUnit.expect(7);
+        assert.expect(7);
 
         fingerprintMock.fails = false;
         fingerprintMock.result = fingerprint;
         fingerprintMock.components = components;
-        storeMock.setConfig('client-diagnostic', {
-            failedStore: true
+
+        storeMock('client-diagnostic').then(function(storage) {
+            storage.clear();
+            storeMock.setConfig('client-diagnostic', {
+                failedStore: true
+            });
+            fingerprintTester({}).start(function(status, details, results) {
+
+                assert.equal(typeof status, 'object', 'The status is a object');
+                assert.equal(typeof details, 'object', 'The details is a object');
+                assert.equal(typeof results, 'object', 'The details are provided inside an object');
+                assert.equal(results.value, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
+                assert.deepEqual(results.details.slice(0, -1), components, 'The fingerprint details are provided inside the results');
+                assert.equal(results.details.pop().key, 'error', 'The fingerprint error is provided inside the results');
+                assert.equal(results.errors, 1, 'An error should be found');
+
+                ready();
+            });
         });
-
-        fingerprintTester({}).start(function (status, details, results) {
-
-            assert.equal(typeof status, 'object', 'The status is a object');
-            assert.equal(typeof details, 'object', 'The details is a object');
-            assert.equal(typeof results, 'object', 'The details are provided inside an object');
-            assert.equal(results.value, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
-            assert.deepEqual(results.details.slice(0, -1), components, 'The fingerprint details are provided inside the results');
-            assert.equal(results.details.pop().key, 'error', 'The fingerprint error is provided inside the results');
-            assert.equal(results.errors, 1, 'An error should be found');
-
-            QUnit.start();
-        });
-
     });
 
-    QUnit.asyncTest('The tester runs, even if storage is not writable', function (assert) {
+    QUnit.test('The tester runs, even if storage is not writable', function(assert) {
+        var ready = assert.async();
 
-        QUnit.expect(7);
+        assert.expect(7);
 
         fingerprintMock.fails = false;
         fingerprintMock.result = fingerprint;
@@ -273,44 +272,48 @@ define([
         storeMock.setConfig('client-diagnostic', {
             failedSet: true
         });
+        storeMock('client-diagnostic').then(function(storage) {
+            storage.clear();
+            fingerprintTester({}).start(function(status, details, results) {
 
-        fingerprintTester({}).start(function (status, details, results) {
+                assert.equal(typeof status, 'object', 'The status is a object');
+                assert.equal(typeof details, 'object', 'The details is a object');
+                assert.equal(typeof results, 'object', 'The details are provided inside an object');
+                assert.equal(results.value, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
+                assert.deepEqual(results.details.slice(0, -1), components, 'The fingerprint details are provided inside the results');
+                assert.equal(results.details.pop().key, 'error', 'The fingerprint error is provided inside the results');
+                assert.equal(results.errors, 1, 'An error should be found');
 
-            assert.equal(typeof status, 'object', 'The status is a object');
-            assert.equal(typeof details, 'object', 'The details is a object');
-            assert.equal(typeof results, 'object', 'The details are provided inside an object');
-            assert.equal(results.value, fingerprint.toUpperCase(), 'The fingerprint is provided inside the results');
-            assert.deepEqual(results.details.slice(0, -1), components, 'The fingerprint details are provided inside the results');
-            assert.equal(results.details.pop().key, 'error', 'The fingerprint error is provided inside the results');
-            assert.equal(results.errors, 1, 'An error should be found');
-
-            QUnit.start();
+                ready();
+            });
         });
 
     });
 
-    QUnit.asyncTest('The tester runs, even if an error occurs', function (assert) {
+    QUnit.test('The tester runs, even if an error occurs', function(assert) {
+        var ready = assert.async();
 
-        QUnit.expect(7);
+        assert.expect(7);
 
         fingerprintMock.fails = true;
         fingerprintMock.result = fingerprint;
         fingerprintMock.components = components;
         storeMock.setConfig('client-diagnostic', {});
+        storeMock('client-diagnostic').then(function(storage) {
+            storage.clear();
+            fingerprintTester({}).start(function(status, details, results) {
 
-        fingerprintTester({}).start(function (status, details, results) {
+                assert.equal(typeof status, 'object', 'The status is a object');
+                assert.equal(typeof details, 'object', 'The details is a object');
+                assert.equal(typeof results, 'object', 'The details are provided inside an object');
+                assert.equal(typeof results.value, 'undefined', 'The fingerprint is not provided inside the results');
+                assert.equal(results.details.length, 1, 'The fingerprint details are provided inside the results');
+                assert.equal(results.details.pop().key, 'error', 'The fingerprint error is provided inside the results');
+                assert.equal(results.errors, 1, 'An error should be found');
 
-            assert.equal(typeof status, 'object', 'The status is a object');
-            assert.equal(typeof details, 'object', 'The details is a object');
-            assert.equal(typeof results, 'object', 'The details are provided inside an object');
-            assert.equal(typeof results.value, 'undefined', 'The fingerprint is not provided inside the results');
-            assert.equal(results.details.length, 1, 'The fingerprint details are provided inside the results');
-            assert.equal(results.details.pop().key, 'error', 'The fingerprint error is provided inside the results');
-            assert.equal(results.errors, 1, 'An error should be found');
-
-            QUnit.start();
+                ready();
+            });
         });
-
     });
 
 });

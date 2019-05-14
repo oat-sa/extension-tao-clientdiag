@@ -13,15 +13,19 @@
 /// along with this program; if not, write to the Free Software
 /// Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 ///
-/// Copyright (c) 2015 Open Assessment Technologies SA
+/// Copyright (c) 2015-2019 Open Assessment Technologies SA
 ///
 
 
 @import "inc/bootstrap";
 
 
-.diagnostics-main-area {
+.diagnostics-content-area {
     max-width: 768px;
+    margin: 40px auto 40px auto;
+}
+
+.diagnostics-main-area {
     margin: 40px auto 0 auto;
     background: $canvas;
     @include simple-border();
@@ -67,8 +71,8 @@
 
     .quality-bar {
         height: 15px;
-       @include linear-gradient(#CE1431 #D57915 #D5A215 #D5CB15 #36B111);
-//        @include linear-gradient(#36B111  #D5A215 #CE1431 );
+        @include linear-gradient(#CE1431 #D57915 #D5A215 #D5CB15 #36B111);
+        //        @include linear-gradient(#36B111  #D5A215 #CE1431 );
         opacity: .8;
         @include border-radius(2);
         margin: 5px 0 10px;
@@ -111,7 +115,7 @@
     }
 
     [data-action=bandwidth-launcher] {
-      margin: 5px 0 10px;
+        margin: 5px 0 10px;
     }
 
     li {
@@ -127,6 +131,7 @@
         }
     }
 }
+
 
 
 table.datatable {
@@ -205,7 +210,6 @@ table.datatable {
     .diagnostic-index, .diagnostic-runner {
         .content {
             width: 100%;
-            padding: 0 20px;
         }
         .message {
             padding: 8px;
@@ -219,7 +223,6 @@ table.datatable {
             padding: 3px;
             overflow: hidden;
             color: whiten($info, .9);
-            margin: 40px 0 10px 0;
 
             .btn-info {
                 overflow: hidden;

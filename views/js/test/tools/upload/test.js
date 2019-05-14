@@ -16,26 +16,27 @@
  * Copyright (c) 2016-2017 (original work) Open Assessment Technologies SA ;
  */
 define([
+
     'jquery',
     'lodash',
     'taoClientDiagnostic/tools/upload/tester'
-], function($, _, uploadTester){
+], function($, _, uploadTester) {
     'use strict';
 
-    // backup/restore ajax method between each test
+    // Backup/restore ajax method between each test
     var ajaxBackup;
 
-    QUnit.testStart(function () {
+    QUnit.testStart(function() {
         ajaxBackup = $.ajax;
     });
-    QUnit.testDone(function () {
+    QUnit.testDone(function() {
         $.ajax = ajaxBackup;
     });
 
     QUnit.module('API');
 
     QUnit.test('The tester has the right form', function(assert) {
-        QUnit.expect(6);
+        assert.expect(6);
         assert.ok(typeof uploadTester === 'function', 'The module exposes a function');
         assert.ok(typeof uploadTester() === 'object', 'uploadTester is a factory');
         assert.ok(typeof uploadTester().start === 'function', 'the test has a start method');
@@ -44,7 +45,7 @@ define([
         assert.ok(typeof uploadTester().labels === 'object', 'the test has a labels objects');
     });
 
-    QUnit.cases([{
+    QUnit.cases.init([{
         title: 'no level'
     }, {
         title: 'level 0',
@@ -68,7 +69,7 @@ define([
                 'uploadMax'
             ];
 
-            QUnit.expect(labelKeys.length + 1);
+            assert.expect(labelKeys.length + 1);
 
             assert.equal(typeof labels, 'object', 'A set of labels is returned');
             labelKeys.forEach(function(key) {
@@ -84,7 +85,7 @@ define([
         };
         var summary = tester.getSummary(results);
 
-        QUnit.expect(7);
+        assert.expect(7);
 
         assert.equal(typeof summary, 'object', 'The method has returned the summary');
 
@@ -102,7 +103,7 @@ define([
         var result = 1024 * 1024;
         var status = tester.getFeedback(result);
 
-        QUnit.expect(6);
+        assert.expect(6);
 
         assert.equal(typeof status, 'object', 'The method has returned the status');
         assert.equal(status.id, 'upload', 'The status contains the tester id');
@@ -112,29 +113,28 @@ define([
         assert.equal(typeof status.feedback, 'object', 'The status contains a feedback descriptor');
     });
 
-
     QUnit.module('Test');
 
-    QUnit.asyncTest('The tester runs', function(assert) {
+    QUnit.test('The tester runs', function(assert) {
+        var ready = assert.async();
         var expectedSize = 100;
         var $ajax = $.ajax;
 
-        QUnit.expect(4);
+        assert.expect(4);
 
-        $.ajax = function (config) {
+        $.ajax = function(config) {
             config.url = window.location.href.replace('test.html', 'test.json');
             return $ajax(config);
         };
 
-        uploadTester({size : expectedSize}).start(function(status, details, result) {
+        uploadTester({size: expectedSize}).start(function(status, details, result) {
             assert.ok(typeof result.avg === 'number', 'Speed is a number');
             assert.ok(result.avg > 0, 'Speed is a positive number');
             assert.ok(typeof result.avg === 'number', 'Loaded is a number');
             assert.ok(result.avg > 0, 'Loaded is a positive number');
 
-            QUnit.start();
+            ready();
         });
-
     });
 
 });
