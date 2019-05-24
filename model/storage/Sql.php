@@ -21,6 +21,7 @@
 
 namespace oat\taoClientDiagnostic\model\storage;
 
+use Doctrine\DBAL\DBALException;
 use oat\oatbox\service\ConfigurableService;
 use oat\taoClientDiagnostic\exception\StorageException;
 
@@ -83,7 +84,7 @@ class Sql extends ConfigurableService implements Storage
             }
             return true;
 
-        } catch (\PDOException $e) {
+        } catch (DBALException $e) {
             throw new StorageException($e->getMessage());
         }
     }
@@ -166,7 +167,7 @@ class Sql extends ConfigurableService implements Storage
 
         try{
             $this->getPersistence()->exec($query);
-        } catch (\PDOException $e){
+        } catch (DBALException $e){
             return false;
         }
         return true;
