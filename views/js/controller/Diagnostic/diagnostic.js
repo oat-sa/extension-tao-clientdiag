@@ -55,7 +55,8 @@ define([
             var extension = $container.data('extension') || 'taoClientDiagnostic';
             var $list = $container.find('.list');
             var $panel = $('.panel');
-            var config = $container.data('config');
+            var extensionConfig = $container.data('config') || {};
+            var config = extensionConfig.diagnostic || extensionConfig;
             var indexUrl = helpers._url('index', 'Diagnostic', extension);
             var workstationUrl = helpers._url('workstation', 'DiagnosticChecker', extension);
             var buttons = [];
