@@ -24,11 +24,10 @@
  */
 define([
     'jquery',
-    'layout/loading-bar',
     'ui/feedback',
     'taoClientDiagnostic/tools/message',
     'taoClientDiagnostic/component/diagnostic/diagnosticLoader'
-], function ($, loadingBar, feedback, showMessage, diagnosticFactory) {
+], function ($, feedback, showMessage, diagnosticFactory) {
     'use strict';
 
     /**
@@ -40,19 +39,7 @@ define([
 
             showMessage('#feedback-box');
 
-            diagnosticFactory($contentArea, config)
-                .on('start', function() {
-                    loadingBar.start();
-                })
-                .on('end', function() {
-                    loadingBar.stop();
-                })
-                .on('render', function() {
-                    loadingBar.stop();
-                    if (config.autoStart) {
-                        this.run();
-                    }
-                });
+            diagnosticFactory($contentArea, config);
         }
     };
 });

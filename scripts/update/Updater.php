@@ -765,5 +765,19 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         $this->skip('5.0.0', '6.0.0');
+
+        if ($this->isVersion('6.0.0')) {
+            // Update clientDiag.conf.php
+            $extension = $this->getServiceManager()
+                ->get(\common_ext_ExtensionsManager::SERVICE_ID)
+                ->getExtensionById('taoClientDiagnostic');
+            $oldClientDiagConfig = $extension->getConfig('clientDiag');
+
+            $extension->setConfig('clientDiag', [
+                'diagnostic' => $oldClientDiagConfig['diagnostic'],
+            ]);
+
+            $this->setVersion('6.0.1');
+        }
     }
 }
