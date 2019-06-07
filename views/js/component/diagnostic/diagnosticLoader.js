@@ -21,8 +21,9 @@ define([
     'core/moduleLoader',
     'context',
     'module',
-    'tpl!taoClientDiagnostic/component/diagnostic/tpl/component'
-], function (_, componentFactory, moduleLoader, context, module, componentTpl) {
+    'tpl!taoClientDiagnostic/component/diagnostic/tpl/component',
+    'layout/loading-bar',
+], function (_, componentFactory, moduleLoader, context, module, componentTpl, loadingBar) {
     'use strict';
     /**
      * Some default values.
@@ -69,7 +70,20 @@ define([
                             factoryConfig = componentConfig[factoryName];
                             factoryConfig.controller = componentConfig.controller;
 
-                            factory(self.getElement(), factoryConfig);
+                            var componentInstance = factory(self.getElement(), factoryConfig);
+
+                            componentInstance
+                                .on('render', function() {
+                                    if (factoryConfig.autoStart) {
+                                        this.run();
+                                    }
+                                })
+                                .on('start', function() {
+                                    loadingBar.start();
+                                })
+                                .on('end', function() {
+                                    loadingBar.stop();
+                                });
                         });
 
                         /**
