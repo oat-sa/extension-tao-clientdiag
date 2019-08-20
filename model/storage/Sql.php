@@ -144,15 +144,16 @@ class Sql extends ConfigurableService implements Storage
     }
 
     /**
-     * @param string $word
+     * @param $word
      * @return string
+     * @throws StorageException
      */
     private function tableize($word)
     {
         $tableized = preg_replace('~(?<=\\w)([A-Z])~u', '_$1', $word);
         if ($tableized === null) {
-            throw new \RuntimeException(sprintf(
-                'preg_replace returned null for value "%s"',
+            throw new StorageException(sprintf(
+                'Invalid column name "%s"',
                 $word
             ));
         }
