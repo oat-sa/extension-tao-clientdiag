@@ -15,7 +15,7 @@ use oat\tao\model\theme\Theme;
         <link rel="stylesheet" href="<?= Template::css('diagnostics.css', 'taoClientDiagnostic') ?>"/>
         <link rel="stylesheet" href="<?= Layout::getThemeStylesheet(Theme::CONTEXT_FRONTOFFICE) ?>" />
         <link rel="shortcut icon" href="<?= Template::img('favicon.ico', 'tao') ?>"/>
-        <?= Layout::getAmdLoader(Template::js('loader/backoffice.min.js', 'tao'), 'controller/backoffice') ?>
+        <?= Layout::getAmdLoader(Template::js('loader/tao.min.js', 'tao'), 'controller/backoffice') ?>
     </head>
     <body class="diagnostic-scope">
 <?php Template::inc('blocks/requirement-check.tpl', 'tao'); ?>
