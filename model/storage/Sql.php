@@ -137,12 +137,27 @@ class Sql extends ConfigurableService implements Storage
             self::DIAGNOSTIC_CREATED_AT => $platform->getNowExpression()
         ), $data);
 
-        $query = 'INSERT INTO ' . self::DIAGNOSTIC_TABLE . '(' . implode(', ', array_map('Doctrine\Common\Inflector\Inflector::tableize',array_keys($columns))) . ')' .
+        $query = 'INSERT INTO ' . self::DIAGNOSTIC_TABLE . '(' . implode(', ', array_map([$this, 'tableize'], array_keys($columns))) . ')' .
                  ' VALUES (' . str_repeat("?,", count($columns) - 1) . '? )';
 
         return $this->persistence->exec($query, array_values($columns));
     }
 
+    /**
+     * @param string $word
+     * @return string
+     */
+    private function tableize($word)
+    {
+        $tableized = preg_replace('~(?<=\\w)([A-Z])~u', '_$1', $word);
+        if ($tableized === null) {
+            throw new \RuntimeException(sprintf(
+                'preg_replace returned null for value "%s"',
+                $word
+            ));
+        }
+        return mb_strtolower($tableized);
+    }
 
     /**
      * Update record in SQL table with $data by $this->id
