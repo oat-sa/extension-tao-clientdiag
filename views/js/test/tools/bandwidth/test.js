@@ -93,7 +93,7 @@ define(['context', 'taoClientDiagnostic/tools/bandwidth/tester'], function(conte
     QUnit.test('getFeedback', function(assert) {
         var tester = bandwidthTester({});
         var result = {max: 100, min: 10, average: 40};
-        var status = tester.getFeedback(result);
+        var status = tester.getFeedback(result, {'10KB': {'average' : 5, 'min': 2}});
 
         assert.expect(8);
 
@@ -106,7 +106,7 @@ define(['context', 'taoClientDiagnostic/tools/bandwidth/tester'], function(conte
         assert.equal(status.feedback.type, 'success', 'The type of feedback is correct');
 
         result = {max: 100, min: 10, average: 51};
-        status = tester.getFeedback(result);
+        var status = tester.getFeedback(result, {'10KB': {'average' : 10, 'min': 1}});
         assert.equal(status.feedback.type, 'warning', 'The type of feedback is correct');
     });
 
