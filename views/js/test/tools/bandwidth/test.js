@@ -92,10 +92,10 @@ define(['context', 'taoClientDiagnostic/tools/bandwidth/tester'], function(conte
 
     QUnit.test('getFeedback', function(assert) {
         var tester = bandwidthTester({});
-        var result = {max: 100, min: 10, average: 55};
+        var result = {max: 100, min: 10, average: 40};
         var status = tester.getFeedback(result);
 
-        assert.expect(6);
+        assert.expect(8);
 
         assert.equal(typeof status, 'object', 'The method has returned the status');
         assert.equal(status.id, 'bandwidth', 'The status contains the tester id');
@@ -103,6 +103,11 @@ define(['context', 'taoClientDiagnostic/tools/bandwidth/tester'], function(conte
         assert.equal(typeof status.title, 'string', 'The status contains a title');
         assert.equal(typeof status.quality, 'object', 'The status contains a quality descriptor');
         assert.equal(typeof status.feedback, 'object', 'The status contains a feedback descriptor');
+        assert.equal(status.feedback.type, 'success', 'The type of feedback is correct');
+
+        result = {max: 100, min: 10, average: 51};
+        status = tester.getFeedback(result);
+        assert.equal(status.feedback.type, 'warning', 'The type of feedback is correct');
     });
 
     QUnit.module('Test');

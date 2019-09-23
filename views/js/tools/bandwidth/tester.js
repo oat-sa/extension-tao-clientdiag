@@ -342,9 +342,6 @@ define([
                 var status;
                 var nb;
 
-                if (result.min / avgResult > initConfig.fallbackThreshold){
-                    baseBandwidth = result.min;
-                }
 
                 status = getStatus(
                     baseBandwidth / max * 100,
@@ -363,6 +360,11 @@ define([
                 status.title = labels.title;
                 status.feedback.legend = labels.legend;
                 status.quality.label = nb;
+
+                if (result.min / avgResult < initConfig.fallbackThreshold) {
+                    status.feedback.type = 'warning';
+                    status.feedback.message = __('Unstable bandwidth. Temporary drops in connection speed are possible.');
+                }
 
                 if (nb.toString().length > 2) {
                     status.quality.wide = true;
