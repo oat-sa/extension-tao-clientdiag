@@ -220,6 +220,15 @@ return array(
                     ]
                  */
                 'feedbackThresholds' => [],
+
+                /**
+                 * The ratio of the minimum and average connection speed at which the connection will be considered unstable.
+                 * Calculated only for queries of the same size.
+                 * Calculation formula:
+                 * minimum / average < 0.2
+                 * @type float
+                 */
+                'fallbackThreshold' => 0.2,
             ),
 
             /**
@@ -268,6 +277,15 @@ return array(
                  * @type int
                  */
                 'max' => 100,
+
+                /**
+                 * The ratio of the minimum and average connection speed at which the connection will be considered unstable.
+                 * Calculated only for queries of the same size.
+                 * Calculation formula:
+                 * minimum / average < 0.2
+                 * @type float
+                 */
+                'fallbackThreshold' => 0.2,
             ),
 
             /**
