@@ -266,6 +266,7 @@ define([
                     var size = 0;
                     var decimals = 2;
                     var results;
+                    var resultsBySize = {};
                     var summary;
                     var status;
 
@@ -287,14 +288,19 @@ define([
                         //something went wrong
                         throw err;
                     }
-
                     results = stats(measures, getValue, decimals);
+
+                    _.forEach(_downloadData, function (data, key) {
+                        resultsBySize[key] = stats(_.filter(measures, function(o) {
+                            return o.id === key;
+                        }), getValue, decimals);
+                    });
 
                     results.duration = fixedDecimals(duration / _second, decimals);
                     results.size = size;
 
                     summary = self.getSummary(results);
-                    status = self.getFeedback(results);
+                    status = self.getFeedback(results, resultsBySize);
 
                     done(status, summary, results);
                 });
@@ -327,9 +333,10 @@ define([
              * @param {Number} result.max
              * @param {Number} result.min
              * @param {Number} result.average
+             * @param {Number} resultsBySize - result statistics grouped by size
              * @returns {Object}
              */
-            getFeedback: function getFeedback(result) {
+            getFeedback: function getFeedback(result, resultsBySize) {
                 var avgResult = result.average;
                 var bandwidthUnit = initConfig.unit;
                 var threshold = initConfig.ideal;
@@ -341,10 +348,13 @@ define([
                 var baseBandwidth = avgResult;
                 var status;
                 var nb;
+                var stable = true;
 
-                if (result.min / avgResult > initConfig.fallbackThreshold){
-                    baseBandwidth = result.min;
-                }
+                _.forEach(resultsBySize, function (resultBySize){
+                    if (resultBySize.min / resultBySize.average < initConfig.fallbackThreshold) {
+                        stable = false;
+                    }
+                });
 
                 status = getStatus(
                     baseBandwidth / max * 100,
@@ -354,7 +364,6 @@ define([
 
                 nb = Math.floor(baseBandwidth / bandwidthUnit );
 
-
                 if (nb > maxTestTakers) {
                     nb = '>' + maxTestTakers;
                 }
@@ -363,6 +372,12 @@ define([
                 status.title = labels.title;
                 status.feedback.legend = labels.legend;
                 status.quality.label = nb;
+
+                if (!stable) {
+                    status.feedback.type = 'warning';
+                    status.feedback.message = __('Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience.');
+                    status.feedback.legend = __('Simultaneous test takers under normal connection conditions.');
+                }
 
                 if (nb.toString().length > 2) {
                     status.quality.wide = true;
