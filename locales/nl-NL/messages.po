@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.3.0-sprint91\n"
-"PO-Revision-Date: 2019-05-24T08:15:13\n"
+"Project-Id-Version: TAO 3.4.0-sprint111\n"
+"PO-Revision-Date: 2019-09-27T08:27:47\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: nl-NL\n"
@@ -280,6 +280,9 @@ msgstr "Toon details"
 msgid "Show fingerprint details"
 msgstr ""
 
+msgid "Simultaneous test takers under normal connection conditions."
+msgstr ""
+
 msgid "Something went wrong ..."
 msgstr "Er ging iets verkeerd..."
 
@@ -327,6 +330,9 @@ msgstr "Probeer een test levering"
 
 msgid "Unable to get the workstation name!"
 msgstr "Het lukt niet om de naam van het werkstation te achterhalen!"
+
+msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
+msgstr ""
 
 msgid "Upload speed"
 msgstr "Uploadsnelheid"
