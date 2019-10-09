@@ -24,8 +24,9 @@ namespace oat\taoClientDiagnostic\test\unit;
 use oat\taoClientDiagnostic\model\CompatibilityChecker;
 use Sinergi\BrowserDetector\Browser;
 use Sinergi\BrowserDetector\Os;
+use oat\generis\test\TestCase;
 
-class CompatibilityCheckerTest extends \PHPUnit_Framework_TestCase
+class CompatibilityCheckerTest extends TestCase
 {
     public function testCompatibleConfigTrue()
     {
