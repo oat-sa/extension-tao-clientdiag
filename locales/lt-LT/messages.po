@@ -191,7 +191,7 @@ msgid "Minimum rendering time"
 msgstr "Minimalus atvaizdavimo laikas"
 
 msgid "Missing field %s"
-msgstr "Trūkstamas %s laukas "
+msgstr "Trūkstamas %s laukas"
 
 msgid "No"
 msgstr "Ne"
