@@ -30,9 +30,10 @@ return array(
     'label'       => 'Browser and OS diagnostic tool',
     'description' => 'Check compatibility of the os and browser of a client',
     'license'     => 'GPL-2.0',
-    'version'     => '6.0.6',
+    'version'     => '7.1.0',
     'author'      => 'Open Assessment Technologies SA',
     'requires'    => array(
+        'generis'    => '>=12.5.0',
         'tao'        => '>=35.0.0',
         'taoQtiItem' => '>=18.0.0',
     ),

@@ -22,8 +22,9 @@
 namespace oat\taoClientDiagnostic\test\unit\model\authorization;
 
 use oat\taoClientDiagnostic\model\authorization\Anonymous;
+use oat\generis\test\TestCase;
 
-class AnonymousTest extends \PHPUnit_Framework_TestCase
+class AnonymousTest extends TestCase
 {
     /**
      * @var oat\taoClientDiagnostic\model\authorization\Anonymous
