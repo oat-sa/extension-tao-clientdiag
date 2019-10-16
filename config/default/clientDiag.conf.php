@@ -65,6 +65,12 @@ return array(
         'requireSchoolName' => false,
 
         /**
+         * When this option is activated, the diagnostic will require a school id before allowing to start the checks
+         * @type boolean
+         */
+        'requireSchoolId' => false,
+
+        /**
          * When this option is activated, in link with `requireSchoolName`, the diagnostic will require a school number and
          * a 4 digits PIN. Then will retrieve the school name within a list.
          * @type boolean

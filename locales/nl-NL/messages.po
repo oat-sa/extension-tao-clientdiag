@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint111\n"
-"PO-Revision-Date: 2019-09-27T08:27:47\n"
+"Project-Id-Version: TAO 3.4.0-sprint113\n"
+"PO-Revision-Date: 2019-10-16T14:44:33\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: nl-NL\n"
@@ -246,6 +246,15 @@ msgstr "Verwijder het gereedheid controle resultaat"
 
 msgid "Return to the list"
 msgstr "Keer terug naar de lijst"
+
+msgid "School id"
+msgstr ""
+
+msgid "School ID"
+msgstr ""
+
+msgid "School ID:"
+msgstr ""
 
 msgid "School name"
 msgstr ""

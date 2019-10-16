@@ -458,6 +458,7 @@ define([
      * @param {String} [config.extension] - The name of the extension containing the controller
      * @param {Object} [config.storeParams] - A list of additional parameters to send with diagnostic results
      * @param {Boolean} [config.requireSchoolName] - If `true` require a school name to allow the tests to start
+     * @param {Boolean} [config.requireSchoolId] - If `true` require a school ID to allow the tests to start
      * @param {Boolean} [config.validateSchoolName] - If `true` require a school number and a PIN to get the school name and to allow the tests to start
      *
      * @param {String} [config.browser.action] - The name of the action to call to get the browser checker
@@ -588,7 +589,7 @@ define([
                  * Install the school name manager.
                  * @todo: improve this by moving it into a plugin, and obviously implement the plugin handling
                  */
-                function manageSchoolName(fields, validate) {
+                function manageSchoolProperties(fields, validate) {
                     /**
                      * Checks if the start button can be enabled
                      * @returns
@@ -708,10 +709,14 @@ define([
 
                 if (this.config.requireSchoolName) {
                     if (this.config.validateSchoolName) {
-                        manageSchoolName(['school_number', 'school_pin'], requestSchoolName);
+                        manageSchoolProperties(['school_number', 'school_pin'], requestSchoolName);
                     } else {
-                        manageSchoolName(['school_name']);
+                        manageSchoolProperties(['school_name']);
                     }
+                }
+
+                if (this.config.requireSchoolId) {
+                    manageSchoolProperties(['school_id']);
                 }
 
                 // show result details
