@@ -267,6 +267,14 @@ define([
                 });
             }
 
+            // column: School id
+            if (config.requireSchoolId) {
+                model.push({
+                    id: 'school_id',
+                    label: __('School id')
+                });
+            }
+
             // column: School number
             if (config.validateSchoolName) {
                 model.push({

@@ -6,6 +6,12 @@
         {{#if header}}<p>{{header}}</p>{{/if}}
         {{#if info}}<p>{{info}}</p>{{/if}}
         {{#if setup}}<p>{{setup}}</p>{{/if}}
+        {{#if requireSchoolId}}
+        <p>
+            <label for="school_id">{{__ "School ID:"}}</label>
+            <input type="text" data-control="school_id" id="school_id" name="school_id" maxlength="255" placeholder="{{__ "School ID"}}" />
+        </p>
+        {{/if}}
         {{#if requireSchoolName}}
             {{#if validateSchoolName}}
         <p>
