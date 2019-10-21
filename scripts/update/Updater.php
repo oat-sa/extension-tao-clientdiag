@@ -812,7 +812,7 @@ class Updater extends \common_ext_ExtensionUpdater
                 }
             }
 
-            $this->setVersion('7.2.0');
+            $this->setVersion('7.2.1');
         }
     }
 }
