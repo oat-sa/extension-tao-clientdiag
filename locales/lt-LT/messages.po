@@ -53,7 +53,7 @@ msgid "Cannot retrieve the school name. Please verify your input"
 msgstr "Nepavyko gauti jūsų mokyklos vardo. Prašome patikrinti savo įvestį"
 
 msgid "Change since last fingerprint"
-msgstr ""
+msgstr "Pokytis nuo praeitos žymės"
 
 msgid "Checking the bandwidth..."
 msgstr "Tikrinti pralaidumą..."
@@ -290,7 +290,7 @@ msgid "Show fingerprint details"
 msgstr "Rodyti antspaudo detales"
 
 msgid "Simultaneous test takers under normal connection conditions."
-msgstr ""
+msgstr "Vienu metu prisijungusių testuojamųjų skaičius, esant įprastoms tinklo sąlygoms"
 
 msgid "Something went wrong ..."
 msgstr "Kažkas blogai įvyko..."
@@ -299,10 +299,10 @@ msgid "Starting..."
 msgstr "Pradedama..."
 
 msgid "System Compatibility"
-msgstr ""
+msgstr "Sistemos suderinamumas"
 
 msgid "Test system compatibility"
-msgstr ""
+msgstr "Patikrinti sistemos suderinamumą"
 
 msgid "The device screen does not meet the minimum resolution of %s!"
 msgstr "Įrenginio ekranas neatitinka %s minimalios rezoliucijos!"
@@ -323,7 +323,7 @@ msgid "The selected readiness check results will be removed. Continue ?"
 msgstr "Pasirinktas pasiruošimo tikrinimo rezultatai bus pašalinti. Tęsti?"
 
 msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
-msgstr ""
+msgstr "Būtina atnaujinti diagnostikos rezultatų saugyklą, kad leistų skaityti įrašus!"
 
 msgid "This browser is not tested."
 msgstr "Ši naršyklė netikrinta."
@@ -341,7 +341,7 @@ msgid "Unable to get the workstation name!"
 msgstr "Nepavyko gauti darbo stoties pavadinimą!"
 
 msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
-msgstr ""
+msgstr "Nestabilus tinklo pralaidumas, laikini tinklo trikdžiai gali neigiamai paveikti testą atliekančiųjų veiksmus ir rezultatus."
 
 msgid "Upload speed"
 msgstr "Įkėlimo greitis"
