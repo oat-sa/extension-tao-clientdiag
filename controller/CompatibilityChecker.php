@@ -248,6 +248,10 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $data[Storage::DIAGNOSTIC_SCHOOL_ID] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('school_id')));
         }
 
+        if ($this->hasRequestParameter('workstation')) {
+            $data[Storage::DIAGNOSTIC_WORKSTATION] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('workstation')));
+        }
+
         if ($this->hasRequestParameter('school_number')) {
             $data[Storage::DIAGNOSTIC_SCHOOL_NUMBER] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('school_number')));
         }
