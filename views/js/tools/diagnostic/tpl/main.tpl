@@ -11,6 +11,10 @@
             <label for="school_id">{{__ "School ID:"}}</label>
             <input type="text" data-control="school_id" id="school_id" name="school_id" maxlength="255" placeholder="{{__ "School ID"}}" />
         </p>
+        <p>
+            <label for="workstation">{{__ "Workstation:"}}</label>
+            <input type="text" data-control="workstation" id="workstation" name="workstation" maxlength="64" placeholder="{{__ "Workstation name"}}" />
+        </p>
         {{/if}}
         {{#if requireSchoolName}}
             {{#if validateSchoolName}}

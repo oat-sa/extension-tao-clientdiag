@@ -716,7 +716,7 @@ define([
                 }
 
                 if (this.config.requireSchoolId) {
-                    manageSchoolProperties(['school_id']);
+                    manageSchoolProperties(['school_id', 'workstation']);
                 }
 
                 // show result details
