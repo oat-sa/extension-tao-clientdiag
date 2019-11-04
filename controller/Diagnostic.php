@@ -22,6 +22,7 @@ namespace oat\taoClientDiagnostic\controller;
 
 use oat\generis\model\OntologyAwareTrait;
 use oat\oatbox\service\ServiceNotFoundException;
+use oat\tao\model\export\implementation\CsvExporter;
 use oat\tao\model\theme\ThemeService;
 use oat\taoClientDiagnostic\model\diagnostic\Paginator;
 use DateTime;
@@ -134,6 +135,19 @@ class Diagnostic extends \tao_actions_CommonModule
         $this->returnJson([
             'success' => $this->getDiagnosticDataTable()->removeDiagnostic($id)
         ]);
+    }
+
+    /**
+     * Export diagnostic results to csv file
+     *
+     * @throws \common_exception_InvalidArgumentType
+     */
+    public function csvExport()
+    {
+        $data = json_decode($this->getPostParameter('data'), true);
+        $csvExporter = new CsvExporter($data);
+        $response = $csvExporter->getFileExportResponse(null, true);
+        $this->setResponse($response);
     }
 
     /**
