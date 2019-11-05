@@ -137,7 +137,7 @@ msgid "Intensive bandwidth"
 msgstr "Intensyvus pralaidumas"
 
 msgid "Interface not available"
-msgstr "Sąsaja nėra galima"
+msgstr "Sąsaja negalima"
 
 msgid "Launch another readiness check"
 msgstr "Paleisti kitą pasiruošimo patikrinimą"
