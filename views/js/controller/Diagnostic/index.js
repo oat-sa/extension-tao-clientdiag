@@ -126,7 +126,6 @@ define([
             var serviceUrl = helpers._url('diagnosticData', 'Diagnostic', extension);
             var performancesTester = performancesTesterFactory(config.testers.performance || {});
             var fingerprintTester = fingerprintTesterFactory(config.testers.fingerprint || {});
-            var csvExportUrl = helpers._url('csvExport', 'Diagnostic', extension);
 
             var tools = [];
             var actions = [];
@@ -162,55 +161,6 @@ define([
                 }
             }
 
-            // exporting all diagnostic data according to the table
-            function exportCsv() {
-                loadingBar.start();
-                getRequest(serviceUrl, {rows: Number.MAX_SAFE_INTEGER})
-                    .done(response => {
-                        const mappedData = mappingDiagnosticsData(response.data);
-                        getCsvFileFromData(mappedData);
-                        loadingBar.stop();
-                    });
-            }
-
-            // filtering and transforming diagnostic data according to the model
-            function mappingDiagnosticsData(diagnostics) {
-                return diagnostics.map(diagnostic => {
-                    const result = {};
-                    _.forEach(model, field => {
-                        result[field.id] = field.transform ? field.transform(diagnostic[field.id], diagnostic) : diagnostic[field.id];
-                    });
-                    return result;
-                });
-            }
-
-            // wrapper for get request
-            function getRequest(url, data) {
-                return $.ajax({
-                    url: url,
-                    data: data,
-                    error: () => {
-                        loadingBar.stop();
-                    }
-                });
-            }
-
-            // file upload without form using post method
-            function getCsvFileFromData(data) {
-                const input = $('<input>')
-                    .attr('type', 'hidden')
-                    .attr('name', 'data')
-                    .val(JSON.stringify(data));
-
-                const form = $('<form></form>')
-                    .attr('action', csvExportUrl)
-                    .attr('method', 'post')
-                    .append(input);
-
-                $('body').append(form);
-                form.submit().remove();
-            }
-
             // request the server to remove the selected diagnostic-index
             function remove(selection) {
                 request(removeUrl, selection, __('The readiness check result have been removed'));
@@ -236,17 +186,6 @@ define([
                 label: __('Launch readiness check'),
                 action: function() {
                     window.location.href = diagnosticUrl;
-                }
-            });
-
-            // tool: export csv
-            tools.push({
-                id: 'csvExport',
-                icon: 'export',
-                title: __('Export CSV'),
-                label: __('Export CSV'),
-                action: function () {
-                    exportCsv();
                 }
             });
 
