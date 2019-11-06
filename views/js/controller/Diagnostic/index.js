@@ -161,6 +161,73 @@ define([
                 }
             }
 
+            // exporting all diagnostic data according to the table
+            function exportCsv() {
+                loadingBar.start();
+                getRequest(serviceUrl, {rows: Number.MAX_SAFE_INTEGER})
+                    .done(response => {
+                        const mappedData = mappingDiagnosticsData(response.data);
+                        let csvContent = arrayToCsv(mappedData);
+                        downloadFile(csvContent, 'diagnostics.csv', 'text/csv');
+                        loadingBar.stop();
+                    });
+            }
+
+            // filtering and transforming diagnostic data according to the model
+            function mappingDiagnosticsData(diagnostics) {
+                return diagnostics.map(diagnostic => {
+                    const result = {};
+                    _.forEach(model, field => {
+                        result[field.id] = field.transform ? field.transform(diagnostic[field.id], diagnostic) : diagnostic[field.id];
+                    });
+                    return result;
+                });
+            }
+
+            // wrapper for get request
+            function getRequest(url, data) {
+                return $.ajax({
+                    url: url,
+                    data: data,
+                    error: () => {
+                        loadingBar.stop();
+                    }
+                });
+            }
+
+            // a string variable is created containing the contents of the csv file
+            function arrayToCsv(data, columnDelimiter = ",", lineDelimiter = "\n") {
+                const keys = Object.keys(data[0]);
+                let result = "";
+                result += keys.join(columnDelimiter);
+                result += lineDelimiter;
+                data.forEach(item => {
+                    let ctr = 0;
+                    keys.forEach(key => {
+                        if (ctr > 0) {
+                            result += columnDelimiter
+                        }
+                        result += typeof item[key] === "string" && item[key].includes(columnDelimiter) ? `"${item[key]}"` : item[key];
+                        ctr++
+                    });
+                    result += lineDelimiter
+                });
+                return result
+            }
+
+            // file download from string
+            function downloadFile(content, filename, type) {
+                const blob = new Blob([content], {type: type});
+                const url = URL.createObjectURL(blob);
+                const link = $('<a></a>')
+                    .attr('download', filename)
+                    .attr('href', url)
+                    .get(0)
+                    .click();
+
+                URL.revokeObjectURL(url);
+            }
+
             // request the server to remove the selected diagnostic-index
             function remove(selection) {
                 request(removeUrl, selection, __('The readiness check result have been removed'));
@@ -188,6 +255,19 @@ define([
                     window.location.href = diagnosticUrl;
                 }
             });
+
+            if (config.export) {
+                // tool: export csv
+                tools.push({
+                    id: 'csvExport',
+                    icon: 'export',
+                    title: __('Export CSV'),
+                    label: __('Export CSV'),
+                    action: function () {
+                        exportCsv();
+                    }
+                });
+            }
 
             if(installedExtension){
                 // tool: compatibilty via lti
