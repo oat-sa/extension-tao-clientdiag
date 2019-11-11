@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016-2017 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2016-2019 (original work) Open Assessment Technologies SA ;
  */
  /**
  * @author Andrey Niahrou <andrey.niahrou@1pt.com>
@@ -70,9 +70,7 @@ define([
             // a string variable is created containing the contents of the csv file
             function arrayToCsv(data, columnDelimiter = ",", lineDelimiter = "\n") {
                 const keys = Object.keys(data[0]);
-                let result = "";
-                result += keys.join(columnDelimiter);
-                result += lineDelimiter;
+                let result = `${keys.join(columnDelimiter)}${lineDelimiter}`;
                 data.forEach(item => {
                     let ctr = 0;
                     keys.forEach(key => {
@@ -91,13 +89,15 @@ define([
             function downloadFile(content, filename, type) {
                 const blob = new Blob([content], {type: type});
                 const url = URL.createObjectURL(blob);
-                const link = $('<a></a>')
+                let link = $('<a></a>')
                     .attr('download', filename)
                     .attr('href', url)
                     .get(0)
                     .click();
 
                 URL.revokeObjectURL(url);
+
+                link = null;
             }
 
             loadingBar.start();
