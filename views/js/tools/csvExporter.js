@@ -89,8 +89,8 @@ define([
             function downloadFile(content, filename, type) {
                 const blob = new Blob([content], {type: type});
                 const url = URL.createObjectURL(blob);
-                let link = $('<a></a>')
-                    .attr('download', filename)
+                let link = $('<a></a>');
+                link.attr('download', filename)
                     .attr('href', url)
                     .get(0)
                     .click();
