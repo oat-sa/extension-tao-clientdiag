@@ -33,9 +33,10 @@ define([
     'taoClientDiagnostic/tools/fingerprint/tester',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/fingerprint',
     'tpl!taoClientDiagnostic/tools/diagnostic/tpl/details',
+    'taoClientDiagnostic/tools/csvExporter',
     'ui/datatable',
     'lib/moment-timezone.min'
-], function ($, _, __, helpers, moment, loadingBar, encode, feedback, dialog, getStatus, performancesTesterFactory, fingerprintTesterFactory, fingerprintTpl, detailsTpl) {
+], function ($, _, __, helpers, moment, loadingBar, encode, feedback, dialog, getStatus, performancesTesterFactory, fingerprintTesterFactory, fingerprintTpl, detailsTpl, csvExporter) {
     'use strict';
 
     /**
@@ -188,6 +189,19 @@ define([
                     window.location.href = diagnosticUrl;
                 }
             });
+
+            if (config.export) {
+                // tool: export csv
+                tools.push({
+                    id: 'csvExport',
+                    icon: 'export',
+                    title: __('Export CSV'),
+                    label: __('Export CSV'),
+                    action: function () {
+                        csvExporter.exportCsv(model);
+                    }
+                });
+            }
 
             if(installedExtension){
                 // tool: compatibilty via lti
