@@ -563,7 +563,7 @@ define([
                             state = !$control.is(':enabled');
                         }
                         if (state) {
-                            $control.removeProp('disabled');
+                            $control.prop('disabled', false);
                         } else {
                             $control.prop('disabled', true);
                         }
