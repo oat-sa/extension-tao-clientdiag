@@ -30,6 +30,7 @@ module.exports = function(grunt) {
                     extension : 'taoClientDiagnostic',
                     dependencies : ['taoQtiItem', 'taoItems'],
                     outputDir : 'loader',
+                    paths: require('./paths.json'),
                     bundles : [{
                         name : 'taoClientDiagnostic',
                         default : true,
