@@ -46,6 +46,14 @@ class Sql extends ConfigurableService implements Storage
      */
     private $persistence;
 
+    private const FIELDS_INT = [
+        self::DIAGNOSTIC_BANDWIDTH_SIZE,
+        self::DIAGNOSTIC_INTENSIVE_BANDWIDTH_SIZE,
+        self::DIAGNOSTIC_PERFORMANCE_COUNT,
+        self::DIAGNOSTIC_BANDWIDTH_COUNT,
+        self::DIAGNOSTIC_INTENSIVE_BANDWIDTH_COUNT
+    ];
+
     /**
      * Get persistence with configurable driver option of Sql Storage
      * Get default driver if option is not set
@@ -197,11 +205,8 @@ class Sql extends ConfigurableService implements Storage
     private function castValue($field, $value)
     {
         if (is_string($value)) {
-            $intFieldsMarkers = ['_count', '_size'];
-            foreach ($intFieldsMarkers as $fld) {
-                if (substr($field, -strlen($fld)) === $fld) {
-                    return (int)$value;
-                }
+            if (in_array($field, self::FIELDS_INT)) {
+                return (int)$value;
             }
             return is_numeric($value) ? (float)$value : $value;
         }
