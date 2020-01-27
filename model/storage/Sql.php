@@ -64,7 +64,7 @@ class Sql extends ConfigurableService implements Storage
      * Else insert new entry
      * @param $id
      * @param array $data
-     * @return mixed
+     * @return boolean
      * @throws StorageException
      */
     public function store($id, $data = array())
@@ -100,7 +100,7 @@ class Sql extends ConfigurableService implements Storage
         foreach ($input as $key => $value) {
             $const = get_called_class() . '::DIAGNOSTIC_' . strtoupper($key);
             if (defined($const)) {
-                $data[constant($const)] = $value;
+                $data[constant($const)] = $this->castValue($key, $value);
             }
         }
         if (empty($data)) {
@@ -187,5 +187,24 @@ class Sql extends ConfigurableService implements Storage
             return false;
         }
         return true;
+    }
+
+    /**
+     * @param string $field
+     * @param mixed $value
+     * @return float|int|string
+     */
+    private function castValue($field, $value)
+    {
+        if (is_string($value)) {
+            $intFieldsMarkers = ['_count', '_size'];
+            foreach ($intFieldsMarkers as $fld) {
+                if (substr($field, -strlen($fld)) === $fld) {
+                    return (int)$value;
+                }
+            }
+            return is_numeric($value) ? (float)$value : $value;
+        }
+        return $value;
     }
 }
