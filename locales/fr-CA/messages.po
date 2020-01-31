@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint113\n"
-"PO-Revision-Date: 2019-10-25T08:45:31\n"
+"Project-Id-Version: TAO 3.4.0-sprint120\n"
+"PO-Revision-Date: 2020-01-31T09:39:02\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-CA\n"
@@ -91,6 +91,9 @@ msgstr "Détails"
 msgid "Diagnostic Tool"
 msgstr "Outil de diagnostic"
 
+msgid "diagnostics.csv"
+msgstr ""
+
 msgid "Done!"
 msgstr "Terminé"
 
@@ -102,6 +105,9 @@ msgstr ""
 
 msgid "Exit"
 msgstr "Quitter"
+
+msgid "Export CSV"
+msgstr ""
 
 msgid "Failed to get school name"
 msgstr ""
@@ -247,10 +253,10 @@ msgstr ""
 msgid "Return to the list"
 msgstr ""
 
-msgid "School id"
+msgid "School ID"
 msgstr ""
 
-msgid "School ID"
+msgid "School id"
 msgstr ""
 
 msgid "School ID:"
