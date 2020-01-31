@@ -95,7 +95,7 @@ define([
                     })
                     .on('end', function() {
                         // enable the input when the test is complete
-                        this.controls.$workstation.removeProp('disabled');
+                        this.controls.$workstation.prop('disabled', false);
                         loadingBar.stop();
                     })
                     .on('render', function() {
