@@ -46,6 +46,14 @@ class Sql extends ConfigurableService implements Storage
      */
     private $persistence;
 
+    private const FIELDS_INT = [
+        self::DIAGNOSTIC_BANDWIDTH_SIZE,
+        self::DIAGNOSTIC_INTENSIVE_BANDWIDTH_SIZE,
+        self::DIAGNOSTIC_PERFORMANCE_COUNT,
+        self::DIAGNOSTIC_BANDWIDTH_COUNT,
+        self::DIAGNOSTIC_INTENSIVE_BANDWIDTH_COUNT
+    ];
+
     /**
      * Get persistence with configurable driver option of Sql Storage
      * Get default driver if option is not set
@@ -64,7 +72,7 @@ class Sql extends ConfigurableService implements Storage
      * Else insert new entry
      * @param $id
      * @param array $data
-     * @return mixed
+     * @return boolean
      * @throws StorageException
      */
     public function store($id, $data = array())
@@ -100,7 +108,7 @@ class Sql extends ConfigurableService implements Storage
         foreach ($input as $key => $value) {
             $const = get_called_class() . '::DIAGNOSTIC_' . strtoupper($key);
             if (defined($const)) {
-                $data[constant($const)] = $value;
+                $data[constant($const)] = $this->castValue($key, $value);
             }
         }
         if (empty($data)) {
@@ -187,5 +195,21 @@ class Sql extends ConfigurableService implements Storage
             return false;
         }
         return true;
+    }
+
+    /**
+     * @param string $field
+     * @param mixed $value
+     * @return float|int|string
+     */
+    private function castValue($field, $value)
+    {
+        if (is_string($value)) {
+            if (in_array($field, self::FIELDS_INT)) {
+                return (int)$value;
+            }
+            return is_numeric($value) ? (float)$value : $value;
+        }
+        return $value;
     }
 }
