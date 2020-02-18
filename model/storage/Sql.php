@@ -210,7 +210,7 @@ class Sql extends ConfigurableService implements Storage
      * @param mixed $value
      * @return float|int|string
      */
-    public function castValue($field, $value)
+    private function castValue($field, $value)
     {
         if (in_array($field, self::FIELDS_STRING)) {
             return (string)$value;
