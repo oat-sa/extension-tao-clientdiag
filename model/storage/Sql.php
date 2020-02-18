@@ -51,7 +51,15 @@ class Sql extends ConfigurableService implements Storage
         self::DIAGNOSTIC_INTENSIVE_BANDWIDTH_SIZE,
         self::DIAGNOSTIC_PERFORMANCE_COUNT,
         self::DIAGNOSTIC_BANDWIDTH_COUNT,
+        self::DIAGNOSTIC_FINGERPRINT_ERRORS,
+        self::DIAGNOSTIC_FINGERPRINT_CHANGED,
         self::DIAGNOSTIC_INTENSIVE_BANDWIDTH_COUNT
+    ];
+
+    private const FIELDS_STRING = [
+        self::DIAGNOSTIC_BROWSERVERSION,
+        self::DIAGNOSTIC_SCHOOL_NUMBER,
+        self::DIAGNOSTIC_OSVERSION,
     ];
 
     /**
@@ -108,7 +116,7 @@ class Sql extends ConfigurableService implements Storage
         foreach ($input as $key => $value) {
             $const = get_called_class() . '::DIAGNOSTIC_' . strtoupper($key);
             if (defined($const)) {
-                $data[constant($const)] = $this->castValue($key, $value);
+                $data[constant($const)] = $this->castValue(constant($const), $value);
             }
         }
         if (empty($data)) {
@@ -202,8 +210,12 @@ class Sql extends ConfigurableService implements Storage
      * @param mixed $value
      * @return float|int|string
      */
-    private function castValue($field, $value)
+    public function castValue($field, $value)
     {
+        if (in_array($field, self::FIELDS_STRING)) {
+            return (string)$value;
+        }
+
         if (is_string($value)) {
             if (in_array($field, self::FIELDS_INT)) {
                 return (int)$value;
