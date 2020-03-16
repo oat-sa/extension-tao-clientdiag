@@ -33,7 +33,7 @@ class SqlTest extends TestCase
      */
     private $subject;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->subject = new Sql();
     }
@@ -43,10 +43,7 @@ class SqlTest extends TestCase
      */
     public function testCastValue($fieldName, $value, $expectedType)
     {
-        $this->assertInternalType(
-            $expectedType,
-            $this->invokeMethod($this->subject, 'castValue', [$fieldName, $value])
-        );
+        $this->$expectedType($this->invokeMethod($this->subject, 'castValue', [$fieldName, $value]));
     }
 
 
@@ -56,22 +53,22 @@ class SqlTest extends TestCase
     public function valueProvider()
     {
         return [
-            ['size', 1, 'integer'],
-            ['size', 't1', 'string'],
-            [Sql::DIAGNOSTIC_BANDWIDTH_SIZE, '12', 'integer'],
-            [Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_SIZE, '12.00', 'integer'],
-            [Sql::DIAGNOSTIC_PERFORMANCE_COUNT, '12.33', 'integer'],
-            [Sql::DIAGNOSTIC_BANDWIDTH_COUNT, 22, 'integer'],
-            [Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_COUNT, '33.02', 'integer'],
-            [Sql::DIAGNOSTIC_OSVERSION, 10.0, 'string'],
-            [Sql::DIAGNOSTIC_OSVERSION, '10.0', 'string'],
-            [Sql::DIAGNOSTIC_OSVERSION, 8, 'string'],
-            [Sql::DIAGNOSTIC_OSVERSION, '8', 'string'],
-            [Sql::DIAGNOSTIC_BROWSERVERSION, 33.02, 'string'],
-            [Sql::DIAGNOSTIC_BROWSERVERSION, 73, 'string'],
-            ['another', '33.02', 'float'],
-            ['another3', 'omg', 'string'],
-            ['another2', 33.02, 'float'],
+            ['size', 1, 'assertIsInt'],
+            ['size', 't1', 'assertIsString'],
+            [Sql::DIAGNOSTIC_BANDWIDTH_SIZE, '12', 'assertIsInt'],
+            [Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_SIZE, '12.00', 'assertIsInt'],
+            [Sql::DIAGNOSTIC_PERFORMANCE_COUNT, '12.33', 'assertIsInt'],
+            [Sql::DIAGNOSTIC_BANDWIDTH_COUNT, 22, 'assertIsInt'],
+            [Sql::DIAGNOSTIC_INTENSIVE_BANDWIDTH_COUNT, '33.02', 'assertIsInt'],
+            [Sql::DIAGNOSTIC_OSVERSION, 10.0, 'assertIsString'],
+            [Sql::DIAGNOSTIC_OSVERSION, '10.0', 'assertIsString'],
+            [Sql::DIAGNOSTIC_OSVERSION, 8, 'assertIsString'],
+            [Sql::DIAGNOSTIC_OSVERSION, '8', 'assertIsString'],
+            [Sql::DIAGNOSTIC_BROWSERVERSION, 33.02, 'assertIsString'],
+            [Sql::DIAGNOSTIC_BROWSERVERSION, 73, 'assertIsString'],
+            ['another', '33.02', 'assertIsFloat'],
+            ['another3', 'omg', 'assertIsString'],
+            ['another2', 33.02, 'assertIsFloat'],
         ];
     }
 }
