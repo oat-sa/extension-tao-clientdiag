@@ -30,7 +30,7 @@ class RequireUsernameTest extends TestCase
     /** @var RequireUsername */
     private $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->instance = new RequireUsername();
         $aclMock = $this->getMockBuilder('\tao_models_classes_UserService')
@@ -44,7 +44,7 @@ class RequireUsernameTest extends TestCase
 
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->instance = null;
     }
