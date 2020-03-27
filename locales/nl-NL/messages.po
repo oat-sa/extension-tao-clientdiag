@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint121\n"
-"PO-Revision-Date: 2020-02-14T10:35:24\n"
+"Project-Id-Version: TAO 3.4.0-sprint124\n"
+"PO-Revision-Date: 2020-03-20T11:17:03\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: nl-NL\n"
@@ -14,19 +14,19 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 msgid "%d sources (%s)"
-msgstr ""
+msgstr "%d bronnen (%s)"
 
 msgid "All rights reserved."
 msgstr "Alle rechten voorbehouden."
 
 msgid "An error occurred! Please verify your input!"
-msgstr ""
+msgstr "Er is een fout opgetreden! Controleer uw invoer!"
 
 msgid "Average bandwidth"
 msgstr "Gemiddelde bandbreedte"
 
 msgid "Average intensive bandwidth"
-msgstr ""
+msgstr "Gemiddelde intensieve bandbreedte"
 
 msgid "Average performances"
 msgstr "Gemiddelde prestatie"
@@ -47,13 +47,13 @@ msgid "Browser"
 msgstr "Browser"
 
 msgid "Cannot get your fingerprint"
-msgstr ""
+msgstr "Kan uw vingerafdruk niet verkrijgen"
 
 msgid "Cannot retrieve the school name. Please verify your input"
-msgstr ""
+msgstr "Kan de naam van de school niet achterhalen. Gelieve uw input te verifiëren"
 
 msgid "Change since last fingerprint"
-msgstr ""
+msgstr "Verandering sinds de laatste vingerafdruk"
 
 msgid "Checking the bandwidth..."
 msgstr "Bandbreedte aan het controleren..."
@@ -62,13 +62,13 @@ msgid "Checking the browser..."
 msgstr "Browser aan het controleren..."
 
 msgid "Checking the media intensive bandwidth..."
-msgstr ""
+msgstr "Het checken van de media-intensieve bandbreedte..."
 
 msgid "Checking the performances..."
 msgstr "Prestaties aan het controleren..."
 
 msgid "Checking the screen..."
-msgstr ""
+msgstr "Het scherm wordt gecontroleerd...."
 
 msgid "Checking upload speed..."
 msgstr "Upload snelheid aan het controleren..."
@@ -77,7 +77,7 @@ msgid "Compatible"
 msgstr "compatibel"
 
 msgid "Computing the fingerprint..."
-msgstr ""
+msgstr "Het berekenen van de vingerafdruk..."
 
 msgid "Connect to the diagnostic tool"
 msgstr "Verbind met de diagnostische tool"
@@ -101,7 +101,7 @@ msgid "Dynamic UID"
 msgstr ""
 
 msgid "Errors occurred! Please see details"
-msgstr ""
+msgstr "Er zijn fouten opgetreden! Zie details"
 
 msgid "Exit"
 msgstr "Afsluiten"
@@ -110,22 +110,22 @@ msgid "Export CSV"
 msgstr ""
 
 msgid "Failed to get school name"
-msgstr ""
+msgstr "We zijn er niet in geslaagd om de naam van de school te achterhalen"
 
 msgid "Fingerprint"
-msgstr ""
+msgstr "Vingerafdruk"
 
 msgid "Fingerprint error"
-msgstr ""
+msgstr "Fout in de vingerafdruk"
 
 msgid "Fingerprint errors"
-msgstr ""
+msgstr "Fouten in de vingerafdruk"
 
 msgid "Fingerprint sources"
 msgstr ""
 
 msgid "Getting school name..."
-msgstr ""
+msgstr "Het verkrijgen van schoolnaam..."
 
 msgid "Good bandwidth"
 msgstr "Goede bandbreedte"
@@ -140,7 +140,7 @@ msgid "Hide Details"
 msgstr "Details verbergen"
 
 msgid "Intensive bandwidth"
-msgstr ""
+msgstr "Intensieve bandbreedte"
 
 msgid "Interface not available"
 msgstr "Service is niet beschikbaar"
@@ -179,28 +179,28 @@ msgid "Maximum bandwidth"
 msgstr "Maximale bandbreedte"
 
 msgid "Maximum intensive bandwidth"
-msgstr ""
+msgstr "Maximale intensieve bandbreedte"
 
 msgid "Maximum rendering time"
 msgstr "Maximale weergavetijd"
 
 msgid "Media intensive bandwidth"
-msgstr ""
+msgstr "Media-intensieve bandbreedte"
 
 msgid "Minimum bandwidth"
 msgstr "Minimale bandbreedte"
 
 msgid "Minimum intensive bandwidth"
-msgstr ""
+msgstr "Minimale intensieve bandbreedte"
 
 msgid "Minimum rendering time"
 msgstr "Minimale weergavetijd"
 
 msgid "Missing field %s"
-msgstr ""
+msgstr "Ontbrekend veld %s"
 
 msgid "No"
-msgstr ""
+msgstr "Nee"
 
 msgid "No diagnostic service defined"
 msgstr "Geen diagnostische service gedefinieerd"
@@ -212,7 +212,7 @@ msgid "Number of simultaneous test takers the connection can handle"
 msgstr "Aantal simultane afnames die de connectie aan kan"
 
 msgid "Number of simultaneous test takers the connection can handle with media intensive"
-msgstr ""
+msgstr "Aantal simultane testgebruikers dat de verbinding kan verwerken in geval van media-intensief"
 
 msgid "Operating system"
 msgstr "Besturingssysteem"
@@ -263,37 +263,37 @@ msgid "School ID:"
 msgstr ""
 
 msgid "School name"
-msgstr ""
+msgstr "Naam van de school"
 
 msgid "School name:"
-msgstr ""
+msgstr "Naam van de school:"
 
 msgid "School number"
-msgstr ""
+msgstr "Nummer van de school"
 
 msgid "School number:"
-msgstr ""
+msgstr "Nummer van de school:"
 
 msgid "School PIN code (4 digits)"
-msgstr ""
+msgstr "PIN-code van de school (4 cijfers)"
 
 msgid "School PIN:"
-msgstr ""
+msgstr "PIN-code van de school:"
 
 msgid "Screen Height"
-msgstr ""
+msgstr "Hoogte van het scherm"
 
 msgid "Screen resolution"
-msgstr ""
+msgstr "Scherm resolutie"
 
 msgid "Screen Width"
-msgstr ""
+msgstr "Scherm wijdte"
 
 msgid "Show Details"
 msgstr "Toon details"
 
 msgid "Show fingerprint details"
-msgstr ""
+msgstr "Toon vingerafdrukgegevens"
 
 msgid "Simultaneous test takers under normal connection conditions."
 msgstr ""
@@ -311,13 +311,13 @@ msgid "Test system compatibility"
 msgstr ""
 
 msgid "The device screen does not meet the minimum resolution of %s!"
-msgstr ""
+msgstr "Het scherm voldoet niet aan de minimale resolutie van %s!"
 
 msgid "The device screen has the minimum required resolution."
-msgstr ""
+msgstr "Het scherm heeft de minimaal vereiste resolutie."
 
 msgid "The device screen resolution meets the requirements."
-msgstr ""
+msgstr "De schermresolutie voldoet aan de eisen."
 
 msgid "The readiness check result have been removed"
 msgstr "Het resultaat van de gereedheid controle is verwijderd"
@@ -371,16 +371,16 @@ msgid "Workstation:"
 msgstr "Werkstation:"
 
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 msgid "Your fingerprint is %s"
-msgstr ""
+msgstr "Uw vingerafdruk is %s"
 
 msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
-msgstr ""
+msgstr "Uw vingerafdruk is %s. Het lijkt er echter op dat het veranderd is sinds de laatste check. Het kan verband houden met veranderingen in uw systeem."
 
 msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
-msgstr ""
+msgstr "Uw vingerafdruk is %s. We hebben echter problemen ondervonden tijdens het ophalen van de gegevens. Misschien is uw beschikbare schijfruimte te klein"
 
 msgid "Your system is fully compliant."
 msgstr "Uw systeem is volledig compatibel."

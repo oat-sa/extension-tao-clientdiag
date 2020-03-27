@@ -21,6 +21,7 @@
 
 namespace oat\taoClientDiagnostic\test\unit\model\authorization;
 
+use oat\taoClientDiagnostic\exception\InvalidCallException;
 use oat\taoClientDiagnostic\model\authorization\Anonymous;
 use oat\generis\test\TestCase;
 
@@ -31,12 +32,12 @@ class AnonymousTest extends TestCase
      */
     private $instance;
 
-    public function setUp()
+    public function setUp(): void
     {
            $this->instance = new Anonymous();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->instance = null;
     }
@@ -48,7 +49,7 @@ class AnonymousTest extends TestCase
 
     public function testGetAuthorizationUrl()
     {
-        $this->setExpectedException('oat\taoClientDiagnostic\exception\InvalidCallException');
+        $this->expectException(InvalidCallException::class);
         $this->instance->getAuthorizationUrl('urlFixture');
     }
 }
