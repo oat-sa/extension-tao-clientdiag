@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint120\n"
-"PO-Revision-Date: 2020-01-31T09:39:02\n"
+"Project-Id-Version: TAO 3.4.0-sprint121\n"
+"PO-Revision-Date: 2020-08-03T09:49:08\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr-FR\n"
@@ -14,19 +14,19 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 
 msgid "%d sources (%s)"
-msgstr ""
+msgstr "%d sources (%s)"
 
 msgid "All rights reserved."
-msgstr ""
+msgstr "Tous droits réservés."
 
 msgid "An error occurred! Please verify your input!"
-msgstr ""
+msgstr "Une erreur s'est produite ! Veuillez vérifier votre entrée !"
 
 msgid "Average bandwidth"
 msgstr "Bande passante moyenne"
 
 msgid "Average intensive bandwidth"
-msgstr ""
+msgstr "Bande passante intensive moyenne"
 
 msgid "Average performances"
 msgstr "Performance moyenne (risque de lenteurs)"
@@ -43,17 +43,20 @@ msgstr "Bande passante"
 msgid "Be aware that these tests will take up to several minutes."
 msgstr "Ces tests peuvent prendre plusieurs minutes."
 
+msgid "Begin diagnostics"
+msgstr "Démarrer le diagnostic"
+
 msgid "Browser"
-msgstr ""
+msgstr "Navigateur web"
 
 msgid "Cannot get your fingerprint"
-msgstr ""
+msgstr "Ne peut obtenir votre empreinte"
 
 msgid "Cannot retrieve the school name. Please verify your input"
-msgstr ""
+msgstr "Ne peut récupérer le nom de l'école. Veuillez vérifier votre entrée."
 
 msgid "Change since last fingerprint"
-msgstr ""
+msgstr "Changement depuis la dernière empreinte"
 
 msgid "Checking the bandwidth..."
 msgstr "Test de bande passante..."
@@ -62,13 +65,13 @@ msgid "Checking the browser..."
 msgstr "Test du navigateur..."
 
 msgid "Checking the media intensive bandwidth..."
-msgstr ""
+msgstr "Vérification de la bande passante intensive pour un média"
 
 msgid "Checking the performances..."
 msgstr "Test des performances..."
 
 msgid "Checking the screen..."
-msgstr ""
+msgstr "Vérification de l'écran..."
 
 msgid "Checking upload speed..."
 msgstr "Vérification de la vitesse de téléchargement..."
@@ -77,13 +80,13 @@ msgid "Compatible"
 msgstr "Conforme"
 
 msgid "Computing the fingerprint..."
-msgstr ""
+msgstr "Traitement de l'empreinte..."
 
 msgid "Connect to the diagnostic tool"
 msgstr "Accéder à l'outil de diagnostic"
 
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 msgid "Details"
 msgstr "Détails"
@@ -98,34 +101,34 @@ msgid "Done!"
 msgstr "Terminé"
 
 msgid "Dynamic UID"
-msgstr ""
+msgstr "UID dynamique"
 
 msgid "Errors occurred! Please see details"
-msgstr ""
+msgstr "Des erreurs se sont produites ! Veuillez voir les détails"
 
 msgid "Exit"
-msgstr ""
+msgstr "Sortie"
 
 msgid "Export CSV"
 msgstr ""
 
 msgid "Failed to get school name"
-msgstr ""
+msgstr "Impossible d'obtenir le nom d'école"
 
 msgid "Fingerprint"
-msgstr ""
+msgstr "Empreinte"
 
 msgid "Fingerprint error"
-msgstr ""
+msgstr "Erreur d'empreinte"
 
 msgid "Fingerprint errors"
-msgstr ""
+msgstr "Erreurs d'empreinte"
 
 msgid "Fingerprint sources"
-msgstr ""
+msgstr "Sources d'empreinte"
 
 msgid "Getting school name..."
-msgstr ""
+msgstr "Obtention du nom d'école..."
 
 msgid "Good bandwidth"
 msgstr "Bande passante correcte"
@@ -140,31 +143,31 @@ msgid "Hide Details"
 msgstr "Masquer les détails"
 
 msgid "Intensive bandwidth"
-msgstr ""
+msgstr "Bande passante intensive"
 
 msgid "Interface not available"
-msgstr ""
+msgstr "Interface non disponible"
 
 msgid "Launch another readiness check"
-msgstr ""
+msgstr "Lancement d'une autre vérification de disponibilité"
 
 msgid "Launch readiness check"
-msgstr ""
+msgstr "Lancement d'une vérification de disponibilité"
 
 msgid "List of readiness checks"
-msgstr ""
+msgstr "Liste des vérifications de disponibilité"
 
 msgid "Loading"
-msgstr ""
+msgstr "Chargement"
 
 msgid "Log in"
-msgstr ""
+msgstr "Connexion"
 
 msgid "Login"
-msgstr ""
+msgstr "Nom d'utilisateur"
 
 msgid "Logout"
-msgstr ""
+msgstr "Déconnexion"
 
 msgid "Low bandwidth"
 msgstr "Bande passante faible"
@@ -179,40 +182,40 @@ msgid "Maximum bandwidth"
 msgstr "Bande passante maximale"
 
 msgid "Maximum intensive bandwidth"
-msgstr ""
+msgstr "Bande passante intensive maximale"
 
 msgid "Maximum rendering time"
 msgstr "Temps de rendu maximal"
 
 msgid "Media intensive bandwidth"
-msgstr ""
+msgstr "Bande passante intensive du média"
 
 msgid "Minimum bandwidth"
 msgstr "Bande passante minimale"
 
 msgid "Minimum intensive bandwidth"
-msgstr ""
+msgstr "Bande passante intensive minimale"
 
 msgid "Minimum rendering time"
 msgstr "Temps de rendu minimal"
 
 msgid "Missing field %s"
-msgstr ""
+msgstr "Champ %s manquant"
 
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 msgid "No diagnostic service defined"
-msgstr ""
+msgstr "Aucun service de diagnostic défini"
 
 msgid "No readiness checks have been done!"
-msgstr ""
+msgstr "Aucune vérification de disponibilité n'a été faite !"
 
 msgid "Number of simultaneous test takers the connection can handle"
 msgstr "Nombre d’élèves pouvant passer l’évaluation en simultané"
 
 msgid "Number of simultaneous test takers the connection can handle with media intensive"
-msgstr ""
+msgstr "Nombre de participants simultanés que la connexion peut supporter avec des médias intensifs"
 
 msgid "Operating system"
 msgstr "Système d'exploitation"
@@ -221,37 +224,37 @@ msgid "Operating system and web browser"
 msgstr "Navigateur et système d’exploitation"
 
 msgid "OS"
-msgstr ""
+msgstr "OS"
 
 msgid "Performances"
-msgstr ""
+msgstr "Performances"
 
 msgid "Readiness Check"
-msgstr ""
+msgstr "Vérification de disponibilité"
 
 msgid "Readiness checks already done"
-msgstr ""
+msgstr "Vérifications de disponibilité déjà effectuées"
 
 msgid "Readiness diagnostics"
-msgstr ""
+msgstr "Diagnostics de disponibilité"
 
 msgid "Refresh"
-msgstr ""
+msgstr "Actualiser"
 
 msgid "Refresh the page"
-msgstr ""
+msgstr "Actualiser la page"
 
 msgid "Remove"
-msgstr ""
+msgstr "Supprimer"
 
 msgid "Remove the readiness check result?"
-msgstr ""
+msgstr "Supprimer le résultat de la vérification de disponibilité ?"
 
 msgid "Remove the selected readiness check results"
-msgstr ""
+msgstr "Supprimer les résultats sélectionnés de vérification de disponibilité"
 
 msgid "Return to the list"
-msgstr ""
+msgstr "Revenir à la liste"
 
 msgid "School ID"
 msgstr ""
@@ -263,73 +266,73 @@ msgid "School ID:"
 msgstr ""
 
 msgid "School name"
-msgstr ""
+msgstr "Nom d'école"
 
 msgid "School name:"
-msgstr ""
+msgstr "Nom d'école :"
 
 msgid "School number"
-msgstr ""
+msgstr "Numéro d'école"
 
 msgid "School number:"
-msgstr ""
+msgstr "Numéro d'école :"
 
 msgid "School PIN code (4 digits)"
-msgstr ""
+msgstr "Code PIN de l'école (à 4 chiffres)"
 
 msgid "School PIN:"
-msgstr ""
+msgstr "PIN de l'école :"
 
 msgid "Screen Height"
-msgstr ""
+msgstr "Hauteur d'écran"
 
 msgid "Screen resolution"
-msgstr ""
+msgstr "Résolution d’écran"
 
 msgid "Screen Width"
-msgstr ""
+msgstr "Largeur d'écran"
 
 msgid "Show Details"
 msgstr "Afficher les détails"
 
 msgid "Show fingerprint details"
-msgstr ""
+msgstr "Montrer le détail des empreintes digitales"
 
 msgid "Simultaneous test takers under normal connection conditions."
 msgstr ""
 
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Quelque chose ne s'est pas passé comme prévu..."
 
 msgid "Starting..."
 msgstr "Démarrage..."
 
 msgid "System Compatibility"
-msgstr "Compatibilité du système"
+msgstr ""
 
 msgid "Test system compatibility"
-msgstr "Tester la compatibilité du système"
+msgstr ""
 
 msgid "The device screen does not meet the minimum resolution of %s!"
-msgstr ""
+msgstr "Le périphérique écran ne satisfait pas la résolution minimale de %s !"
 
 msgid "The device screen has the minimum required resolution."
-msgstr ""
+msgstr "Le périphérique écran dispose de la résolution minimale demandée."
 
 msgid "The device screen resolution meets the requirements."
-msgstr ""
+msgstr "Le périphérique écran satisfait les besoins."
 
 msgid "The readiness check result have been removed"
-msgstr ""
+msgstr "Les résultats de vérification de la disponibilité ont été supprimés."
 
 msgid "The readiness check result will be removed. Continue ?"
-msgstr ""
+msgstr "Le résultat de la vérification de disponibilité sera supprimé. Continuer?"
 
 msgid "The selected readiness check results will be removed. Continue ?"
-msgstr ""
+msgstr "Les résultats de vérification de disponibilité sélectionnés seront supprimés. Continuer ?"
 
 msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
-msgstr ""
+msgstr "Le service de stockage fourni pour enregistrer les résultats du diagnostic doit être mis à jour pour supporter les accès en lecture !"
 
 msgid "This browser is not tested."
 msgstr "Ce navigateur n'est pas testé."
@@ -341,10 +344,10 @@ msgid "Total"
 msgstr "Synthèse"
 
 msgid "Try a test delivery"
-msgstr ""
+msgstr "Essayer une passation de test"
 
 msgid "Unable to get the workstation name!"
-msgstr ""
+msgstr "Impossible d'obtenir le nom du poste de travail !"
 
 msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
 msgstr ""
@@ -359,34 +362,34 @@ msgid "Web browser"
 msgstr "Navigateur"
 
 msgid "Workstation"
-msgstr ""
+msgstr "Poste de travail"
 
 msgid "Workstation name"
-msgstr ""
+msgstr "Nom du poste de travail"
 
 msgid "Workstation performances"
 msgstr "Performance du poste de travail"
 
 msgid "Workstation:"
-msgstr ""
+msgstr "Poste de travail :"
 
 msgid "Yes"
-msgstr ""
+msgstr "Oui"
 
 msgid "Your fingerprint is %s"
-msgstr ""
+msgstr "Votre empreinte est %s"
 
 msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
-msgstr ""
+msgstr "Votre empreinte est %s. Cependant celle-ci semble avoir changé depuis la dernière vérification. Cela pourrait être dû à des changements dans votre système."
 
 msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
-msgstr ""
+msgstr "Votre empreinte est %s. Cependant nous avons rencontré un souci pendant la récupération des données. Il se peut que votre espace disque soit trop faible."
 
 msgid "Your system is fully compliant."
 msgstr "Configuration conforme"
 
 msgid "Your system is not optimal, please contact your system administrator."
-msgstr "Configuration à risque (vous pouvez contacter votre plateforme académique pour un accompagnement)"
+msgstr "Configuration à risque (contactez votre plateforme académique)"
 
 msgid "Your system requires a compatibility update, please contact your system administrator."
 msgstr "Configuration nécessitant une mise en conformité (contactez votre plateforme académique)"
