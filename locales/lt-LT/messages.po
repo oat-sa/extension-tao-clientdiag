@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint120\n"
-"PO-Revision-Date: 2020-01-31T09:39:03\n"
+"Project-Id-Version: TAO 3.4.0-sprint121\n"
+"PO-Revision-Date: 2020-08-03T09:49:16\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: lt-LT\n"
@@ -41,25 +41,28 @@ msgid "Bandwidth"
 msgstr "Pralaidumas"
 
 msgid "Be aware that these tests will take up to several minutes."
-msgstr "Atkreipkite dėmesį, jog šie testai užtrunka iki keliolikos minučių."
+msgstr "Atkreipkite dėmesį, jog šie testai užtrunka iki keleto minučių."
+
+msgid "Begin diagnostics"
+msgstr "Pradėti diagnostiką"
 
 msgid "Browser"
 msgstr "Naršyklė"
 
 msgid "Cannot get your fingerprint"
-msgstr "Nepavyko gauti jūsų piršto antspaudo"
+msgstr "Nepavyko gauti jūsų antspaudo"
 
 msgid "Cannot retrieve the school name. Please verify your input"
-msgstr "Nepavyko gauti jūsų mokyklos vardo. Prašome patikrinti savo įvestį"
+msgstr "Nepavyko gauti jūsų mokyklos pavadinimo. Prašome patikrinti savo įvestį"
 
 msgid "Change since last fingerprint"
-msgstr "Pokytis nuo praeitos žymės"
+msgstr "Pasikeitimas nuo paskutinio antspaudo"
 
 msgid "Checking the bandwidth..."
-msgstr "Tikrinti pralaidumą..."
+msgstr "Tikrina pralaidumą..."
 
 msgid "Checking the browser..."
-msgstr "Tikrinti naršklę..."
+msgstr "Tikrina naršyklę..."
 
 msgid "Checking the media intensive bandwidth..."
 msgstr "Tikrinamas medijos intensyvumo pralaidumas..."
@@ -110,7 +113,7 @@ msgid "Export CSV"
 msgstr ""
 
 msgid "Failed to get school name"
-msgstr "Nepavyko gauti mokyklos vardo"
+msgstr "Nepavyko gauti mokyklos pavadinimo"
 
 msgid "Fingerprint"
 msgstr "Antspaudas"
@@ -125,7 +128,7 @@ msgid "Fingerprint sources"
 msgstr "Antspaudo šaltiniai"
 
 msgid "Getting school name..."
-msgstr "Gaunamas mokyklos vardas..."
+msgstr "Gaunamas mokyklos pavadinimas..."
 
 msgid "Good bandwidth"
 msgstr "Geras pralaidumas"
@@ -143,7 +146,7 @@ msgid "Intensive bandwidth"
 msgstr "Intensyvus pralaidumas"
 
 msgid "Interface not available"
-msgstr "Sąsaja negalima"
+msgstr "Sąsaja nėra galima"
 
 msgid "Launch another readiness check"
 msgstr "Paleisti kitą pasiruošimo patikrinimą"
@@ -197,7 +200,7 @@ msgid "Minimum rendering time"
 msgstr "Minimalus atvaizdavimo laikas"
 
 msgid "Missing field %s"
-msgstr "Trūkstamas %s laukas"
+msgstr "Trūkstamas %s laukas "
 
 msgid "No"
 msgstr "Ne"
@@ -212,7 +215,7 @@ msgid "Number of simultaneous test takers the connection can handle"
 msgstr "Vienu metu prisijungusių testo laikytojų kiekis, kurį ryšys gali atlaikyti"
 
 msgid "Number of simultaneous test takers the connection can handle with media intensive"
-msgstr "Kiekis testų laikytojų vienu metu ryšys gali išlaikyti su intensyvia medija"
+msgstr "Testo laikytojų kiekis, kurį vienu metu ryšys gali išlaikyti su intensyvia medija"
 
 msgid "Operating system"
 msgstr "Operacinė sistema"
@@ -254,19 +257,19 @@ msgid "Return to the list"
 msgstr "Grįžti į sąrašą"
 
 msgid "School ID"
-msgstr "Mokyklos ID"
+msgstr ""
 
 msgid "School id"
-msgstr "Mokyklos id"
+msgstr ""
 
 msgid "School ID:"
-msgstr "Mokyklos ID:"
+msgstr ""
 
 msgid "School name"
-msgstr "Mokyklos vardas"
+msgstr "Mokyklos pavadinimas"
 
 msgid "School name:"
-msgstr "Mokyklos vardas:"
+msgstr "Mokyklos pavadinimas:"
 
 msgid "School number"
 msgstr "Mokyklos numeris"
@@ -296,7 +299,7 @@ msgid "Show fingerprint details"
 msgstr "Rodyti antspaudo detales"
 
 msgid "Simultaneous test takers under normal connection conditions."
-msgstr "Vienu metu prisijungusių testuojamųjų skaičius, esant įprastoms tinklo sąlygoms"
+msgstr ""
 
 msgid "Something went wrong ..."
 msgstr "Kažkas blogai įvyko..."
@@ -305,10 +308,10 @@ msgid "Starting..."
 msgstr "Pradedama..."
 
 msgid "System Compatibility"
-msgstr "Sistemos suderinamumas"
+msgstr ""
 
 msgid "Test system compatibility"
-msgstr "Patikrinti sistemos suderinamumą"
+msgstr ""
 
 msgid "The device screen does not meet the minimum resolution of %s!"
 msgstr "Įrenginio ekranas neatitinka %s minimalios rezoliucijos!"
@@ -329,13 +332,13 @@ msgid "The selected readiness check results will be removed. Continue ?"
 msgstr "Pasirinktas pasiruošimo tikrinimo rezultatai bus pašalinti. Tęsti?"
 
 msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
-msgstr "Būtina atnaujinti diagnostikos rezultatų saugyklą, kad leistų skaityti įrašus!"
+msgstr ""
 
 msgid "This browser is not tested."
 msgstr "Ši naršyklė netikrinta."
 
 msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
-msgstr "Šis įrankis vykdys testų kiekį, kad įvertintų, kaip gerai jūsų aplinka tinkama TAO platformai."
+msgstr "Šis įrankis vykdys keletą testų ir įvertins, ar jūsų aplinka pritaikyta TAO platformai."
 
 msgid "Total"
 msgstr "Iš viso"
@@ -347,7 +350,7 @@ msgid "Unable to get the workstation name!"
 msgstr "Nepavyko gauti darbo stoties pavadinimą!"
 
 msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
-msgstr "Nestabilus tinklo pralaidumas, laikini tinklo trikdžiai gali neigiamai paveikti testą atliekančiųjų veiksmus ir rezultatus."
+msgstr ""
 
 msgid "Upload speed"
 msgstr "Įkėlimo greitis"
