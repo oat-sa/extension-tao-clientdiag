@@ -92,7 +92,7 @@ msgid "Diagnostic Tool"
 msgstr "Outil de diagnostic"
 
 msgid "diagnostics.csv"
-msgstr ""
+msgstr "diagnostiques.csv"
 
 msgid "Done!"
 msgstr "Terminé"
@@ -107,7 +107,7 @@ msgid "Exit"
 msgstr "Sortie"
 
 msgid "Export CSV"
-msgstr ""
+msgstr "Export CSV"
 
 msgid "Failed to get school name"
 msgstr "Impossible d'obtenir le nom d'école"
@@ -254,13 +254,13 @@ msgid "Return to the list"
 msgstr "Revenir à la liste"
 
 msgid "School ID"
-msgstr ""
+msgstr "ID École"
 
 msgid "School id"
-msgstr ""
+msgstr "id École"
 
 msgid "School ID:"
-msgstr ""
+msgstr "ID École:"
 
 msgid "School name"
 msgstr "Nom d'école"
@@ -296,7 +296,7 @@ msgid "Show fingerprint details"
 msgstr "Montrer le détail des empreintes digitales"
 
 msgid "Simultaneous test takers under normal connection conditions."
-msgstr ""
+msgstr "Connexions simultanées d'utilisateurs dans des conditions normales"
 
 msgid "Something went wrong ..."
 msgstr "Quelque chose ne s'est pas passé comme prévu..."
@@ -305,10 +305,10 @@ msgid "Starting..."
 msgstr "Démarrage..."
 
 msgid "System Compatibility"
-msgstr ""
+msgstr "Compatibilité du Système"
 
 msgid "Test system compatibility"
-msgstr ""
+msgstr "Tester la compatibilité du système"
 
 msgid "The device screen does not meet the minimum resolution of %s!"
 msgstr "Le périphérique écran ne satisfait pas la résolution minimale de %s !"
@@ -347,7 +347,7 @@ msgid "Unable to get the workstation name!"
 msgstr "Impossible d'obtenir le nom du poste de travail !"
 
 msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
-msgstr ""
+msgstr "Bande passante instable. Les fluctuations temporaires de la vitesse de connexion peuvent affecter l'expérience utilisateur."
 
 msgid "Upload speed"
 msgstr "Bande passante montante"
