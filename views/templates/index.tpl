@@ -31,7 +31,7 @@ use oat\tao\model\theme\Theme;
 
 <div class="content-wrap">
 
-    <?php Template::inc('blocks/header.tpl', 'tao'); ?>
+    <?php Template::inc('blocks/header.tpl'); ?>
 
     <div id="feedback-box" data-error="<?= get_data('errorMessage') ?>" data-message="<?= get_data('message') ?>"></div>
 
