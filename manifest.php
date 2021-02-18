@@ -30,15 +30,7 @@ return array(
     'label'       => 'Browser and OS diagnostic tool',
     'description' => 'Check compatibility of the os and browser of a client',
     'license'     => 'GPL-2.0',
-    'version'     => '7.8.1',
     'author'      => 'Open Assessment Technologies SA',
-    'requires'    => array(
-        'generis'    => '>=12.15.0',
-        'tao'        => '>=35.0.0',
-        'taoQtiItem' => '>=18.0.0',
-    ),
-    // for compatibility
-    'dependencies' => array('tao'),
     'managementRole' => 'http://www.tao.lu/Ontologies/generis.rdf#taoClientDiagnosticManager',
     'acl' => array(
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#taoClientDiagnosticManager', array('ext'=>'taoClientDiagnostic')),
