@@ -87,10 +87,8 @@ class CompatibilityChecker
                     $isValid = true;
                 } else {
                     // it is valid if the version is in the array
-                    // OR if the browser is chrome or firefox and it is a newer version than those in the array
-                    $isValid = in_array($browserVersion[0], $rule->versions)
-                        || (in_array($rule->browser,
-                                array('Chrome', 'Firefox')) && $browserVersion[0] > max($rule->versions));
+                    // OR if the version is newer than the maximum version in the array
+                    $isValid = in_array($browserVersion[0], $rule->versions) || $browserVersion[0] > max($rule->versions);
                 }
 
                 if ($validOs && ($rule->browser === ""
