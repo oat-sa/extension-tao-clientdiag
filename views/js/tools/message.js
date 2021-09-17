@@ -13,27 +13,17 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2016-2021 (original work) Open Assessment Technologies SA;
  */
-
-/**
- *
- * @author Camille Moyon <camille@taotesting.com>
- * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
- */
-define([
-    'jquery',
-    'ui/feedback'
-], function ($, feedback) {
+define(['jquery', 'ui/feedback'], function($, feedback) {
     'use strict';
 
     /**
      * Displays the messages set into a markup
-     * @param {String|jQuery|HTMLElement} container
+     * @param {string|jQuery|HTMLElement} container
      */
-    function showMessages(container) {
-        var $feedbackBox = $(container);
+    return function showMessages(container) {
+        const $feedbackBox = $(container);
 
         if ($feedbackBox.data('error')) {
             feedback().error($feedbackBox.data('error'));
@@ -41,10 +31,5 @@ define([
         if ($feedbackBox.data('message')) {
             feedback().error($feedbackBox.data('message'));
         }
-    }
-
-    /**
-     * @exports
-     */
-    return showMessages;
+    };
 });
