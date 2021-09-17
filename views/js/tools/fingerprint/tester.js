@@ -13,10 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
- */
-/**
- * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
+ * Copyright (c) 2017-2021 (original work) Open Assessment Technologies SA ;
  */
 define([
     'jquery',
@@ -25,36 +22,36 @@ define([
     'util/url',
     'core/logger',
     'core/store',
-    'core/promise',
     'core/format',
     'lib/uuid',
     'taoClientDiagnostic/tools/getConfig',
     'taoClientDiagnostic/tools/getLabels',
     'taoClientDiagnostic/tools/getStatus',
     'taoClientDiagnostic/lib/fingerprint/fingerprint2'
-], function ($, _, __, url, loggerFactory, store, Promise, format, uuid, getConfig, getLabels, getStatus, Fingerprint2) {
+], function($, _, __, url, loggerFactory, store, format, uuid, getConfig, getLabels, getStatus, Fingerprint2) {
     'use strict';
 
     /**
      * @type {logger}
+     * @private
      */
-    var logger = loggerFactory('taoClientDiagnostic/fingerprint');
+    const logger = loggerFactory('taoClientDiagnostic/fingerprint');
 
     /**
      * Some default values
-     * @type {Object}
+     * @type {object}
      * @private
      */
-    var _defaults = {
+    const _defaults = {
         id: 'fingerprint'
     };
 
     /**
      * The names of the storage keys used to persist info on the browser
-     * @type {Object}
+     * @type {object}
      * @private
      */
-    var _storageKeys = {
+    const _storageKeys = {
         store: 'client-diagnostic',
         uuid: 'uuid',
         fingerprint: 'value',
@@ -65,10 +62,10 @@ define([
 
     /**
      * List of threshold values, for each kind of context
-     * @type {Object}
+     * @type {object}
      * @private
      */
-    var _thresholdValues = {
+    const _thresholdValues = {
         error: 0,
         storageIssue: 50,
         changedFingerprint: 90,
@@ -80,31 +77,40 @@ define([
      * @type {Array}
      * @private
      */
-    var _thresholds = [{
-        threshold: _thresholdValues.error,
-        message: __('Cannot get your fingerprint'),
-        type: 'error'
-    }, {
-        threshold: _thresholdValues.storageIssue,
-        message: __('Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small'),
-        type: 'warning'
-    }, {
-        threshold: _thresholdValues.changedFingerprint,
-        message: __('Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system.'),
-        type: 'success'
-    }, {
-        threshold: _thresholdValues.success,
-        message: __('Your fingerprint is %s'),
-        type: 'success'
-    }];
+    const _thresholds = [
+        {
+            threshold: _thresholdValues.error,
+            message: __('Cannot get your fingerprint'),
+            type: 'error'
+        },
+        {
+            threshold: _thresholdValues.storageIssue,
+            message: __(
+                'Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small'
+            ),
+            type: 'warning'
+        },
+        {
+            threshold: _thresholdValues.changedFingerprint,
+            message: __(
+                'Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system.'
+            ),
+            type: 'success'
+        },
+        {
+            threshold: _thresholdValues.success,
+            message: __('Your fingerprint is %s'),
+            type: 'success'
+        }
+    ];
 
     /**
      * List of translated texts per level.
      * The level is provided through the config as a numeric value, starting from 1.
-     * @type {Object}
+     * @type {object}
      * @private
      */
-    var _messages = [
+    const _messages = [
         // level 1
         {
             title: __('Fingerprint'),
@@ -121,33 +127,28 @@ define([
     /**
      * Performs a browser fingerprint capture
      *
-     * @param {Object} config - Some optional configs
-     * @param {String} [config.id] - The identifier of the test
-     * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
-     * @returns {Object}
+     * @param {object} config - Some optional configs
+     * @param {string} [config.id] - The identifier of the test
+     * @param {string} [config.level] - The intensity level of the test. It will aim which messages list to use.
+     * @returns {object}
      */
-    function browserFingerprint(config) {
-        var initConfig = getConfig(config, _defaults);
-        var labels = getLabels(_messages, initConfig.level);
+    return function browserFingerprint(config) {
+        const initConfig = getConfig(config, _defaults);
+        const labels = getLabels(_messages, initConfig.level);
 
         return {
             /**
              * Performs a browser fingerprint capture, then call a function to provide the result
              * @param {Function} done
              */
-            start: function start(done) {
-                var browserStorage;
-                var browserId = 'error';
-                var lastFingerprint = 'error';
-                var freshBrowserId = false;
-                var newFingerprint = false;
-                var self = this;
-                var errors = [];
+            start(done) {
+                let browserId = 'error';
+                let lastFingerprint = 'error';
+                let freshBrowserId = false;
+                let newFingerprint = false;
+                let browserStorage;
+                const errors = [];
 
-                /**
-                 * Simple error handler
-                 * @param error
-                 */
                 function handleError(error) {
                     errors.push({
                         key: 'error',
@@ -157,35 +158,35 @@ define([
                 }
 
                 function getStorageKey(key) {
-                    return initConfig.id + '-' + _storageKeys[key];
+                    return `${initConfig.id}-${_storageKeys[key]}`;
                 }
 
                 store(_storageKeys.store)
-                    .then(function (storage) {
+                    .then(storage => {
                         browserStorage = storage;
                         return Promise.all([
-                            browserStorage.getItem(getStorageKey('uuid')).then(function (value) {
+                            browserStorage.getItem(getStorageKey('uuid')).then(value => {
                                 browserId = value;
                             }),
-                            browserStorage.getItem(getStorageKey('fingerprint')).then(function (value) {
+                            browserStorage.getItem(getStorageKey('fingerprint')).then(value => {
                                 lastFingerprint = value;
                             })
                         ]);
                     })
                     .catch(handleError)
-                    .then(function () {
-                        return new Promise(function (resolve) {
-                            new Fingerprint2().get(function (result, details) {
-                                var results = {};
+                    .then(() => {
+                        return new Promise(resolve => {
+                            new Fingerprint2().get((result, details) => {
+                                const results = {};
                                 results[_storageKeys.fingerprint] = ('' + result).toUpperCase();
                                 results[_storageKeys.details] = details;
                                 resolve(results);
                             });
                         });
                     })
-                    .then(function (results) {
-                        var pendingPromises = [];
-                        var resultFingerprint = results[_storageKeys.fingerprint];
+                    .then(results => {
+                        const pendingPromises = [];
+                        const resultFingerprint = results[_storageKeys.fingerprint];
 
                         if (!browserId) {
                             browserId = uuid(32, 16);
@@ -205,35 +206,33 @@ define([
                                 pendingPromises.push(browserStorage.setItem(getStorageKey('uuid'), browserId));
                             }
                             if (newFingerprint) {
-                                pendingPromises.push(browserStorage.setItem(getStorageKey('fingerprint'), resultFingerprint));
+                                pendingPromises.push(
+                                    browserStorage.setItem(getStorageKey('fingerprint'), resultFingerprint)
+                                );
                             }
                         }
 
                         return Promise.all(pendingPromises)
                             .catch(handleError)
-                            .then(function () {
-                                return results;
-                            });
+                            .then(() => results);
                     })
                     .catch(handleError)
-                    .then(function (results) {
-                        var summary, status;
-
+                    .then(results => {
                         results = results || {};
                         if (errors.length) {
                             results[_storageKeys.errors] = errors.length;
                             results[_storageKeys.details] = (results[_storageKeys.details] || []).concat(errors);
                         }
 
-                        summary = self.getSummary(results);
-                        status = self.getFeedback(results);
+                        const summary = this.getSummary(results);
+                        const status = this.getFeedback(results);
                         done(status, summary, results);
                     });
             },
 
             /**
              * Gets the labels loaded for the tester
-             * @returns {Object}
+             * @returns {object}
              */
             get labels() {
                 return labels;
@@ -241,12 +240,15 @@ define([
 
             /**
              * Builds the results summary
-             * @param {Object} results
-             * @returns {Object}
+             * @param {object} results
+             * @returns {object}
              */
-            getSummary: function getSummary(results) {
-                var sources = _(results[_storageKeys.details]).map('key').pull('error').value();
-                var summary = {
+            getSummary(results) {
+                const sources = _(results[_storageKeys.details])
+                    .map('key')
+                    .pull('error')
+                    .value();
+                const summary = {
                     fingerprintValue: {
                         message: labels.fingerprintValue,
                         value: results[_storageKeys.fingerprint]
@@ -267,7 +269,7 @@ define([
                         value: results[_storageKeys.errors]
                     };
 
-                    _.forEach(results[_storageKeys.details], function(details, idx) {
+                    _.forEach(results[_storageKeys.details], (details, idx) => {
                         if (details.key === 'error') {
                             summary['fingerprintError' + idx] = {
                                 message: labels.fingerprintError,
@@ -282,15 +284,13 @@ define([
 
             /**
              * Gets the feedback status for the provided result value
-             * @param {Object} results
-             * @returns {Object}
+             * @param {object} results
+             * @returns {object}
              */
-            getFeedback: function getFeedback(results) {
-                var status, percentage;
+            getFeedback(results) {
+                let percentage;
 
-                if (!results ||
-                    !results[_storageKeys.fingerprint] ||
-                    results[_storageKeys.fingerprint] === 'error') {
+                if (!results || !results[_storageKeys.fingerprint] || results[_storageKeys.fingerprint] === 'error') {
                     percentage = _thresholdValues.error;
                 } else if (results[_storageKeys.uuid] === 'error') {
                     percentage = _thresholdValues.storageIssue;
@@ -300,7 +300,7 @@ define([
                     percentage = _thresholdValues.success;
                 }
 
-                status = getStatus(percentage, _thresholds);
+                const status = getStatus(percentage, _thresholds);
                 status.id = initConfig.id;
                 status.title = labels.title;
                 status.feedback.message = format(status.feedback.message, results && results[_storageKeys.fingerprint]);
@@ -308,7 +308,5 @@ define([
                 return status;
             }
         };
-    }
-
-    return browserFingerprint;
+    };
 });
