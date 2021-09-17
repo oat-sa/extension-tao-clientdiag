@@ -13,10 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015-2017 (original work) Open Assessment Technologies SA ;
- */
-/**
- * @author Jean-Sébastien Conan <jean-sebastien@taoteting.com>
+ * Copyright (c) 2015-2021 (original work) Open Assessment Technologies SA ;
  */
 define([
     'jquery',
@@ -36,30 +33,31 @@ define([
 
     /**
      * Duration of one second (in milliseconds)
-     * @type {Number}
+     * @type {number}
      * @private
      */
-    var _second = 1000;
+    const _second = 1000;
 
     /**
      * Default timeout duration
-     * @type {Number}
+     * @type {number}
      * @private
      */
-    var _defaultTimeout = 30 * _second;
+    const _defaultTimeout = 30 * _second;
 
     /**
      * Default number of renderings by samples
-     * @type {Number}
+     * @type {number}
      * @private
      */
-    var _defaultOccurrencesCount = 10;
+    const _defaultOccurrencesCount = 10;
 
     /**
      * List of default samples
      * @type {Array}
+     * @private
      */
-    var _defaultSamples = [
+    const _defaultSamples = [
         'taoClientDiagnostic/tools/performances/data/sample1/',
         'taoClientDiagnostic/tools/performances/data/sample2/',
         'taoClientDiagnostic/tools/performances/data/sample3/'
@@ -67,10 +65,10 @@ define([
 
     /**
      * Default values for the performances tester
-     * @type {Object}
+     * @type {object}
      * @private
      */
-    var _defaults = {
+    const _defaults = {
         id: 'performances',
 
         // The threshold for optimal performances
@@ -85,27 +83,31 @@ define([
      * @type {Array}
      * @private
      */
-    var _thresholds = [{
-        threshold: 0,
-        message: __('Very slow performances'),
-        type: 'error'
-    }, {
-        threshold: 33,
-        message: __('Average performances'),
-        type: 'warning'
-    }, {
-        threshold: 66,
-        message: __('Good performances'),
-        type: 'success'
-    }];
+    const _thresholds = [
+        {
+            threshold: 0,
+            message: __('Very slow performances'),
+            type: 'error'
+        },
+        {
+            threshold: 33,
+            message: __('Average performances'),
+            type: 'warning'
+        },
+        {
+            threshold: 66,
+            message: __('Good performances'),
+            type: 'success'
+        }
+    ];
 
     /**
      * List of translated texts per level.
      * The level is provided through the config as a numeric value, starting from 1.
-     * @type {Object}
+     * @type {object}
      * @private
      */
-    var _messages = [
+    const _messages = [
         // level 1
         {
             title: __('Workstation performances'),
@@ -118,27 +120,27 @@ define([
 
     /**
      * Base text used to build sample identifiers
-     * @type {String}
+     * @type {string}
      * @private
      */
-    var _sampleBaseId = 'sample';
+    const _sampleBaseId = 'sample';
 
     /**
      * Loads a page inside a div and compute the time to load
-     * @param {Object} data The descriptor of the page to load
+     * @param {object} data The descriptor of the page to load
      * @param {Function} done A callback function called to provide the result
+     * @private
      */
-    function loadItem(data, done){
-
+    function loadItem(data, done) {
         //item location config
-        var qtiJsonFile = data.url + 'qti.json';
-        var urlTokens = data.url.split('/');
-        var extension = urlTokens[0];
-        var fullpath = require.s.contexts._.config.paths[extension];
-        var baseUrl = data.url.replace(extension, fullpath);
-        var loader = new Loader();
-        var renderer = new Renderer({
-            baseUrl : baseUrl       // compatibility mode for legacy installations
+        const qtiJsonFile = `${data.url}qti.json`;
+        const urlTokens = data.url.split('/');
+        const extension = urlTokens[0];
+        const fullpath = require.s.contexts._.config.paths[extension];
+        const baseUrl = data.url.replace(extension, fullpath);
+        const loader = new Loader();
+        const renderer = new Renderer({
+            baseUrl: baseUrl // compatibility mode for legacy installations
         });
 
         // check needed by compatibility mode for legacy installations
@@ -146,25 +148,17 @@ define([
             renderer.getAssetManager().setData('baseUrl', baseUrl);
         }
 
-        require(['json!'+qtiJsonFile], function(itemData){
-
-            loader.loadItemData(itemData, function(item){
-                renderer.load(function(){
-
-                    var $container,
-                        duration,
-                        start,
-                        end,
-                        result;
-
+        require([`json!${qtiJsonFile}`], function(itemData) {
+            loader.loadItemData(itemData, function(item) {
+                renderer.load(function() {
                     //start right before rendering
-                    start = window.performance.now();
+                    const start = window.performance.now();
 
                     //set renderer
                     item.setRenderer(this);
 
                     //render markup
-                    $container = $('<div>').appendTo('body');
+                    const $container = $('<div>').appendTo('body');
                     $container.append(item.render());
 
                     //execute javascript
@@ -174,76 +168,69 @@ define([
                     $container.remove();
 
                     //done
-                    end = window.performance.now();
+                    const end = window.performance.now();
 
-                    duration = (end - start) / _second;
+                    const duration = (end - start) / _second;
 
-                    result = {
-                        id : data.id,
-                        url : data.url,
+                    const result = {
+                        id: data.id,
+                        url: data.url,
                         duration: duration
                     };
 
                     done(null, result);
-
                 }, this.getLoadedClasses());
             });
-
         });
-
     }
 
     /**
      * Performs a browser performances test by running a heavy page
      *
-     * @param {Object} config - Some optional configs
-     * @param {String} [config.id] - The identifier of the test
-     * @param {Number} [config.optimal] - The threshold for optimal performances
-     * @param {Number} [config.threshold] - The threshold for minimal performances
-     * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
-     * @returns {Object}
+     * @param {object} config - Some optional configs
+     * @param {string} [config.id] - The identifier of the test
+     * @param {number} [config.optimal] - The threshold for optimal performances
+     * @param {number} [config.threshold] - The threshold for minimal performances
+     * @param {string} [config.level] - The intensity level of the test. It will aim which messages list to use.
+     * @returns {object}
      */
-    function performancesTester(config) {
-        var initConfig = getConfig(config, _defaults);
-        var labels = getLabels(_messages, initConfig.level);
-        var idx = 0;
-        var _samples = _.map(!_.isEmpty(initConfig.samples) && initConfig.samples || _defaultSamples, function(sample) {
-            idx ++;
+    return function performancesTester(config) {
+        const initConfig = getConfig(config, _defaults);
+        const labels = getLabels(_messages, initConfig.level);
+        let idx = 0;
+        const _samples = _.map((!_.isEmpty(initConfig.samples) && initConfig.samples) || _defaultSamples, sample => {
+            idx++;
             return {
-                id : _sampleBaseId + idx,
-                url : sample,
-                timeout : initConfig.timeout * 1000 || _defaultTimeout,
-                nb : initConfig.occurrences || _defaultOccurrencesCount
+                id: _sampleBaseId + idx,
+                url: sample,
+                timeout: initConfig.timeout * 1000 || _defaultTimeout,
+                nb: initConfig.occurrences || _defaultOccurrencesCount
             };
         });
 
         // add one occurrence on the first sample to obfuscate the time needed to load the runner
-        _samples[0].nb ++;
+        _samples[0].nb++;
 
         return {
             /**
              * Performs a performances test, then call a function to provide the result
              * @param {Function} done
              */
-            start: function start(done) {
-                var tests = [];
-                var self = this;
+            start(done) {
+                const tests = [];
 
-                _.forEach(_samples, function(data) {
-                    var cb = _.partial(loadItem, data);
-                    var iterations = data.nb || 1;
-                    while (iterations --) {
+                _.forEach(_samples, data => {
+                    const cb = _.partial(loadItem, data);
+                    let iterations = data.nb || 1;
+                    while (iterations--) {
                         tests.push(cb);
                     }
                 });
 
-                async.series(tests, function(err, measures) {
-                    var decimals = 2;
-                    var results;
-                    var status;
-                    var summary;
+                async.series(tests, (err, measures) => {
+                    const decimals = 2;
 
-                    if(err && !measures.length){
+                    if (err && !measures.length) {
                         //something went wrong
                         throw err;
                     }
@@ -251,9 +238,9 @@ define([
                     // remove the first result to obfuscate the time needed to load the runner
                     measures.shift();
 
-                    results = stats(measures, 'duration', decimals);
-                    status = self.getFeedback(results.average);
-                    summary = self.getSummary(results);
+                    const results = stats(measures, 'duration', decimals);
+                    const status = this.getFeedback(results.average);
+                    const summary = this.getSummary(results);
 
                     done(status, summary, results);
                 });
@@ -261,7 +248,7 @@ define([
 
             /**
              * Gets the labels loaded for the tester
-             * @returns {Object}
+             * @returns {object}
              */
             get labels() {
                 return labels;
@@ -269,33 +256,31 @@ define([
 
             /**
              * Builds the results summary
-             * @param {Object} results
-             * @returns {Object}
+             * @param {object} results
+             * @returns {object}
              */
-            getSummary: function getSummary(results) {
+            getSummary(results) {
                 return {
-                    performancesMin: {message: labels.performancesMin, value: results.min + ' s'},
-                    performancesMax: {message: labels.performancesMax, value: results.max + ' s'},
-                    performancesAverage: {message: labels.performancesAverage, value: results.average + ' s'}
+                    performancesMin: { message: labels.performancesMin, value: `${results.min} s` },
+                    performancesMax: { message: labels.performancesMax, value: `${results.max} s` },
+                    performancesAverage: { message: labels.performancesAverage, value: `${results.average} s` }
                 };
             },
 
             /**
              * Gets the feedback status for the provided result value
              * @param {Number} result
-             * @returns {Object}
+             * @returns {object}
              */
-            getFeedback: function getFeedback(result) {
-                var optimal = initConfig.optimal;
-                var range = Math.abs(optimal - (initConfig.threshold));
-                var status = getStatus((range + optimal - result) / range * 100, _thresholds);
+            getFeedback(result) {
+                const optimal = initConfig.optimal;
+                const range = Math.abs(optimal - initConfig.threshold);
+                const status = getStatus(((range + optimal - result) / range) * 100, _thresholds);
 
-                status.title =  labels.title;
+                status.title = labels.title;
                 status.id = initConfig.id;
                 return status;
             }
         };
-    }
-
-    return performancesTester;
+    };
 });
