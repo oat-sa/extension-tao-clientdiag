@@ -50,7 +50,7 @@ define(['lodash'], function(_) {
             }
 
             let feedback;
-            const len = thresholds.length >>> 0;
+            const len = thresholds.length;
             for (let i = 0; i < len; i++) {
                 const step = thresholds[i];
                 if (step && (!step.threshold || status.percentage >= step.threshold)) {
