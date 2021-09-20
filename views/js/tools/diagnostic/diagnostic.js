@@ -487,8 +487,6 @@ define([
             })
             // renders the component
             .on('render', function onDiagnosticRender() {
-                const self = this;
-
                 /**
                  * Starts the tests
                  * @param {object} [data]
