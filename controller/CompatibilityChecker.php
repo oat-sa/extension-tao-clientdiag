@@ -73,7 +73,8 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             'browser' =>  $this->getBrowserDetector()->getName(),
             'browserVersion' => $this->getBrowserDetector()->getVersion(),
             'os' => $this->getOsDetector()->getName(),
-            'osVersion' => $this->getOsDetector()->getVersion()
+            'osVersion' => $this->getOsDetector()->getVersion(),
+            'isMobile' => $this->getOsDetector()->isMobile(),
         ];
         $this->returnJson($result);
     }
