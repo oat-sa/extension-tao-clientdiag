@@ -42,6 +42,8 @@ return array(
     'install' => array(
         'rdf' => array(
             __DIR__ . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR . 'ontology' . DIRECTORY_SEPARATOR . 'roles.rdf',
+            __DIR__ . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR . 'ontology' . DIRECTORY_SEPARATOR . 'WebBrowsersList.rdf',
+            __DIR__ . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR . 'ontology' . DIRECTORY_SEPARATOR . 'OSsList.rdf',
         ),
         'php' => array(
             createDiagnosticTable::class,
