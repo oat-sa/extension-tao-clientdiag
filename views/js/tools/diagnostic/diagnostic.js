@@ -23,8 +23,10 @@ define([
     'ui/component',
     'core/logger',
     'core/store',
+    'core/request',
     'core/dataProvider/request',
     'ui/dialog/alert',
+    'ui/feedback',
     'util/url',
     'taoClientDiagnostic/tools/performances/tester',
     'taoClientDiagnostic/tools/bandwidth/tester',
@@ -47,7 +49,9 @@ define([
     loggerFactory,
     store,
     request,
+    requestData,
     dialogAlert,
+    feedback,
     urlHelper,
     performancesTester,
     bandwidthTester,
@@ -133,21 +137,23 @@ define([
         /**
          * Sends the detailed stats to the server
          * @param {string} type The type of stats
-         * @param {object} details The stats details
+         * @param {object} data The stats details
          * @param {Function} done A callback method called once server has responded
          */
-        store(type, details, done) {
+        store(type, data, done) {
             const config = this.config;
+            const url = urlHelper.route(config.actionStore, config.controller, config.extension, config.storeParams);
 
-            details = _.omit(details, 'values');
-            details.type = type;
+            data = _.omit(data, 'values');
+            data.type = type;
 
-            $.post(
-                urlHelper.route(config.actionStore, config.controller, config.extension, config.storeParams),
-                details,
-                done,
-                'json'
-            );
+            request({ url, data, method: 'POST' })
+                .then(done)
+                .catch(err => {
+                    logger.error(err);
+                    feedback().error(__('Unable to save the results! Please check your connection.'));
+                    done();
+                });
         },
 
         /**
@@ -333,7 +339,12 @@ define([
                     this.trigger('starttester', testerId);
                     this.setState(testerId, true);
 
-                    require([testerConfig.tester], testerFactory => {
+                    /**
+                     * Process the diagnostic from the loaded tester
+                     * @param {Function} testerFactory
+                     * @private
+                     */
+                    const processTester = testerFactory => {
                         const tester = testerFactory(getConfig(testerConfig, this.config), this);
                         this.changeStatus(tester.labels.status);
                         tester.start((status, details, results) => {
@@ -372,7 +383,25 @@ define([
                                 cb();
                             });
                         });
-                    });
+                    };
+
+                    /**
+                     * React to loading failure
+                     * @param {Error} err
+                     * @private
+                     */
+                    const processFailure = err => {
+                        logger.error(err);
+                        feedback().error(
+                            __(
+                                'Unable to process with the diagnostic tester %s. The tester module is unreachable.',
+                                testerId
+                            )
+                        );
+                        cb();
+                    };
+
+                    require([testerConfig.tester], processTester, processFailure);
                 };
 
                 if (this.is('rendered')) {
@@ -563,7 +592,7 @@ define([
                  */
                 const requestSchoolName = values => {
                     const componentConfig = this.config;
-                    return request(
+                    return requestData(
                         urlHelper.route(
                             componentConfig.actionSchool,
                             componentConfig.controller,
