@@ -20,12 +20,13 @@ define([
     'jquery',
     'i18n',
     'helpers',
+    'core/request',
     'layout/loading-bar',
     'ui/actionbar',
     'ui/feedback',
     'taoClientDiagnostic/tools/diagnostic/diagnostic',
     'tpl!taoClientDiagnostic/templates/diagnostic/main'
-], function(module, $, __, helpers, loadingBar, actionbar, feedback, diagnosticFactory, diagnosticTpl) {
+], function(module, $, __, helpers, request, loadingBar, actionbar, feedback, diagnosticFactory, diagnosticTpl) {
     'use strict';
 
     /**
@@ -54,7 +55,6 @@ define([
             const extensionConfig = $container.data('config') || {};
             const config = extensionConfig.diagnostic || extensionConfig;
             const indexUrl = helpers._url('index', 'Diagnostic', extension);
-            const workstationUrl = helpers._url('workstation', 'DiagnosticChecker', extension);
             const buttons = [];
             const moduleConfig = module.config() || {};
 
@@ -130,9 +130,10 @@ define([
             });
 
             // need to know the workstation name to display it
-            $.get(workstationUrl, 'json')
-                .done(data => installTester(data && data.workstation))
-                .fail(() => {
+            const url = helpers._url('workstation', 'DiagnosticChecker', extension);
+            request({ url })
+                .then(data => installTester(data && data.workstation))
+                .catch(() => {
                     feedback().error(__('Unable to get the workstation name!'));
                     installTester();
                 });
