@@ -368,6 +368,12 @@ return array(
                  * @type string
                  */
                 'customMsgKey' => 'diagBrowserOsCheckResult',
+
+                /**
+                 * The API to call for the detailed list of default supported browsers
+                 * @type string
+                 */
+                'browserslistUrl' => 'https://oat-sa.github.io/browserslist-app-tao/api.json',
             ],
 
             /**
