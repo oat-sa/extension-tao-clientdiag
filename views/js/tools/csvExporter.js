@@ -15,7 +15,14 @@
  *
  * Copyright (c) 2016-2021 (original work) Open Assessment Technologies SA ;
  */
-define(['jquery', 'lodash', 'i18n', 'layout/loading-bar', 'helpers'], function($, _, __, loadingBar, helpers) {
+define(['jquery', 'lodash', 'i18n', 'core/request', 'layout/loading-bar', 'helpers'], function(
+    $,
+    _,
+    __,
+    request,
+    loadingBar,
+    helpers
+) {
     'use strict';
 
     /**
@@ -38,17 +45,6 @@ define(['jquery', 'lodash', 'i18n', 'layout/loading-bar', 'helpers'], function($
             const $container = $(cssScope);
             const extension = $container.data('extension') || 'taoClientDiagnostic';
             const serviceUrl = helpers._url('diagnosticData', 'Diagnostic', extension);
-
-            // wrapper for get request
-            function getRequest(url, data) {
-                return $.ajax({
-                    url: url,
-                    data: data,
-                    error: () => {
-                        loadingBar.stop();
-                    }
-                });
-            }
 
             // filtering and transforming diagnostic data according to the model
             function mappingDiagnosticsData(diagnostics) {
@@ -100,12 +96,20 @@ define(['jquery', 'lodash', 'i18n', 'layout/loading-bar', 'helpers'], function($
             }
 
             loadingBar.start();
-            getRequest(serviceUrl, { rows: Number.MAX_SAFE_INTEGER }).done(response => {
-                const mappedData = mappingDiagnosticsData(response.data);
-                let csvContent = arrayToCsv(mappedData);
-                downloadFile(csvContent, __('diagnostics.csv'), 'text/csv');
-                loadingBar.stop();
-            });
+
+            request({
+                url: serviceUrl,
+                data: { rows: Number.MAX_SAFE_INTEGER }
+            })
+                .then(response => {
+                    const mappedData = mappingDiagnosticsData(response.data);
+                    let csvContent = arrayToCsv(mappedData);
+                    downloadFile(csvContent, __('diagnostics.csv'), 'text/csv');
+                    loadingBar.stop();
+                })
+                .catch(() => {
+                    loadingBar.stop();
+                });
         }
     };
 });
