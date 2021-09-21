@@ -170,7 +170,8 @@ define([
                         request({
                             url: urlHelper.route(initConfig.action, initConfig.controller, initConfig.extension),
                             data: platformInfo,
-                            method: 'POST'
+                            method: 'POST',
+                            noToken: true
                         })
                             .catch(() => {
                                 return {

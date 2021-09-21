@@ -99,7 +99,8 @@ define(['jquery', 'lodash', 'i18n', 'core/request', 'layout/loading-bar', 'helpe
 
             request({
                 url: serviceUrl,
-                data: { rows: Number.MAX_SAFE_INTEGER }
+                data: { rows: Number.MAX_SAFE_INTEGER },
+                noToken: true
             })
                 .then(response => {
                     const mappedData = mappingDiagnosticsData(response.data);

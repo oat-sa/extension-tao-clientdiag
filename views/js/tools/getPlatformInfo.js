@@ -104,6 +104,6 @@ define(['core/request', 'util/url', 'taoClientDiagnostic/tools/getConfig'], func
             config.browserVersionExtension
         );
 
-        return request({ url });
+        return request({ url, noToken: true });
     };
 });

@@ -131,7 +131,7 @@ define([
 
             // need to know the workstation name to display it
             const url = helpers._url('workstation', 'DiagnosticChecker', extension);
-            request({ url })
+            request({ url, noToken: true })
                 .then(data => installTester(data && data.workstation))
                 .catch(() => {
                     feedback().error(__('Unable to get the workstation name!'));

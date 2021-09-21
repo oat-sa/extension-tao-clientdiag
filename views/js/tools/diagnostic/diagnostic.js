@@ -147,7 +147,7 @@ define([
             data = _.omit(data, 'values');
             data.type = type;
 
-            request({ url, data, method: 'POST' })
+            request({ url, data, method: 'POST', noToken: true })
                 .then(done)
                 .catch(err => {
                     logger.error(err);
@@ -313,7 +313,7 @@ define([
          */
         deleteIdentifier() {
             const url = urlHelper.route(this.config.actionDropId, this.config.controller, this.config.extension);
-            return request(url, null, 'POST');
+            return request({ url, method: 'POST', noToken: true });
         },
 
         /**

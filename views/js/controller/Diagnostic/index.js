@@ -162,7 +162,8 @@ define([
                         data: {
                             id: selection
                         },
-                        method: 'POST'
+                        method: 'POST',
+                        noToken: true
                     })
                         .then(response => {
                             loadingBar.stop();
