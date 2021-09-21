@@ -59,6 +59,12 @@ return array(
         'configurableText' => null,
 
         /**
+         * When this option is activated, the diagnostic will allow exporting results to a CSV file
+         * @type boolean
+         */
+        'export' => false,
+
+        /**
          * When this option is activated, the diagnostic will require a school name before allowing to start the checks
          * @type boolean
          */
