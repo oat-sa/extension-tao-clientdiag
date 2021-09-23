@@ -17,16 +17,13 @@
  *
  *
  */
-define([
-    'jquery',
-    'ui/tooltipster',
-    'select2',
-    'css!taoClientDiagnosticCss/exclusion-list-form'
-], function ($, tooltipster) {
+define(['jquery', 'ui/tooltipster', 'select2', 'css!taoClientDiagnosticCss/exclusion-list-form'], function(
+    $,
+    tooltipster
+) {
     'use strict';
 
     return {
-        start() {
-        }
+        start() {}
     };
 });

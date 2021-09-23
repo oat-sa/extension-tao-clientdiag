@@ -32,14 +32,14 @@ define({
             diagnostic: 'controller/Diagnostic/diagnostic'
         }
     },
-    'ExcludedBrowsers': {
-        'actions': {
-            'editInstance': 'controller/ExclusionList/editInstance'
+    ExcludedBrowsers: {
+        actions: {
+            editInstance: 'controller/ExclusionList/editInstance'
         }
     },
-    'ExcludedOS': {
-        'actions': {
-            'editInstance': 'controller/ExclusionList/editInstance'
+    ExcludedOS: {
+        actions: {
+            editInstance: 'controller/ExclusionList/editInstance'
         }
-    },
+    }
 });
