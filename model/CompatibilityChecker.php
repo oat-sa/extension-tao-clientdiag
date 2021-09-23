@@ -20,11 +20,14 @@
 
 namespace oat\taoClientDiagnostic\model;
 
+use oat\oatbox\service\ConfigurableService;
 use Sinergi\BrowserDetector\Browser;
 use Sinergi\BrowserDetector\Os;
 
-class CompatibilityChecker
+class CompatibilityChecker extends ConfigurableService
 {
+    public const SERVICE_ID = 'taoClientDiagnostic/CompatibilityChecker';
+
     protected $compatibility;
 
     /**
