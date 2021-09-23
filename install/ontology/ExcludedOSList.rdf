@@ -5,7 +5,6 @@
         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
         xmlns:widget="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#"
         xmlns:tao="http://www.tao.lu/Ontologies/TAO.rdf#"
-
 >
 
     <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAODelivery.rdf#OSMake">
@@ -17,13 +16,13 @@
     <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOS">
         <rdfs:subClassOf rdf:resource="http://www.tao.lu/Ontologies/TAO.rdf#TAOObject"/>
         <rdfs:label xml:lang="en-US"><![CDATA[Excluded OS]]></rdfs:label>
-        <rdfs:comment xml:lang="en-US"><![CDATA[Excluded OS]]></rdfs:comment>
+        <rdfs:comment xml:lang="en-US"><![CDATA[Operating System to exclude]]></rdfs:comment>
     </rdf:Description>
 
     <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOSName">
         <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
         <rdfs:label xml:lang="en-US"><![CDATA[OS name]]></rdfs:label>
-        <rdfs:comment xml:lang="en-US"><![CDATA[OS name]]></rdfs:comment>
+        <rdfs:comment xml:lang="en-US"><![CDATA[Name of the Operating System to exclude]]></rdfs:comment>
         <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOS"/>
         <rdfs:range rdf:resource="http://www.tao.lu/Ontologies/TAODelivery.rdf#OSMake"/>
         <widget:widget rdf:resource="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#ComboBox"/>
@@ -31,13 +30,14 @@
 
     <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOSVersion">
         <rdf:type rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
-        <rdfs:label xml:lang="en-US"><![CDATA[Minimum version]]></rdfs:label>
-        <rdfs:comment xml:lang="en-US"><![CDATA[OS minimum version]]></rdfs:comment>
+        <rdfs:label xml:lang="en-US"><![CDATA[OS version]]></rdfs:label>
+        <rdfs:comment xml:lang="en-US"><![CDATA[Version of the Operating System to exclude]]></rdfs:comment>
         <rdfs:domain rdf:resource="http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOS"/>
         <rdfs:range rdf:resource="http://www.w3.org/2000/01/rdf-schema#Literal"/>
         <widget:widget rdf:resource="http://www.tao.lu/datatypes/WidgetDefinitions.rdf#TextBox"/>
     </rdf:Description>
 
+    <!--Basic list of the most popular OS-->
     <rdf:Description rdf:about="http://www.tao.lu/Ontologies/TAODelivery.rdf#OsWindows">
         <rdf:type rdf:resource="http://www.tao.lu/Ontologies/TAODelivery.rdf#OSMake"/>
         <rdfs:label xml:lang="en-US"><![CDATA[Windows]]></rdfs:label>
