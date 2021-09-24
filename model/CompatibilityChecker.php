@@ -14,14 +14,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015-2019 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2015-2021 (original work) Open Assessment Technologies SA;
  */
 
 namespace oat\taoClientDiagnostic\model;
 
 use oat\oatbox\service\ConfigurableService;
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
+use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserClassService;
+use oat\taoClientDiagnostic\model\exclusionList\ExcludedOsClassService;
 use Sinergi\BrowserDetector\Browser;
 use Sinergi\BrowserDetector\Os;
 use tao_models_classes_FileNotFoundException;
@@ -38,12 +39,14 @@ class CompatibilityChecker extends ConfigurableService
 
     protected $compatibility;
     protected $supported;
+    protected $excludedBrowsers;
+    protected $excludedOS;
 
     /**
      * Extract compatibility file
      * @throws tao_models_classes_FileNotFoundException
      */
-    public function getCompatibilityList()
+    public function getCompatibilityList(): array
     {
         if (!$this->compatibility) {
             $compatibilityFile = __DIR__ . '/../include/compatibility.json';
@@ -60,7 +63,7 @@ class CompatibilityChecker extends ConfigurableService
      * Fetch the support list
      * @throws tao_models_classes_FileNotFoundException
      */
-    public function getSupportedList()
+    public function getSupportedList(): array
     {
         if (!$this->supported) {
             $service = $this->getServiceLocator()->get(DiagnosticServiceInterface::SERVICE_ID);
@@ -68,7 +71,7 @@ class CompatibilityChecker extends ConfigurableService
             $supportListUrl = $config['diagnostic']['testers']['browser']['browserslistUrl'];
 
             if (!$supportListUrl) {
-                throw new tao_models_classes_FileNotFoundException("The URL to the list of supported browser is configured");
+                throw new tao_models_classes_FileNotFoundException("The URL to the list of supported browser is not configured");
             }
             $supportedList = json_decode(file_get_contents($supportListUrl), true);
 
@@ -91,31 +94,19 @@ class CompatibilityChecker extends ConfigurableService
 
     /**
      * Standard version_compare threats that  5.2 < 5.2.0, 5.2 < 5.2.1, ...
-     *
-     * @param $ver1
-     * @param $ver2
-     * @param null|string @see http://php.net/manual/en/function.version-compare.php
-     * @return mixed
      */
-    protected function versionCompare($ver1, $ver2, $operator = null)
+    protected function versionCompare($ver1, $ver2): int
     {
         $ver1 = preg_replace('#(\.0+)+($|-)#', '', $ver1);
         $ver2 = preg_replace('#(\.0+)+($|-)#', '', $ver2);
-        if ($operator === null) {
-            $result = version_compare($ver1, $ver2);
-        } else {
-            $result = version_compare($ver1, $ver2, $operator);
-        }
-        return $result;
+        return version_compare($ver1, $ver2);
     }
 
     /**
      * Check if a version is greater or equal to the listed ones
-     * @param $testedVersion
-     * @param $versionList
-     * @return bool
      */
-    protected function checkVersion($testedVersion, $versionList) {
+    protected function checkVersion($testedVersion, $versionList): bool
+    {
         if (empty($versionList)) {
             return true;
         }
@@ -130,18 +121,72 @@ class CompatibilityChecker extends ConfigurableService
     }
 
     /**
-     * Check if the client browser, and the OS, meet the requirements supplied in a validation list.
-     * Returns a value corresponding to the COMPATIBILITY_* constants.
-     * @param array $validationList
-     * @return int
+     * Checks if a version is excluded
      */
-    protected function checkSupport(array $validationList): int
+    protected function isExcluded($name, $version, $exclusionsList): bool
+    {
+        $name = strtolower($name);
+        if (count($exclusionsList) && array_key_exists($name, $exclusionsList)) {
+            $explodedVersion = explode('.', $version);
+            $excludedVersions = $exclusionsList[$name];
+            foreach ($excludedVersions as $excludedVersion) {
+                if (empty($excludedVersion)) {
+                    // any version is excluded
+                    return true;
+                }
+                $explodedExcludedVersion = explode('.', $excludedVersion);
+                if (array_slice($explodedVersion, 0, count($explodedExcludedVersion)) == $explodedExcludedVersion) {
+                    // greedy or exact version is excluded
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Checks if a browser is excluded
+     */
+    public function isBrowserExcluded($name, $version): bool
+    {
+        if (!$this->excludedBrowsers) {
+            $service = $this->getServiceLocator()->get(ExcludedBrowserClassService::SERVICE_ID);
+            $this->excludedBrowsers = $service->getExclusionsList();
+        }
+        return $this->isExcluded($name, $version, $this->excludedBrowsers);
+    }
+
+    /**
+     * Checks if an OS is excluded
+     */
+    public function isOsExcluded($name, $version): bool
+    {
+        if (!$this->excludedOS) {
+            $service = $this->getServiceLocator()->get(ExcludedOsClassService::SERVICE_ID);
+            $this->excludedOS = $service->getExclusionsList();
+        }
+        return $this->isExcluded($name, $version, $this->excludedOS);
+    }
+
+    /**
+     * Checks if the client browser, and the OS, meet the requirements supplied in a validation list.
+     * Returns a value corresponding to the COMPATIBILITY_* constants.
+     * @throws tao_models_classes_FileNotFoundException
+     */
+    public function isCompatibleConfig(): int
     {
         $clientDevice = $this->getOsDetector()->isMobile() ? 'mobile' : 'desktop';
         $clientOS = strtolower($this->getOsDetector()->getName());
         $clientOSVersion = $this->getOsDetector()->getVersion();
         $clientBrowser = strtolower($this->getBrowserDetector()->getName());
         $clientBrowserVersion = $this->getBrowserDetector()->getVersion();
+
+        if ($this->isOsExcluded($clientOS, $clientOSVersion) ||
+            $this->isBrowserExcluded($clientBrowser, $clientBrowserVersion)) {
+            return self::COMPATIBILITY_NOT_SUPPORTED;
+        }
+
+        $validationList = array_merge($this->getSupportedList(), $this->getCompatibilityList());
 
         foreach ($validationList as $entry) {
             if ($clientDevice !== $entry['device']) {
@@ -174,43 +219,17 @@ class CompatibilityChecker extends ConfigurableService
     }
 
     /**
-     * Check if the detected browser is compatible.
-     * It also pays attention to the operating system.
-     * Based on json file
-     * If couple is found on file:
-     *  - return compatibility key, see the constants COMPATIBILITY_* (1=ok, 0=not ok)
-     *  - return 2 if not tested
-     * @return int
-     * @throws tao_models_classes_FileNotFoundException
-     */
-    public function isCompatibleConfig()
-    {
-        $support = $this->checkSupport($this->getSupportedList());
-
-        if ($support === self::COMPATIBILITY_NOT_TESTED) {
-            $support = $this->checkSupport($this->getCompatibilityList());
-        }
-
-        return $support;
-    }
-
-
-    /**
      * Get the browser detector
-     *
-     * @return Browser
      */
-    protected function getBrowserDetector()
+    protected function getBrowserDetector(): Browser
     {
         return new Browser();
     }
 
     /**
      * Get the operating system detector
-     *
-     * @return Os
      */
-    protected function getOsDetector()
+    protected function getOsDetector(): Os
     {
         return new Os();
     }

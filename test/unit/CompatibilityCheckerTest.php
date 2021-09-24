@@ -14,7 +14,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 Open Assessment Technologies SA
+ * Copyright (c) 2015-2021 Open Assessment Technologies SA
  */
 
 
@@ -27,80 +27,50 @@ use oat\generis\test\TestCase;
 
 class CompatibilityCheckerTest extends TestCase
 {
-    public function testCompatibleConfigCompatible()
+    public function versionsProvider()
     {
-        $compatibility = array(
-            array("compatible" => CompatibilityChecker::COMPATIBILITY_COMPATIBLE, "os" => "Windows", "osVersion" => "8.1", "device" => "desktop", "browser" => "Chrome", "versions" => array(33, 34, 35))
-        );
-        $supported = array(
-            array("compatible" => CompatibilityChecker::COMPATIBILITY_SUPPORTED, "os" => "Windows", "osVersion" => "8.1", "device" => "desktop", "browser" => "Chrome", "versions" => array(40, 41, 42))
-        );
-
-        $checker = new CompatibilityCheckerDummy(
-            $compatibility,
-            $supported,
-            $this->getDetectorMock(Os::class, 'Windows', '8.1', false),
-            $this->getDetectorMock(Browser::class, 'Chrome', '33', false)
-        );
-
-        $this->assertEquals(CompatibilityChecker::COMPATIBILITY_COMPATIBLE, $checker->isCompatibleConfig());
+        return [
+            ['Chrome', '33', 'Windows', '8.1', CompatibilityChecker::COMPATIBILITY_COMPATIBLE],
+            ['Chrome', '38', 'Windows', '8.1', CompatibilityChecker::COMPATIBILITY_COMPATIBLE],
+            ['Chrome', '41', 'Windows', '8.1', CompatibilityChecker::COMPATIBILITY_SUPPORTED],
+            ['Chrome', '45', 'Windows', '8.1', CompatibilityChecker::COMPATIBILITY_SUPPORTED],
+            ['Chrome', '15', 'Windows', '', CompatibilityChecker::COMPATIBILITY_NOT_TESTED],
+            ['Internet Explorer', '9', 'Windows', '7', CompatibilityChecker::COMPATIBILITY_NONE],
+            ['Chrome', '43', 'Windows', '8.1', CompatibilityChecker::COMPATIBILITY_NOT_SUPPORTED],
+            ['Chrome', '42', 'Windows', '10', CompatibilityChecker::COMPATIBILITY_NOT_SUPPORTED],
+        ];
     }
 
-    public function testCompatibleConfigSupported()
+    /**
+     * @dataProvider versionsProvider
+     */
+    public function testIsCompatibleConfig($browserName, $browserVersion, $osName, $osVersion, $expectedResult)
     {
-        $compatibility = array(
-            array("compatible" => CompatibilityChecker::COMPATIBILITY_COMPATIBLE, "os" => "Windows", "osVersion" => "8.1", "device" => "desktop", "browser" => "Chrome", "versions" => array(33, 34, 35))
-        );
-        $supported = array(
-            array("compatible" => CompatibilityChecker::COMPATIBILITY_SUPPORTED, "os" => "Windows", "osVersion" => "8.1", "device" => "desktop", "browser" => "Chrome", "versions" => array(40, 41, 42))
-        );
+        $compatibility = [
+            ['compatible' => CompatibilityChecker::COMPATIBILITY_NONE, 'os' => 'Windows', 'osVersion' => '7', 'device' => 'desktop', 'browser' => 'Internet Explorer', 'versions' => [9]],
+            ['compatible' => CompatibilityChecker::COMPATIBILITY_COMPATIBLE, 'os' => 'Windows', 'osVersion' => '8.1', 'device' => 'desktop', 'browser' => 'Chrome', 'versions' => [33, 34, 35]],
+        ];
+        $supported = [
+            ['compatible' => CompatibilityChecker::COMPATIBILITY_SUPPORTED, 'os' => 'Windows', 'osVersion' => '8.1', 'device' => 'desktop', 'browser' => 'Chrome', 'versions' => [40, 41, 42]],
+        ];
+        $excludedBrowsers = [
+            'chrome' => ['43']
+        ];
+        $excludedOS = [
+            'windows' => ['10']
+        ];
 
         $checker = new CompatibilityCheckerDummy(
             $compatibility,
             $supported,
-            $this->getDetectorMock(Os::class, 'Windows', '8.1', false),
-            $this->getDetectorMock(Browser::class, 'Chrome', '41', false)
+            $excludedBrowsers,
+            $excludedOS,
+            $this->getDetectorMock(Os::class, $osName, $osVersion, false),
+            $this->getDetectorMock(Browser::class, $browserName, $browserVersion, false)
         );
 
-        $this->assertEquals(CompatibilityChecker::COMPATIBILITY_SUPPORTED, $checker->isCompatibleConfig());
-    }
+        $this->assertEquals($checker->isCompatibleConfig(), $expectedResult);
 
-    public function testCompatibleConfigNotTested()
-    {
-        $compatibility = array(
-            array("compatible" => CompatibilityChecker::COMPATIBILITY_COMPATIBLE, "os" => "Windows", "osVersion" => "8.1", "device" => "desktop", "browser" => "Chrome", "versions" => array(33, 34, 35))
-        );
-        $supported = array(
-            array("compatible" => CompatibilityChecker::COMPATIBILITY_SUPPORTED, "os" => "Windows", "osVersion" => "8.1", "device" => "desktop", "browser" => "Chrome", "versions" => array(40, 41, 42))
-        );
-
-        $checker = new CompatibilityCheckerDummy(
-            $compatibility,
-            $supported,
-            $this->getDetectorMock(Os::class, 'Windows', '8.1', false),
-            $this->getDetectorMock(Browser::class, 'Chrome', 'NoVersion', false)
-        );
-
-        $this->assertEquals(CompatibilityChecker::COMPATIBILITY_NOT_TESTED, $checker->isCompatibleConfig());
-    }
-
-    public function testCompatibleConfigNone()
-    {
-        $compatibility = array(
-            array("compatible" => CompatibilityChecker::COMPATIBILITY_NONE, "os" => "Windows", "osVersion" => "7", "device" => "desktop", "browser" => "Internet Explorer", "versions" => array(9))
-        );
-        $supported = array(
-            array("compatible" => CompatibilityChecker::COMPATIBILITY_SUPPORTED, "os" => "Windows", "osVersion" => "8.1", "device" => "desktop", "browser" => "Chrome", "versions" => array(40, 41, 42))
-        );
-
-        $checker = new CompatibilityCheckerDummy(
-            $compatibility,
-            $supported,
-            $this->getDetectorMock(Os::class, 'Windows', '7', false),
-            $this->getDetectorMock(Browser::class, 'Internet Explorer', '9', false)
-        );
-
-        $this->assertEquals(CompatibilityChecker::COMPATIBILITY_NONE, $checker->isCompatibleConfig());
     }
 
     protected function getDetectorMock($class, $name, $version, $mobile)
@@ -133,20 +103,22 @@ class CompatibilityCheckerDummy extends CompatibilityChecker
     private $osDetector;
     private $browserDetector;
 
-    public function __construct($compatibility, $supported, $osDetector, $browserDetector)
+    public function __construct($compatibility, $supported, $excludedBrowsers, $excludedOS, $osDetector, $browserDetector)
     {
         $this->compatibility = $compatibility;
         $this->supported = $supported;
+        $this->excludedBrowsers = $excludedBrowsers;
+        $this->excludedOS = $excludedOS;
         $this->osDetector = $osDetector;
         $this->browserDetector = $browserDetector;
     }
 
-    protected function getBrowserDetector()
+    protected function getBrowserDetector(): Browser
     {
         return $this->browserDetector;
     }
 
-    public function getOsDetector()
+    public function getOsDetector(): Os
     {
         return $this->osDetector;
     }
