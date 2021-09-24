@@ -73,7 +73,7 @@ abstract class ExclusionListClassService extends OntologyClassService
                         $this->getVersionProperty()]
                 );
 
-                $excludedName = strtolower(current($properties[$this->getNamePropertyUri()])->getLabel());
+                $excludedName = strtolower((string)current($properties[$this->getNamePropertyUri()]));
                 $excludedVersion = (string)current($properties[$this->getVersionPropertyUri()]);
 
                 $this->excluded[$excludedName][] = $excludedVersion;
