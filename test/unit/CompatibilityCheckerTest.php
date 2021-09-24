@@ -16,7 +16,7 @@
  *
  * Copyright (c) 2015-2021 Open Assessment Technologies SA
  */
-
+declare(strict_types=1);
 
 namespace oat\taoClientDiagnostic\test\unit;
 
