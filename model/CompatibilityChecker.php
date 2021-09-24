@@ -52,7 +52,7 @@ class CompatibilityChecker extends ConfigurableService
             $compatibilityFile = __DIR__ . '/../include/compatibility.json';
 
             if (!file_exists($compatibilityFile)) {
-                throw new tao_models_classes_FileNotFoundException("Unable to find the compatibility file");
+                throw new tao_models_classes_FileNotFoundException('Unable to find the compatibility file');
             }
             $this->compatibility = json_decode(file_get_contents($compatibilityFile), true);
         }
@@ -71,12 +71,12 @@ class CompatibilityChecker extends ConfigurableService
             $supportListUrl = $config['diagnostic']['testers']['browser']['browserslistUrl'];
 
             if (!$supportListUrl) {
-                throw new tao_models_classes_FileNotFoundException("The URL to the list of supported browser is not configured");
+                throw new tao_models_classes_FileNotFoundException('The URL to the list of supported browser is not configured');
             }
             $supportedList = json_decode(file_get_contents($supportListUrl), true);
 
             if (!$supportedList) {
-                throw new tao_models_classes_FileNotFoundException("Unable to fetch the list of supported browsers");
+                throw new tao_models_classes_FileNotFoundException('Unable to fetch the list of supported browsers');
             }
 
             $this->supported = array_map(function ($entry) {
