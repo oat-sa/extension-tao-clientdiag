@@ -20,6 +20,8 @@
 namespace oat\taoClientDiagnostic\test\unit\exclusionList;
 
 use core_kernel_classes_Class;
+use core_kernel_classes_Property;
+use core_kernel_classes_Resource;
 use oat\generis\model\OntologyRdfs;
 use oat\generis\test\TestCase;
 use oat\taoClientDiagnostic\model\exclusionList\ExcludedOsClassService;
@@ -29,68 +31,71 @@ class ExcludedExcludedOsClassServiceTest extends TestCase
 {
     public function testGetRootClass(): void
     {
+        $class = $this->createMock(core_kernel_classes_Class::class);
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getClass')
             ->with(ExcludedOsClassService::ROOT_CLASS)
-            ->willReturn('fixture');
+            ->willReturn($class);
 
         $service = new ExcludedOsClassService();
         $service->setModel($model);
-        $this->assertEquals('fixture', $service->getRootClass());
+        $this->assertEquals($class, $service->getRootClass());
     }
 
-    public function testGetMakeClass(): void
+    public function testGetListClass(): void
     {
         $name = 'fixture-os-name';
-        $resource = 'fixture-resource';
+        $resource = $this->createMock(core_kernel_classes_Resource::class);
 
         $class = $this->createMock(core_kernel_classes_Class::class);
         $class->expects($this->once())
             ->method('searchInstances')
             ->with(
-                [ OntologyRdfs::RDFS_LABEL => $name ],
-                [ 'like' => false ]
+                [OntologyRdfs::RDFS_LABEL => $name],
+                ['like' => false]
             )
             ->willReturn([$resource]);
 
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getClass')
-            ->with(ExcludedOsClassService::MAKE_ENTRY)
+            ->with(ExcludedOsClassService::LIST_CLASS)
             ->willReturn($class);
 
 
         $service = new ExcludedOsClassService();
         $service->setModel($model);
 
-        $this->assertEquals($resource, $service->getResourceByName($name));
+        $this->assertEquals($resource, $service->getListDefinitionByName($name));
     }
 
     public function testGetNameProperty(): void
     {
+        $property = $this->createMock(core_kernel_classes_Property::class);
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getProperty')
             ->with(ExcludedOsClassService::EXCLUDED_NAME)
-            ->willReturn('fixture');
+            ->willReturn($property);
 
         $service = new ExcludedOsClassService();
         $service->setModel($model);
-        $this->assertEquals('fixture', $service->getNameProperty());
+        $this->assertEquals($property, $service->getNameProperty());
     }
 
     public function testGetVersionProperty(): void
     {
+        $property = $this->createMock(core_kernel_classes_Property::class);
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getProperty')
             ->with(ExcludedOsClassService::EXCLUDED_VERSION)
-            ->willReturn('fixture');
+            ->willReturn($property);
 
         $service = new ExcludedOsClassService();
         $service->setModel($model);
-        $this->assertEquals('fixture', $service->getVersionProperty());
+        $this->assertEquals($property, $service->getVersionProperty());
     }
 
 }

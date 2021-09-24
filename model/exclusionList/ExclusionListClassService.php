@@ -35,40 +35,16 @@ abstract class ExclusionListClassService extends OntologyClassService
     /** @var array */
     private $names = [];
 
-    /**
-     * Get the name property
-     *
-     * @return core_kernel_classes_Property
-     */
-    abstract public function getNameProperty();
+    abstract protected function getListClass(): core_kernel_classes_Class;
 
-    /**
-     * @return string
-     */
+    abstract public function getNameProperty(): core_kernel_classes_Property;
+
     abstract public function getNamePropertyUri(): string;
 
-    /**
-     * Get the version property
-     *
-     * @return core_kernel_classes_Property
-     */
-    abstract public function getVersionProperty();
+    abstract public function getVersionProperty():core_kernel_classes_Property;
 
-    /**
-     * @return string
-     */
     abstract public function getVersionPropertyUri(): string;
 
-    /**
-     * Get the parent class
-     *
-     * @return core_kernel_classes_Class
-     */
-    abstract protected function getMakeClass();
-
-    /**
-     * @return array
-     */
     public function getExcludedNames(): array
     {
         if (!$this->names) {
@@ -83,13 +59,9 @@ abstract class ExclusionListClassService extends OntologyClassService
         return $this->names;
     }
 
-    /**
-     * @param string $name
-     * @return core_kernel_classes_Resource|null
-     */
-    public function getResourceByName($name)
+    public function getListDefinitionByName($name): ?core_kernel_classes_Resource
     {
-        $results = $this->getMakeClass()->searchInstances(
+        $results = $this->getListClass()->searchInstances(
             [OntologyRdfs::RDFS_LABEL => $name],
             ['like' => false]
         );

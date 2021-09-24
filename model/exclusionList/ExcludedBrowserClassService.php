@@ -32,7 +32,7 @@ class ExcludedBrowserClassService extends ExclusionListClassService
     const SERVICE_ID = 'taoClientDiagnostic/ExcludedBrowserClassService';
 
     public const ROOT_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowser';
-    public const MAKE_ENTRY = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserMake';
+    public const LIST_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowsersList';
     public const EXCLUDED_NAME = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowserName';
     public const EXCLUDED_VERSION = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowserVersion';
 
@@ -46,49 +46,28 @@ class ExcludedBrowserClassService extends ExclusionListClassService
         return $this->getClass(self::ROOT_CLASS);
     }
 
-    /**
-     * Get the name property of excluded Browser
-     *
-     * @return core_kernel_classes_Property
-     */
-    public function getNameProperty()
+    protected function getListClass(): core_kernel_classes_Class
+    {
+        return $this->getClass(self::LIST_CLASS);
+    }
+
+    public function getNameProperty(): core_kernel_classes_Property
     {
         return $this->getProperty($this->getNamePropertyUri());
     }
 
-    /**
-     * @return string
-     */
     public function getNamePropertyUri(): string
     {
         return self::EXCLUDED_NAME;
     }
 
-    /**
-     * Get the version property of excluded Browser
-     *
-     * @return core_kernel_classes_Property
-     */
-    public function getVersionProperty()
+    public function getVersionProperty(): core_kernel_classes_Property
     {
         return $this->getProperty($this->getVersionPropertyUri());
     }
 
-    /**
-     * @return string
-     */
     public function getVersionPropertyUri(): string
     {
         return self::EXCLUDED_VERSION;
-    }
-
-    /**
-     * Get the parent class of excluded Browser
-     *
-     * @return core_kernel_classes_Class
-     */
-    protected function getMakeClass()
-    {
-        return $this->getClass(self::MAKE_ENTRY);
     }
 }
