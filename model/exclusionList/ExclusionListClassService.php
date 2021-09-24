@@ -35,28 +35,61 @@ abstract class ExclusionListClassService extends OntologyClassService
     /** @var array */
     private $names = [];
 
+    /** @var array */
+    private $excluded = [];
+
     abstract protected function getListClass(): core_kernel_classes_Class;
 
     abstract public function getNameProperty(): core_kernel_classes_Property;
 
     abstract public function getNamePropertyUri(): string;
 
-    abstract public function getVersionProperty():core_kernel_classes_Property;
+    abstract public function getVersionProperty(): core_kernel_classes_Property;
 
     abstract public function getVersionPropertyUri(): string;
 
-    public function getExcludedNames(): array
+    public function getListNames(): array
     {
         if (!$this->names) {
             $nameInstances = $this->getNameProperty()->getRange()->getInstances();
 
-            /** @var \core_kernel_classes_Resource $nameInstance */
+            /** @var core_kernel_classes_Resource $nameInstance */
             foreach ($nameInstances as $nameInstance) {
                 $this->names[strtolower($nameInstance->getLabel())] = $nameInstance->getUri();
             }
         }
 
         return $this->names;
+    }
+
+    public function getExclusionsList(): array
+    {
+        if (!$this->excluded) {
+            $instances = $this->getRootClass()->getInstances(true);
+
+            /** @var core_kernel_classes_Resource $instance */
+            foreach ($instances as $instance) {
+                $properties = $instance->getPropertiesValues([
+                        $this->getNameProperty(),
+                        $this->getVersionProperty()]
+                );
+
+                $excludedName = strtolower(current($properties[$this->getNamePropertyUri()])->getLabel());
+                $excludedVersion = (string)current($properties[$this->getVersionPropertyUri()]);
+
+                $this->excluded[$excludedName][] = $excludedVersion;
+            }
+        }
+
+        return $this->excluded;
+    }
+
+    public function getExclusionsByName($name): array
+    {
+        return $this->getRootClass()->searchInstances(
+            [OntologyRdfs::RDFS_LABEL => $name],
+            ['like' => false]
+        );
     }
 
     public function getListDefinitionByName($name): ?core_kernel_classes_Resource
