@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 namespace oat\taoClientDiagnostic\controller;
 
-use oat\taoClientDiagnostic\model\exclusionList\ExcludedOsClassService;
+use oat\taoClientDiagnostic\model\exclusionList\ExcludedOSClassService;
 
 /**
  *
@@ -35,8 +35,8 @@ class ExcludedOS extends \tao_actions_SaSModule
         $myFormContainer = new \tao_actions_form_Instance($clazz, $instance);
 
         $myForm = $myFormContainer->getForm();
-        $nameElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedOsClassService::EXCLUDED_NAME));
-        $versionElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedOsClassService::EXCLUDED_VERSION));
+        $nameElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedOSClassService::EXCLUDED_NAME));
+        $versionElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedOSClassService::EXCLUDED_VERSION));
         $nameElement->addClass('select2');
         $versionElement->setHelp(
             "<span class=\"icon-help tooltipstered\" data-tooltip=\".exclusion-list-form .excluded-version-tooltip-content\" data-tooltip-theme=\"info\"></span>"
@@ -60,12 +60,12 @@ class ExcludedOS extends \tao_actions_SaSModule
     }
 
     /**
-     * @return ExcludedOsClassService
+     * @return ExcludedOSClassService
      */
     protected function getClassService()
     {
         if (is_null($this->service)) {
-            $this->service = $this->getServiceLocator()->get(ExcludedOsClassService::SERVICE_ID);
+            $this->service = $this->getServiceLocator()->get(ExcludedOSClassService::SERVICE_ID);
         }
         return $this->service;
     }

@@ -26,10 +26,10 @@ use core_kernel_classes_Property;
 use core_kernel_classes_Resource;
 use oat\generis\model\OntologyRdfs;
 use oat\generis\test\TestCase;
-use oat\taoClientDiagnostic\model\exclusionList\ExcludedOsClassService;
+use oat\taoClientDiagnostic\model\exclusionList\ExcludedOSClassService;
 use \oat\generis\model\data\Ontology;
 
-class ExcludedExcludedOsClassServiceTest extends TestCase
+class ExcludedExcludedOSClassServiceTest extends TestCase
 {
     public function testGetRootClass(): void
     {
@@ -37,10 +37,10 @@ class ExcludedExcludedOsClassServiceTest extends TestCase
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getClass')
-            ->with(ExcludedOsClassService::ROOT_CLASS)
+            ->with(ExcludedOSClassService::ROOT_CLASS)
             ->willReturn($class);
 
-        $service = new ExcludedOsClassService();
+        $service = new ExcludedOSClassService();
         $service->setModel($model);
         $this->assertEquals($class, $service->getRootClass());
     }
@@ -62,11 +62,11 @@ class ExcludedExcludedOsClassServiceTest extends TestCase
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getClass')
-            ->with(ExcludedOsClassService::LIST_CLASS)
+            ->with(ExcludedOSClassService::LIST_CLASS)
             ->willReturn($class);
 
 
-        $service = new ExcludedOsClassService();
+        $service = new ExcludedOSClassService();
         $service->setModel($model);
 
         $this->assertEquals($resource, $service->getListDefinitionByName($name));
@@ -78,10 +78,10 @@ class ExcludedExcludedOsClassServiceTest extends TestCase
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getProperty')
-            ->with(ExcludedOsClassService::EXCLUDED_NAME)
+            ->with(ExcludedOSClassService::EXCLUDED_NAME)
             ->willReturn($property);
 
-        $service = new ExcludedOsClassService();
+        $service = new ExcludedOSClassService();
         $service->setModel($model);
         $this->assertEquals($property, $service->getNameProperty());
     }
@@ -92,10 +92,10 @@ class ExcludedExcludedOsClassServiceTest extends TestCase
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getProperty')
-            ->with(ExcludedOsClassService::EXCLUDED_VERSION)
+            ->with(ExcludedOSClassService::EXCLUDED_VERSION)
             ->willReturn($property);
 
-        $service = new ExcludedOsClassService();
+        $service = new ExcludedOSClassService();
         $service->setModel($model);
         $this->assertEquals($property, $service->getVersionProperty());
     }
@@ -117,10 +117,10 @@ class ExcludedExcludedOsClassServiceTest extends TestCase
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getClass')
-            ->with(ExcludedOsClassService::ROOT_CLASS)
+            ->with(ExcludedOSClassService::ROOT_CLASS)
             ->willReturn($class);
 
-        $service = new ExcludedOsClassService();
+        $service = new ExcludedOSClassService();
         $service->setModel($model);
 
         $this->assertEquals([$resource1, $resource2], $service->getExclusionsByName($name));
@@ -145,8 +145,8 @@ class ExcludedExcludedOsClassServiceTest extends TestCase
         $resource->expects($this->once())
             ->method('getPropertiesValues')
             ->willReturn([
-                ExcludedOsClassService::EXCLUDED_NAME => [$nameProperty],
-                ExcludedOsClassService::EXCLUDED_VERSION => [$versionProperty]
+                ExcludedOSClassService::EXCLUDED_NAME => [$nameProperty],
+                ExcludedOSClassService::EXCLUDED_VERSION => [$versionProperty]
             ]);
 
         $class = $this->createMock(core_kernel_classes_Class::class);
@@ -158,13 +158,13 @@ class ExcludedExcludedOsClassServiceTest extends TestCase
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getClass')
-            ->with(ExcludedOsClassService::ROOT_CLASS)
+            ->with(ExcludedOSClassService::ROOT_CLASS)
             ->willReturn($class);
         $model->expects($this->any())
             ->method('getProperty')
             ->willReturn($this->createMock(core_kernel_classes_Property::class));
 
-        $service = new ExcludedOsClassService();
+        $service = new ExcludedOSClassService();
         $service->setModel($model);
 
         $this->assertEquals([$name => [$version]], $service->getExclusionsList());
