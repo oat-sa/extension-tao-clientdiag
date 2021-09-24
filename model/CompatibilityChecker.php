@@ -20,6 +20,7 @@
 namespace oat\taoClientDiagnostic\model;
 
 use common_exception_InconsistentData;
+use common_exception_FileSystemError;
 use common_exception_MissingParameter;
 use oat\oatbox\service\ConfigurableService;
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
@@ -27,7 +28,6 @@ use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserClassService;
 use oat\taoClientDiagnostic\model\exclusionList\ExcludedOsClassService;
 use Sinergi\BrowserDetector\Browser;
 use Sinergi\BrowserDetector\Os;
-use tao_models_classes_FileNotFoundException;
 
 class CompatibilityChecker extends ConfigurableService
 {
@@ -46,7 +46,7 @@ class CompatibilityChecker extends ConfigurableService
 
     /**
      * Extract compatibility file
-     * @throws tao_models_classes_FileNotFoundException
+     * @throws common_exception_FileSystemError
      */
     public function getCompatibilityList(): array
     {
@@ -54,7 +54,7 @@ class CompatibilityChecker extends ConfigurableService
             $compatibilityFile = __DIR__ . '/../include/compatibility.json';
 
             if (!file_exists($compatibilityFile)) {
-                throw new tao_models_classes_FileNotFoundException('Unable to find the compatibility file');
+                throw new common_exception_FileSystemError('Unable to find the compatibility file');
             }
             $this->compatibility = json_decode(file_get_contents($compatibilityFile), true);
         }
@@ -63,7 +63,7 @@ class CompatibilityChecker extends ConfigurableService
 
     /**
      * Fetch the support list
-     * @throws tao_models_classes_FileNotFoundException
+     * @throws common_exception_FileSystemError
      * @throws common_exception_InconsistentData
      * @throws common_exception_MissingParameter
      */
@@ -78,10 +78,13 @@ class CompatibilityChecker extends ConfigurableService
                 throw new common_exception_MissingParameter('The URL to the list of supported browser is not configured');
             }
 
-            $supportedListData = file_get_contents($supportListUrl);
-
+            $supportedListData = @file_get_contents($supportListUrl);
             if ($supportedListData === false) {
-                throw new tao_models_classes_FileNotFoundException('Unable to fetch the list of supported browsers');
+                $error = error_get_last();
+                throw new \common_exception_FileSystemError(sprintf(
+                    'Unable to fetch the list of supported browsers due to error: %s',
+                    $error['message']
+                ));
             }
 
             $supportedList = json_decode($supportedListData, true);
@@ -185,7 +188,7 @@ class CompatibilityChecker extends ConfigurableService
     /**
      * Checks if the client browser, and the OS, meet the requirements supplied in a validation list.
      * Returns a value corresponding to the COMPATIBILITY_* constants.
-     * @throws tao_models_classes_FileNotFoundException
+     * @throws common_exception_FileSystemError
      * @throws common_exception_InconsistentData
      * @throws common_exception_MissingParameter
      */
