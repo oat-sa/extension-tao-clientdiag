@@ -14,15 +14,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2021 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2021 Open Assessment Technologies SA
  */
-declare(strict_types=1);
 
-namespace oat\taoClientDiagnostic\model\SupportedList;
+use \oat\taoClientDiagnostic\model\SupportedList\CachedListDecorator;
+use \oat\taoClientDiagnostic\model\SupportedList\RemoteList;
 
-interface SupportedListInterface
-{
-    public const SERVICE_ID = 'taoClientDiagnostic/SupportedBrowserList';
-
-    public function getList(): ?array;
-}
+return new CachedListDecorator(array(
+    CachedListDecorator::OPTION_ORIGINAL_IMPLEMENTATION => RemoteList::class,
+    CachedListDecorator::OPTION_TTL_CACHE => 3600,
+));

@@ -16,22 +16,13 @@
  *
  * Copyright (c) 2021 (original work) Open Assessment Technologies SA;
  */
+declare(strict_types=1);
 
 namespace oat\taoClientDiagnostic\model\SupportedList;
 
-use core_kernel_classes_Class;
-use core_kernel_classes_Property;
-use core_kernel_classes_Resource;
-use oat\generis\model\OntologyRdfs;
 use oat\oatbox\service\ConfigurableService;
-use oat\tao\model\OntologyClassService;
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
 
-/**
- * Class exclusionListClassService
- *
- * @package oat\taoClientDiagnostic\model\exclusionList
- */
 class RemoteList extends ConfigurableService implements SupportedListInterface
 {
     public function getList(): ?array
