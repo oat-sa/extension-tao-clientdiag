@@ -92,14 +92,17 @@ class CompatibilityChecker extends ConfigurableService
         return $this->supported;
     }
 
+    protected function filterVersion($version): string
+    {
+        return preg_replace('#(\.0+)+($|-)#', '', $version);
+    }
+
     /**
      * Standard version_compare threats that  5.2 < 5.2.0, 5.2 < 5.2.1, ...
      */
     protected function versionCompare($ver1, $ver2): int
     {
-        $ver1 = preg_replace('#(\.0+)+($|-)#', '', $ver1);
-        $ver2 = preg_replace('#(\.0+)+($|-)#', '', $ver2);
-        return version_compare($ver1, $ver2);
+        return version_compare($this->filterVersion($ver1), $this->filterVersion($ver2));
     }
 
     /**
