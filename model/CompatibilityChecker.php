@@ -48,7 +48,7 @@ class CompatibilityChecker extends ConfigurableService
      */
     public function getCompatibilityList(): array
     {
-        if (!$this->compatibility) {
+        if ($this->compatibility == null) {
             $compatibilityFile = __DIR__ . '/../include/compatibility.json';
 
             if (!file_exists($compatibilityFile)) {
@@ -65,7 +65,7 @@ class CompatibilityChecker extends ConfigurableService
      */
     public function getSupportedList(): array
     {
-        if (!$this->supported) {
+        if ($this->supported == null) {
             $service = $this->getServiceLocator()->get(DiagnosticServiceInterface::SERVICE_ID);
             $config = $service->getDiagnosticJsConfig();
             $supportListUrl = $config['diagnostic']['testers']['browser']['browserslistUrl'];
@@ -152,7 +152,7 @@ class CompatibilityChecker extends ConfigurableService
      */
     public function isBrowserExcluded($name, $version): bool
     {
-        if (!$this->excludedBrowsers) {
+        if ($this->excludedBrowsers == null) {
             $service = $this->getServiceLocator()->get(ExcludedBrowserClassService::SERVICE_ID);
             $this->excludedBrowsers = $service->getExclusionsList();
         }
@@ -164,7 +164,7 @@ class CompatibilityChecker extends ConfigurableService
      */
     public function isOsExcluded($name, $version): bool
     {
-        if (!$this->excludedOS) {
+        if ($this->excludedOS == null) {
             $service = $this->getServiceLocator()->get(ExcludedOsClassService::SERVICE_ID);
             $this->excludedOS = $service->getExclusionsList();
         }

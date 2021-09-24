@@ -51,7 +51,7 @@ abstract class ExclusionListClassService extends OntologyClassService
 
     public function getListNames(): array
     {
-        if (!$this->names) {
+        if ($this->names == null) {
             $nameInstances = $this->getNameProperty()->getRange()->getInstances();
 
             foreach ($nameInstances as $nameInstance) {
@@ -64,7 +64,7 @@ abstract class ExclusionListClassService extends OntologyClassService
 
     public function getExclusionsList(): array
     {
-        if (!$this->excluded) {
+        if ($this->excluded == null) {
             $instances = $this->getRootClass()->getInstances(true);
 
             foreach ($instances as $instance) {
