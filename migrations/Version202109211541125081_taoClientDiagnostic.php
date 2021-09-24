@@ -14,7 +14,6 @@ use oat\tao\scripts\tools\migrations\AbstractMigration;
  */
 final class Version202109211541125081_taoClientDiagnostic extends AbstractMigration
 {
-
     public function getDescription(): string
     {
         return 'Update Ontology models to add list of excluded browsers and operating systems';

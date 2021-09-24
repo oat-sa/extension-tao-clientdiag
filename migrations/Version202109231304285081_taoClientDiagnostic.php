@@ -13,7 +13,6 @@ use oat\taoClientDiagnostic\model\CompatibilityChecker;
  */
 final class Version202109231304285081_taoClientDiagnostic extends AbstractMigration
 {
-
     public function getDescription(): string
     {
         return 'Register the service CompatibilityChecker';

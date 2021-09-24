@@ -14,7 +14,6 @@ use oat\taoClientDiagnostic\model\exclusionList\ExcludedOsClassService;
  */
 final class Version202109231026535081_taoClientDiagnostic extends AbstractMigration
 {
-
     public function getDescription(): string
     {
         return 'Registers exclusion list services';

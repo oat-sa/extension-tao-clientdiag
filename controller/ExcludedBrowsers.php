@@ -27,7 +27,6 @@ use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserClassService;
  */
 class ExcludedBrowsers extends \tao_actions_SaSModule
 {
-
     public function editInstance()
     {
         $clazz = $this->getCurrentClass();
@@ -43,7 +42,6 @@ class ExcludedBrowsers extends \tao_actions_SaSModule
         );
         if ($myForm->isSubmited()) {
             if ($myForm->isValid()) {
-
                 $values = $myForm->getValues();
                 // save properties
                 $binder = new \tao_models_classes_dataBinding_GenerisFormDataBinder($instance);
