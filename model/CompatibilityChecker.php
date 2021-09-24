@@ -26,6 +26,7 @@ use oat\oatbox\service\ConfigurableService;
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
 use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserClassService;
 use oat\taoClientDiagnostic\model\exclusionList\ExcludedOsClassService;
+use oat\taoClientDiagnostic\model\SupportedList\SupportedListInterface;
 use Sinergi\BrowserDetector\Browser;
 use Sinergi\BrowserDetector\Os;
 
@@ -70,24 +71,9 @@ class CompatibilityChecker extends ConfigurableService
     public function getSupportedList(): array
     {
         if ($this->supported == null) {
-            $service = $this->getServiceLocator()->get(DiagnosticServiceInterface::SERVICE_ID);
-            $config = $service->getDiagnosticJsConfig();
-            $supportListUrl = $config['diagnostic']['testers']['browser']['browserslistUrl'];
-
-            if (!$supportListUrl) {
-                throw new common_exception_MissingParameter('The URL to the list of supported browser is not configured');
-            }
-
-            $supportedListData = @file_get_contents($supportListUrl);
-            if ($supportedListData === false) {
-                $error = error_get_last();
-                throw new \common_exception_FileSystemError(sprintf(
-                    'Unable to fetch the list of supported browsers due to error: %s',
-                    $error['message']
-                ));
-            }
-
-            $supportedList = json_decode($supportedListData, true);
+            /** @var SupportedListInterface $remoteSupportedListService */
+            $remoteSupportedListService = $this->getServiceLocator()->get(SupportedListInterface::SERVICE_ID);
+            $supportedList = $remoteSupportedListService->getList();
 
             if (!$supportedList) {
                 throw new common_exception_InconsistentData('Unable to decode list of supported browsers');
