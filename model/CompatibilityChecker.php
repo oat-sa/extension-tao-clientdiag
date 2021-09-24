@@ -19,6 +19,8 @@
 
 namespace oat\taoClientDiagnostic\model;
 
+use common_exception_InconsistentData;
+use common_exception_MissingParameter;
 use oat\oatbox\service\ConfigurableService;
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
 use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserClassService;
@@ -62,6 +64,8 @@ class CompatibilityChecker extends ConfigurableService
     /**
      * Fetch the support list
      * @throws tao_models_classes_FileNotFoundException
+     * @throws common_exception_InconsistentData
+     * @throws common_exception_MissingParameter
      */
     public function getSupportedList(): array
     {
@@ -71,12 +75,19 @@ class CompatibilityChecker extends ConfigurableService
             $supportListUrl = $config['diagnostic']['testers']['browser']['browserslistUrl'];
 
             if (!$supportListUrl) {
-                throw new tao_models_classes_FileNotFoundException('The URL to the list of supported browser is not configured');
+                throw new common_exception_MissingParameter('The URL to the list of supported browser is not configured');
             }
-            $supportedList = json_decode(file_get_contents($supportListUrl), true);
+
+            $supportedListData = file_get_contents($supportListUrl);
+
+            if ($supportedListData === false) {
+                throw new tao_models_classes_FileNotFoundException('Unable to fetch the list of supported browsers');
+            }
+
+            $supportedList = json_decode($supportedListData, true);
 
             if (!$supportedList) {
-                throw new tao_models_classes_FileNotFoundException('Unable to fetch the list of supported browsers');
+                throw new common_exception_InconsistentData('Unable to decode list of supported browsers');
             }
 
             $this->supported = array_map(function ($entry) {
@@ -175,6 +186,8 @@ class CompatibilityChecker extends ConfigurableService
      * Checks if the client browser, and the OS, meet the requirements supplied in a validation list.
      * Returns a value corresponding to the COMPATIBILITY_* constants.
      * @throws tao_models_classes_FileNotFoundException
+     * @throws common_exception_InconsistentData
+     * @throws common_exception_MissingParameter
      */
     public function isCompatibleConfig(): int
     {
