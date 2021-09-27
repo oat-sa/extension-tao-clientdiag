@@ -23,9 +23,8 @@ use common_exception_InconsistentData;
 use common_exception_FileSystemError;
 use common_exception_MissingParameter;
 use oat\oatbox\service\ConfigurableService;
-use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
 use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserClassService;
-use oat\taoClientDiagnostic\model\exclusionList\ExcludedOsClassService;
+use oat\taoClientDiagnostic\model\exclusionList\ExcludedOSClassService;
 use oat\taoClientDiagnostic\model\SupportedList\SupportedListInterface;
 use Sinergi\BrowserDetector\Browser;
 use Sinergi\BrowserDetector\Os;
@@ -165,7 +164,7 @@ class CompatibilityChecker extends ConfigurableService
     public function isOsExcluded($name, $version): bool
     {
         if ($this->excludedOS == null) {
-            $service = $this->getServiceLocator()->get(ExcludedOsClassService::SERVICE_ID);
+            $service = $this->getServiceLocator()->get(ExcludedOSClassService::SERVICE_ID);
             $this->excludedOS = $service->getExclusionsList();
         }
         return $this->isExcluded($name, $version, $this->excludedOS);

@@ -24,14 +24,14 @@ use core_kernel_classes_Class;
 use core_kernel_classes_Property;
 
 /*
- * Class ExcludedOsClassService
+ * Class ExcludedOSClassService
  *
  * @package oat\taoClientDiagnostic\model\exclusionList
  */
 
-class ExcludedOsClassService extends ExclusionListClassService
+class ExcludedOSClassService extends ExclusionListClassService
 {
-    const SERVICE_ID = 'taoClientDiagnostic/ExcludedOsClassService';
+    const SERVICE_ID = 'taoClientDiagnostic/ExcludedOSClassService';
 
     public const ROOT_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOS';
     public const LIST_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#OSList';
