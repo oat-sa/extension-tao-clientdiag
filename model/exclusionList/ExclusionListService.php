@@ -29,10 +29,10 @@ use oat\tao\model\OntologyClassService;
 abstract class ExclusionListService extends OntologyClassService
 {
     /** @var array */
-    private $names = [];
+    private $names;
 
     /** @var array */
-    private $excluded = [];
+    private $excluded;
 
     abstract public function getNameProperty(): core_kernel_classes_Property;
 
@@ -46,7 +46,7 @@ abstract class ExclusionListService extends OntologyClassService
 
     public function getListNames(): array
     {
-        if ($this->names == null) {
+        if ($this->names === null) {
             $nameInstances = $this->getNameProperty()->getRange()->getInstances();
 
             foreach ($nameInstances as $nameInstance) {
@@ -59,7 +59,7 @@ abstract class ExclusionListService extends OntologyClassService
 
     public function getExclusionsList(): array
     {
-        if ($this->excluded == null) {
+        if ($this->excluded === null) {
             $instances = $this->getRootClass()->getInstances(true);
 
             foreach ($instances as $instance) {
