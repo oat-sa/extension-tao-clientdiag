@@ -47,11 +47,6 @@ class ExcludedBrowserClassService extends ExclusionListClassService
         return $this->getClass(self::ROOT_CLASS);
     }
 
-    protected function getListClass(): core_kernel_classes_Class
-    {
-        return $this->getClass(self::LIST_CLASS);
-    }
-
     public function getNameProperty(): core_kernel_classes_Property
     {
         return $this->getProperty($this->getNamePropertyUri());
@@ -70,5 +65,10 @@ class ExcludedBrowserClassService extends ExclusionListClassService
     public function getVersionPropertyUri(): string
     {
         return self::EXCLUDED_VERSION;
+    }
+
+    protected function getListClass(): core_kernel_classes_Class
+    {
+        return $this->getClass(self::LIST_CLASS);
     }
 }

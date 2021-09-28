@@ -39,8 +39,6 @@ abstract class ExclusionListClassService extends OntologyClassService
     /** @var array */
     private $excluded = [];
 
-    abstract protected function getListClass(): core_kernel_classes_Class;
-
     abstract public function getNameProperty(): core_kernel_classes_Property;
 
     abstract public function getNamePropertyUri(): string;
@@ -48,6 +46,8 @@ abstract class ExclusionListClassService extends OntologyClassService
     abstract public function getVersionProperty(): core_kernel_classes_Property;
 
     abstract public function getVersionPropertyUri(): string;
+
+    abstract protected function getListClass(): core_kernel_classes_Class;
 
     public function getListNames(): array
     {
