@@ -90,6 +90,6 @@ class CachedListDecorator extends ConfigurableService implements SupportedListIn
      */
     public function getCache()
     {
-        return ServiceManager::getServiceLocator()->get(SimpleCache::SERVICE_ID);
+        return $this->getServiceLocator()->get(SimpleCache::SERVICE_ID);
     }
 }
