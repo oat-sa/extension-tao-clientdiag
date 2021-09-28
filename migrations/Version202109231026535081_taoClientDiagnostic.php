@@ -22,8 +22,8 @@ namespace oat\taoClientDiagnostic\migrations;
 
 use Doctrine\DBAL\Schema\Schema;
 use oat\tao\scripts\tools\migrations\AbstractMigration;
-use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserClassService;
-use oat\taoClientDiagnostic\model\exclusionList\ExcludedOSClassService;
+use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserService;
+use oat\taoClientDiagnostic\model\exclusionList\ExcludedOSService;
 
 /**
  * Auto-generated Migration: Please modify to your needs!
@@ -37,13 +37,13 @@ final class Version202109231026535081_taoClientDiagnostic extends AbstractMigrat
 
     public function up(Schema $schema): void
     {
-        $this->getServiceManager()->register(ExcludedOSClassService::SERVICE_ID, new ExcludedOSClassService());
-        $this->getServiceManager()->register(ExcludedBrowserClassService::SERVICE_ID, new ExcludedBrowserClassService());
+        $this->getServiceManager()->register(ExcludedOSService::SERVICE_ID, new ExcludedOSService());
+        $this->getServiceManager()->register(ExcludedBrowserService::SERVICE_ID, new ExcludedBrowserService());
     }
 
     public function down(Schema $schema): void
     {
-        $this->getServiceManager()->unregister(ExcludedOSClassService::SERVICE_ID);
-        $this->getServiceManager()->unregister(ExcludedBrowserClassService::SERVICE_ID);
+        $this->getServiceManager()->unregister(ExcludedOSService::SERVICE_ID);
+        $this->getServiceManager()->unregister(ExcludedBrowserService::SERVICE_ID);
     }
 }

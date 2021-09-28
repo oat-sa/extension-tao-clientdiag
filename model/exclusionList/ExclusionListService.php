@@ -26,12 +26,7 @@ use core_kernel_classes_Resource;
 use oat\generis\model\OntologyRdfs;
 use oat\tao\model\OntologyClassService;
 
-/**
- * Class exclusionListClassService
- *
- * @package oat\taoClientDiagnostic\model\exclusionList
- */
-abstract class ExclusionListClassService extends OntologyClassService
+abstract class ExclusionListService extends OntologyClassService
 {
     /** @var array */
     private $names = [];
@@ -69,9 +64,9 @@ abstract class ExclusionListClassService extends OntologyClassService
 
             foreach ($instances as $instance) {
                 $properties = $instance->getPropertiesValues([
-                        $this->getNameProperty(),
-                        $this->getVersionProperty()]
-                );
+                    $this->getNameProperty(),
+                    $this->getVersionProperty()
+                ]);
 
                 $excludedNameProperty = current($properties[$this->getNamePropertyUri()]);
                 if ($excludedNameProperty) {

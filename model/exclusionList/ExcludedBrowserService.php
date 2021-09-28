@@ -23,23 +23,17 @@ namespace oat\taoClientDiagnostic\model\exclusionList;
 use core_kernel_classes_Class;
 use core_kernel_classes_Property;
 
-/*
- * Class ExcludedOSClassService
- *
- * @package oat\taoClientDiagnostic\model\exclusionList
- */
-
-class ExcludedOSClassService extends ExclusionListClassService
+class ExcludedBrowserService extends ExclusionListService
 {
-    const SERVICE_ID = 'taoClientDiagnostic/ExcludedOSClassService';
+    const SERVICE_ID = 'taoClientDiagnostic/ExcludedBrowserService';
 
-    public const ROOT_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOS';
-    public const LIST_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#OSList';
-    public const EXCLUDED_NAME = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOSName';
-    public const EXCLUDED_VERSION = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOSVersion';
+    public const ROOT_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowser';
+    public const LIST_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowsersList';
+    public const EXCLUDED_NAME = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowserName';
+    public const EXCLUDED_VERSION = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowserVersion';
 
     /**
-     * Get the root class for excluded Operating system
+     * Get the root class for excluded Browser
      *
      * @return core_kernel_classes_Class
      */

@@ -16,4 +16,4 @@
  *
  * Copyright (c) 2021 Open Assessment Technologies SA
  */
-return new oat\taoClientDiagnostic\model\exclusionList\ExcludedOSClassService();
+return new oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserService();

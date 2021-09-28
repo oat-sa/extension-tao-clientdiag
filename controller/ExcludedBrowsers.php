@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 namespace oat\taoClientDiagnostic\controller;
 
-use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserClassService;
+use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserService;
 
 /**
  *
@@ -34,8 +34,8 @@ class ExcludedBrowsers extends \tao_actions_SaSModule
         $myFormContainer = new \tao_actions_form_Instance($this->getCurrentClass(), $instance);
 
         $myForm = $myFormContainer->getForm();
-        $nameElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedBrowserClassService::EXCLUDED_NAME));
-        $versionElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedBrowserClassService::EXCLUDED_VERSION));
+        $nameElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedBrowserService::EXCLUDED_NAME));
+        $versionElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedBrowserService::EXCLUDED_VERSION));
         $nameElement->addClass('select2');
         $versionElement->setHelp(
             "<span class=\"icon-help tooltipstered\" data-tooltip=\".exclusion-list-form .excluded-version-tooltip-content\" data-tooltip-theme=\"info\"></span>"
@@ -56,10 +56,10 @@ class ExcludedBrowsers extends \tao_actions_SaSModule
         $this->setView('exclusionList/form.tpl');
     }
 
-    protected function getClassService(): ExcludedBrowserClassService
+    protected function getClassService(): ExcludedBrowserService
     {
         if (is_null($this->service)) {
-            $this->service = $this->getServiceLocator()->get(ExcludedBrowserClassService::SERVICE_ID);
+            $this->service = $this->getServiceLocator()->get(ExcludedBrowserService::SERVICE_ID);
         }
         return $this->service;
     }
