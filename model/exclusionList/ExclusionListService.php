@@ -48,7 +48,7 @@ abstract class ExclusionListService extends OntologyClassService
     {
         if ($this->names === null) {
             $nameInstances = $this->getNameProperty()->getRange()->getInstances();
-
+            $this->names = [];
             foreach ($nameInstances as $nameInstance) {
                 $this->names[strtolower($nameInstance->getLabel())] = $nameInstance->getUri();
             }
@@ -61,7 +61,7 @@ abstract class ExclusionListService extends OntologyClassService
     {
         if ($this->excluded === null) {
             $instances = $this->getRootClass()->getInstances(true);
-
+            $this->excluded = [];
             foreach ($instances as $instance) {
                 $properties = $instance->getPropertiesValues([
                     $this->getNameProperty(),
@@ -75,7 +75,6 @@ abstract class ExclusionListService extends OntologyClassService
 
                     $this->excluded[$excludedName][] = $excludedVersion;
                 }
-
             }
         }
 
