@@ -96,9 +96,9 @@ class CompatibilityChecker extends ConfigurableService
             $this->supported = array_map(function ($entry) {
                 $entry['compatible'] = self::COMPATIBILITY_SUPPORTED;
 
-                $entry['versions'] = array_reduce($entry['versions'], function ($versions, $version) {
-                    return array_merge($versions, explode('-', $version));
-                }, []);
+                $entry['versions'] = array_merge(...array_map(static function (string $version): array {
+                    return explode('-', $version);
+                }, $entry['versions']));
 
                 return $entry;
             }, $supportedList);
