@@ -41,17 +41,15 @@ class ExcludedBrowsers extends \tao_actions_SaSModule
         $versionElement->setHelp(
             "<span class=\"icon-help tooltipstered\" data-tooltip=\".exclusion-list-form .excluded-version-tooltip-content\" data-tooltip-theme=\"info\"></span>"
         );
-        if ($myForm->isSubmited()) {
-            if ($myForm->isValid()) {
-                $values = $myForm->getValues();
-                // save properties
-                $binder = new \tao_models_classes_dataBinding_GenerisFormDataBinder($instance);
-                $binder->bind($values);
-                $message = __('Instance saved');
+        if ($myForm->isSubmited() && $myForm->isValid()) {
+            $values = $myForm->getValues();
+            // save properties
+            $binder = new \tao_models_classes_dataBinding_GenerisFormDataBinder($instance);
+            $binder->bind($values);
+            $message = __('Instance saved');
 
-                $this->setData('message', $message);
-                $this->setData('reload', true);
-            }
+            $this->setData('message', $message);
+            $this->setData('reload', true);
         }
 
         $this->setData('formTitle', __('Edit Excluded Browser'));
