@@ -26,10 +26,10 @@ use core_kernel_classes_Property;
 use core_kernel_classes_Resource;
 use oat\generis\model\OntologyRdfs;
 use oat\generis\test\TestCase;
-use oat\taoClientDiagnostic\model\exclusionList\ExcludedOSClassService;
+use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserService;
 use \oat\generis\model\data\Ontology;
 
-class ExcludedExcludedOSClassServiceTest extends TestCase
+class ExcludedBrowserServiceTest extends TestCase
 {
     public function testGetRootClass(): void
     {
@@ -37,17 +37,17 @@ class ExcludedExcludedOSClassServiceTest extends TestCase
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getClass')
-            ->with(ExcludedOSClassService::ROOT_CLASS)
+            ->with(ExcludedBrowserService::ROOT_CLASS)
             ->willReturn($class);
 
-        $service = new ExcludedOSClassService();
+        $service = new ExcludedBrowserService();
         $service->setModel($model);
         $this->assertEquals($class, $service->getRootClass());
     }
 
     public function testGetListClass(): void
     {
-        $name = 'fixture-os-name';
+        $name = 'fixture-browser-name';
         $resource = $this->createMock(core_kernel_classes_Resource::class);
 
         $class = $this->createMock(core_kernel_classes_Class::class);
@@ -62,11 +62,10 @@ class ExcludedExcludedOSClassServiceTest extends TestCase
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getClass')
-            ->with(ExcludedOSClassService::LIST_CLASS)
+            ->with(ExcludedBrowserService::LIST_CLASS)
             ->willReturn($class);
 
-
-        $service = new ExcludedOSClassService();
+        $service = new ExcludedBrowserService();
         $service->setModel($model);
 
         $this->assertEquals($resource, $service->getListDefinitionByName($name));
@@ -78,31 +77,31 @@ class ExcludedExcludedOSClassServiceTest extends TestCase
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getProperty')
-            ->with(ExcludedOSClassService::EXCLUDED_NAME)
+            ->with(ExcludedBrowserService::EXCLUDED_NAME)
             ->willReturn($property);
 
-        $service = new ExcludedOSClassService();
+        $service = new ExcludedBrowserService();
         $service->setModel($model);
         $this->assertEquals($property, $service->getNameProperty());
     }
 
-    public function testGetVersionProperty(): void
+    public function testGetVersionProperty()
     {
         $property = $this->createMock(core_kernel_classes_Property::class);
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getProperty')
-            ->with(ExcludedOSClassService::EXCLUDED_VERSION)
+            ->with(ExcludedBrowserService::EXCLUDED_VERSION)
             ->willReturn($property);
 
-        $service = new ExcludedOSClassService();
+        $service = new ExcludedBrowserService();
         $service->setModel($model);
         $this->assertEquals($property, $service->getVersionProperty());
     }
 
     public function testGetExclusionsByName()
     {
-        $name = 'fixture-os-name';
+        $name = 'fixture-browser-name';
         $resource1 = $this->createMock(core_kernel_classes_Resource::class);
         $resource2 = $this->createMock(core_kernel_classes_Resource::class);
         $class = $this->createMock(core_kernel_classes_Class::class);
@@ -117,10 +116,10 @@ class ExcludedExcludedOSClassServiceTest extends TestCase
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getClass')
-            ->with(ExcludedOSClassService::ROOT_CLASS)
+            ->with(ExcludedBrowserService::ROOT_CLASS)
             ->willReturn($class);
 
-        $service = new ExcludedOSClassService();
+        $service = new ExcludedBrowserService();
         $service->setModel($model);
 
         $this->assertEquals([$resource1, $resource2], $service->getExclusionsByName($name));
@@ -128,8 +127,8 @@ class ExcludedExcludedOSClassServiceTest extends TestCase
 
     public function testGetExclusionsList()
     {
-        $name = 'fixture-os-name';
-        $version = 'fixture-os-version';
+        $name = 'fixture-browser-name';
+        $version = 'fixture-browser-version';
 
         $nameProperty = $this->createMock(core_kernel_classes_Property::class);
         $nameProperty->expects($this->once())
@@ -145,8 +144,8 @@ class ExcludedExcludedOSClassServiceTest extends TestCase
         $resource->expects($this->once())
             ->method('getPropertiesValues')
             ->willReturn([
-                ExcludedOSClassService::EXCLUDED_NAME => [$nameProperty],
-                ExcludedOSClassService::EXCLUDED_VERSION => [$versionProperty]
+                ExcludedBrowserService::EXCLUDED_NAME => [$nameProperty],
+                ExcludedBrowserService::EXCLUDED_VERSION => [$versionProperty]
             ]);
 
         $class = $this->createMock(core_kernel_classes_Class::class);
@@ -158,13 +157,13 @@ class ExcludedExcludedOSClassServiceTest extends TestCase
         $model = $this->createMock(Ontology::class);
         $model->expects($this->once())
             ->method('getClass')
-            ->with(ExcludedOSClassService::ROOT_CLASS)
+            ->with(ExcludedBrowserService::ROOT_CLASS)
             ->willReturn($class);
         $model->expects($this->any())
             ->method('getProperty')
             ->willReturn($this->createMock(core_kernel_classes_Property::class));
 
-        $service = new ExcludedOSClassService();
+        $service = new ExcludedBrowserService();
         $service->setModel($model);
 
         $this->assertEquals([$name => [$version]], $service->getExclusionsList());

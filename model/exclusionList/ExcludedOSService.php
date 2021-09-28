@@ -23,33 +23,23 @@ namespace oat\taoClientDiagnostic\model\exclusionList;
 use core_kernel_classes_Class;
 use core_kernel_classes_Property;
 
-/**
- * Class ExcludedBrowserClassService
- *
- * @package oat\taoClientDiagnostic\model\exclusionList
- */
-class ExcludedBrowserClassService extends ExclusionListClassService
+class ExcludedOSService extends ExclusionListService
 {
-    const SERVICE_ID = 'taoClientDiagnostic/ExcludedBrowserClassService';
+    const SERVICE_ID = 'taoClientDiagnostic/ExcludedOSService';
 
-    public const ROOT_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowser';
-    public const LIST_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowsersList';
-    public const EXCLUDED_NAME = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowserName';
-    public const EXCLUDED_VERSION = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowserVersion';
+    public const ROOT_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOS';
+    public const LIST_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#OSList';
+    public const EXCLUDED_NAME = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOSName';
+    public const EXCLUDED_VERSION = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOSVersion';
 
     /**
-     * Get the root class for excluded Browser
+     * Get the root class for excluded Operating system
      *
      * @return core_kernel_classes_Class
      */
     public function getRootClass()
     {
         return $this->getClass(self::ROOT_CLASS);
-    }
-
-    protected function getListClass(): core_kernel_classes_Class
-    {
-        return $this->getClass(self::LIST_CLASS);
     }
 
     public function getNameProperty(): core_kernel_classes_Property
@@ -70,5 +60,10 @@ class ExcludedBrowserClassService extends ExclusionListClassService
     public function getVersionPropertyUri(): string
     {
         return self::EXCLUDED_VERSION;
+    }
+
+    protected function getListClass(): core_kernel_classes_Class
+    {
+        return $this->getClass(self::LIST_CLASS);
     }
 }

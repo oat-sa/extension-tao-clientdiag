@@ -26,20 +26,13 @@ use core_kernel_classes_Resource;
 use oat\generis\model\OntologyRdfs;
 use oat\tao\model\OntologyClassService;
 
-/**
- * Class exclusionListClassService
- *
- * @package oat\taoClientDiagnostic\model\exclusionList
- */
-abstract class ExclusionListClassService extends OntologyClassService
+abstract class ExclusionListService extends OntologyClassService
 {
     /** @var array */
-    private $names = [];
+    private $names;
 
     /** @var array */
-    private $excluded = [];
-
-    abstract protected function getListClass(): core_kernel_classes_Class;
+    private $excluded;
 
     abstract public function getNameProperty(): core_kernel_classes_Property;
 
@@ -49,9 +42,11 @@ abstract class ExclusionListClassService extends OntologyClassService
 
     abstract public function getVersionPropertyUri(): string;
 
+    abstract protected function getListClass(): core_kernel_classes_Class;
+
     public function getListNames(): array
     {
-        if ($this->names == null) {
+        if ($this->names === null) {
             $nameInstances = $this->getNameProperty()->getRange()->getInstances();
 
             foreach ($nameInstances as $nameInstance) {
@@ -64,14 +59,14 @@ abstract class ExclusionListClassService extends OntologyClassService
 
     public function getExclusionsList(): array
     {
-        if ($this->excluded == null) {
+        if ($this->excluded === null) {
             $instances = $this->getRootClass()->getInstances(true);
 
             foreach ($instances as $instance) {
                 $properties = $instance->getPropertiesValues([
-                        $this->getNameProperty(),
-                        $this->getVersionProperty()]
-                );
+                    $this->getNameProperty(),
+                    $this->getVersionProperty()
+                ]);
 
                 $excludedNameProperty = current($properties[$this->getNamePropertyUri()]);
                 if ($excludedNameProperty) {

@@ -20,7 +20,7 @@ declare(strict_types=1);
 
 namespace oat\taoClientDiagnostic\controller;
 
-use oat\taoClientDiagnostic\model\exclusionList\ExcludedOSClassService;
+use oat\taoClientDiagnostic\model\exclusionList\ExcludedOSService;
 
 /**
  *
@@ -28,30 +28,27 @@ use oat\taoClientDiagnostic\model\exclusionList\ExcludedOSClassService;
  */
 class ExcludedOS extends \tao_actions_SaSModule
 {
-    public function editInstance()
+    public function editInstance(): void
     {
-        $clazz = $this->getCurrentClass();
         $instance = $this->getCurrentInstance();
-        $myFormContainer = new \tao_actions_form_Instance($clazz, $instance);
+        $myFormContainer = new \tao_actions_form_Instance($this->getCurrentClass(), $instance);
 
         $myForm = $myFormContainer->getForm();
-        $nameElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedOSClassService::EXCLUDED_NAME));
-        $versionElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedOSClassService::EXCLUDED_VERSION));
+        $nameElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedOSService::EXCLUDED_NAME));
+        $versionElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedOSService::EXCLUDED_VERSION));
         $nameElement->addClass('select2');
         $versionElement->setHelp(
             "<span class=\"icon-help tooltipstered\" data-tooltip=\".exclusion-list-form .excluded-version-tooltip-content\" data-tooltip-theme=\"info\"></span>"
         );
-        if ($myForm->isSubmited()) {
-            if ($myForm->isValid()) {
-                $values = $myForm->getValues();
-                // save properties
-                $binder = new \tao_models_classes_dataBinding_GenerisFormDataBinder($instance);
-                $binder->bind($values);
-                $message = __('Instance saved');
+        if ($myForm->isSubmited() && $myForm->isValid()) {
+            $values = $myForm->getValues();
+            // save properties
+            $binder = new \tao_models_classes_dataBinding_GenerisFormDataBinder($instance);
+            $binder->bind($values);
+            $message = __('Instance saved');
 
-                $this->setData('message', $message);
-                $this->setData('reload', true);
-            }
+            $this->setData('message', $message);
+            $this->setData('reload', true);
         }
 
         $this->setData('formTitle', __('Edit Excluded Operation System'));
@@ -59,13 +56,10 @@ class ExcludedOS extends \tao_actions_SaSModule
         $this->setView('exclusionList/form.tpl');
     }
 
-    /**
-     * @return ExcludedOSClassService
-     */
-    protected function getClassService()
+    protected function getClassService(): ExcludedOSService
     {
         if (is_null($this->service)) {
-            $this->service = $this->getServiceLocator()->get(ExcludedOSClassService::SERVICE_ID);
+            $this->service = $this->getServiceLocator()->get(ExcludedOSService::SERVICE_ID);
         }
         return $this->service;
     }
