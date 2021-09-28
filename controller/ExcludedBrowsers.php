@@ -28,11 +28,10 @@ use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserClassService;
  */
 class ExcludedBrowsers extends \tao_actions_SaSModule
 {
-    public function editInstance()
+    public function editInstance(): void
     {
-        $clazz = $this->getCurrentClass();
         $instance = $this->getCurrentInstance();
-        $myFormContainer = new \tao_actions_form_Instance($clazz, $instance);
+        $myFormContainer = new \tao_actions_form_Instance($this->getCurrentClass(), $instance);
 
         $myForm = $myFormContainer->getForm();
         $nameElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedBrowserClassService::EXCLUDED_NAME));
@@ -57,10 +56,7 @@ class ExcludedBrowsers extends \tao_actions_SaSModule
         $this->setView('exclusionList/form.tpl');
     }
 
-    /**
-     * @return ExcludedBrowserClassService
-     */
-    protected function getClassService()
+    protected function getClassService(): ExcludedBrowserClassService
     {
         if (is_null($this->service)) {
             $this->service = $this->getServiceLocator()->get(ExcludedBrowserClassService::SERVICE_ID);
