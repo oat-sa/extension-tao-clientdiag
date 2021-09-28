@@ -23,8 +23,8 @@ use common_exception_InconsistentData;
 use common_exception_FileSystemError;
 use common_exception_MissingParameter;
 use oat\oatbox\service\ConfigurableService;
-use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserClassService;
-use oat\taoClientDiagnostic\model\exclusionList\ExcludedOSClassService;
+use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserService;
+use oat\taoClientDiagnostic\model\exclusionList\ExcludedOSService;
 use oat\taoClientDiagnostic\model\SupportedList\SupportedListInterface;
 use Sinergi\BrowserDetector\Browser;
 use Sinergi\BrowserDetector\Os;
@@ -50,7 +50,7 @@ class CompatibilityChecker extends ConfigurableService
      */
     public function getCompatibilityList(): array
     {
-        if ($this->compatibility == null) {
+        if ($this->compatibility === null) {
             $compatibilityFile = __DIR__ . '/../include/compatibility.json';
 
             if (!file_exists($compatibilityFile)) {
@@ -81,9 +81,9 @@ class CompatibilityChecker extends ConfigurableService
             $this->supported = array_map(function ($entry) {
                 $entry['compatible'] = self::COMPATIBILITY_SUPPORTED;
 
-                $entry['versions'] = array_reduce($entry['versions'], function ($versions, $version) {
-                    return array_merge($versions, explode('-', $version));
-                }, []);
+                $entry['versions'] = array_merge(...array_map(static function (string $version): array {
+                    return explode('-', $version);
+                }, $entry['versions']));
 
                 return $entry;
             }, $supportedList);
@@ -151,8 +151,8 @@ class CompatibilityChecker extends ConfigurableService
      */
     public function isBrowserExcluded($name, $version): bool
     {
-        if ($this->excludedBrowsers == null) {
-            $service = $this->getServiceLocator()->get(ExcludedBrowserClassService::SERVICE_ID);
+        if ($this->excludedBrowsers === null) {
+            $service = $this->getServiceLocator()->get(ExcludedBrowserService::SERVICE_ID);
             $this->excludedBrowsers = $service->getExclusionsList();
         }
         return $this->isExcluded($name, $version, $this->excludedBrowsers);
@@ -163,8 +163,8 @@ class CompatibilityChecker extends ConfigurableService
      */
     public function isOsExcluded($name, $version): bool
     {
-        if ($this->excludedOS == null) {
-            $service = $this->getServiceLocator()->get(ExcludedOSClassService::SERVICE_ID);
+        if ($this->excludedOS === null) {
+            $service = $this->getServiceLocator()->get(ExcludedOSService::SERVICE_ID);
             $this->excludedOS = $service->getExclusionsList();
         }
         return $this->isExcluded($name, $version, $this->excludedOS);
