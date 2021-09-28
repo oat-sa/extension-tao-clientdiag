@@ -13,7 +13,7 @@ use oat\taoClientDiagnostic\model\SupportedList\SupportedListInterface;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version202109241806275151_taoClientDiagnostic extends AbstractMigration
+final class Version202109241806275152_taoClientDiagnostic extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -23,7 +23,7 @@ final class Version202109241806275151_taoClientDiagnostic extends AbstractMigrat
     public function up(Schema $schema): void
     {
         $this->getServiceManager()->register(SupportedListInterface::SERVICE_ID, new CachedListDecorator([
-            CachedListDecorator::OPTION_ORIGINAL_IMPLEMENTATION => RemoteList::class,
+            CachedListDecorator::OPTION_ORIGINAL_IMPLEMENTATION => new RemoteList(),
             CachedListDecorator::OPTION_TTL_CACHE => 3600,
         ]));
     }

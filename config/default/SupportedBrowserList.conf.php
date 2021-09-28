@@ -21,6 +21,6 @@ use \oat\taoClientDiagnostic\model\SupportedList\CachedListDecorator;
 use \oat\taoClientDiagnostic\model\SupportedList\RemoteList;
 
 return new CachedListDecorator(array(
-    CachedListDecorator::OPTION_ORIGINAL_IMPLEMENTATION => RemoteList::class,
+    CachedListDecorator::OPTION_ORIGINAL_IMPLEMENTATION => new RemoteList(),
     CachedListDecorator::OPTION_TTL_CACHE => 3600,
 ));

@@ -26,7 +26,7 @@ use oat\oatbox\service\ServiceManager;
 
 class CachedListDecorator extends ConfigurableService implements SupportedListInterface
 {
-    /** @var string class name or SERVICE_ID */
+    /** @var string SupportedListInterface */
     public const OPTION_ORIGINAL_IMPLEMENTATION = 'OPTION_ORIGINAL_IMPLEMENTATION';
 
     /** @var string value should be in seconds */
@@ -44,17 +44,11 @@ class CachedListDecorator extends ConfigurableService implements SupportedListIn
     private function getImplementation(): SupportedListInterface
     {
         if ($this->implementation === null) {
-            $implementationKey = $this->getOption(self::OPTION_ORIGINAL_IMPLEMENTATION);
+            $implementation = $this->getOption(self::OPTION_ORIGINAL_IMPLEMENTATION);
 
-            if (!$this->getServiceLocator()->has($implementationKey)) {
-                throw new \common_exception_NoImplementation('No implementation setup for ' . __CLASS__);
-            }
-
-            $implementation = $this->getServiceLocator()->get($implementationKey);
-
-            if ($implementation instanceof SupportedListInterface) {
+            if (!$implementation instanceof SupportedListInterface) {
                 throw new \common_exception_NoImplementation(sprintf(
-                    'Implementation for %s should be of class SupportedListInterface' .
+                    'Implementation for %s should be of class SupportedListInterface',
                     __CLASS__
                 ));
             }
@@ -63,6 +57,7 @@ class CachedListDecorator extends ConfigurableService implements SupportedListIn
                 throw new \common_exception_NoImplementation('CachedListDecorator can\'t be set as implementation for itself ' . __CLASS__);
             }
 
+            $this->getServiceLocator()->propagate($implementation);
             $this->implementation = $implementation;
         }
         return $this->implementation;
@@ -80,7 +75,11 @@ class CachedListDecorator extends ConfigurableService implements SupportedListIn
             $ttl = (int)$this->getOption(self::OPTION_TTL_CACHE);
         }
 
-        $this->getCache()->set(self::CACHE_KEY, $list, new \DateInterval('PT' . $ttl . 'S'));
+        try {
+            $this->getCache()->set(self::CACHE_KEY, $list, new \DateInterval('PT' . $ttl . 'S'));
+        } catch (\common_exception_NotImplemented $e) {
+            // for those implementation that don't support TTL we don't want cache
+        }
         return $list;
     }
 
