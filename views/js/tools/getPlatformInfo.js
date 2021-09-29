@@ -15,7 +15,7 @@
  *
  * Copyright (c) 2016-2021 (original work) Open Assessment Technologies SA ;
  */
-define(['jquery', 'util/url', 'taoClientDiagnostic/tools/getConfig'], function($, urlHelper, getConfig) {
+define(['core/request', 'util/url', 'taoClientDiagnostic/tools/getConfig'], function(request, urlHelper, getConfig) {
     'use strict';
 
     /**
@@ -97,17 +97,13 @@ define(['jquery', 'util/url', 'taoClientDiagnostic/tools/getConfig'], function($
     return function getPlatformInfo(win, config) {
         config = getConfig(config, defaultConfig);
 
-        const testerUrl = getTesterUrl(
+        const url = getTesterUrl(
             win,
             config.browserVersionAction,
             config.browserVersionController,
             config.browserVersionExtension
         );
 
-        return new Promise((resolve, reject) => {
-            $.ajax({ url: testerUrl })
-                .done(resolve)
-                .fail(reject);
-        });
+        return request({ url, noToken: true });
     };
 });

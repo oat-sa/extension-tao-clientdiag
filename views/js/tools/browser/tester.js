@@ -17,14 +17,23 @@
  */
 define([
     'jquery',
+    'lodash',
     'i18n',
     'util/url',
+    'core/logger',
+    'core/request',
     'taoClientDiagnostic/tools/getConfig',
     'taoClientDiagnostic/tools/getLabels',
     'taoClientDiagnostic/tools/getPlatformInfo',
     'taoClientDiagnostic/tools/getStatus'
-], function($, __, url, getConfig, getLabels, getPlatformInfo, getStatus) {
+], function($, _, __, urlHelper, loggerFactory, request, getConfig, getLabels, getPlatformInfo, getStatus) {
     'use strict';
+
+    /**
+     * @type {logger}
+     * @private
+     */
+    const logger = loggerFactory('taoClientDiagnostic/browser');
 
     /**
      * Some default values
@@ -37,7 +46,8 @@ define([
         browserVersionController: 'CompatibilityChecker',
         browserVersionExtension: 'taoClientDiagnostic',
         action: 'check',
-        controller: 'DiagnosticChecker'
+        controller: 'DiagnosticChecker',
+        browserslistUrl: 'https://oat-sa.github.io/browserslist-app-tao/api.json'
     };
 
     /**
@@ -67,6 +77,13 @@ define([
     ];
 
     /**
+     * Fallback name to recover from connectivity error
+     * @param {string}
+     * @private
+     */
+    const unknown = __('Unknown');
+
+    /**
      * Performs a browser support test
      *
      * @param {object} config - Some optional configs
@@ -81,33 +98,102 @@ define([
         const initConfig = getConfig(config, _defaults);
         const labels = getLabels(_messages, initConfig.level);
 
+        /**
+         * Fetches the list of fully supported browsers
+         * @returns {Promise<Array>}
+         * @private
+         */
+        const fetchBrowserList = () => request({ url: initConfig.browserslistUrl, noToken: true }).catch(() => []);
+
+        /**
+         * Checks the current browser against the list of fully supported browsers
+         * @param platformInfo
+         * @returns {Promise<boolean>}
+         * @private
+         */
+        function checkBrowserSupport(platformInfo) {
+            const currentDevice = platformInfo.isMobile ? 'mobile' : 'desktop';
+            const currentOS = platformInfo.os.toLowerCase();
+            const currentBrowser = platformInfo.browser.toLowerCase();
+            const currentVersion = platformInfo.browserVersion;
+            return fetchBrowserList().then(list =>
+                list.some(entry => {
+                    const { browser, device, os, versions } = entry;
+
+                    if (currentDevice !== device) {
+                        return false;
+                    }
+
+                    if (os && os.toLowerCase() !== currentOS) {
+                        return false;
+                    }
+
+                    if (browser.toLowerCase() !== currentBrowser) {
+                        return false;
+                    }
+
+                    // Using lodash because of IE support.
+                    // Some useful traversal algorithms are needed and they don't have polyfill in our bundles.
+                    // The versions come with an inconsistent format and they need to be processed upfront.
+                    return _(versions)
+                        .map(version => version.split('-'))
+                        .flatten()
+                        .value()
+                        .some(version => currentVersion.localeCompare(version, void 0, { numeric: true }) >= 0);
+                }, {})
+            );
+        }
+
         return {
             /**
              * Performs a browser support test, then call a function to provide the result
              * @param {Function} done
              */
             start(done) {
-                getPlatformInfo(window, initConfig).then(results => {
-                    // which browser
-                    $.post(
-                        url.route(initConfig.action, initConfig.controller, initConfig.extension),
-                        results,
-                        data => {
-                            const percentage = 'success' === data.type ? 100 : 'warning' === data.type ? 33 : 0;
-                            const status = this.getFeedback(percentage, data);
-                            const summary = this.getSummary(results);
+                getPlatformInfo(window, initConfig)
+                    .catch(err => {
+                        logger.error(err);
+                        return {
+                            browser: unknown,
+                            browserVersion: '',
+                            os: unknown,
+                            osVersion: '',
+                            isMobile: false
+                        };
+                    })
+                    .then(platformInfo =>
+                        checkBrowserSupport(platformInfo).then(browserSupported =>
+                            Object.assign(platformInfo, { browserSupported })
+                        )
+                    )
+                    .then(platformInfo => {
+                        request({
+                            url: urlHelper.route(initConfig.action, initConfig.controller, initConfig.extension),
+                            data: platformInfo,
+                            method: 'POST',
+                            noToken: true
+                        })
+                            .catch(() => {
+                                return {
+                                    success: false,
+                                    type: 'error',
+                                    message: __('Unable to validate the data as the server did not respond in time.')
+                                };
+                            })
+                            .then(data => {
+                                const percentage = 'success' === data.type ? 100 : 'warning' === data.type ? 33 : 0;
+                                const status = this.getFeedback(percentage, data);
+                                const summary = this.getSummary(platformInfo);
 
-                            status.customMsgRenderer = customMsg => {
-                                return (customMsg || '')
-                                    .replace(_placeHolders.CURRENT_BROWSER, summary.browser.value)
-                                    .replace(_placeHolders.CURRENT_OS, summary.os.value);
-                            };
+                                status.customMsgRenderer = customMsg => {
+                                    return (customMsg || '')
+                                        .replace(_placeHolders.CURRENT_BROWSER, summary.browser.value)
+                                        .replace(_placeHolders.CURRENT_OS, summary.os.value);
+                                };
 
-                            done(status, summary, results);
-                        },
-                        'json'
-                    );
-                });
+                                done(status, summary, platformInfo);
+                            });
+                    });
             },
 
             /**

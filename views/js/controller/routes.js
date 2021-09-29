@@ -31,5 +31,15 @@ define({
             index: 'controller/Diagnostic/index',
             diagnostic: 'controller/Diagnostic/diagnostic'
         }
+    },
+    ExcludedBrowsers: {
+        actions: {
+            editInstance: 'controller/ExclusionList/editInstance'
+        }
+    },
+    ExcludedOS: {
+        actions: {
+            editInstance: 'controller/ExclusionList/editInstance'
+        }
     }
 });

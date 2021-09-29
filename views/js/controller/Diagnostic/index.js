@@ -21,6 +21,7 @@ define([
     'i18n',
     'helpers',
     'moment',
+    'core/request',
     'layout/loading-bar',
     'util/encode',
     'ui/feedback',
@@ -39,6 +40,7 @@ define([
     __,
     helpers,
     moment,
+    request,
     loadingBar,
     encode,
     feedback,
@@ -151,40 +153,42 @@ define([
             const model = [];
 
             // request the server with a selection of readiness check results
-            function request(url, selection, message) {
+            function requestData(url, selection, message) {
                 if (selection && selection.length) {
                     loadingBar.start();
 
-                    $.ajax({
+                    request({
                         url,
                         data: {
                             id: selection
                         },
-                        dataType: 'json',
-                        type: 'POST',
-                        error() {
+                        method: 'POST',
+                        noToken: true
+                    })
+                        .then(response => {
                             loadingBar.stop();
-                        }
-                    }).done(response => {
-                        loadingBar.stop();
 
-                        if (response && response.success) {
-                            if (message) {
-                                feedback().success(message);
+                            if (response && response.success) {
+                                if (message) {
+                                    feedback().success(message);
+                                }
+                                $list.datatable('refresh');
+                            } else {
+                                feedback().error(
+                                    `${__('Something went wrong ...')}<br>${encode.html(response.error)}`,
+                                    {
+                                        encodeHtml: false
+                                    }
+                                );
                             }
-                            $list.datatable('refresh');
-                        } else {
-                            feedback().error(`${__('Something went wrong ...')}<br>${encode.html(response.error)}`, {
-                                encodeHtml: false
-                            });
-                        }
-                    });
+                        })
+                        .catch(() => loadingBar.stop());
                 }
             }
 
             // request the server to remove the selected diagnostic-index
             function remove(selection) {
-                request(removeUrl, selection, __('The readiness check result have been removed'));
+                requestData(removeUrl, selection, __('The readiness check result have been removed'));
             }
 
             // tool: page refresh
