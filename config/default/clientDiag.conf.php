@@ -59,6 +59,12 @@ return array(
         'configurableText' => null,
 
         /**
+         * When this option is activated, the diagnostic will allow exporting results to a CSV file
+         * @type boolean
+         */
+        'export' => false,
+
+        /**
          * When this option is activated, the diagnostic will require a school name before allowing to start the checks
          * @type boolean
          */
@@ -362,6 +368,12 @@ return array(
                  * @type string
                  */
                 'customMsgKey' => 'diagBrowserOsCheckResult',
+
+                /**
+                 * The API to call for the detailed list of default supported browsers
+                 * @type string
+                 */
+                'browserslistUrl' => 'https://oat-sa.github.io/browserslist-app-tao/api.json',
             ],
 
             /**

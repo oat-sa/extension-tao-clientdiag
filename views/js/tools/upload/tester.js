@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016-2017 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2016-2021 (original work) Open Assessment Technologies SA ;
  */
 define([
     'jquery',
@@ -29,29 +29,31 @@ define([
 
     /**
      * A binary kilo bytes (KiB)
-     * @type {Number}
+     * @type {number}
      * @private
      */
-    var _kilo = 1024;
+    const _kilo = 1024;
 
     /**
      * A binary mega bytes (MiB)
-     * @type {Number}
+     * @type {number}
      * @private
      */
-    var _mega = _kilo * _kilo;
+    const _mega = _kilo * _kilo;
 
     /**
      * Result of diagnostic
+     * @type {Array}
+     * @private
      */
-    var data = [];
+    let data = [];
 
     /**
      * Default values for the upload speed tester
-     * @type {Object}
+     * @type {object}
      * @private
      */
-    var _defaults = {
+    const _defaults = {
         id: 'upload',
 
         // Size of data to sent to server during speed test in bytes
@@ -66,27 +68,31 @@ define([
      * @type {Array}
      * @private
      */
-    var _thresholds = [{
-        threshold: 0,
-        message: __('Low upload speed'),
-        type: 'error'
-    }, {
-        threshold: 33,
-        message: __('Average upload speed'),
-        type: 'warning'
-    }, {
-        threshold: 66,
-        message: __('Good upload speed'),
-        type: 'success'
-    }];
+    const _thresholds = [
+        {
+            threshold: 0,
+            message: __('Low upload speed'),
+            type: 'error'
+        },
+        {
+            threshold: 33,
+            message: __('Average upload speed'),
+            type: 'warning'
+        },
+        {
+            threshold: 66,
+            message: __('Good upload speed'),
+            type: 'success'
+        }
+    ];
 
     /**
      * List of translated texts per level.
      * The level is provided through the config as a numeric value, starting from 1.
-     * @type {Object}
+     * @type {object}
      * @private
      */
-    var _messages = [
+    const _messages = [
         // level 1
         {
             title: __('Upload speed'),
@@ -98,100 +104,97 @@ define([
 
     /**
      * Generate random string of given length
-     * @param length
+     * @param {number} length
      */
-    var generateStr = function generateStr(length) {
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        var i;
+    function generateStr(length) {
+        let text = '';
+        const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-        for (i = 0; i < length; i++) {
+        for (let i = 0; i < length; i++) {
             text += possible.charAt(Math.floor(Math.random() * possible.length));
         }
 
         return text;
-    };
+    }
 
     /**
      * Upload generated string to check upload speed.
      * @param {number} size of string to upload in bytes
      * @return {object} jqXHR
      */
-    var upload = function upload(size) {
-
-        var url = urlHelper.route('upload', 'CompatibilityChecker', 'taoClientDiagnostic', {cache : Date.now()});
-        var str = generateStr(size);
+    function upload(size) {
+        const url = urlHelper.route('upload', 'CompatibilityChecker', 'taoClientDiagnostic', { cache: Date.now() });
+        const str = generateStr(size);
         data = [];
 
         return $.ajax({
-            url : url,
-            type : 'POST',
-            data : {
-                upload : str
+            url: url,
+            type: 'POST',
+            data: {
+                upload: str
             },
-            xhr: function() {
-                var xhr = new window.XMLHttpRequest();
-                var startTime = Date.now();
+            xhr: () => {
+                const xhr = new window.XMLHttpRequest();
+                const startTime = Date.now();
                 // Upload progress
-                xhr.upload.addEventListener("progress", function(evt){
-                    var passedTime;
-                    if (evt.lengthComputable) {
-                        passedTime = Date.now() - startTime;
-                        data.push({
-                            time: passedTime,
-                            loaded: evt.loaded,
-                            speed: ((evt.loaded * 8) / _mega) / (passedTime / 1000)
-                        });
-                    }
-                }, false);
+                xhr.upload.addEventListener(
+                    'progress',
+                    evt => {
+                        if (evt.lengthComputable) {
+                            const passedTime = Date.now() - startTime;
+                            data.push({
+                                time: passedTime,
+                                loaded: evt.loaded,
+                                speed: (evt.loaded * 8) / _mega / (passedTime / 1000)
+                            });
+                        }
+                    },
+                    false
+                );
 
                 return xhr;
             }
         });
-    };
+    }
 
     /**
      * Performs a upload speed test
-     * @param {Object} config - Some optional configs
-     * @param {String} [config.id] - The identifier of the test
-     * @param {Number} [config.size] - Size of data to sent to server during speed test in bytes
-     * @param {Number} [config.optimal] - Optimal speed in bytes per second
-     * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
-     * @returns {Object}
+     * @param {object} config - Some optional configs
+     * @param {string} [config.id] - The identifier of the test
+     * @param {number} [config.size] - Size of data to sent to server during speed test in bytes
+     * @param {number} [config.optimal] - Optimal speed in bytes per second
+     * @param {string} [config.level] - The intensity level of the test. It will aim which messages list to use.
+     * @returns {object}
      */
-    var uploadTester = function uploadTester(config) {
-        var initConfig = getConfig(config, _defaults);
-        var labels = getLabels(_messages, initConfig.level);
+    return function uploadTester(config) {
+        const initConfig = getConfig(config, _defaults);
+        const labels = getLabels(_messages, initConfig.level);
 
         return {
             /**
              * Performs upload speed test, then call a function to provide the result
              * @param {Function} done
              */
-            start : function start(done) {
-                var self = this;
+            start(done) {
+                upload(parseInt(initConfig.size, 10)).then(() => {
+                    let totalSpeed = 0;
+                    let maxSpeed = 0;
 
-                upload(parseInt(initConfig.size, 10)).then(function() {
-                    var totalSpeed = 0;
-                    var avgSpeed;
-                    var maxSpeed = 0;
-                    var status, summary, results;
-
-                    _.forEach(data, function (val) {
+                    _.forEach(data, val => {
                         totalSpeed += val.speed;
                         if (maxSpeed < val.speed) {
                             maxSpeed = Math.round(val.speed * 100) / 100;
                         }
                     });
-                    avgSpeed = Math.round(totalSpeed / data.length * 100) / 100;
-                    results = {
+                    const avgSpeed = Math.round((totalSpeed / data.length) * 100) / 100;
+                    const results = {
                         max: maxSpeed,
                         avg: avgSpeed,
                         type: 'upload'
                     };
 
-                    status = self.getFeedback(avgSpeed);
-                    summary = self.getSummary(results);
+                    const status = this.getFeedback(avgSpeed);
+                    const summary = this.getSummary(results);
 
                     done(status, summary, results);
                 });
@@ -199,7 +202,7 @@ define([
 
             /**
              * Gets the labels loaded for the tester
-             * @returns {Object}
+             * @returns {object}
              */
             get labels() {
                 return labels;
@@ -207,32 +210,30 @@ define([
 
             /**
              * Builds the results summary
-             * @param {Object} results
-             * @returns {Object}
+             * @param {object} results
+             * @returns {object}
              */
-            getSummary: function getSummary(results) {
+            getSummary(results) {
                 return {
-                    uploadAvg: {message: labels.uploadAvg, value: results.avg + ' Mbps'},
-                    uploadMax: {message: labels.uploadMax, value: results.max + ' Mbps'}
+                    uploadAvg: { message: labels.uploadAvg, value: `${results.avg} Mbps` },
+                    uploadMax: { message: labels.uploadMax, value: `${results.max} Mbps` }
                 };
             },
 
             /**
              * Gets the feedback status for the provided result value
-             * @param {Number} result
-             * @returns {Object}
+             * @param {number} result
+             * @returns {object}
              */
-            getFeedback: function getFeedback(result) {
-                var optimal = initConfig.optimal / _mega;
-                var status = getStatus((100 / optimal) * result, _thresholds);
+            getFeedback(result) {
+                const optimal = initConfig.optimal / _mega;
+                const status = getStatus((100 / optimal) * result, _thresholds);
 
                 status.id = initConfig.id;
-                status.title =  labels.title;
+                status.title = labels.title;
 
                 return status;
             }
         };
     };
-
-    return uploadTester;
 });

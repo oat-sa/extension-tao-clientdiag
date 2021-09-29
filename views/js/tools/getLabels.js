@@ -13,29 +13,26 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2017-2021 (original work) Open Assessment Technologies SA ;
  */
-/**
- * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
- */
-define(['lodash'], function (_) {
+define(function() {
     'use strict';
 
     /**
      * Gets the list of messages related to a particular level.
      * The level is provided as a numeric value, starting from 1.
-     * @param {Array|Object} messages - The list of messages for all levels.
+     * @param {Array|object} messages - The list of messages for all levels.
      *                                  If only one object is provided is will be wrapped into an array
-     * @param {Number|String} level - The level for which filter the messages.
+     * @param {number|string} level - The level for which filter the messages.
      *                                It should be comprised within the available indexes.
      *                                Higher levels will be reduced to the higher available,
      *                                lower levels will be increased to the lowest.
-     * @returns {Object}
+     * @returns {object}
      */
     return function getLabels(messages, level) {
         messages = messages || {};
 
-        if (!_.isArray(messages)) {
+        if (!Array.isArray(messages)) {
             messages = [messages];
         }
 

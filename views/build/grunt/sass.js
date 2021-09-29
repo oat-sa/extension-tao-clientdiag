@@ -1,4 +1,4 @@
-module.exports = function(grunt) { 
+module.exports = function(grunt) {
 
     var sass    = grunt.config('sass') || {};
     var watch   = grunt.config('watch') || {};
@@ -8,6 +8,7 @@ module.exports = function(grunt) {
     sass.taoclientdiagnostic = { };
     sass.taoclientdiagnostic.files = { };
     sass.taoclientdiagnostic.files[root + 'css/diagnostics.css'] = root + 'scss/diagnostics.scss';
+    sass.taoclientdiagnostic.files[root + 'css/exclusion-list-form.css'] = root + 'scss/exclusion-list-form.scss';
 
     watch.taoclientdiagnosticsass = {
         files : [root + 'views/scss/**/*.scss'],
@@ -19,7 +20,7 @@ module.exports = function(grunt) {
 
     notify.taoclientdiagnosticsass = {
         options: {
-            title: 'Grunt SASS', 
+            title: 'Grunt SASS',
             message: 'SASS files compiled to CSS'
         }
     };

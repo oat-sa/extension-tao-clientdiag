@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE structures SYSTEM "../../tao/doc/structures.dtd">
+<structures>
+
+    <structure id="settings" name="Settings" level="12" group="invisible">
+        <description>Exclusion List</description>
+        <sections>
+            <section id="manage_browsers" name="Browsers Exclusion List" url="/taoClientDiagnostic/ExcludedBrowsers/index">
+                <trees>
+                    <tree name="Excluded Browsers"
+                          className="Excluded Browsers"
+                          dataUrl="/taoClientDiagnostic/ExcludedBrowsers/getOntologyData"
+                          rootNode="http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowser"
+                          selectClass="excluded-browser-class-properties"
+                          selectInstance="excluded-browser-properties"
+                          delete="excluded-browser-delete"
+                    />
+                </trees>
+                <actions>
+                    <action id="excluded-browser-class-properties" name="Properties"
+                            url="/taoClientDiagnostic/ExcludedBrowsers/editClassLabel" group="content" context="class">
+                        <icon id="icon-edit"/>
+                    </action>
+                    <action id="excluded-browser-class-new" name="New Class" url="/taoClientDiagnostic/ExcludedBrowsers/addSubClass"
+                            context="resource" group="tree" binding="subClass">
+                        <icon id="icon-folder-open"/>
+                    </action>
+                    <action id="excluded-browser-properties" name="Properties" url="/taoClientDiagnostic/ExcludedBrowsers/editInstance"
+                            group="content" context="instance">
+                        <icon id="icon-edit"/>
+                    </action>
+                    <action id="excluded-browser-delete" name="Delete" url="/taoClientDiagnostic/ExcludedBrowsers/delete"
+                            context="resource" group="tree" binding="removeNode">
+                        <icon id="icon-bin"/>
+                    </action>
+                    <action id="excluded-browser-new" name="Add" url="/taoClientDiagnostic/ExcludedBrowsers/addInstance"
+                            context="resource"
+                            group="tree" binding="instanciate">
+                        <icon id="icon-add"/>
+                    </action>
+                </actions>
+            </section>
+            <section id="manage_os" name="OS Exclusion List" url="/taoClientDiagnostic/ExcludedOS/index">
+                <trees>
+                    <tree name="Excluded OS"
+                          className="Excluded OS"
+                          dataUrl="/taoClientDiagnostic/ExcludedOS/getOntologyData"
+                          rootNode="http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOS"
+                          selectClass="excluded-os-class-properties"
+                          selectInstance="excluded-os-properties"
+                          delete="excluded-os-delete"
+                    />
+                </trees>
+                <actions>
+                    <action id="excluded-os-class-properties" name="Properties" url="/taoClientDiagnostic/ExcludedOS/editClassLabel"
+                            group="content" context="class">
+                        <icon id="icon-edit"/>
+                    </action>
+                    <action id="excluded-os-class-new" name="New Class" url="/taoClientDiagnostic/ExcludedOS/addSubClass" context="resource"
+                            group="tree" binding="subClass">
+                        <icon id="icon-folder-open"/>
+                    </action>
+                    <action id="excluded-os-properties" name="Properties" url="/taoClientDiagnostic/ExcludedOS/editInstance" group="content"
+                            context="instance">
+                        <icon id="icon-edit"/>
+                    </action>
+                    <action id="excluded-os-delete" name="Delete" url="/taoClientDiagnostic/ExcludedOS/delete" context="resource"
+                            group="tree" binding="removeNode">
+                        <icon id="icon-bin"/>
+                    </action>
+                    <action id="excluded-os-new" name="Add" url="/taoClientDiagnostic/ExcludedOS/addInstance" context="resource" group="tree"
+                            binding="instanciate">
+                        <icon id="icon-add"/>
+                    </action>
+                </actions>
+            </section>
+        </sections>
+    </structure>
+</structures>

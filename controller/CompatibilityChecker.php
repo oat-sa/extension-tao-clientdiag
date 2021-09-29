@@ -73,7 +73,8 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             'browser' =>  $this->getBrowserDetector()->getName(),
             'browserVersion' => $this->getBrowserDetector()->getVersion(),
             'os' => $this->getOsDetector()->getName(),
-            'osVersion' => $this->getOsDetector()->getVersion()
+            'osVersion' => $this->getOsDetector()->getVersion(),
+            'isMobile' => $this->getOsDetector()->isMobile(),
         ];
         $this->returnJson($result);
     }
@@ -89,7 +90,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $data = $this->getData(true);
             $id   = $this->getId();
 
-            $checker            = new CompatibilityCheckerModel($data);
+            $checker            = $this->getServiceLocator()->get(CompatibilityCheckerModel::SERVICE_ID);
             $isCompatible       = (int)$checker->isCompatibleConfig();
             $data['compatible'] = $isCompatible;
 
@@ -102,22 +103,34 @@ class CompatibilityChecker extends \tao_actions_CommonModule
 
             $compatibilityMessage = [
                 //Not compatible
-                '0' => [
+                CompatibilityCheckerModel::COMPATIBILITY_NONE => [
                     'success' => true,
                     'type'    => 'error',
                     'message' => __('Your system requires a compatibility update, please contact your system administrator.')
                 ],
                 //Compatible
-                '1' => [
+                CompatibilityCheckerModel::COMPATIBILITY_COMPATIBLE => [
                     'success' => true,
                     'type'    => 'success',
-                    'message' => __('Compatible')
+                    'message' => __('This browser is compatible but its support may end soon.')
                 ],
                 //Not tested
-                '2' => [
+                CompatibilityCheckerModel::COMPATIBILITY_NOT_TESTED => [
                     'success' => true,
                     'type'    => 'warning',
                     'message' => __('This browser is not tested.')
+                ],
+                //Fully supported
+                CompatibilityCheckerModel::COMPATIBILITY_SUPPORTED => [
+                    'success' => true,
+                    'type'    => 'success',
+                    'message' => __('This browser is supported.')
+                ],
+                //Not supported
+                CompatibilityCheckerModel::COMPATIBILITY_NOT_SUPPORTED => [
+                    'success' => true,
+                    'type'    => 'warning',
+                    'message' => __('This browser is not supported.')
                 ],
             ];
 

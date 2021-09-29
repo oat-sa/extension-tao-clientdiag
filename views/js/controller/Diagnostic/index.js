@@ -13,10 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015-2019 (original work) Open Assessment Technologies SA ;
- */
-/**
- * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
+ * Copyright (c) 2015-2021 (original work) Open Assessment Technologies SA ;
  */
 define([
     'jquery',
@@ -24,6 +21,7 @@ define([
     'i18n',
     'helpers',
     'moment',
+    'core/request',
     'layout/loading-bar',
     'util/encode',
     'ui/feedback',
@@ -36,137 +34,162 @@ define([
     'taoClientDiagnostic/tools/csvExporter',
     'ui/datatable',
     'lib/moment-timezone.min'
-], function ($, _, __, helpers, moment, loadingBar, encode, feedback, dialog, getStatus, performancesTesterFactory, fingerprintTesterFactory, fingerprintTpl, detailsTpl, csvExporter) {
+], function(
+    $,
+    _,
+    __,
+    helpers,
+    moment,
+    request,
+    loadingBar,
+    encode,
+    feedback,
+    dialog,
+    getStatus,
+    performancesTesterFactory,
+    fingerprintTesterFactory,
+    fingerprintTpl,
+    detailsTpl,
+    csvExporter
+) {
     'use strict';
 
     /**
      * The CSS scope
-     * @type {String}
+     * @type {string}
+     * @private
      */
-    var cssScope = '.diagnostic-index';
+    const cssScope = '.diagnostic-index';
 
     /**
      * Default Time Zone for date
      * @type {string}
+     * @private
      */
-    var defaultDateTimeZone = 'UTC';
+    const defaultDateTimeZone = 'UTC';
 
     /**
      * Default date format
      * @type {string}
+     * @private
      */
-    var defaultDateFormat = 'Y/MM/DD HH:mm:ss';
+    const defaultDateFormat = 'Y/MM/DD HH:mm:ss';
 
     /**
      * Format a number with decimals
-     * @param {Number} number - The number to format
-     * @param {Number} [digits] - The number of decimals
-     * @returns {Number}
+     * @param {number} value - The number to format
+     * @param {number|string} [digits] - The number of decimals
+     * @returns {number}
+     * @private
      */
-    var formatNumber = function formatNumber(number, digits) {
-        var nb = 'undefined' === typeof digits ? 2 : Math.max(0, parseInt(digits, 10));
-        var factor = Math.pow(10, nb) || 1;
-        return Math.round(number * factor) / factor;
-    };
+    function formatNumber(value, digits) {
+        const nb = 'undefined' === typeof digits ? 2 : Math.max(0, parseInt(digits, 10));
+        const factor = Math.pow(10, nb) || 1;
+        return Math.round(value * factor) / factor;
+    }
 
     /**
      * Format a bandwidth value
-     * @param {Number} value
-     * @returns {Number}
+     * @param {number} value
+     * @returns {number|string}
+     * @private
      */
-    var formatBandwidth = function formatBandwidth(value) {
-        var bandwidth = formatNumber(value);
-
+    function formatBandwidth(value) {
         if (value > 100) {
-            bandwidth = '> 100';
+            return '> 100';
         }
 
-        return bandwidth;
-    };
+        return formatNumber(value);
+    }
 
     /**
      * Transform date to local timezone
-     * @param {String} date
-     * @returns {String}
+     * @param {string} date
+     * @returns {string}
+     * @private
      */
-    var transformDateToLocal = function transformDateToLocal(date) {
-        var d, time;
+    function transformDateToLocal(date) {
+        let time;
 
         if (_.isFinite(date)) {
             if (!_.isNumber(date)) {
                 date = _.parseInt(date, 10);
             }
-            d = new Date(date * 1000);
+            const d = new Date(date * 1000);
             time = moment.utc(d);
         } else {
             time = moment.tz(date, defaultDateTimeZone);
         }
 
         return time.tz(moment.tz.guess()).format(defaultDateFormat);
-    };
+    }
+
+    // the page is always loading data when starting
+    loadingBar.start();
 
     /**
      * Controls the readiness check page
-     *
-     * @type {Object}
      */
-    var taoDiagnosticCtlr = {
+    return {
         /**
          * Entry point of the page
          */
-        start : function start() {
-            var $container = $(cssScope);
-            var extension = $container.data('extension') || 'taoClientDiagnostic';
-            var $list = $container.find('.list');
-            var dataset = $container.data('set');
-            var extensionConfig = $container.data('config') || {};
-            var config = extensionConfig.diagnostic || extensionConfig;
-            var installedExtension = $container.data('installedextension') || false;
-            var diagnosticUrl = helpers._url('diagnostic', 'Diagnostic', extension);
-            var removeUrl = helpers._url('remove', 'Diagnostic', extension);
-            var serviceUrl = helpers._url('diagnosticData', 'Diagnostic', extension);
-            var performancesTester = performancesTesterFactory(config.testers.performance || {});
-            var fingerprintTester = fingerprintTesterFactory(config.testers.fingerprint || {});
+        start() {
+            const $container = $(cssScope);
+            const extension = $container.data('extension') || 'taoClientDiagnostic';
+            const $list = $container.find('.list');
+            let dataset = $container.data('set');
+            const extensionConfig = $container.data('config') || {};
+            const config = extensionConfig.diagnostic || extensionConfig;
+            const installedExtension = $container.data('installedextension') || false;
+            const diagnosticUrl = helpers._url('diagnostic', 'Diagnostic', extension);
+            const removeUrl = helpers._url('remove', 'Diagnostic', extension);
+            const serviceUrl = helpers._url('diagnosticData', 'Diagnostic', extension);
+            const performancesTester = performancesTesterFactory(config.testers.performance || {});
+            const fingerprintTester = fingerprintTesterFactory(config.testers.fingerprint || {});
 
-            var tools = [];
-            var actions = [];
-            var model = [];
+            const tools = [];
+            const actions = [];
+            const model = [];
 
             // request the server with a selection of readiness check results
-            function request(url, selection, message) {
+            function requestData(url, selection, message) {
                 if (selection && selection.length) {
                     loadingBar.start();
 
-                    $.ajax({
-                        url: url,
+                    request({
+                        url,
                         data: {
                             id: selection
                         },
-                        dataType : 'json',
-                        type: 'POST',
-                        error: function() {
+                        method: 'POST',
+                        noToken: true
+                    })
+                        .then(response => {
                             loadingBar.stop();
-                        }
-                    }).done(function(response) {
-                        loadingBar.stop();
 
-                        if (response && response.success) {
-                            if (message) {
-                                feedback().success(message);
+                            if (response && response.success) {
+                                if (message) {
+                                    feedback().success(message);
+                                }
+                                $list.datatable('refresh');
+                            } else {
+                                feedback().error(
+                                    `${__('Something went wrong ...')}<br>${encode.html(response.error)}`,
+                                    {
+                                        encodeHtml: false
+                                    }
+                                );
                             }
-                            $list.datatable('refresh');
-                        } else {
-                            feedback().error(__('Something went wrong ...') + '<br>' + encode.html(response.error), {encodeHtml: false});
-                        }
-                    });
+                        })
+                        .catch(() => loadingBar.stop());
                 }
             }
 
             // request the server to remove the selected diagnostic-index
             function remove(selection) {
-                request(removeUrl, selection, __('The readiness check result have been removed'));
+                requestData(removeUrl, selection, __('The readiness check result have been removed'));
             }
-
 
             // tool: page refresh
             tools.push({
@@ -174,7 +197,7 @@ define([
                 icon: 'reset',
                 title: __('Refresh the page'),
                 label: __('Refresh'),
-                action: function() {
+                action() {
                     $list.datatable('refresh');
                 }
             });
@@ -185,7 +208,7 @@ define([
                 icon: 'play',
                 title: __('Launch another readiness check'),
                 label: __('Launch readiness check'),
-                action: function() {
+                action() {
                     window.location.href = diagnosticUrl;
                 }
             });
@@ -197,20 +220,20 @@ define([
                     icon: 'export',
                     title: __('Export CSV'),
                     label: __('Export CSV'),
-                    action: function () {
+                    action() {
                         csvExporter.exportCsv(model);
                     }
                 });
             }
 
-            if(installedExtension){
-                // tool: compatibilty via lti
+            if (installedExtension) {
+                // tool: compatibility via lti
                 tools.push({
                     id: 'lti',
                     icon: 'play',
                     title: __('Try a test delivery'),
                     label: __('Try a test delivery'),
-                    action: function() {
+                    action() {
                         window.location.href = deliveryUrl;
                     }
                 });
@@ -223,28 +246,27 @@ define([
                 title: __('Remove the selected readiness check results'),
                 label: __('Remove'),
                 massAction: true,
-                action: function(selection) {
+                action(selection) {
                     dialog({
                         message: __('The selected readiness check results will be removed. Continue ?'),
                         autoRender: true,
                         autoDestroy: true,
-                        onOkBtn: function() {
+                        onOkBtn() {
                             remove(selection);
                         }
                     });
                 }
             });
 
-
             // tool: close tab, this won't be present in an LTI iframe
             // button should always be right most
-            if(window.self === window.top) {
+            if (window.self === window.top) {
                 tools.push({
                     id: 'exitButton',
                     icon: 'close',
                     title: __('Exit'),
                     label: __('Exit'),
-                    action: function() {
+                    action() {
                         window.self.close();
                     }
                 });
@@ -255,12 +277,12 @@ define([
                 id: 'remove',
                 icon: 'remove',
                 title: __('Remove the readiness check result?'),
-                action: function(id) {
+                action(id) {
                     dialog({
                         autoRender: true,
                         autoDestroy: true,
                         message: __('The readiness check result will be removed. Continue ?'),
-                        onOkBtn: function() {
+                        onOkBtn() {
                             remove([id]);
                         }
                     });
@@ -303,14 +325,16 @@ define([
                 model.push({
                     id: 'fingerprint-cell',
                     label: __('Fingerprint'),
-                    transform: function(v, row) {
+                    transform(v, row) {
                         return fingerprintTpl(row.fingerprint);
                     }
                 });
 
                 $list.on('click.fingerprint', '.fingerprint-cell span.details', function(e) {
-                    var id = $(e.target).closest('tr').data('itemIdentifier');
-                    var row = _.find(dataset.data, {id: id});
+                    const id = $(e.target)
+                        .closest('tr')
+                        .data('itemIdentifier');
+                    const row = _.find(dataset.data, { id: id });
                     if (row) {
                         dialog({
                             content: detailsTpl(fingerprintTester.getSummary(row.fingerprint)),
@@ -328,7 +352,7 @@ define([
                 model.push({
                     id: 'screen_size',
                     label: __('Screen resolution'),
-                    transform: function(value, row) {
+                    transform(value, row) {
                         if (row.screen && row.screen.width && row.screen.height) {
                             return row.screen.width + 'x' + row.screen.height;
                         }
@@ -357,8 +381,8 @@ define([
                 model.push({
                     id: 'performance',
                     label: __('Performances'),
-                    transform: function (value) {
-                        var status = performancesTester.getFeedback(value);
+                    transform(value) {
+                        const status = performancesTester.getFeedback(value);
                         return status.feedback && status.feedback.message;
                     }
                 });
@@ -398,36 +422,30 @@ define([
             model.push({
                 id: 'date',
                 label: __('Date'),
-                transform: function(value) {
-                    return transformDateToLocal(value);
-                }
+                transform: transformDateToLocal
             });
 
             $list
-                .on('query.datatable', function() {
-                    loadingBar.start();
-                })
-                .on('load.datatable', function(e, data) {
+                .on('query.datatable', () => loadingBar.start())
+                .on('load.datatable', (e, data) => {
                     dataset = data;
                     loadingBar.stop();
                 })
-                .datatable({
-                    url: serviceUrl,
-                    status: {
-                        empty: __('No readiness checks have been done!'),
-                        available: __('Readiness checks already done'),
-                        loading: __('Loading')
+                .datatable(
+                    {
+                        url: serviceUrl,
+                        status: {
+                            empty: __('No readiness checks have been done!'),
+                            available: __('Readiness checks already done'),
+                            loading: __('Loading')
+                        },
+                        selectable: true,
+                        tools,
+                        actions,
+                        model
                     },
-                    tools: tools,
-                    actions: actions,
-                    selectable: true,
-                    model: model
-                }, dataset);
+                    dataset
+                );
         }
     };
-
-    // the page is always loading data when starting
-    loadingBar.start();
-
-    return taoDiagnosticCtlr;
 });
