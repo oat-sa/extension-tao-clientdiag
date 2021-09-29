@@ -13,10 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA ;
- */
-/**
- * @author Jean-Sébastien Conan <jean-sebastien@taotesting.com>
+ * Copyright (c) 2018-2021 (original work) Open Assessment Technologies SA ;
  */
 define([
     'lodash',
@@ -25,15 +22,15 @@ define([
     'taoClientDiagnostic/tools/getConfig',
     'taoClientDiagnostic/tools/getLabels',
     'taoClientDiagnostic/tools/getStatus'
-], function (_, __, format, getConfig, getLabels, getStatus) {
+], function(_, __, format, getConfig, getLabels, getStatus) {
     'use strict';
 
     /**
      * Some default values
-     * @type {Object}
+     * @type {object}
      * @private
      */
-    var _defaults = {
+    const _defaults = {
         id: 'screen',
         threshold: {
             width: 1024,
@@ -42,11 +39,11 @@ define([
     };
 
     /**
-     * Placeholder variables for custom messages
-     * @type {Object}
+     * Placeholder const iables for custom messages
+     * @type {object}
      * @private
      */
-    var _placeHolders = {
+    const _placeHolders = {
         WIDTH: '%WIDTH%',
         HEIGHT: '%HEIGHT%'
     };
@@ -56,27 +53,31 @@ define([
      * @type {Array}
      * @private
      */
-    var _thresholds = [{
-        threshold: 0,
-        message: __('The device screen does not meet the minimum resolution of %s!'),
-        type: 'error'
-    }, {
-        threshold: 33,
-        message: __('The device screen has the minimum required resolution.'),
-        type: 'warning'
-    }, {
-        threshold: 66,
-        message: __('The device screen resolution meets the requirements.'),
-        type: 'success'
-    }];
+    const _thresholds = [
+        {
+            threshold: 0,
+            message: __('The device screen does not meet the minimum resolution of %s!'),
+            type: 'error'
+        },
+        {
+            threshold: 33,
+            message: __('The device screen has the minimum required resolution.'),
+            type: 'warning'
+        },
+        {
+            threshold: 66,
+            message: __('The device screen resolution meets the requirements.'),
+            type: 'success'
+        }
+    ];
 
     /**
      * List of translated texts per level.
      * The level is provided through the config as a numeric value, starting from 1.
-     * @type {Object}
+     * @type {object}
      * @private
      */
-    var _messages = [
+    const _messages = [
         // level 1
         {
             title: __('Screen resolution'),
@@ -89,30 +90,30 @@ define([
     /**
      * Performs a screen resolution check
      *
-     * @param {Object} config - Some optional configs
-     * @param {String} [config.id] - The identifier of the test
-     * @param {String} [config.level] - The intensity level of the test. It will aim which messages list to use.
-     * @param {Object} [config.threshold] - The minimum resolution expected
-     * @returns {Object}
+     * @param {object} config - Some optional configs
+     * @param {string} [config.id] - The identifier of the test
+     * @param {string} [config.level] - The intensity level of the test. It will aim which messages list to use.
+     * @param {object} [config.threshold] - The minimum resolution expected
+     * @returns {object}
      */
-    function screenTester(config) {
-        var initConfig = getConfig(config, _defaults);
-        var labels = getLabels(_messages, initConfig.level);
+    return function screenTester(config) {
+        const initConfig = getConfig(config, _defaults);
+        const labels = getLabels(_messages, initConfig.level);
 
         return {
             /**
              * Performs a screen resolution check, then call a function to provide the result
              * @param {Function} done
              */
-            start: function start(done) {
-                var results = _.pick(window.screen, ['width', 'height']);
-                var status = this.getFeedback(results);
-                var summary = this.getSummary(results);
+            start(done) {
+                const results = _.pick(window.screen, ['width', 'height']);
+                const status = this.getFeedback(results);
+                const summary = this.getSummary(results);
 
-                status.customMsgRenderer = function(customMsg) {
+                status.customMsgRenderer = customMsg => {
                     return (customMsg || '')
                         .replace(_placeHolders.WIDTH, results.width)
-                        .replace(_placeHolders.HEIGHT, results.height)
+                        .replace(_placeHolders.HEIGHT, results.height);
                 };
 
                 done(status, summary, results);
@@ -128,10 +129,10 @@ define([
 
             /**
              * Builds the results summary
-             * @param {Object} results
-             * @returns {Object}
+             * @param {object} results
+             * @returns {object}
              */
-            getSummary: function getSummary(results) {
+            getSummary(results) {
                 return {
                     width: {
                         message: labels.width,
@@ -146,32 +147,30 @@ define([
 
             /**
              * Gets the feedback status for the provided result value
-             * @param {Object} results
-             * @returns {Object}}
+             * @param {object} results
+             * @returns {object}}
              */
-            getFeedback: function getFeedback(results) {
-                var threshold = initConfig.threshold || {};
-                var expectedWidth = threshold.width || _defaults.threshold.width;
-                var expectedHeight = threshold.height || _defaults.threshold.height;
-                var percentage, status;
+            getFeedback(results) {
+                const threshold = initConfig.threshold || {};
+                const expectedWidth = threshold.width || _defaults.threshold.width;
+                const expectedHeight = threshold.height || _defaults.threshold.height;
+                let percentage;
 
                 if (!results || results.height < expectedHeight || results.width < expectedWidth) {
                     percentage = 0;
                 } else if (results.height > expectedHeight || results.width > expectedWidth) {
                     percentage = 100;
                 } else {
-                    percentage = 50
+                    percentage = 50;
                 }
 
-                status = getStatus(percentage, _thresholds);
+                const status = getStatus(percentage, _thresholds);
                 status.id = initConfig.id;
                 status.title = labels.title;
-                status.feedback.message = format(status.feedback.message, expectedWidth + 'x' + expectedHeight);
+                status.feedback.message = format(status.feedback.message, `${expectedWidth}x${expectedHeight}`);
 
                 return status;
             }
         };
-    }
-
-    return screenTester;
+    };
 });

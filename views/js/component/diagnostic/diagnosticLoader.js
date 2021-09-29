@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2019 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2019-2021 (original work) Open Assessment Technologies SA ;
  */
 define([
     'lodash',
@@ -22,80 +22,63 @@ define([
     'context',
     'module',
     'tpl!taoClientDiagnostic/component/diagnostic/tpl/component',
-    'layout/loading-bar',
-], function (_, componentFactory, moduleLoader, context, module, componentTpl, loadingBar) {
+    'layout/loading-bar'
+], function(_, componentFactory, moduleLoader, context, module, componentTpl, loadingBar) {
     'use strict';
-    /**
-     * Some default values.
-     * @type {Object}
-     */
-    var defaults = {};
 
     /*
      * This component factory is loading diagnostic tool modules and initialising with their configuration.
-     * @param {Object} container - Container in which the module will render diagnostic check
-     * @param {Object} config
+     * @param {object} container - Container in which the module will render diagnostic check
+     * @param {object} config - Some config options.
      */
     return function diagnosticLoaderFactory(container, config) {
-        var api = {};
-        var component = componentFactory(api, defaults)
-        // set the component's layout
+        const component = componentFactory()
+            // set the component's layout
             .setTemplate(componentTpl)
 
-        // auto render on init
-            .on('init', function(){
+            // auto render on init
+            .on('init', function onDiagnosticLoaderInit() {
                 this.render(container);
             })
             // renders the component
-            .on('render', function () {
-                var self = this;
-                var moduleConfig = module.config();
-                var identifiers = _.keys(moduleConfig.diagnostics);
+            .on('render', function onDiagnosticLoaderRender() {
+                const moduleConfig = module.config();
+                const identifiers = Object.keys(moduleConfig.diagnostics);
                 /*
                  * This loads all the modules from module configuration, which are in the `diagnostics` array.
                  */
                 moduleLoader({}, _.isFunction)
                     .addList(moduleConfig.diagnostics)
                     .load(context.bundle)
-                    .then(function(factories) {
-                        var componentConfig = self.getConfig();
-                        var factoryConfig;
-                        var factoryName;
+                    .then(factories => {
+                        const componentConfig = this.getConfig();
 
                         /*
                          * Read all factories and initialise them with their config from component.
                          */
-                        _.forEach(factories, function (factory, index) {
-                            factoryName = identifiers[index];
-                            factoryConfig = componentConfig[factoryName];
+                        factories.forEach((factory, index) => {
+                            const factoryName = identifiers[index];
+                            const factoryConfig = componentConfig[factoryName];
                             factoryConfig.controller = componentConfig.controller;
 
-                            var componentInstance = factory(self.getElement(), factoryConfig);
-
-                            componentInstance
-                                .on('render', function() {
+                            factory(this.getElement(), factoryConfig)
+                                .on('render', function onRender() {
                                     if (factoryConfig.autoStart) {
                                         this.run();
                                     }
                                 })
-                                .on('start', function() {
-                                    loadingBar.start();
-                                })
-                                .on('end', function() {
-                                    loadingBar.stop();
-                                });
+                                .on('start', () => loadingBar.start())
+                                .on('end', () => loadingBar.stop());
                         });
 
                         /**
                          * @event ready
                          */
-                        self.trigger('ready');
+                        this.trigger('ready');
                     });
             });
 
-        _.defer(function() {
-            component.init(config);
-        });
+        _.defer(() => component.init(config));
 
         return component;
     };

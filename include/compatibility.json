@@ -1,21 +1,21 @@
 [
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "", "browser" : "Firefox", "versions" : [84]},
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "", "browser" : "Chrome", "versions" : [87]},
-    {"compatible" : 1, "os" : "OS X", "osVersion" : "", "browser" : "Safari", "versions" : [13]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "", "device": "desktop", "browser" : "Firefox", "versions" : [84]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "", "device": "desktop", "browser" : "Chrome", "versions" : [87]},
+    {"compatible" : 1, "os" : "OS X", "osVersion" : "", "device": "desktop", "browser" : "Safari", "versions" : [13]},
 
-    {"compatible" : 1, "os" : "Linux", "osVersion" : "", "browser" : "Firefox", "versions" : [84]},
-    {"compatible" : 1, "os" : "Linux", "osVersion" : "", "browser" : "Chrome", "versions" : [87]},
+    {"compatible" : 1, "os" : "Linux", "osVersion" : "", "device": "desktop", "browser" : "Firefox", "versions" : [84]},
+    {"compatible" : 1, "os" : "Linux", "osVersion" : "", "device": "desktop", "browser" : "Chrome", "versions" : [87]},
 
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "", "browser" : "Firefox", "versions" : [84]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "", "browser" : "Chrome", "versions" : [87]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "", "browser" : "Edge", "versions" : [87]},
-    {"compatible" : 1, "os" : "Windows", "osVersion" : "", "browser" : "Internet Explorer", "versions" : [11]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "", "device": "desktop", "browser" : "Firefox", "versions" : [84]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "", "device": "desktop", "browser" : "Chrome", "versions" : [87]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "", "device": "desktop", "browser" : "Edge", "versions" : [87]},
+    {"compatible" : 1, "os" : "Windows", "osVersion" : "", "device": "desktop", "browser" : "Internet Explorer", "versions" : [11]},
 
-    {"compatible" : 1, "os" : "Android", "osVersion" : "", "browser" : "Chrome", "versions" : [88]},
-    {"compatible" : 1, "os" : "Android", "osVersion" : "", "browser" : "Firefox", "versions" : [85]},
+    {"compatible" : 1, "os" : "Android", "osVersion" : "", "device": "mobile", "browser" : "Chrome", "versions" : [88]},
+    {"compatible" : 1, "os" : "Android", "osVersion" : "", "device": "mobile", "browser" : "Firefox", "versions" : [85]},
 
-    {"compatible" : 1, "os" : "iOS", "osVersion" : "", "browser" : "Safari", "versions" : [13]},
-    {"compatible" : 1, "os" : "iOS", "osVersion" : "", "browser" : "Safari", "versions" : [14]},
+    {"compatible" : 1, "os" : "iOS", "osVersion" : "", "device": "mobile", "browser" : "Safari", "versions" : [13]},
+    {"compatible" : 1, "os" : "iOS", "osVersion" : "", "device": "mobile", "browser" : "Safari", "versions" : [14]},
 
-    {"compatible" : 1, "os" : "Chrome OS", "osVersion" : "", "browser" : "Chrome", "versions" : [87]}
+    {"compatible" : 1, "os" : "Chrome OS", "osVersion" : "", "device": "mobile", "browser" : "Chrome", "versions" : [87]}
 ]

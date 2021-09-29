@@ -13,25 +13,20 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2016-2021 (original work) Open Assessment Technologies SA ;
  */
-/**
- * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
- */
-define(['lodash'], function (_) {
+define(['lodash'], function(_) {
     'use strict';
 
     /**
      * Gets a config set
-     * @param {Object} [config]
-     * @param {Object} [defaults]
-     * @returns {Object}
+     * @param {object} [config]
+     * @param {object} [defaults]
+     * @returns {object}
      */
     return function getConfig(config, defaults) {
         return _(config || {})
-            .omit(function (value) {
-                return value === null || typeof value === 'undefined';
-            })
+            .omit(value => value === null || typeof value === 'undefined')
             .defaults(defaults || {})
             .value();
     };

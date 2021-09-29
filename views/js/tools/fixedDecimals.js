@@ -13,24 +13,19 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2015-2021 (original work) Open Assessment Technologies SA ;
  */
-/**
- * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
- */
-define(function () {
+define(function() {
     'use strict';
 
     /**
      * Rounds a value to a fixed number of decimals
-     * @param {Number} value The value to round
-     * @param {Number} decimals The number of decimal
-     * @returns {Number}
+     * @param {number} value - The value to round
+     * @param {number} decimals - The number of decimal
+     * @returns {number}
      */
-    var fixedDecimals = function fixedDecimals(value, decimals) {
-        var shift = Math.pow(10, Math.abs(decimals || 1));
+    return function fixedDecimals(value, decimals) {
+        const shift = Math.pow(10, Math.abs(decimals || 1));
         return Math.round(Number(value) * shift) / shift || 0;
     };
-
-    return fixedDecimals;
 });

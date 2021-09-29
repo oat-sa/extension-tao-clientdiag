@@ -13,29 +13,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015-2019 (original work) Open Assessment Technologies SA;
- *
- */
-
-/**
- *
- * @author dieter <dieter@taotesting.com>
- * @author Jean-Sébastien Conan <jean-sebastien.conan@vesperiagroup.com>
+ * Copyright (c) 2015-2021 (original work) Open Assessment Technologies SA;
  */
 define([
     'jquery',
-    'ui/feedback',
     'taoClientDiagnostic/tools/message',
     'taoClientDiagnostic/component/diagnostic/diagnosticLoader'
-], function ($, feedback, showMessage, diagnosticFactory) {
+], function($, showMessage, diagnosticFactory) {
     'use strict';
 
-    /**
-     * @exports
-     */
     return {
         start: function(config) {
-            var $contentArea = $('.content');
+            const $contentArea = $('.content');
 
             showMessage('#feedback-box');
 
