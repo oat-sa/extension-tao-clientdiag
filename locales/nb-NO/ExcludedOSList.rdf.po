@@ -1,0 +1,147 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 2021.10\n"
+"PO-Revision-Date: 2021-10-26T13:42:59\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: nb-NO\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: nb-NO\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OSList
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "OS List"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OSList
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "OS List"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOS
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Excluded OS"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOS
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Operating System to exclude"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOSName
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "OS name"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOSName
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Name of the Operating System to exclude"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOSVersion
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "OS version"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOSVersion
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Version of the Operating System to exclude"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsWindows
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Windows"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsOSX
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "OS X"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsLinux
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Linux"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsAndroid
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Android"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsNokia
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Nokia"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsBlackBerry
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "BlackBerry"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsFreeBSD
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "FreeBSD"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsOpenBSD
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "OpenBSD"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsNetBSD
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "NetBSD"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsOpenSolaris
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "OpenSolaris"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsSunOS
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "SunOS"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsOS2
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "OS2"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsBeOS
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "BeOS"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsWindowsPhone
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Windows Phone"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsIos
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "iOS"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsChromeOS
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Chrome OS"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OswebOS
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "webOS"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsSymbOS
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "SymbOS"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#OsUnknownOS
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "unknown"
+msgstr ""
+
