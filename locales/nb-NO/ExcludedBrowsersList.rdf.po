@@ -1,0 +1,232 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 2021.10\n"
+"PO-Revision-Date: 2021-10-26T13:42:59\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: nb-NO\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: nb-NO\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowsersList
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Browsers List"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowsersList
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Browsers List"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowser
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Excluded browser"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowser
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Web Browser to exclude"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowserName
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Browser name"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowserName
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Name of the Web Browser to exclude"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowserVersion
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Browser version"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowserVersion
+msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
+msgid "Version of the Web Browser to exclude"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserUnknownBrowser
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "unknown"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserIE
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Internet Explorer"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserPocketIE
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Pocket Internet Explorer"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserChrome
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Chrome"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserNavigator
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Navigator"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserGoogleBot
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "GoogleBot"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserYahooSlurp
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Yahoo! Slurp"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserBlackBerry
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "BlackBerry"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserIceCat
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "IceCat"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserOpera
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Opera"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserOperaMini
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Opera Mini"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserWebTV
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "WebTV"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserSafari
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Safari"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserFirefox
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Firefox"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserSeaMonkey
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "SeaMonkey"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserIceweasel
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Iceweasel"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserShiretoko
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Shiretoko"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserMozilla
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Mozilla"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserLynx
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Lynx"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserAmaya
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Amaya"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserNetscape
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Netscape Navigator"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserKonqueror
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Konqueror"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowseriCab
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "iCab"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserGaleon
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Galeon"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserDragon
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Dragon"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserEdge
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Edge"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserYandex
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Yandex"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserPhoenix
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Phoenix"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserNetPositive
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "NetPositive"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserwebOSBrowser
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "webOS Browser"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserOmniWeb
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "OmniWeb"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserFirebird
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Firebird"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserSailfishBrowser
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Sailfish Browser"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserNokiaBrowser
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Nokia Browser"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserMSNBrowser
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "MSN Browser"
+msgstr ""
+
+# http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowserVivaldi
+msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
+msgid "Vivaldi"
+msgstr ""
+
