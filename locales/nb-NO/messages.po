@@ -1,0 +1,448 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: TAO 2021.10\n"
+"PO-Revision-Date: 2021-10-26T13:42:59\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: nb-NO\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: nb-NO\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+
+msgid "%d sources (%s)"
+msgstr "%d kilder (%s)"
+
+#, tao-public
+msgid "Add"
+msgstr ""
+
+msgid "All rights reserved."
+msgstr "Alle rettigheter forbeholdt."
+
+msgid "An error occurred! Please verify your input!"
+msgstr "En feil oppstod! Prøv på nytt!"
+
+msgid "Average bandwidth"
+msgstr "Gjennomsnittlig båndbredde"
+
+msgid "Average intensive bandwidth"
+msgstr "Gjennomsnittlig intensiv båndbredde"
+
+msgid "Average performances"
+msgstr "Gjennomsnittlig ytelse"
+
+msgid "Average rendering time"
+msgstr "Gjennomsnittlig gjengivelsestid"
+
+msgid "Average upload speed"
+msgstr "Gjennomsnittlig opplastningshastighet"
+
+msgid "Bandwidth"
+msgstr "Båndbredde"
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr "Vær oppmerksom på at disse prøvene vil ta opptil flere minutter."
+
+msgid "Browser"
+msgstr "Nettleser"
+
+#, tao-public
+msgid "Browsers Exclusion List"
+msgstr ""
+
+msgid "Cannot get your fingerprint"
+msgstr "Får ikke fingeravtrykk ditt"
+
+msgid "Cannot retrieve the school name. Please verify your input"
+msgstr "Kan ikke hente skolens navn. Prøv på nytt"
+
+msgid "Change since last fingerprint"
+msgstr "Endring siden siste fingeravtrykk"
+
+msgid "Checking the bandwidth..."
+msgstr "Sjekker båndbredde..."
+
+msgid "Checking the browser..."
+msgstr "Sjekker nettleser..."
+
+msgid "Checking the media intensive bandwidth..."
+msgstr "Sjekker den medieintensive båndbredden..."
+
+msgid "Checking the performances..."
+msgstr "Sjekker ytelse..."
+
+msgid "Checking the screen..."
+msgstr "Sjekker skjermen..."
+
+msgid "Checking upload speed..."
+msgstr "Sjekker opplastingshastighet..."
+
+msgid "Computing the fingerprint..."
+msgstr "Beregner fingeravtrykket..."
+
+msgid "Connect to the diagnostic tool"
+msgstr "Koble til diagnoseverktøyet"
+
+msgid "Date"
+msgstr "Dato"
+
+#, tao-public
+msgid "Delete"
+msgstr ""
+
+msgid "Details"
+msgstr "Detaljer"
+
+msgid "Diagnostic Tool"
+msgstr "Diagnoseverktøy"
+
+msgid "diagnostics.csv"
+msgstr "diagnostics.csv"
+
+msgid "Done!"
+msgstr "Ferdig!"
+
+msgid "Dynamic UID"
+msgstr "Dynamisk UID"
+
+msgid "Edit Excluded Browser"
+msgstr ""
+
+msgid "Edit Excluded Operation System"
+msgstr ""
+
+msgid "Errors occurred! Please see details"
+msgstr "Det oppstod feil! Se detaljer"
+
+#, tao-public
+msgid "Excluded Browsers"
+msgstr ""
+
+#, tao-public
+msgid "Excluded OS"
+msgstr ""
+
+#, tao-public
+msgid "Exclusion List"
+msgstr ""
+
+msgid "Exit"
+msgstr "Exit"
+
+msgid "Export CSV"
+msgstr "Eksporter CSV"
+
+msgid "Failed to get school name"
+msgstr "Kunne ikke finne skolen"
+
+msgid "Fingerprint"
+msgstr "Fingeravtrykk"
+
+msgid "Fingerprint error"
+msgstr "Fingeravtrykkfeil"
+
+msgid "Fingerprint errors"
+msgstr "Fingeravtrykkfeil"
+
+msgid "Fingerprint sources"
+msgstr "Fingeravtrykkskilder"
+
+msgid "Getting school name..."
+msgstr "Gå tilgang til skolens navn...."
+
+msgid "Good bandwidth"
+msgstr "God båndbredde"
+
+msgid "Good performances"
+msgstr "God ytelse"
+
+msgid "Good upload speed"
+msgstr "God opplastningshastighet"
+
+msgid "Hide Details"
+msgstr "Skjul detaljer"
+
+msgid "Instance saved"
+msgstr ""
+
+msgid "Intensive bandwidth"
+msgstr "Intensiv båndbredde"
+
+msgid "Interface not available"
+msgstr "Grensesnitt ikke tilgjengelig"
+
+msgid "Launch another readiness check"
+msgstr "Start en ny beredskapskontroll"
+
+msgid "Launch readiness check"
+msgstr "Start beredskapskontroll"
+
+msgid "List of readiness checks"
+msgstr "Liste over beredskapskontroller"
+
+msgid "Loading"
+msgstr "Laster"
+
+msgid "Log in"
+msgstr "Logg inn"
+
+msgid "Login"
+msgstr "Logg inn"
+
+msgid "Logout"
+msgstr "Logg ut"
+
+msgid "Low bandwidth"
+msgstr "Lav båndbredde"
+
+msgid "Low upload speed"
+msgstr "Lav opplastningshastighet"
+
+msgid "Main Menu"
+msgstr "Hovedmeny"
+
+msgid "Max upload speed"
+msgstr "Maks opplastningshastighet"
+
+msgid "Maximum bandwidth"
+msgstr "Maksimal båndbredde"
+
+msgid "Maximum intensive bandwidth"
+msgstr "Maksimal intensiv båndbredde"
+
+msgid "Maximum rendering time"
+msgstr "Maksimal gjengivelsestid"
+
+msgid "Media intensive bandwidth"
+msgstr "Medieintensiv båndbredde"
+
+msgid "Minimum bandwidth"
+msgstr "Minimum båndbredde"
+
+msgid "Minimum intensive bandwidth"
+msgstr "Minimum intensiv båndbredde"
+
+msgid "Minimum rendering time"
+msgstr "Minimum gjengivelsestid"
+
+msgid "Missing field %s"
+msgstr "Feltet %s mangler"
+
+#, tao-public
+msgid "New Class"
+msgstr ""
+
+msgid "No"
+msgstr "Ingen"
+
+msgid "No diagnostic service defined"
+msgstr "Ingen diagnostisk tjeneste er definert"
+
+msgid "No readiness checks have been done!"
+msgstr "Ingen beredskapskontroller er utført!"
+
+msgid "Number of simultaneous test takers the connection can handle"
+msgstr "Antall samtidige pålogginger tilkoblingen kan håndtere"
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr "Antall samtidige pålogginger tilkoblingen kan håndtere med medieintensive"
+
+msgid "Operating system"
+msgstr "Operativsystem"
+
+msgid "Operating system and web browser"
+msgstr "Operativsystem og nettleser"
+
+msgid "OS"
+msgstr "OS"
+
+#, tao-public
+msgid "OS Exclusion List"
+msgstr ""
+
+msgid "Performances"
+msgstr "Ytelse"
+
+#, tao-public
+msgid "Properties"
+msgstr ""
+
+msgid "Readiness Check"
+msgstr "Beredskapskontroll"
+
+msgid "Readiness checks already done"
+msgstr "Beredskapskontrollene er allerede utført"
+
+msgid "Readiness diagnostics"
+msgstr "Beredskapsdiagnostikk"
+
+msgid "Refresh"
+msgstr "Oppdater"
+
+msgid "Refresh the page"
+msgstr "Oppdater siden"
+
+msgid "Remove"
+msgstr "Fjern"
+
+msgid "Remove the readiness check result?"
+msgstr "Vil du fjerne beredskapskontrollresultatet?"
+
+msgid "Remove the selected readiness check results"
+msgstr "Fjern de valgte beredskapskontrollresultatene"
+
+msgid "Return to the list"
+msgstr "Gå tilbake til listen"
+
+msgid "School ID"
+msgstr "Skole-ID"
+
+msgid "School id"
+msgstr "Skole-id"
+
+msgid "School ID:"
+msgstr "Skole-ID:"
+
+msgid "School name"
+msgstr "Skolenavn"
+
+msgid "School name:"
+msgstr "Skolenavn:"
+
+msgid "School number"
+msgstr "Skolenummer"
+
+msgid "School number:"
+msgstr "Skolenummer:"
+
+msgid "School PIN code (4 digits)"
+msgstr "Skolens PIN-kode (4 sifre)"
+
+msgid "School PIN:"
+msgstr "Skolens PIN-kode:"
+
+msgid "Screen Height"
+msgstr "Skjermhøyde"
+
+msgid "Screen resolution"
+msgstr "Skjermoppløsning"
+
+msgid "Screen Width"
+msgstr "Skjermbredde"
+
+#, tao-public
+msgid "Settings"
+msgstr ""
+
+msgid "Show Details"
+msgstr "Vis detaljer"
+
+msgid "Show fingerprint details"
+msgstr "Vis detaljer om fingeravtrykk"
+
+msgid "Simultaneous test takers under normal connection conditions."
+msgstr "Samtidig pålogginger under normale tilkoblingsforhold."
+
+msgid "Something went wrong ..."
+msgstr "Noe gikk galt..."
+
+msgid "Starting..."
+msgstr "Starter..."
+
+msgid "System Compatibility"
+msgstr "Systemkompatibilitet"
+
+msgid "Test system compatibility"
+msgstr "Testsystemkompatibilitet"
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr "Enhetsskjermen oppfyller ikke minimumsoppløsningen på %s!"
+
+msgid "The device screen has the minimum required resolution."
+msgstr "Enhetens skjerm har et minimum av nødvendig oppløsning."
+
+msgid "The device screen resolution meets the requirements."
+msgstr "Enhetens skjermoppløsning oppfyller kravene."
+
+msgid "The readiness check result have been removed"
+msgstr "Beredskapskontrollresultatet er fjernet"
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr "Beredskapskontrollresultatet vil bli fjernet. Vil du fortsette?"
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr "De valgte beredskapskontrollresultatene vil bli fjernet. Vil du fortsette?"
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr "Lagringstjenesten som tilbys for å lagre diagnoseresultatene må oppgraderes til støtte for leser!"
+
+msgid "This browser is compatible but its support may end soon."
+msgstr ""
+
+msgid "This browser is not supported."
+msgstr ""
+
+msgid "This browser is not tested."
+msgstr "Denne nettleseren er ikke testet."
+
+msgid "This browser is supported."
+msgstr ""
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Try a test delivery"
+msgstr "Kjør en prøveinnlevering"
+
+msgid "Unable to get the workstation name!"
+msgstr "Klarer ikke å hente navnet på arbeidsstasjonen!"
+
+msgid "Unable to save the results! Please check your connection."
+msgstr ""
+
+msgid "Unable to validate the data as the server did not respond in time."
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+msgid "Upload speed"
+msgstr "Opplastningshastighet"
+
+msgid "Very slow performances"
+msgstr "Veldig treg ytelse"
+
+msgid "Web browser"
+msgstr "Nettleser"
+
+msgid "Workstation"
+msgstr "Arbeidsstasjon"
+
+msgid "Workstation name"
+msgstr "Arbeidsstasjonens navn"
+
+msgid "Workstation performances"
+msgstr "Arbeidsstasjonens ytelse"
+
+msgid "Workstation:"
+msgstr "Arbeidsstasjon:"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "Your fingerprint is %s"
+msgstr "Fingeravtrykket ditt er %s"
+
+msgid "Your system is fully compliant."
+msgstr "Systemet ditt er fullt kompatibelt."
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr "Systemet ditt er ikke optimalt. Ta kontakt med systemadministrator."
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr "Systemet krever en kompatibilitetsoppdatering. Ta kontakt med systemadministrator."
+
