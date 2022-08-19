@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 3.4.0-sprint117\n"
-"PO-Revision-Date: 2020-09-22T16:02:17\n"
+"Project-Id-Version: TAO 2022.09\n"
+"PO-Revision-Date: 2022-08-12T16:46:03\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ja-JP\n"
@@ -15,6 +15,10 @@ msgstr ""
 
 msgid "%d sources (%s)"
 msgstr "%d リソース (%s)"
+
+#, tao-public
+msgid "Add"
+msgstr "追加"
 
 msgid "All rights reserved."
 msgstr "All rights reserved."
@@ -46,6 +50,10 @@ msgstr "これらの診断には数分かかります"
 msgid "Browser"
 msgstr "ブラウザ"
 
+#, tao-public
+msgid "Browsers Exclusion List"
+msgstr "ブラウザ除外リスト"
+
 msgid "Cannot get your fingerprint"
 msgstr "フィンガープリントを取得できません"
 
@@ -73,9 +81,6 @@ msgstr "モニタ チェック中"
 msgid "Checking upload speed..."
 msgstr "アップロード速度 チェック中..."
 
-msgid "Compatible"
-msgstr "互換性"
-
 msgid "Computing the fingerprint..."
 msgstr "フィンガープリント計算中..."
 
@@ -84,6 +89,10 @@ msgstr "診断ツールに接続"
 
 msgid "Date"
 msgstr "日付"
+
+#, tao-public
+msgid "Delete"
+msgstr "削除"
 
 msgid "Details"
 msgstr "詳細"
@@ -100,8 +109,26 @@ msgstr "診断完了！"
 msgid "Dynamic UID"
 msgstr "ダイナミックUID"
 
+msgid "Edit Excluded Browser"
+msgstr "除外するブラウザを編集する"
+
+msgid "Edit Excluded Operation System"
+msgstr "除外するオペレーションシステムを編集する"
+
 msgid "Errors occurred! Please see details"
 msgstr "エラーが発生しました！　詳細を確認してください。"
+
+#, tao-public
+msgid "Excluded Browsers"
+msgstr "対象外ブラウザ"
+
+#, tao-public
+msgid "Excluded OS"
+msgstr "対象外OS"
+
+#, tao-public
+msgid "Exclusion List"
+msgstr "除外リスト"
 
 msgid "Exit"
 msgstr "終了"
@@ -139,6 +166,9 @@ msgstr "アップロード速度良好"
 msgid "Hide Details"
 msgstr "詳細を隠す"
 
+msgid "Instance saved"
+msgstr "インスタンス保存"
+
 msgid "Intensive bandwidth"
 msgstr "インテンシブ帯域幅"
 
@@ -172,6 +202,9 @@ msgstr "帯域幅が狭い"
 msgid "Low upload speed"
 msgstr "アップロード速度が遅い"
 
+msgid "Main Menu"
+msgstr "メインメニュー"
+
 msgid "Max upload speed"
 msgstr "最大アップロード速度"
 
@@ -199,6 +232,10 @@ msgstr "最小レンダリング時間"
 msgid "Missing field %s"
 msgstr "欠落しているフィールド： %s"
 
+#, tao-public
+msgid "New Class"
+msgstr "新規クラス"
+
 msgid "No"
 msgstr "いいえ"
 
@@ -209,10 +246,10 @@ msgid "No readiness checks have been done!"
 msgstr "完了したレディネスチェックはありません"
 
 msgid "Number of simultaneous test takers the connection can handle"
-msgstr "同時に接続できる受検者数"
+msgstr "同時に接続できる受験者数"
 
 msgid "Number of simultaneous test takers the connection can handle with media intensive"
-msgstr "メディアインテンシブで接続可能な同時受検者数"
+msgstr "メディアインテンシブで接続可能な同時受験者数"
 
 msgid "Operating system"
 msgstr "オペレーティングシステム"
@@ -223,8 +260,16 @@ msgstr "オペレーティングシステムとWebブラウザ"
 msgid "OS"
 msgstr "OS"
 
+#, tao-public
+msgid "OS Exclusion List"
+msgstr "OS除外リスト"
+
 msgid "Performances"
 msgstr "パフォーマンス"
+
+#, tao-public
+msgid "Properties"
+msgstr "プロパティ"
 
 msgid "Readiness Check"
 msgstr "レディネスチェック"
@@ -289,6 +334,10 @@ msgstr "画面の解像度"
 msgid "Screen Width"
 msgstr "画面の幅"
 
+#, tao-public
+msgid "Settings"
+msgstr "設定"
+
 msgid "Show Details"
 msgstr "詳細を表示"
 
@@ -296,7 +345,7 @@ msgid "Show fingerprint details"
 msgstr "フィンガープリントの詳細表示"
 
 msgid "Simultaneous test takers under normal connection conditions."
-msgstr "通常の接続状態での同時受検者数"
+msgstr "通常の接続状態での同時受験者数"
 
 msgid "Something went wrong ..."
 msgstr "不具合発生..."
@@ -331,11 +380,17 @@ msgstr "選択したレディネスチェックの結果を削除しますか？
 msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
 msgstr "診断結果を保存するストレージサービスをアップグレードする必要があります。"
 
+msgid "This browser is compatible but its support may end soon."
+msgstr "このブラウザは互換性がありますが、近々サポートが終了する可能性があります。"
+
+msgid "This browser is not supported."
+msgstr "このブラウザはサポートされていません。"
+
 msgid "This browser is not tested."
 msgstr "このブラウザは検証されていません。"
 
-msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
-msgstr "このツールは、現在の環境がTAOプラットフォームを実行するのに適しているかどうかを確認するために、いくつかの診断を実行します。"
+msgid "This browser is supported."
+msgstr "このブラウザは対応しています。"
 
 msgid "Total"
 msgstr "合計"
@@ -346,8 +401,14 @@ msgstr "テストデリバリを試す"
 msgid "Unable to get the workstation name!"
 msgstr "ワークステーション名が取得できません!"
 
-msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
-msgstr "帯域幅が不安定のため、接続速度が一時的に変動すると、受検に影響を与える可能性があります。"
+msgid "Unable to save the results! Please check your connection."
+msgstr "結果を保存できません。接続を確認してください。"
+
+msgid "Unable to validate the data as the server did not respond in time."
+msgstr "サーバの応答が間に合わなかったため、データを検証できません。"
+
+msgid "Unknown"
+msgstr "不明"
 
 msgid "Upload speed"
 msgstr "アップロード速度"
@@ -375,12 +436,6 @@ msgstr "はい"
 
 msgid "Your fingerprint is %s"
 msgstr "フィンガープリント：%s"
-
-msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
-msgstr "あなたのフィンガープリントは %s です。ただし、前回のチェック以降、変更されているようです。あなたのシステムの変更に関連している可能性があります。"
-
-msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
-msgstr "あなたのフィンガープリントは %s です。ただし、データの取得中に問題が発生しました。利用可能なディスク容量が小さすぎる可能性があります。"
 
 msgid "Your system is fully compliant."
 msgstr "お使いのシステムは完全に適合しています。"
