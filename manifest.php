@@ -24,6 +24,7 @@ use oat\taoClientDiagnostic\controller\Diagnostic;
 use oat\taoClientDiagnostic\scripts\install\createDiagnosticTable;
 use oat\tao\model\accessControl\func\AccessRule;
 use oat\taoClientDiagnostic\scripts\install\RegisterDiagnosticComponent;
+use oat\taoClientDiagnostic\scripts\install\SetupServices;
 
 return array(
     'name'        => 'taoClientDiagnostic',
@@ -47,7 +48,8 @@ return array(
         ),
         'php' => array(
             createDiagnosticTable::class,
-            RegisterDiagnosticComponent::class
+            RegisterDiagnosticComponent::class,
+            SetupServices::class,
         )
     ),
     'uninstall' => array(
