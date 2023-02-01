@@ -296,7 +296,7 @@ msgid "Show fingerprint details"
 msgstr ""
 
 msgid "Simultaneous test takers under normal connection conditions."
-msgstr ""
+msgstr "Partecipanti simultanei al test in normali condizioni di connessione."
 
 msgid "Something went wrong ..."
 msgstr ""
@@ -308,7 +308,7 @@ msgid "System Compatibility"
 msgstr ""
 
 msgid "Test system compatibility"
-msgstr ""
+msgstr "Testa la compatibilità del sistema"
 
 msgid "The device screen does not meet the minimum resolution of %s!"
 msgstr ""
@@ -347,7 +347,7 @@ msgid "Unable to get the workstation name!"
 msgstr ""
 
 msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
-msgstr ""
+msgstr "Larghezza di banda instabile, fluttuazioni temporanee della velocità di connessione possono influire sull'esperienza del candidato."
 
 msgid "Upload speed"
 msgstr "Velocita' di upload"
@@ -391,3 +391,5 @@ msgstr "Il tuo sistema non è ottimale, si prega di contattare il proprio ammini
 msgid "Your system requires a compatibility update, please contact your system administrator."
 msgstr "Il tuo sistema richiede un aggiornamento, si prega di contattare il tuo amministratore di sistema"
 
+msgid "This browser is supported."
+msgstr "Questo browser è supportato"
