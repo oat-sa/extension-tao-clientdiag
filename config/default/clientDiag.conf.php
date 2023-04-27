@@ -18,9 +18,10 @@
  * Copyright (c) 2015-2023 (original work) Open Assessment Technologies SA.
  */
 
+// phpcs:disable
+
 /**
  * Default client diagnostic config
- * @phpcsSuppress
  */
 return array(
     'diagnostic' => array(

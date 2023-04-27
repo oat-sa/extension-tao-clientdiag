@@ -18,10 +18,10 @@
  * Copyright (c) 2016 Open Assessment Technologies SA.
  */
 
+// phpcs:disable
+
 /**
  * This configuration is for set storage processes.
- *
- * @phpcsSuppress
  *
  *  ### SQL ###
  *
@@ -64,3 +64,6 @@
  * [...]
  * For update, add this script to updater
  */
+
+// phpcs:enable
+
