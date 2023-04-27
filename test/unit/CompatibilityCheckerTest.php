@@ -49,11 +49,32 @@ class CompatibilityCheckerTest extends TestCase
     public function testIsCompatibleConfig($browserName, $browserVersion, $osName, $osVersion, $expectedResult)
     {
         $compatibility = [
-            ['compatible' => CompatibilityChecker::COMPATIBILITY_NONE, 'os' => 'Windows', 'osVersion' => '7', 'device' => 'desktop', 'browser' => 'Internet Explorer', 'versions' => [9]],
-            ['compatible' => CompatibilityChecker::COMPATIBILITY_COMPATIBLE, 'os' => 'Windows', 'osVersion' => '8.1', 'device' => 'desktop', 'browser' => 'Chrome', 'versions' => [33, 34, 35]],
+            [
+                'compatible' => CompatibilityChecker::COMPATIBILITY_NONE,
+                'os' => 'Windows',
+                'osVersion' => '7',
+                'device' => 'desktop',
+                'browser' => 'Internet Explorer',
+                'versions' => [9]
+            ],
+            [
+                'compatible' => CompatibilityChecker::COMPATIBILITY_COMPATIBLE,
+                'os' => 'Windows',
+                'osVersion' => '8.1',
+                'device' => 'desktop',
+                'browser' => 'Chrome',
+                'versions' => [33, 34, 35]
+            ],
         ];
         $supported = [
-            ['compatible' => CompatibilityChecker::COMPATIBILITY_SUPPORTED, 'os' => 'Windows', 'osVersion' => '8.1', 'device' => 'desktop', 'browser' => 'Chrome', 'versions' => [40, 41, 42]],
+            [
+                'compatible' => CompatibilityChecker::COMPATIBILITY_SUPPORTED,
+                'os' => 'Windows',
+                'osVersion' => '8.1',
+                'device' => 'desktop',
+                'browser' => 'Chrome',
+                'versions' => [40, 41, 42]
+            ],
         ];
         $excludedBrowsers = [
             'chrome' => ['43']
