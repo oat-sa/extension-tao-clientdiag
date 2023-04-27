@@ -15,12 +15,12 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
- *
+ * Copyright (c) 2017-2023 (original work) Open Assessment Technologies SA.
  */
 
 namespace oat\taoClientDiagnostic\model\diagnostic;
 
+use common_exception_NoImplementation;
 use DateTime;
 use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\storage\PaginatedStorage;
@@ -32,7 +32,7 @@ use Zend\ServiceManager\ServiceLocatorAwareTrait;
 
 /**
  * This temporary helpers is a temporary way to return data to the controller.
- * This helps isolating the mock code from the real controller one.
+ * This helps to isolate the mock code from the real controller one.
  * It will be replaced by a real service afterward.
  */
 class DiagnosticDataTable implements ServiceLocatorAwareInterface
@@ -46,7 +46,7 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
      *
      * @param $id
      * @return mixed
-     * @throws \common_exception_NoImplementation
+     * @throws common_exception_NoImplementation
      */
     public function getDiagnostic($id)
     {
@@ -58,7 +58,7 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
      *
      * @param array [$options]
      * @return array
-     * @throws \common_exception_NoImplementation
+     * @throws common_exception_NoImplementation
      */
     public function getDiagnostics($options = array())
     {
@@ -72,7 +72,10 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
                     'fingerprint' => [
                         'uuid'    => $row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_UUID],
                         'value'   => $row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_VALUE],
-                        'details' => json_decode(html_entity_decode($row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_DETAILS]), true),
+                        'details' => json_decode(
+                            html_entity_decode($row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_DETAILS]),
+                            true
+                        ),
                         'errors'  => $row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_ERRORS],
                         'changed' => $row[PaginatedSqlStorage::DIAGNOSTIC_FINGERPRINT_CHANGED],
                     ],
@@ -80,8 +83,10 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
                         'width'   => $row[PaginatedSqlStorage::DIAGNOSTIC_SCREEN_WIDTH],
                         'height'  => $row[PaginatedSqlStorage::DIAGNOSTIC_SCREEN_HEIGHT]
                     ],
-                    'os'          => $row[PaginatedSqlStorage::DIAGNOSTIC_OS] . ' (' . $row[PaginatedSqlStorage::DIAGNOSTIC_OSVERSION] . ')',
-                    'browser'     => $row[PaginatedSqlStorage::DIAGNOSTIC_BROWSER] . ' (' . $row[PaginatedSqlStorage::DIAGNOSTIC_BROWSERVERSION] . ')',
+                    'os' => $row[PaginatedSqlStorage::DIAGNOSTIC_OS]
+                        . " ({$row[PaginatedSqlStorage::DIAGNOSTIC_OSVERSION]})",
+                    'browser' => $row[PaginatedSqlStorage::DIAGNOSTIC_BROWSER]
+                        . " ({$row[PaginatedSqlStorage::DIAGNOSTIC_BROWSERVERSION]})",
                     'performance' => $row[PaginatedSqlStorage::DIAGNOSTIC_PERFORMANCE_AVERAGE],
                     'bandwidth'   => $row[PaginatedSqlStorage::DIAGNOSTIC_BANDWIDTH_MAX],
                     'intensive_bandwidth' => $row[PaginatedSqlStorage::DIAGNOSTIC_INTENSIVE_BANDWIDTH_MAX],
@@ -89,7 +94,8 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
                 ];
 
                 if (isset($row[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION])) {
-                    $rowData['workstation'] = $row[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION] . ' (' . $row[PaginatedSqlStorage::DIAGNOSTIC_IP] . ')';
+                    $rowData['workstation'] = $row[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION]
+                        . " ({$row[PaginatedSqlStorage::DIAGNOSTIC_IP]})";
                 } else {
                     $rowData['workstation'] = '(' . $row[PaginatedSqlStorage::DIAGNOSTIC_IP] . ')';
                 }
@@ -110,7 +116,7 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
      *
      * @param $id
      * @return bool
-     * @throws \common_exception_NoImplementation
+     * @throws common_exception_NoImplementation
      */
     public function removeDiagnostic($id)
     {

@@ -15,15 +15,16 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2017-2023 (original work) Open Assessment Technologies SA.
  */
 
 namespace oat\taoClientDiagnostic\controller;
 
+use common_exception_MissingParameter;
 use oat\tao\helpers\UserHelper;
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticDataTable;
 use oat\taoClientDiagnostic\model\storage\PaginatedSqlStorage;
+use tao_helpers_Display;
 
 /**
  * Class DiagnosticChecker
@@ -44,7 +45,7 @@ class DiagnosticChecker extends CompatibilityChecker
      *
      * @param bool $check
      * @return array
-     * @throws \common_exception_MissingParameter
+     * @throws common_exception_MissingParameter
      */
     protected function getData($check = false)
     {
@@ -52,7 +53,9 @@ class DiagnosticChecker extends CompatibilityChecker
         $data['login'] = UserHelper::getUserLogin(\common_session_SessionManager::getSession()->getUser());
 
         if ($this->hasRequestParameter('workstation')) {
-            $data[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('workstation')));
+            $data[PaginatedSqlStorage::DIAGNOSTIC_WORKSTATION] = tao_helpers_Display::sanitizeXssHtml(
+                trim($this->getRequestParameter('workstation'))
+            );
         }
 
         return $data;

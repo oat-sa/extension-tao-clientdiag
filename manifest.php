@@ -35,17 +35,21 @@ return array(
     'author'      => 'Open Assessment Technologies SA',
     'managementRole' => 'http://www.tao.lu/Ontologies/generis.rdf#taoClientDiagnosticManager',
     'acl' => array(
+        //phpcs:disable
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#taoClientDiagnosticManager', array('ext' => 'taoClientDiagnostic')),
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext' => 'taoClientDiagnostic','mod' => 'CompatibilityChecker')),
         array('grant', 'http://www.tao.lu/Ontologies/generis.rdf#AnonymousRole', array('ext' => 'taoClientDiagnostic','mod' => 'Authenticator')),
         array(AccessRule::GRANT, ClientDiagnosticRoles::READINESS_CHECKER_ROLE, Diagnostic::class),
         array(AccessRule::GRANT, ClientDiagnosticRoles::READINESS_CHECKER_ROLE, DiagnosticChecker::class),
+        //phpcs:enable
     ),
     'install' => array(
         'rdf' => array(
+            //phpcs:disable
             __DIR__ . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR . 'ontology' . DIRECTORY_SEPARATOR . 'roles.rdf',
             __DIR__ . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR . 'ontology' . DIRECTORY_SEPARATOR . 'ExcludedBrowsersList.rdf',
             __DIR__ . DIRECTORY_SEPARATOR . 'install' . DIRECTORY_SEPARATOR . 'ontology' . DIRECTORY_SEPARATOR . 'ExcludedOSList.rdf',
+            //phpcs:enable
         ),
         'php' => array(
             createDiagnosticTable::class,

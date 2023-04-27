@@ -27,7 +27,7 @@ namespace oat\taoClientDiagnostic\model\storage;
  */
 interface Storage
 {
-    const SERVICE_ID = 'taoClientDiagnostic/storage';
+    public const SERVICE_ID = 'taoClientDiagnostic/storage';
 
     /**
      * All columns of diagnostic storage

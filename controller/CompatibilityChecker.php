@@ -15,12 +15,13 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015-2019 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2015-2023 (original work) Open Assessment Technologies SA.
  */
 
 namespace oat\taoClientDiagnostic\controller;
 
+use common_exception_MissingParameter;
+use common_session_SessionManager;
 use oat\tao\model\mvc\DefaultUrlService;
 use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
@@ -30,6 +31,7 @@ use oat\taoClientDiagnostic\model\schoolName\SchoolNameService;
 use oat\taoClientDiagnostic\model\storage\Storage;
 use Sinergi\BrowserDetector\Browser;
 use Sinergi\BrowserDetector\Os;
+use tao_helpers_Display;
 
 /**
  * Class CompatibilityChecker
@@ -37,7 +39,7 @@ use Sinergi\BrowserDetector\Os;
  */
 class CompatibilityChecker extends \tao_actions_CommonModule
 {
-    const COOKIE_ID = 'compatibility_checker_id';
+    public const COOKIE_ID = 'compatibility_checker_id';
 
     /**
      * If logged in, display index view with config data
@@ -106,7 +108,9 @@ class CompatibilityChecker extends \tao_actions_CommonModule
                 CompatibilityCheckerModel::COMPATIBILITY_NONE => [
                     'success' => true,
                     'type'    => 'error',
-                    'message' => __('Your system requires a compatibility update, please contact your system administrator.')
+                    'message' => __(
+                        'Your system requires a compatibility update, please contact your system administrator.'
+                    )
                 ],
                 //Compatible
                 CompatibilityCheckerModel::COMPATIBILITY_COMPATIBLE => [
@@ -135,7 +139,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             ];
 
             $this->returnJson($compatibilityMessage[$isCompatible]);
-        } catch (\common_exception_MissingParameter $e) {
+        } catch (common_exception_MissingParameter $e) {
             $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $e->getUserMessage()));
         }
     }
@@ -232,7 +236,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      *
      * @param bool $check
      * @return array
-     * @throws \common_exception_MissingParameter
+     * @throws common_exception_MissingParameter
      */
     protected function getData($check = false)
     {
@@ -253,33 +257,41 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         $data = $this->mapData($data);
 
         if ($this->hasRequestParameter('school_name')) {
-            $data[Storage::DIAGNOSTIC_SCHOOL_NAME] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('school_name')));
+            $data[Storage::DIAGNOSTIC_SCHOOL_NAME] = tao_helpers_Display::sanitizeXssHtml(
+                trim($this->getRequestParameter('school_name'))
+            );
         }
 
         if ($this->hasRequestParameter('school_id')) {
-            $data[Storage::DIAGNOSTIC_SCHOOL_ID] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('school_id')));
+            $data[Storage::DIAGNOSTIC_SCHOOL_ID] = tao_helpers_Display::sanitizeXssHtml(
+                trim($this->getRequestParameter('school_id'))
+            );
         }
 
         if ($this->hasRequestParameter('workstation')) {
-            $data[Storage::DIAGNOSTIC_WORKSTATION] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('workstation')));
+            $data[Storage::DIAGNOSTIC_WORKSTATION] = tao_helpers_Display::sanitizeXssHtml(
+                trim($this->getRequestParameter('workstation'))
+            );
         }
 
         if ($this->hasRequestParameter('school_number')) {
-            $data[Storage::DIAGNOSTIC_SCHOOL_NUMBER] = \tao_helpers_Display::sanitizeXssHtml(trim($this->getRequestParameter('school_number')));
+            $data[Storage::DIAGNOSTIC_SCHOOL_NUMBER] = tao_helpers_Display::sanitizeXssHtml(
+                trim($this->getRequestParameter('school_number'))
+            );
         }
 
         if ($check) {
             if (!$this->hasRequestParameter('os')) {
-                throw new \common_exception_MissingParameter('os');
+                throw new common_exception_MissingParameter('os');
             }
             if (!$this->hasRequestParameter('osVersion')) {
-                throw new \common_exception_MissingParameter('osVersion');
+                throw new common_exception_MissingParameter('osVersion');
             }
             if (!$this->hasRequestParameter('browser')) {
-                throw new \common_exception_MissingParameter('browser');
+                throw new common_exception_MissingParameter('browser');
             }
             if (!$this->hasRequestParameter('browserVersion')) {
-                throw new \common_exception_MissingParameter('browserVersion');
+                throw new common_exception_MissingParameter('browserVersion');
             }
             $data['osVersion'] = preg_replace('/[^\w\.]/', '', $data['osVersion']);
             $data['browserVersion'] = preg_replace('/[^\w\.]/', '', $data['browserVersion']);
@@ -291,14 +303,20 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $data['login'] = 'Anonymous';
         }
 
-        $user = \common_session_SessionManager::getSession()->getUser();
+        $user = common_session_SessionManager::getSession()->getUser();
         if ($user && $user->getIdentifier()) {
             $data['user_id'] = $user->getIdentifier();
         }
 
-        $data['version'] = $this->getServiceLocator()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic')->getVersion();
+        $data['version'] = $this->getServiceLocator()
+            ->get(\common_ext_ExtensionsManager::SERVICE_ID)
+            ->getExtensionById('taoClientDiagnostic')
+            ->getVersion();
 
-        $data['ip'] = (!empty($_SERVER['HTTP_X_REAL_IP'])) ? $_SERVER['HTTP_X_REAL_IP'] : ((!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : 'unknown');
+        $data['ip'] = (!empty($_SERVER['HTTP_X_REAL_IP']))
+            ? $_SERVER['HTTP_X_REAL_IP']
+            : ((!empty($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : 'unknown');
+
         return $data;
     }
 
