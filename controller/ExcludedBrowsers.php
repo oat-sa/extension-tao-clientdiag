@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2021 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2021-2023 (original work) Open Assessment Technologies SA.
  */
 
 declare(strict_types=1);
@@ -39,9 +39,13 @@ class ExcludedBrowsers extends \tao_actions_SaSModule
         $nameElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedBrowserService::EXCLUDED_NAME));
         $versionElement = $myForm->getElement(\tao_helpers_Uri::encode(ExcludedBrowserService::EXCLUDED_VERSION));
         $nameElement->addClass('select2');
+
+        // phpcs:disable
         $versionElement->setHelp(
             "<span class=\"icon-help tooltipstered\" data-tooltip=\".exclusion-list-form .excluded-version-tooltip-content\" data-tooltip-theme=\"info\"></span>"
         );
+        // phpcs:enable
+
         if ($myForm->isSubmited() && $myForm->isValid()) {
             $values = $myForm->getValues();
             // save properties

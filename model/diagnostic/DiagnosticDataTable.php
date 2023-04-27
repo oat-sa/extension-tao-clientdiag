@@ -155,9 +155,15 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
     {
         if (! $this->storage) {
             $storage = $this->getServiceLocator()->get(Storage::SERVICE_ID);
+
             if (! $storage instanceof PaginatedStorage) {
-                throw new StorageException(__('The storage service provided to store the diagnostic results must be upgraded to support reads!'));
+                //phpcs:disable
+                throw new StorageException(
+                    __('The storage service provided to store the diagnostic results must be upgraded to support reads!')
+                );
+                //phpcs:enable
             }
+
             $this->storage = $storage;
         }
         return $this->storage;
