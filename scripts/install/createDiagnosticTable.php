@@ -25,6 +25,7 @@ use oat\taoClientDiagnostic\model\storage\Sql;
 use oat\taoClientDiagnostic\model\storage\Storage;
 use Doctrine\DBAL\Schema\SchemaException;
 
+// phpcs:disable PSR1.Methods.CamelCapsMethodName.NotCamelCaps
 class createDiagnosticTable extends \common_ext_action_InstallAction
 {
     public function __invoke($params)

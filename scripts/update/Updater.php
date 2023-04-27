@@ -304,7 +304,11 @@ class Updater extends common_ext_ExtensionUpdater
                 $addCompatibleSchema = clone $deleteCompatibleSchema;
                 $tableResults = $addCompatibleSchema->getTable(Sql::DIAGNOSTIC_TABLE);
                 $tableResults->addColumn(Sql::DIAGNOSTIC_COMPATIBLE, 'integer', ['length' => 1, 'notnull' => false]);
-                $queries = $persistence->getPlatform()->getMigrateSchemaSql($deleteCompatibleSchema, $addCompatibleSchema);
+                $queries = $persistence->getPlatform()->getMigrateSchemaSql(
+                    $deleteCompatibleSchema,
+                    $addCompatibleSchema
+                );
+
                 foreach ($queries as $query) {
                     $persistence->exec($query);
                 }
