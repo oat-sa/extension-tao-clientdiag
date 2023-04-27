@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -142,7 +143,8 @@ class Diagnostic extends \tao_actions_CommonModule
      * @param array $defaults
      * @return array
      */
-    protected function getRequestOptions(array $defaults = []) {
+    protected function getRequestOptions(array $defaults = [])
+    {
 
         $defaults = array_merge($this->getDefaultOptions(), $defaults);
 
@@ -167,7 +169,6 @@ class Diagnostic extends \tao_actions_CommonModule
             'detailed' => $detailed,
             'periodEnd' => $periodEnd
         );
-
     }
 
     /**

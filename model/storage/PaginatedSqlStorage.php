@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -104,7 +105,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
         try {
             \common_Logger::i('Deleting diagnostic result ' . $id);
             $query = 'DELETE FROM ' . self::DIAGNOSTIC_TABLE;
-            return (boolean) $this->query($query, $filter)->rowCount();
+            return (bool) $this->query($query, $filter)->rowCount();
         } catch (DBALException $e) {
             throw new StorageException($e->getMessage());
         }
@@ -146,7 +147,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
 
         if (is_array($where)) {
             $conditions = [];
-            foreach($where as $column => $value) {
+            foreach ($where as $column => $value) {
                 $placeholder = '?';
                 $value = '' . $value;
 

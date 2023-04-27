@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -86,7 +87,6 @@ class Sql extends ConfigurableService implements Storage
     public function store($id, $data = array())
     {
         try {
-
             if (empty($id)) {
                 throw new StorageException('Invalid id parameter.');
             }
@@ -99,7 +99,6 @@ class Sql extends ConfigurableService implements Storage
                 $this->update($id, $data);
             }
             return true;
-
         } catch (DBALException $e) {
             throw new StorageException($e->getMessage());
         }
@@ -135,7 +134,7 @@ class Sql extends ConfigurableService implements Storage
     {
         $query = 'SELECT ' . self::DIAGNOSTIC_ID . ' FROM ' . self::DIAGNOSTIC_TABLE . ' WHERE ' . self::DIAGNOSTIC_ID . ' = ?';
         $statement = $this->persistence->query($query, array($id));
-        return (boolean)$statement->rowCount();
+        return (bool)$statement->rowCount();
     }
 
 
@@ -197,9 +196,9 @@ class Sql extends ConfigurableService implements Storage
     {
         $query = 'DELETE FROM ' . self::DIAGNOSTIC_TABLE;
 
-        try{
+        try {
             $this->getPersistence()->exec($query);
-        } catch (DBALException $e){
+        } catch (DBALException $e) {
             return false;
         }
         return true;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,7 +42,6 @@ class RequireUsernameTest extends TestCase
         $this->instance->setServiceLocator($this->getServiceLocatorMock([
             \tao_models_classes_UserService::SERVICE_ID => $aclMock
         ]));
-
     }
 
     public function tearDown(): void

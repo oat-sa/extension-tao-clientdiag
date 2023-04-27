@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -36,7 +37,6 @@ use Sinergi\BrowserDetector\Os;
  */
 class CompatibilityChecker extends \tao_actions_CommonModule
 {
-
     const COOKIE_ID = 'compatibility_checker_id';
 
     /**
@@ -135,7 +135,6 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             ];
 
             $this->returnJson($compatibilityMessage[$isCompatible]);
-
         } catch (\common_exception_MissingParameter $e) {
             $this->returnJson(array('success' => false, 'type' => 'error', 'message' => $e->getUserMessage()));
         }
@@ -201,7 +200,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
         $response = [];
         $success = true;
 
-        foreach($required as $fieldName) {
+        foreach ($required as $fieldName) {
             if (!isset($data[$fieldName])) {
                 $success = false;
                 $response['errorCode'] = 400;
@@ -214,7 +213,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             try {
                 $schoolNameProvider = $this->getServiceLocator()->get(SchoolNameService::SERVICE_ID);
                 $response['data'] = $schoolNameProvider->getSchoolName($data['school_number'], $data['school_pin']);
-            } catch(\Exception $e) {
+            } catch (\Exception $e) {
                 $success = false;
                 $response['errorCode'] = 404;
                 $response['errorMessage'] = __('Cannot retrieve the school name. Please verify your input');
@@ -357,7 +356,8 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      * @param array $data
      * @return array
      */
-    protected function mapData(array $data) {
+    protected function mapData(array $data)
+    {
         $config = $this->loadConfig();
 
         foreach ($data as $k => $d) {

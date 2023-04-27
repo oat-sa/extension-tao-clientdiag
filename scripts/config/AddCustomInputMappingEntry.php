@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -20,7 +21,7 @@
 namespace oat\taoClientDiagnostic\scripts\config;
 
 use oat\oatbox\extension\InstallAction;
-use \common_report_Report as Report;
+use common_report_Report as Report;
 
 /**
  * Class AddCustomInputMappingEntry

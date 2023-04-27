@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -39,5 +40,4 @@ class SchoolNameProvider extends ConfigurableService implements SchoolNameServic
     {
         throw new \common_exception_NoImplementation('You must implement a data provider to get the school name');
     }
-
 }

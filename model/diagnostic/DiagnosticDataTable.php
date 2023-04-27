@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -61,8 +62,8 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
      */
     public function getDiagnostics($options = array())
     {
-        return $this->paginate($this->getStorage(), $options, function($data) {
-            foreach($data as $idx => $row) {
+        return $this->paginate($this->getStorage(), $options, function ($data) {
+            foreach ($data as $idx => $row) {
                 $rowData = [
                     'id'          => $row[PaginatedSqlStorage::DIAGNOSTIC_ID],
                     'school_name' => $row[PaginatedSqlStorage::DIAGNOSTIC_SCHOOL_NAME],
@@ -118,7 +119,7 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
             $ids = [$ids];
         }
 
-        foreach($ids as $id) {
+        foreach ($ids as $id) {
             $this->getStorage()->delete($id);
         }
 
@@ -155,5 +156,4 @@ class DiagnosticDataTable implements ServiceLocatorAwareInterface
         }
         return $this->storage;
     }
-
 }

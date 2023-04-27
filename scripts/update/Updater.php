@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -46,7 +47,6 @@ use oat\taoClientDiagnostic\model\diagnostic\DiagnosticService;
  */
 class Updater extends \common_ext_ExtensionUpdater
 {
-
     /**
      * Update platform at version jump
      *
@@ -62,7 +62,6 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         if ($currentVersion == '1.0.1') {
-
             $currentVersion = '1.1.0';
         }
 
@@ -112,7 +111,7 @@ class Updater extends \common_ext_ExtensionUpdater
 
         $this->setVersion($currentVersion);
 
-        if($this->isVersion('1.3.0')) {
+        if ($this->isVersion('1.3.0')) {
             $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
             $config = $extension->getConfig('clientDiag');
             $extension->setConfig('clientDiag', array_merge($config, array(
@@ -122,7 +121,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('1.3.1');
         }
 
-        if($this->isVersion('1.3.1')) {
+        if ($this->isVersion('1.3.1')) {
             AclProxy::applyRule(new AccessRule(
                 AccessRule::GRANT,
                 TaoRoles::ANONYMOUS,
@@ -137,7 +136,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('1.4.0');
         }
 
-        if($this->isVersion('1.4.0')) {
+        if ($this->isVersion('1.4.0')) {
             $service = $this->getServiceManager()->get(Authorization::SERVICE_ID);
 
             if ($service instanceof RequireUsername) {
@@ -151,7 +150,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('1.4.1');
         }
 
-        if($this->isVersion('1.4.1')) {
+        if ($this->isVersion('1.4.1')) {
             if (!$this->getServiceManager()->has(Storage::SERVICE_ID)) {
                 $service = new Csv(array(
                     'filename' => FILES_PATH . 'taoClientDiagnostic' . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'store.csv'
@@ -234,7 +233,7 @@ class Updater extends \common_ext_ExtensionUpdater
                 $addTempSchema = clone $schema;
                 $tableResults = $addTempSchema->getTable(Sql::DIAGNOSTIC_TABLE);
                 $tableResults->changeColumn(Sql::DIAGNOSTIC_BROWSERVERSION, ['notnull' => false]);
-                $tableResults->changeColumn(Sql::DIAGNOSTIC_OSVERSION   , ['notnull' => false]);
+                $tableResults->changeColumn(Sql::DIAGNOSTIC_OSVERSION, ['notnull' => false]);
                 $tableResults->addColumn('compatible_tmp', 'integer', ['length' => 1, 'notnull' => false]);
                 $queries = $persistence->getPlatform()->getMigrateSchemaSql($schema, $addTempSchema);
                 foreach ($queries as $query) {
@@ -242,23 +241,22 @@ class Updater extends \common_ext_ExtensionUpdater
                 }
 
                 /* Migrate data to temp column */
-                $sql =  'SELECT ' . Sql::DIAGNOSTIC_ID . ', ' .Sql::DIAGNOSTIC_COMPATIBLE .
+                $sql =  'SELECT ' . Sql::DIAGNOSTIC_ID . ', ' . Sql::DIAGNOSTIC_COMPATIBLE .
                         ' FROM ' . Sql::DIAGNOSTIC_TABLE;
                 $stmt = $persistence->query($sql);
                 $results = $stmt->fetchAll();
 
                 foreach ($results as $result) {
-
-                    if ($result['compatible']===true || $result['compatible']==1) {
+                    if ($result['compatible'] === true || $result['compatible'] == 1) {
                         $compatible = 1;
-                    } elseif ($result['compatible']===false || $result['compatible']==0) {
+                    } elseif ($result['compatible'] === false || $result['compatible'] == 0) {
                         $compatible = 0;
                     } else {
                         $compatible = (int) $result['compatible'];
                     }
 
                     $sql = 'UPDATE ' . Sql::DIAGNOSTIC_TABLE .
-                           ' SET compatible_tmp = :compatible'.
+                           ' SET compatible_tmp = :compatible' .
                            ' WHERE ' . Sql::DIAGNOSTIC_ID . ' = :id';
                     $persistence->exec($sql, array(
                         'compatible' => $compatible,
@@ -307,7 +305,7 @@ class Updater extends \common_ext_ExtensionUpdater
         if ($this->isVersion('1.9.1')) {
             $extension = $this->getServiceManager()->get(\common_ext_ExtensionsManager::SERVICE_ID)->getExtensionById('taoClientDiagnostic');
             $config = $extension->getConfig('clientDiag');
-            $config['upload'] =[
+            $config['upload'] = [
                 'size' => 1 * 1024 * 1024,
                 'optimal' => 1 * 1024 * 1024,
             ];
@@ -317,8 +315,7 @@ class Updater extends \common_ext_ExtensionUpdater
 
         $this->skip('1.10.0', '1.10.1');
 
-        if($this->isVersion('1.10.1')){
-
+        if ($this->isVersion('1.10.1')) {
             $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
 
             if ($storageService instanceof Sql) {
@@ -354,11 +351,9 @@ class Updater extends \common_ext_ExtensionUpdater
         }
 
         if ($this->isVersion('1.13.2')) {
-
             $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
 
             if ($storageService instanceof Sql) {
-
                 if (! $storageService instanceof PaginatedStorage) {
                     $paginatedStorage = new PaginatedSqlStorage($storageService->getOptions());
                     $this->getServiceManager()->register(Storage::SERVICE_ID, $paginatedStorage);
@@ -448,7 +443,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $this->setVersion('2.1.0');
         }
 
-		if ($this->isVersion('2.1.0')) {
+        if ($this->isVersion('2.1.0')) {
             $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
 
             if ($storageService instanceof Sql) {
@@ -484,7 +479,7 @@ class Updater extends \common_ext_ExtensionUpdater
             $config = $extension->getConfig('clientDiag');
 
             if (isset($config['testers'])) {
-                foreach($config['testers'] as &$tester) {
+                foreach ($config['testers'] as &$tester) {
                     $tester['enabled'] = true;
                     $tester['level'] = 1;
                 }
@@ -820,7 +815,7 @@ class Updater extends \common_ext_ExtensionUpdater
 
         $this->skip('7.2.0', '7.6.1');
 
-        
+
         //Updater files are deprecated. Please use migrations.
         //See: https://github.com/oat-sa/generis/wiki/Tao-Update-Process
 

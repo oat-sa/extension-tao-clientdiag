@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -19,8 +20,10 @@
  */
 
 namespace oat\taoClientDiagnostic\model\diagnostic;
+
 use oat\oatbox\service\ConfigurableService;
 use oat\tao\model\theme\ThemeService;
+
 /**
  * Class DiagnosticService
  * @package oat\taoClientDiagnostic\model\diagnostic
