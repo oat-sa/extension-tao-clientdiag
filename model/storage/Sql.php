@@ -20,9 +20,10 @@
 
 namespace oat\taoClientDiagnostic\model\storage;
 
-use Doctrine\DBAL\DBALException;
+use common_persistence_Persistence;
 use oat\oatbox\service\ConfigurableService;
 use oat\taoClientDiagnostic\exception\StorageException;
+use Doctrine\DBAL\DBALException;
 
 /**
  * Class Sql
@@ -38,10 +39,10 @@ class Sql extends ConfigurableService implements Storage
     /**
      * Constant for persistence option
      */
-    const DIAGNOSTIC_PERSISTENCE = 'persistence';
+    public const DIAGNOSTIC_PERSISTENCE = 'persistence';
 
     /**
-     * @var \common_persistence_Persistence
+     * @var common_persistence_Persistence
      */
     private $persistence;
 
@@ -64,7 +65,7 @@ class Sql extends ConfigurableService implements Storage
     /**
      * Get persistence with configurable driver option of Sql Storage
      * Get default driver if option is not set
-     * @return \common_persistence_Persistence
+     * @return common_persistence_Persistence
      */
     public function getPersistence()
     {
@@ -130,7 +131,12 @@ class Sql extends ConfigurableService implements Storage
      */
     private function exists($id)
     {
-        $query = 'SELECT ' . self::DIAGNOSTIC_ID . ' FROM ' . self::DIAGNOSTIC_TABLE . ' WHERE ' . self::DIAGNOSTIC_ID . ' = ?';
+        $query = sprintf(
+            'SELECT %s FROM %s WHERE %s = ?',
+            self::DIAGNOSTIC_ID,
+            self::DIAGNOSTIC_TABLE,
+            self::DIAGNOSTIC_ID
+        );
         $statement = $this->persistence->query($query, array($id));
         return (bool)$statement->rowCount();
     }
@@ -150,8 +156,10 @@ class Sql extends ConfigurableService implements Storage
             self::DIAGNOSTIC_CREATED_AT => $platform->getNowExpression()
         ), $data);
 
-        $query = 'INSERT INTO ' . self::DIAGNOSTIC_TABLE . '(' . implode(', ', array_map([$this, 'tableize'], array_keys($columns))) . ')' .
-                 ' VALUES (' . str_repeat("?,", count($columns) - 1) . '? )';
+        $query = 'INSERT INTO '
+            . self::DIAGNOSTIC_TABLE
+            . '(' . implode(', ', array_map([$this, 'tableize'], array_keys($columns))) . ')'
+            . ' VALUES (' . str_repeat("?,", count($columns) - 1) . '? )';
 
         return $this->persistence->exec($query, array_values($columns));
     }
