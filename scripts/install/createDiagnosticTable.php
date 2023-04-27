@@ -15,15 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA;
- *
+ * Copyright (c) 2017-2023 (original work) Open Assessment Technologies SA.
  */
 
 namespace oat\taoClientDiagnostic\scripts\install;
 
+use common_report_Report;
 use oat\taoClientDiagnostic\model\storage\Sql;
-use Doctrine\DBAL\Schema\SchemaException;
 use oat\taoClientDiagnostic\model\storage\Storage;
+use Doctrine\DBAL\Schema\SchemaException;
 
 class createDiagnosticTable extends \common_ext_action_InstallAction
 {
@@ -32,7 +32,10 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
         $storageService  = $this->getServiceManager()->get(Storage::SERVICE_ID);
 
         if (!$storageService instanceof Sql) {
-            return new \common_report_Report(\common_report_Report::TYPE_WARNING, 'Diagnostic tool storage is not compatible to create table');
+            return new common_report_Report(
+                common_report_Report::TYPE_WARNING,
+                'Diagnostic tool storage is not compatible to create table'
+            );
         }
         $persistence = $storageService->getPersistence();
 
@@ -44,6 +47,7 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             $tableResults = $schema->createtable(Sql::DIAGNOSTIC_TABLE);
             $tableResults->addOption('engine', 'MyISAM');
 
+            // phpcs:disable
             $tableResults->addColumn(Sql::DIAGNOSTIC_ID, 'string', ['length' => 16]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_CONTEXT_ID, 'string', ['length' => 256, 'notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_LOGIN, 'string', ['length' => 32]);
@@ -94,6 +98,7 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
             $tableResults->addColumn(Sql::DIAGNOSTIC_CREATED_AT, 'datetime');
             $tableResults->addColumn(Sql::DIAGNOSTIC_UPLOAD_MAX, 'float', ['notnull' => false]);
             $tableResults->addColumn(Sql::DIAGNOSTIC_UPLOAD_AVG, 'float', ['notnull' => false]);
+            // phpcs:enable
 
             $tableResults->setPrimaryKey(array(Sql::DIAGNOSTIC_ID));
 
@@ -107,6 +112,7 @@ class createDiagnosticTable extends \common_ext_action_InstallAction
         } catch (SchemaException $e) {
             \common_Logger::i('Database Schema already up to date.');
         }
-        return new \common_report_Report(\common_report_Report::TYPE_SUCCESS, 'Diagnostic successfully created');
+
+        return new common_report_Report(common_report_Report::TYPE_SUCCESS, 'Diagnostic successfully created');
     }
 }

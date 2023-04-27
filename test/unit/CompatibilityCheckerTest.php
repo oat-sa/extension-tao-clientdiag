@@ -124,8 +124,14 @@ class CompatibilityCheckerDummy extends CompatibilityChecker
     private $osDetector;
     private $browserDetector;
 
-    public function __construct($compatibility, $supported, $excludedBrowsers, $excludedOS, $osDetector, $browserDetector)
-    {
+    public function __construct(
+        $compatibility,
+        $supported,
+        $excludedBrowsers,
+        $excludedOS,
+        $osDetector,
+        $browserDetector
+    ) {
         $this->compatibility = $compatibility;
         $this->supported = $supported;
         $this->excludedBrowsers = $excludedBrowsers;

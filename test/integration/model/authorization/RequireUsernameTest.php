@@ -86,8 +86,13 @@ class RequireUsernameTest extends TestCase
     /**
      * @dataProvider getLoginData
      */
-    public function testValidateLogin($loginFixture, $hasException, $exception, $useACLService = false, $returnACL = false)
-    {
+    public function testValidateLogin(
+        $loginFixture,
+        $hasException,
+        $exception,
+        $useACLService = false,
+        $returnACL = false
+    ) {
         if ($useACLService) {
             $aclFixture = $this->getMockBuilder(tao_models_classes_UserService::class)
                 ->disableOriginalConstructor()

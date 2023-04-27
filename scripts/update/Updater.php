@@ -208,7 +208,10 @@ class Updater extends common_ext_ExtensionUpdater
                 $tableResults->addColumn(Sql::DIAGNOSTIC_BROWSERVERSION, 'string', ['length' => 32]);
                 $tableResults->addColumn(Sql::DIAGNOSTIC_OSVERSION, 'string', ['length' => 32]);
 
-                $tableResults->changeColumn(Sql::DIAGNOSTIC_VERSION, ['type' => Type::getType('string'), 'length' => 16]);
+                $tableResults->changeColumn(
+                    Sql::DIAGNOSTIC_VERSION,
+                    ['type' => Type::getType('string'), 'length' => 16]
+                );
 
                 $tableResults->changeColumn(Sql::DIAGNOSTIC_BROWSER, ['notnull' => false]);
                 $tableResults->changeColumn(Sql::DIAGNOSTIC_OS, ['notnull' => false]);
