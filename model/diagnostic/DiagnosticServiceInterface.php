@@ -15,8 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2017 (original work) Open Assessment Technologies SA ;
- *
+ * Copyright (c) 2017-2023 (original work) Open Assessment Technologies SA.
  */
 
 namespace oat\taoClientDiagnostic\model\diagnostic;
@@ -27,7 +26,7 @@ namespace oat\taoClientDiagnostic\model\diagnostic;
  */
 interface DiagnosticServiceInterface
 {
-    const SERVICE_ID = 'taoClientDiagnostic/DiagnosticService';
+    public const SERVICE_ID = 'taoClientDiagnostic/DiagnosticService';
 
     /**
      * Returns the javascript configuration for the client diagnostics

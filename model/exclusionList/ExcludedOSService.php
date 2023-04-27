@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2021 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2021-2023 (original work) Open Assessment Technologies SA.
  */
 
 declare(strict_types=1);
@@ -27,7 +27,7 @@ use core_kernel_classes_Property;
 
 class ExcludedOSService extends ExclusionListService
 {
-    const SERVICE_ID = 'taoClientDiagnostic/ExcludedOSService';
+    public const SERVICE_ID = 'taoClientDiagnostic/ExcludedOSService';
 
     public const ROOT_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedOS';
     public const LIST_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#OSList';

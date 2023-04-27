@@ -15,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2016-2023 (original work) Open Assessment Technologies SA.
  */
 
 /**
@@ -32,7 +32,7 @@ interface PaginatedStorage extends Storage
     /**
      * The size of a page in the data set
      */
-    const PAGE_SIZE = 25;
+    public const PAGE_SIZE = 25;
 
     /**
      * Gets an existing record in database by id
