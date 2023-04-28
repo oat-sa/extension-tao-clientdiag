@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,16 +15,15 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015 (original work) Open Assessment Technologies SA;
- *
- *
+ * Copyright (c) 2015-2023 (original work) Open Assessment Technologies SA.
  */
 
 namespace oat\taoClientDiagnostic\model\storage;
 
-use Doctrine\DBAL\DBALException;
+use common_persistence_Persistence;
 use oat\oatbox\service\ConfigurableService;
 use oat\taoClientDiagnostic\exception\StorageException;
+use Doctrine\DBAL\DBALException;
 
 /**
  * Class Sql
@@ -34,15 +34,15 @@ class Sql extends ConfigurableService implements Storage
     /**
      * Constant for diagnostic table name
      */
-    const DIAGNOSTIC_TABLE = 'diagnostic_report';
+    public const DIAGNOSTIC_TABLE = 'diagnostic_report';
 
     /**
      * Constant for persistence option
      */
-    const DIAGNOSTIC_PERSISTENCE = 'persistence';
+    public const DIAGNOSTIC_PERSISTENCE = 'persistence';
 
     /**
-     * @var \common_persistence_Persistence
+     * @var common_persistence_Persistence
      */
     private $persistence;
 
@@ -65,7 +65,7 @@ class Sql extends ConfigurableService implements Storage
     /**
      * Get persistence with configurable driver option of Sql Storage
      * Get default driver if option is not set
-     * @return \common_persistence_Persistence
+     * @return common_persistence_Persistence
      */
     public function getPersistence()
     {
@@ -86,7 +86,6 @@ class Sql extends ConfigurableService implements Storage
     public function store($id, $data = array())
     {
         try {
-
             if (empty($id)) {
                 throw new StorageException('Invalid id parameter.');
             }
@@ -99,7 +98,6 @@ class Sql extends ConfigurableService implements Storage
                 $this->update($id, $data);
             }
             return true;
-
         } catch (DBALException $e) {
             throw new StorageException($e->getMessage());
         }
@@ -133,9 +131,14 @@ class Sql extends ConfigurableService implements Storage
      */
     private function exists($id)
     {
-        $query = 'SELECT ' . self::DIAGNOSTIC_ID . ' FROM ' . self::DIAGNOSTIC_TABLE . ' WHERE ' . self::DIAGNOSTIC_ID . ' = ?';
+        $query = sprintf(
+            'SELECT %s FROM %s WHERE %s = ?',
+            self::DIAGNOSTIC_ID,
+            self::DIAGNOSTIC_TABLE,
+            self::DIAGNOSTIC_ID
+        );
         $statement = $this->persistence->query($query, array($id));
-        return (boolean)$statement->rowCount();
+        return (bool)$statement->rowCount();
     }
 
 
@@ -153,8 +156,10 @@ class Sql extends ConfigurableService implements Storage
             self::DIAGNOSTIC_CREATED_AT => $platform->getNowExpression()
         ), $data);
 
-        $query = 'INSERT INTO ' . self::DIAGNOSTIC_TABLE . '(' . implode(', ', array_map([$this, 'tableize'], array_keys($columns))) . ')' .
-                 ' VALUES (' . str_repeat("?,", count($columns) - 1) . '? )';
+        $query = 'INSERT INTO '
+            . self::DIAGNOSTIC_TABLE
+            . '(' . implode(', ', array_map([$this, 'tableize'], array_keys($columns))) . ')'
+            . ' VALUES (' . str_repeat("?,", count($columns) - 1) . '? )';
 
         return $this->persistence->exec($query, array_values($columns));
     }
@@ -197,9 +202,9 @@ class Sql extends ConfigurableService implements Storage
     {
         $query = 'DELETE FROM ' . self::DIAGNOSTIC_TABLE;
 
-        try{
+        try {
             $this->getPersistence()->exec($query);
-        } catch (DBALException $e){
+        } catch (DBALException $e) {
             return false;
         }
         return true;

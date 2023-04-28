@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,8 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2015-2021 Open Assessment Technologies SA
+ * Copyright (c) 2015-2023 Open Assessment Technologies SA
  */
+
 declare(strict_types=1);
 
 namespace oat\taoClientDiagnostic\test\unit;
@@ -47,11 +49,32 @@ class CompatibilityCheckerTest extends TestCase
     public function testIsCompatibleConfig($browserName, $browserVersion, $osName, $osVersion, $expectedResult)
     {
         $compatibility = [
-            ['compatible' => CompatibilityChecker::COMPATIBILITY_NONE, 'os' => 'Windows', 'osVersion' => '7', 'device' => 'desktop', 'browser' => 'Internet Explorer', 'versions' => [9]],
-            ['compatible' => CompatibilityChecker::COMPATIBILITY_COMPATIBLE, 'os' => 'Windows', 'osVersion' => '8.1', 'device' => 'desktop', 'browser' => 'Chrome', 'versions' => [33, 34, 35]],
+            [
+                'compatible' => CompatibilityChecker::COMPATIBILITY_NONE,
+                'os' => 'Windows',
+                'osVersion' => '7',
+                'device' => 'desktop',
+                'browser' => 'Internet Explorer',
+                'versions' => [9]
+            ],
+            [
+                'compatible' => CompatibilityChecker::COMPATIBILITY_COMPATIBLE,
+                'os' => 'Windows',
+                'osVersion' => '8.1',
+                'device' => 'desktop',
+                'browser' => 'Chrome',
+                'versions' => [33, 34, 35]
+            ],
         ];
         $supported = [
-            ['compatible' => CompatibilityChecker::COMPATIBILITY_SUPPORTED, 'os' => 'Windows', 'osVersion' => '8.1', 'device' => 'desktop', 'browser' => 'Chrome', 'versions' => [40, 41, 42]],
+            [
+                'compatible' => CompatibilityChecker::COMPATIBILITY_SUPPORTED,
+                'os' => 'Windows',
+                'osVersion' => '8.1',
+                'device' => 'desktop',
+                'browser' => 'Chrome',
+                'versions' => [40, 41, 42]
+            ],
         ];
         $excludedBrowsers = [
             'chrome' => ['43']
@@ -70,7 +93,6 @@ class CompatibilityCheckerTest extends TestCase
         );
 
         $this->assertEquals($checker->isCompatibleConfig(), $expectedResult);
-
     }
 
     protected function getDetectorMock($class, $name, $version, $mobile)
@@ -95,7 +117,6 @@ class CompatibilityCheckerTest extends TestCase
 
         return $detector;
     }
-
 }
 
 class CompatibilityCheckerDummy extends CompatibilityChecker
@@ -103,8 +124,14 @@ class CompatibilityCheckerDummy extends CompatibilityChecker
     private $osDetector;
     private $browserDetector;
 
-    public function __construct($compatibility, $supported, $excludedBrowsers, $excludedOS, $osDetector, $browserDetector)
-    {
+    public function __construct(
+        $compatibility,
+        $supported,
+        $excludedBrowsers,
+        $excludedOS,
+        $osDetector,
+        $browserDetector
+    ) {
         $this->compatibility = $compatibility;
         $this->supported = $supported;
         $this->excludedBrowsers = $excludedBrowsers;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,7 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2018 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2018-2023 (original work) Open Assessment Technologies SA ;
  *
  */
 
@@ -24,6 +25,7 @@
 
 namespace oat\taoClientDiagnostic\model\schoolName;
 
+use common_exception_NoImplementation;
 use oat\oatbox\service\ConfigurableService;
 
 class SchoolNameProvider extends ConfigurableService implements SchoolNameService
@@ -33,11 +35,10 @@ class SchoolNameProvider extends ConfigurableService implements SchoolNameServic
      * @param string $id
      * @param string $pin
      * @return string
-     * @throws \common_exception_NoImplementation
+     * @throws common_exception_NoImplementation
      */
     public function getSchoolName($id, $pin)
     {
-        throw new \common_exception_NoImplementation('You must implement a data provider to get the school name');
+        throw new common_exception_NoImplementation('You must implement a data provider to get the school name');
     }
-
 }

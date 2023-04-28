@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -87,7 +88,7 @@ class Csv extends ConfigurableService implements Storage
         $fileExists = file_exists($file);
         if (($this->handle = fopen($file, 'a+')) !== false) {
             if (!$fileExists) {
-                fputcsv($this->handle, $this->getColumns(),';');
+                fputcsv($this->handle, $this->getColumns(), ';');
                 fseek($this->handle, 0);
             }
             return;
@@ -124,14 +125,14 @@ class Csv extends ConfigurableService implements Storage
      * @return bool|string|void
      * @throws StorageException
      */
-    private function update($id, $entityData = []) {
+    private function update($id, $entityData = [])
+    {
         $tmpFile = \tao_helpers_File::createTempDir() . 'store.csv';
         $tmpHandle = fopen($tmpFile, 'w');
         $line = 1;
         $index = 0;
 
         while (($data = fgetcsv($this->handle, 1000, ";")) !== false) {
-
             if ($line === 1) {
                 $keys = $data;
                 if (($index = array_search('id', $keys, true)) === false) {
@@ -140,13 +141,12 @@ class Csv extends ConfigurableService implements Storage
             }
 
             if ($data[$index] == $id) {
-                foreach($data as $index => $value){
+                foreach ($data as $index => $value) {
                     if (empty($entityData[$keys[$index]])) {
                         $entityData[$keys[$index]] = $value;
                     }
                 }
-            }
-            else {
+            } else {
                 fputcsv($tmpHandle, $data, ';');
             }
             $line++;
@@ -162,7 +162,7 @@ class Csv extends ConfigurableService implements Storage
     public function flush()
     {
         $file = $this->getOption('filename');
-        if(file_exists($file)){
+        if (file_exists($file)) {
             return unlink($file);
         }
         return true;

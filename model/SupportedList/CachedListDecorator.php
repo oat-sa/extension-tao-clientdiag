@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -16,10 +17,14 @@
  *
  * Copyright (c) 2021 (original work) Open Assessment Technologies SA;
  */
+
 declare(strict_types=1);
 
 namespace oat\taoClientDiagnostic\model\SupportedList;
 
+use common_exception_NoImplementation;
+use common_exception_NotImplemented;
+use DateInterval;
 use oat\oatbox\cache\SimpleCache;
 use oat\oatbox\service\ConfigurableService;
 use oat\oatbox\service\ServiceManager;
@@ -47,14 +52,16 @@ class CachedListDecorator extends ConfigurableService implements SupportedListIn
             $implementation = $this->getOption(self::OPTION_ORIGINAL_IMPLEMENTATION);
 
             if (!$implementation instanceof SupportedListInterface) {
-                throw new \common_exception_NoImplementation(sprintf(
+                throw new common_exception_NoImplementation(sprintf(
                     'Implementation for %s should be of class SupportedListInterface',
                     __CLASS__
                 ));
             }
 
             if ($implementation instanceof self) {
-                throw new \common_exception_NoImplementation('CachedListDecorator can\'t be set as implementation for itself ' . __CLASS__);
+                throw new common_exception_NoImplementation(
+                    'CachedListDecorator can\'t be set as implementation for itself ' . __CLASS__
+                );
             }
 
             $this->getServiceLocator()->propagate($implementation);
@@ -76,8 +83,8 @@ class CachedListDecorator extends ConfigurableService implements SupportedListIn
         }
 
         try {
-            $this->getCache()->set(self::CACHE_KEY, $list, new \DateInterval('PT' . $ttl . 'S'));
-        } catch (\common_exception_NotImplemented $e) {
+            $this->getCache()->set(self::CACHE_KEY, $list, new DateInterval('PT' . $ttl . 'S'));
+        } catch (common_exception_NotImplemented $e) {
             // for those implementation that don't support TTL we don't want cache
         }
         return $list;
