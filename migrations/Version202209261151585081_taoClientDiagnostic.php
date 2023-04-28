@@ -28,7 +28,6 @@ final class Version202209261151585081_taoClientDiagnostic extends AbstractMigrat
         ]);
 
         $this->registerService(SearchProxy::SERVICE_ID, $searchProxy);
-
     }
 
     public function down(Schema $schema): void

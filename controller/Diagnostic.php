@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,15 +42,15 @@ class Diagnostic extends \tao_actions_CommonModule
 {
     use OntologyAwareTrait;
 
-    const DEFAULT_SORT_COLUMN = 'firstname';
-    const DEFAULT_SORT_ORDER = 'asc';
+    public const DEFAULT_SORT_COLUMN = 'firstname';
+    public const DEFAULT_SORT_ORDER = 'asc';
 
     protected $currentTestCenter = null;
     protected $currentDelivery   = null;
     protected $dataTable;
 
     /**
-     * Display the list of all readiness checks performed on the given test center
+     * Display the list of all readiness checks performed on the given test center.
      * It also allows launching new ones.
      */
     public function index()
@@ -142,10 +143,11 @@ class Diagnostic extends \tao_actions_CommonModule
      * @param array $defaults
      * @return array
      */
-    protected function getRequestOptions(array $defaults = []) {
-
+    protected function getRequestOptions(array $defaults = [])
+    {
         $defaults = array_merge($this->getDefaultOptions(), $defaults);
 
+        // phpcs:disable
         $page = $this->hasRequestParameter('page') ? $this->getRequestParameter('page') : $defaults['page'];
         $rows = $this->hasRequestParameter('rows') ? $this->getRequestParameter('rows') : $defaults['rows'];
         $sortBy = $this->hasRequestParameter('sortby') ? $this->getRequestParameter('sortby') : $defaults['sortby'];
@@ -156,6 +158,7 @@ class Diagnostic extends \tao_actions_CommonModule
         $periodEnd = $this->hasRequestParameter('periodEnd') ? $this->getRequestParameter('periodEnd') : $defaults['periodEnd'];
         $detailed = $this->hasRequestParameter('detailed') ? $this->getRequestParameter('detailed') : 'false';
         $detailed = filter_var($detailed, FILTER_VALIDATE_BOOLEAN);
+        // phpcs:enable
 
         return array(
             'page' => $page,
@@ -167,7 +170,6 @@ class Diagnostic extends \tao_actions_CommonModule
             'detailed' => $detailed,
             'periodEnd' => $periodEnd
         );
-
     }
 
     /**

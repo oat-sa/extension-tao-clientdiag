@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -41,9 +42,8 @@ class Authenticator extends \tao_actions_CommonModule
     public function login()
     {
         try {
-
             if (!$this->hasRequestParameter('successCallback')) {
-                throw new \common_exception_MissingParameter ('Internal error, please retry in few moment');
+                throw new \common_exception_MissingParameter('Internal error, please retry in few moment');
             }
 
             if ($this->isRequestPost()) {
@@ -63,7 +63,6 @@ class Authenticator extends \tao_actions_CommonModule
                     $this->redirect($this->getRequestParameter('successCallback'));
                 }
             }
-
         } catch (InvalidLoginException $e) {
             $this->setData('errorMessage', $e->getUserMessage());
         }

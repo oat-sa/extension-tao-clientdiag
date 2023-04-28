@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -14,8 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2021 (original work) Open Assessment Technologies SA;
+ * Copyright (c) 2021-2023 (original work) Open Assessment Technologies SA.
  */
+
 declare(strict_types=1);
 
 namespace oat\taoClientDiagnostic\model\exclusionList;
@@ -25,7 +27,7 @@ use core_kernel_classes_Property;
 
 class ExcludedBrowserService extends ExclusionListService
 {
-    const SERVICE_ID = 'taoClientDiagnostic/ExcludedBrowserService';
+    public const SERVICE_ID = 'taoClientDiagnostic/ExcludedBrowserService';
 
     public const ROOT_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#ExcludedBrowser';
     public const LIST_CLASS = 'http://www.tao.lu/Ontologies/TAODelivery.rdf#BrowsersList';

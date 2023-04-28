@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -64,7 +65,8 @@ class RequireUsername extends ConfigurableService implements Authorization
             throw new InvalidLoginException('No login found');
         }
 
-        if ($this->getServiceLocator()->get(\tao_models_classes_UserService::SERVICE_ID)->loginExists($login)
+        if (
+            $this->getServiceLocator()->get(\tao_models_classes_UserService::SERVICE_ID)->loginExists($login)
             || ($this->hasOption('regexValidator') &&  preg_match($this->getOption('regexValidator'), $login) === 1)
         ) {
             return true;

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -185,8 +186,10 @@ class CompatibilityChecker extends ConfigurableService
         $clientBrowser = strtolower($this->getBrowserDetector()->getName());
         $clientBrowserVersion = $this->getBrowserDetector()->getVersion();
 
-        if ($this->isOsExcluded($clientOS, $clientOSVersion) ||
-            $this->isBrowserExcluded($clientBrowser, $clientBrowserVersion)) {
+        if (
+            $this->isOsExcluded($clientOS, $clientOSVersion) ||
+            $this->isBrowserExcluded($clientBrowser, $clientBrowserVersion)
+        ) {
             return self::COMPATIBILITY_NOT_SUPPORTED;
         }
 
