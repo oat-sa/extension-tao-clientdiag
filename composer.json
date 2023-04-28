@@ -24,8 +24,8 @@
         "oat-sa/oatbox-extension-installer": "~1.1||dev-master",
         "sinergi/browser-detector": "^6.0.2",
         "oat-sa/generis" : ">=15.22",
-        "oat-sa/tao-core" : ">=50.24.6",
-        "oat-sa/extension-tao-itemqti" : ">=27.0.0"
+        "oat-sa/tao-core" : "dev-feature/AUT-2995",
+        "oat-sa/extension-tao-itemqti" : "dev-feature/AUT-2995"
     },
     "autoload" : {
         "psr-4" : {
