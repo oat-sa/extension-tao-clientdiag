@@ -1,0 +1,400 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tao-3x\n"
+"PO-Revision-Date: 2023-04-21 15:46\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: pt\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: tao-3x\n"
+"X-Crowdin-Project-ID: 582145\n"
+"X-Crowdin-Language: pt-BR\n"
+"X-Crowdin-File: /taoClientDiagnostic/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 1425\n"
+"Language-Team: Portuguese, Brazilian\n"
+
+msgid "%d sources (%s)"
+msgstr "%d fontes (%s)"
+
+msgid "All rights reserved."
+msgstr "Todos os direitos reservados."
+
+msgid "An error occurred! Please verify your input!"
+msgstr "Ocorreu um erro! Por favor, verifique sua entrada!"
+
+msgid "Average bandwidth"
+msgstr "Banda média"
+
+msgid "Average intensive bandwidth"
+msgstr "Banda média intensiva"
+
+msgid "Average performances"
+msgstr "Desempenho médio"
+
+msgid "Average rendering time"
+msgstr "Tempo médio de renderização"
+
+msgid "Average upload speed"
+msgstr "Velocidade média de upload"
+
+msgid "Bandwidth"
+msgstr "Banda"
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr "Esteja ciente de que estes testes levarão vários minutos."
+
+msgid "Browser"
+msgstr "Navegador"
+
+msgid "Cannot get your fingerprint"
+msgstr "Não é possível obter sua impressão digital"
+
+msgid "Cannot retrieve the school name. Please verify your input"
+msgstr "Não foi possível recuperar o nome da escola. Verifique sua entrada"
+
+msgid "Change since last fingerprint"
+msgstr "Alterar desde a última impressão digital"
+
+msgid "Checking the bandwidth..."
+msgstr "Verificando banda larga..."
+
+msgid "Checking the browser..."
+msgstr "Verificando o navegador..."
+
+msgid "Checking the media intensive bandwidth..."
+msgstr "Verificando a banda intensiva de mídia..."
+
+msgid "Checking the performances..."
+msgstr "Verificando os desempenhos..."
+
+msgid "Checking the screen..."
+msgstr "Verificando a tela..."
+
+msgid "Checking upload speed..."
+msgstr "Verificando velocidade de upload..."
+
+msgid "Compatible"
+msgstr "Compatível"
+
+msgid "Computing the fingerprint..."
+msgstr "Calculando a impressão digital..."
+
+msgid "Connect to the diagnostic tool"
+msgstr "Conectar-se à ferramenta de diagnóstico"
+
+msgid "Date"
+msgstr "Encontro"
+
+msgid "Details"
+msgstr "detalhes"
+
+msgid "Diagnostic Tool"
+msgstr "Ferramenta de diagnóstico"
+
+msgid "diagnostics.csv"
+msgstr "diagnósticos.csv"
+
+msgid "Done!"
+msgstr "Concluído!"
+
+msgid "Dynamic UID"
+msgstr "UID Dinâmico"
+
+msgid "Errors occurred! Please see details"
+msgstr "Ocorreram erros! Por favor, veja os detalhes"
+
+msgid "Exit"
+msgstr "Sair"
+
+msgid "Export CSV"
+msgstr "Exportar como CSV"
+
+msgid "Failed to get school name"
+msgstr "Falha ao obter o nome da escola"
+
+msgid "Fingerprint"
+msgstr "Impressão digital"
+
+msgid "Fingerprint error"
+msgstr "Erro de impressão digital"
+
+msgid "Fingerprint errors"
+msgstr "Erros de impressão digital"
+
+msgid "Fingerprint sources"
+msgstr "Fontes de impressão digital"
+
+msgid "Getting school name..."
+msgstr "Obtendo o nome da escola..."
+
+msgid "Good bandwidth"
+msgstr "Banda boa"
+
+msgid "Good performances"
+msgstr "Boas performances"
+
+msgid "Good upload speed"
+msgstr "Boa velocidade de upload"
+
+msgid "Hide Details"
+msgstr "Ocultar detalhes"
+
+msgid "Intensive bandwidth"
+msgstr "Banda intensiva"
+
+msgid "Interface not available"
+msgstr "Interface não disponível"
+
+msgid "Launch another readiness check"
+msgstr "Iniciar outra verificação de prontidão"
+
+msgid "Launch readiness check"
+msgstr "Iniciar verificação de prontidão"
+
+msgid "List of readiness checks"
+msgstr "Lista de verificações de prontidão"
+
+msgid "Loading"
+msgstr "Carregando..."
+
+msgid "Log in"
+msgstr "Efetuar Login"
+
+msgid "Login"
+msgstr "Conectar-se"
+
+msgid "Logout"
+msgstr "Desconectar"
+
+msgid "Low bandwidth"
+msgstr "Banda baixa"
+
+msgid "Low upload speed"
+msgstr "Velocidade de upload baixa"
+
+msgid "Max upload speed"
+msgstr "Velocidade máxima de upload"
+
+msgid "Maximum bandwidth"
+msgstr "Banda máxima"
+
+msgid "Maximum intensive bandwidth"
+msgstr "Banda máxima intensiva"
+
+msgid "Maximum rendering time"
+msgstr "Tempo máximo de renderização"
+
+msgid "Media intensive bandwidth"
+msgstr "Banda intensiva de mídia"
+
+msgid "Minimum bandwidth"
+msgstr "Banda mínima"
+
+msgid "Minimum intensive bandwidth"
+msgstr "Banda mínima intensiva"
+
+msgid "Minimum rendering time"
+msgstr "Tempo mínimo de renderização"
+
+msgid "Missing field %s"
+msgstr "Faltando o campo %s"
+
+msgid "No"
+msgstr "Não"
+
+msgid "No diagnostic service defined"
+msgstr "Nenhum serviço de diagnóstico definido"
+
+msgid "No readiness checks have been done!"
+msgstr "Nenhuma verificação de prontidão foi feita!"
+
+msgid "Number of simultaneous test takers the connection can handle"
+msgstr "Número de realizadores de testes simultâneos que a conexão pode manipular"
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr "Número de realizadores de testes simultâneos que a conexão pode manipular com a intensiva de mídia"
+
+msgid "Operating system"
+msgstr "Sistema operacional"
+
+msgid "Operating system and web browser"
+msgstr "Sistema operacional e navegador web"
+
+msgid "OS"
+msgstr "S.O."
+
+msgid "Performances"
+msgstr "Desempenho"
+
+msgid "Readiness Check"
+msgstr "Verificação de preparação"
+
+msgid "Readiness checks already done"
+msgstr "Verificações de prontidão já feitas"
+
+msgid "Readiness diagnostics"
+msgstr "Diagnóstico de prontidão"
+
+msgid "Refresh"
+msgstr "atualizar"
+
+msgid "Refresh the page"
+msgstr "Atualizar a página"
+
+msgid "Remove"
+msgstr "Excluir"
+
+msgid "Remove the readiness check result?"
+msgstr "Remover o resultado de verificação de preparação?"
+
+msgid "Remove the selected readiness check results"
+msgstr "Remover os resultados de verificação de prontidão selecionados"
+
+msgid "Return to the list"
+msgstr "Retornar à lista"
+
+msgid "School ID"
+msgstr "ID da Escola"
+
+msgid "School id"
+msgstr "id da escola"
+
+msgid "School ID:"
+msgstr "ID da Escola:"
+
+msgid "School name"
+msgstr "Nome da escola"
+
+msgid "School name:"
+msgstr "Nome da escola:"
+
+msgid "School number"
+msgstr "Número da escola"
+
+msgid "School number:"
+msgstr "Número da escola:"
+
+msgid "School PIN code (4 digits)"
+msgstr "PIN da escola (4 dígitos)"
+
+msgid "School PIN:"
+msgstr "PIN da escola:"
+
+msgid "Screen Height"
+msgstr "Altura da tela"
+
+msgid "Screen resolution"
+msgstr "Resolução da tela"
+
+msgid "Screen Width"
+msgstr "Largura da tela"
+
+msgid "Show Details"
+msgstr "Mostrar detalhes"
+
+msgid "Show fingerprint details"
+msgstr "Mostrar detalhes de impressão digital"
+
+msgid "Simultaneous test takers under normal connection conditions."
+msgstr "Tickets simultâneos sob condições de conexão normais."
+
+msgid "Something went wrong ..."
+msgstr "Algo deu errado..."
+
+msgid "Starting..."
+msgstr "Iniciando..."
+
+msgid "System Compatibility"
+msgstr "Compatibilidade do sistema"
+
+msgid "Test system compatibility"
+msgstr "Testar compatibilidade do sistema"
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr "A tela do dispositivo não atende à resolução mínima de %s!"
+
+msgid "The device screen has the minimum required resolution."
+msgstr "A tela do dispositivo tem a resolução mínima necessária."
+
+msgid "The device screen resolution meets the requirements."
+msgstr "A resolução de tela do dispositivo atende aos requisitos."
+
+msgid "The readiness check result have been removed"
+msgstr "O resultado da verificação de prontidão foi removido"
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr "O resultado da verificação de prontidão será removido. Continuar?"
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr "Os resultados da verificação de prontidão selecionados serão removidos. Continuar?"
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr "O serviço de armazenamento fornecido para armazenar os resultados do diagnóstico deve ser atualizado para suportar as leituras!"
+
+msgid "This browser is not tested."
+msgstr "Este navegador não foi testado."
+
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
+msgstr "Esta ferramenta irá executar vários testes para determinar se o ambiente atual é adequado para executar a plataforma de AT."
+
+msgid "Total"
+msgstr "Total:"
+
+msgid "Try a test delivery"
+msgstr "Experimentar uma entrega de teste"
+
+msgid "Unable to get the workstation name!"
+msgstr "Impossível obter o nome da estação de trabalho!"
+
+msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
+msgstr "Largura de banda instável, flutuações temporárias na velocidade de conexão podem afetar a experiência do taker."
+
+msgid "Upload speed"
+msgstr "Velocidade de Upload"
+
+msgid "Very slow performances"
+msgstr "Performances muito lentas"
+
+msgid "Web browser"
+msgstr "Navegador da Web"
+
+msgid "Workstation"
+msgstr "Estação"
+
+msgid "Workstation name"
+msgstr "Nome da estação"
+
+msgid "Workstation performances"
+msgstr "Performances da estação"
+
+msgid "Workstation:"
+msgstr "Workstation:"
+
+msgid "Yes"
+msgstr "sim"
+
+msgid "Your fingerprint is %s"
+msgstr "Sua impressão digital é %s"
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr "Sua impressão digital é %s. No entanto, parece que mudou desde a última verificação. Ela pode estar relacionada a alterações no seu sistema."
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
+msgstr "Sua impressão digital é %s. No entanto, encontramos problema ao recuperar os dados. Talvez seu espaço disponível seja muito pequeno"
+
+msgid "Your system is fully compliant."
+msgstr "Seu sistema é totalmente conforme."
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr "Seu sistema não é o ideal, entre em contato com o administrador do sistema."
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr "Seu sistema requer uma atualização de compatibilidade, entre em contato com o administrador do sistema."
+
