@@ -1,24 +1,27 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: TAO 2021.10\n"
-"PO-Revision-Date: 2021-10-26T13:42:59\n"
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2023-06-07 10:43\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
-"Language: nb-NO\n"
+"Language: nb_NO\n"
 "sourceLanguage: en-US\n"
-"targetLanguage: nb-NO\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Basepath: ../../\n"
 "X-Poedit-KeywordsList: __\n"
 "X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: nb\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-clientdiag] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 669\n"
+"Language-Team: Norwegian Bokmal\n"
 
 msgid "%d sources (%s)"
 msgstr "%d kilder (%s)"
-
-#, tao-public
-msgid "Add"
-msgstr ""
 
 msgid "All rights reserved."
 msgstr "Alle rettigheter forbeholdt."
@@ -50,10 +53,6 @@ msgstr "Vær oppmerksom på at disse prøvene vil ta opptil flere minutter."
 msgid "Browser"
 msgstr "Nettleser"
 
-#, tao-public
-msgid "Browsers Exclusion List"
-msgstr ""
-
 msgid "Cannot get your fingerprint"
 msgstr "Får ikke fingeravtrykk ditt"
 
@@ -81,6 +80,9 @@ msgstr "Sjekker skjermen..."
 msgid "Checking upload speed..."
 msgstr "Sjekker opplastingshastighet..."
 
+msgid "Compatible"
+msgstr ""
+
 msgid "Computing the fingerprint..."
 msgstr "Beregner fingeravtrykket..."
 
@@ -90,10 +92,6 @@ msgstr "Koble til diagnoseverktøyet"
 msgid "Date"
 msgstr "Dato"
 
-#, tao-public
-msgid "Delete"
-msgstr ""
-
 msgid "Details"
 msgstr "Detaljer"
 
@@ -101,7 +99,7 @@ msgid "Diagnostic Tool"
 msgstr "Diagnoseverktøy"
 
 msgid "diagnostics.csv"
-msgstr "diagnostics.csv"
+msgstr ""
 
 msgid "Done!"
 msgstr "Ferdig!"
@@ -109,29 +107,11 @@ msgstr "Ferdig!"
 msgid "Dynamic UID"
 msgstr "Dynamisk UID"
 
-msgid "Edit Excluded Browser"
-msgstr ""
-
-msgid "Edit Excluded Operation System"
-msgstr ""
-
 msgid "Errors occurred! Please see details"
 msgstr "Det oppstod feil! Se detaljer"
 
-#, tao-public
-msgid "Excluded Browsers"
-msgstr ""
-
-#, tao-public
-msgid "Excluded OS"
-msgstr ""
-
-#, tao-public
-msgid "Exclusion List"
-msgstr ""
-
 msgid "Exit"
-msgstr "Exit"
+msgstr ""
 
 msgid "Export CSV"
 msgstr "Eksporter CSV"
@@ -166,9 +146,6 @@ msgstr "God opplastningshastighet"
 msgid "Hide Details"
 msgstr "Skjul detaljer"
 
-msgid "Instance saved"
-msgstr ""
-
 msgid "Intensive bandwidth"
 msgstr "Intensiv båndbredde"
 
@@ -202,9 +179,6 @@ msgstr "Lav båndbredde"
 msgid "Low upload speed"
 msgstr "Lav opplastningshastighet"
 
-msgid "Main Menu"
-msgstr "Hovedmeny"
-
 msgid "Max upload speed"
 msgstr "Maks opplastningshastighet"
 
@@ -232,12 +206,8 @@ msgstr "Minimum gjengivelsestid"
 msgid "Missing field %s"
 msgstr "Feltet %s mangler"
 
-#, tao-public
-msgid "New Class"
-msgstr ""
-
 msgid "No"
-msgstr "Ingen"
+msgstr "Nei"
 
 msgid "No diagnostic service defined"
 msgstr "Ingen diagnostisk tjeneste er definert"
@@ -258,18 +228,10 @@ msgid "Operating system and web browser"
 msgstr "Operativsystem og nettleser"
 
 msgid "OS"
-msgstr "OS"
-
-#, tao-public
-msgid "OS Exclusion List"
 msgstr ""
 
 msgid "Performances"
 msgstr "Ytelse"
-
-#, tao-public
-msgid "Properties"
-msgstr ""
 
 msgid "Readiness Check"
 msgstr "Beredskapskontroll"
@@ -334,10 +296,6 @@ msgstr "Skjermoppløsning"
 msgid "Screen Width"
 msgstr "Skjermbredde"
 
-#, tao-public
-msgid "Settings"
-msgstr ""
-
 msgid "Show Details"
 msgstr "Vis detaljer"
 
@@ -380,20 +338,14 @@ msgstr "De valgte beredskapskontrollresultatene vil bli fjernet. Vil du fortsett
 msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
 msgstr "Lagringstjenesten som tilbys for å lagre diagnoseresultatene må oppgraderes til støtte for leser!"
 
-msgid "This browser is compatible but its support may end soon."
-msgstr ""
-
-msgid "This browser is not supported."
-msgstr ""
-
 msgid "This browser is not tested."
 msgstr "Denne nettleseren er ikke testet."
 
-msgid "This browser is supported."
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
 msgstr ""
 
 msgid "Total"
-msgstr "Total"
+msgstr ""
 
 msgid "Try a test delivery"
 msgstr "Kjør en prøveinnlevering"
@@ -401,13 +353,7 @@ msgstr "Kjør en prøveinnlevering"
 msgid "Unable to get the workstation name!"
 msgstr "Klarer ikke å hente navnet på arbeidsstasjonen!"
 
-msgid "Unable to save the results! Please check your connection."
-msgstr ""
-
-msgid "Unable to validate the data as the server did not respond in time."
-msgstr ""
-
-msgid "Unknown"
+msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
 msgstr ""
 
 msgid "Upload speed"
@@ -436,6 +382,12 @@ msgstr "Ja"
 
 msgid "Your fingerprint is %s"
 msgstr "Fingeravtrykket ditt er %s"
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr ""
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
+msgstr ""
 
 msgid "Your system is fully compliant."
 msgstr "Systemet ditt er fullt kompatibelt."
