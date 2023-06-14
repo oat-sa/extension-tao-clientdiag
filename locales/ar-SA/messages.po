@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-07 10:43\n"
+"PO-Revision-Date: 2023-06-14 15:13\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ar\n"
@@ -207,7 +207,7 @@ msgid "Missing field %s"
 msgstr ""
 
 msgid "No"
-msgstr ""
+msgstr "لا"
 
 msgid "No diagnostic service defined"
 msgstr ""
@@ -378,7 +378,7 @@ msgid "Workstation:"
 msgstr ""
 
 msgid "Yes"
-msgstr ""
+msgstr "نعم"
 
 msgid "Your fingerprint is %s"
 msgstr ""
