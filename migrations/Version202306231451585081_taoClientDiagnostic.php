@@ -24,14 +24,16 @@ final class Version202306231451585081_taoClientDiagnostic extends AbstractMigrat
 
         if (!array_key_exists(self::DIAG_LOGOUT_ENDPOINT, $routeConfig)) {
             $routeConfig[self::DIAG_LOGOUT_ENDPOINT] = [
-
+                'ext' => 'taoClientDiagnostic',
+                'controller' => 'Authenticator',
+                'action' => 'logout'
             ];
 
             $routeService->setOptions($routeConfig);
 
             $this->registerService(DefaultUrlService::SERVICE_ID, $routeService);
         } else {
-            $this->logWarning('Endpoint already exists in config, skipping');
+            $this->warnIf(true, 'Endpoint already exists in config, skipping');
         }
     }
 
@@ -47,7 +49,7 @@ final class Version202306231451585081_taoClientDiagnostic extends AbstractMigrat
 
             $this->registerService(DefaultUrlService::SERVICE_ID, $routeService);
         } else {
-            $this->logWarning("Endpoint doesn't exist in config, skipping");
+            $this->warnIf(true, "Endpoint doesn't exist in config, skipping");
         }
     }
 }
