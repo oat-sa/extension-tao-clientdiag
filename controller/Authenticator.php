@@ -71,6 +71,22 @@ class Authenticator extends \tao_actions_CommonModule
         $this->setData('client_config_url', $this->getClientConfigUrl());
         $this->setData('content-controller', 'taoClientDiagnostic/controller/Authenticator/login');
         $this->setData('content-template', 'Authenticator' . DIRECTORY_SEPARATOR . 'login.tpl');
+        $this->setData('no-logout', true);
         $this->setView('index.tpl');
+    }
+
+    /**
+     * Logout, destroy the session and back to the login page
+     */
+    public function logout()
+    {
+        \common_session_SessionManager::endSession();
+
+        setcookie('login', null, [
+            'expires' => time() - 1,
+            'path' => '/taoClientDiagnostic/'
+        ]);
+
+        $this->redirect(_url('logout', 'Main', 'tao'));
     }
 }
