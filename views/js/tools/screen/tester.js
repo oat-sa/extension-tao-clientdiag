@@ -106,7 +106,7 @@ define([
              * @param {Function} done
              */
             start(done) {
-                const results = _.pick(window.screen, ['width', 'height']);
+                const results = _.pickBy(window.screen, ['width', 'height']);
                 const status = this.getFeedback(results);
                 const summary = this.getSummary(results);
 
