@@ -1,0 +1,400 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2023-12-04 16:02\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: ar\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: ar\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-clientdiag] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 669\n"
+"Language-Team: Arabic\n"
+
+msgid "%d sources (%s)"
+msgstr "%d مصادر (%s)"
+
+msgid "All rights reserved."
+msgstr "جميع الحقوق محفوظة."
+
+msgid "An error occurred! Please verify your input!"
+msgstr "حدث خطأ! يرجى التحقق من مدخلاتك!"
+
+msgid "Average bandwidth"
+msgstr "متوسط عرض النطاق الترددي"
+
+msgid "Average intensive bandwidth"
+msgstr "متوسط عرض النطاق الترددي المكثف"
+
+msgid "Average performances"
+msgstr "متوسط الأداء"
+
+msgid "Average rendering time"
+msgstr "متوسط وقت التقديم"
+
+msgid "Average upload speed"
+msgstr "متوسط سرعة التحميل"
+
+msgid "Bandwidth"
+msgstr "النطاق الترددي"
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr "كن على علم بأن هذه الاختبارات ستستغرق عدة دقائق."
+
+msgid "Browser"
+msgstr "متصفح"
+
+msgid "Cannot get your fingerprint"
+msgstr "لا يمكنني الحصول على بصمتك"
+
+msgid "Cannot retrieve the school name. Please verify your input"
+msgstr "لا يمكن استرداد اسم المؤسسة. يرجى التحقق من مدخلاتك"
+
+msgid "Change since last fingerprint"
+msgstr "تغيير منذ آخر بصمة"
+
+msgid "Checking the bandwidth..."
+msgstr "التحقق من عرض النطاق الترددي..."
+
+msgid "Checking the browser..."
+msgstr "التحقق من المتصفح..."
+
+msgid "Checking the media intensive bandwidth..."
+msgstr "التحقق من النطاق الترددي المكثف للوسائط..."
+
+msgid "Checking the performances..."
+msgstr "التحقق من الأداء..."
+
+msgid "Checking the screen..."
+msgstr "التحقق من الشاشة..."
+
+msgid "Checking upload speed..."
+msgstr "التحقق من سرعة التحميل..."
+
+msgid "Compatible"
+msgstr "متوافق"
+
+msgid "Computing the fingerprint..."
+msgstr "حساب بصمة الإصبع..."
+
+msgid "Connect to the diagnostic tool"
+msgstr "الاتصال بأداة التشخيص"
+
+msgid "Date"
+msgstr "التاريخ"
+
+msgid "Details"
+msgstr "تفاصيل"
+
+msgid "Diagnostic Tool"
+msgstr "أداة التشخيص"
+
+msgid "diagnostics.csv"
+msgstr "التشخيص.csv"
+
+msgid "Done!"
+msgstr "منجز!"
+
+msgid "Dynamic UID"
+msgstr "UID ديناميكي"
+
+msgid "Errors occurred! Please see details"
+msgstr "حدثت أخطاء! يرجى الاطلاع على التفاصيل"
+
+msgid "Exit"
+msgstr "خروج"
+
+msgid "Export CSV"
+msgstr "تصدير CSV"
+
+msgid "Failed to get school name"
+msgstr "فشل في الحصول على اسم المؤسسة"
+
+msgid "Fingerprint"
+msgstr "بصمة الأصبع"
+
+msgid "Fingerprint error"
+msgstr "خطأ في بصمة الإصبع"
+
+msgid "Fingerprint errors"
+msgstr "أخطاء في بصمة الإصبع"
+
+msgid "Fingerprint sources"
+msgstr "مصادر بصمة الأصبع"
+
+msgid "Getting school name..."
+msgstr "الحصول على اسم المؤسسة..."
+
+msgid "Good bandwidth"
+msgstr "عرض نطاق جيد"
+
+msgid "Good performances"
+msgstr "أداء جيد"
+
+msgid "Good upload speed"
+msgstr "سرعة تحميل جيدة"
+
+msgid "Hide Details"
+msgstr "إخفاء التفاصيل"
+
+msgid "Intensive bandwidth"
+msgstr "نطاق ترددي مكثف"
+
+msgid "Interface not available"
+msgstr "الواجهة غير متوفرة"
+
+msgid "Launch another readiness check"
+msgstr "تشغيل فحص جاهزية آخر"
+
+msgid "Launch readiness check"
+msgstr "تشغيل فحص الجاهزية"
+
+msgid "List of readiness checks"
+msgstr "قائمة فحوص الجاهزية"
+
+msgid "Loading"
+msgstr "جار التحميل"
+
+msgid "Log in"
+msgstr "تسجيل الدخول"
+
+msgid "Login"
+msgstr "تسجيل الدخول"
+
+msgid "Logout"
+msgstr "تسجيل الخروج"
+
+msgid "Low bandwidth"
+msgstr "نطاق ترددي منخفض"
+
+msgid "Low upload speed"
+msgstr "سرعة تحميل منخفضة"
+
+msgid "Max upload speed"
+msgstr "أقصى سرعة تحميل"
+
+msgid "Maximum bandwidth"
+msgstr "الحد الأقصى للنطاق الترددي"
+
+msgid "Maximum intensive bandwidth"
+msgstr "أقصى نطاق ترددي مكثف"
+
+msgid "Maximum rendering time"
+msgstr "الحد الأقصى لوقت التقديم"
+
+msgid "Media intensive bandwidth"
+msgstr "النطاق الترددي المكثف لوسائل الإعلام"
+
+msgid "Minimum bandwidth"
+msgstr "الحد الأدنى للنطاق الترددي"
+
+msgid "Minimum intensive bandwidth"
+msgstr "الحد الأدنى من النطاق الترددي المكثف"
+
+msgid "Minimum rendering time"
+msgstr "الحد الأدنى لوقت التقديم"
+
+msgid "Missing field %s"
+msgstr "حقل مفقود %s"
+
+msgid "No"
+msgstr "لا"
+
+msgid "No diagnostic service defined"
+msgstr "لم يتم تحديد أي خدمة تشخيصية"
+
+msgid "No readiness checks have been done!"
+msgstr "لم يتم إجراء أي فحوص للجاهزية!"
+
+msgid "Number of simultaneous test takers the connection can handle"
+msgstr "عدد الخاضعين للاختبار الذين يمكن للاتصال التعامل معهم في وقت واحد"
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr "عدد الخاضعين للاختبار الذين يمكن للاتصال التعامل معهم بالوسائط المكثفة في وقت واحد"
+
+msgid "Operating system"
+msgstr "نظام تشغيل"
+
+msgid "Operating system and web browser"
+msgstr "نظام التشغيل ومتصفح الويب"
+
+msgid "OS"
+msgstr "OS"
+
+msgid "Performances"
+msgstr "الأداء"
+
+msgid "Readiness Check"
+msgstr "التحقق من الجاهزية"
+
+msgid "Readiness checks already done"
+msgstr "تم إجراء فحوص الجاهزية مقدّمًا"
+
+msgid "Readiness diagnostics"
+msgstr "تشخيص الجاهزية"
+
+msgid "Refresh"
+msgstr "تحديث"
+
+msgid "Refresh the page"
+msgstr "تحديث الصفحة"
+
+msgid "Remove"
+msgstr "إزالة"
+
+msgid "Remove the readiness check result?"
+msgstr "إزالة نتيجة فحص الجاهزية؟"
+
+msgid "Remove the selected readiness check results"
+msgstr "إزالة نتائج فحص الاستعداد المختارة"
+
+msgid "Return to the list"
+msgstr "العودة إلى القائمة"
+
+msgid "School ID"
+msgstr "معرف المؤسسة"
+
+msgid "School id"
+msgstr "معرف المؤسسة"
+
+msgid "School ID:"
+msgstr "معرف المؤسسة:"
+
+msgid "School name"
+msgstr "اسم المؤسسة"
+
+msgid "School name:"
+msgstr "اسم المؤسسة:"
+
+msgid "School number"
+msgstr "رقم المؤسسة"
+
+msgid "School number:"
+msgstr "رقم المؤسسة:"
+
+msgid "School PIN code (4 digits)"
+msgstr "رمز تعريف المؤسسة (4 أرقام)"
+
+msgid "School PIN:"
+msgstr "رمز تعريف المؤسسة:"
+
+msgid "Screen Height"
+msgstr "ارتفاع الشاشة"
+
+msgid "Screen resolution"
+msgstr "دقة الشاشة"
+
+msgid "Screen Width"
+msgstr "عرض الشاشة"
+
+msgid "Show Details"
+msgstr "أظهر التفاصيل"
+
+msgid "Show fingerprint details"
+msgstr "أظهر تفاصيل بصمة الإصبع"
+
+msgid "Simultaneous test takers under normal connection conditions."
+msgstr "الخاضعون للاختبار في وقت واحد في ظروف الاتصال العادية."
+
+msgid "Something went wrong ..."
+msgstr "حدث خطأ ما ..."
+
+msgid "Starting..."
+msgstr "البَدْء..."
+
+msgid "System Compatibility"
+msgstr "توافق النظام"
+
+msgid "Test system compatibility"
+msgstr "اختبار توافق النظام"
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr "لا تفي شاشة الجهاز بالحد الأدنى من الدقة ل %s!"
+
+msgid "The device screen has the minimum required resolution."
+msgstr "تتوفر شاشة الجهاز على الحد الأدنى من الدقة المطلوبة."
+
+msgid "The device screen resolution meets the requirements."
+msgstr "تتوفر شاشة الجهاز على الدقة المطلوبة."
+
+msgid "The readiness check result have been removed"
+msgstr "تمت إزالة نتيجة التحقق من الجاهزية"
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr "ستتم إزالة نتيجة التحقق من الجاهزية. هل تريد الاستمرار؟"
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr "ستتم إزالة نتيجة التحقق من الجاهزية. هل تريد الاستمرار؟"
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr "يجب ترقية خدمة التخزين المقدمة لتخزين نتائج التشخيص لدعم عمليات القراءة!"
+
+msgid "This browser is not tested."
+msgstr "لم يتم اختبار هذا المتصفح."
+
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
+msgstr "ستقوم هذه الأداة بإجراء عدد من الاختبارات لتحديد مدى ملاءمة بيئتك الحالية لتشغيل منصة TAO."
+
+msgid "Total"
+msgstr "مجموع"
+
+msgid "Try a test delivery"
+msgstr "جرب تسليم الاختبار"
+
+msgid "Unable to get the workstation name!"
+msgstr "غير قادر على الحصول على اسم محطة العمل!"
+
+msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
+msgstr "قد يؤثر النطاق الترددي غير المستقر والتقلبات المؤقتة في سرعة الاتصال على تجرِبة الخاضعين للاختبار."
+
+msgid "Upload speed"
+msgstr "سرعة التحميل"
+
+msgid "Very slow performances"
+msgstr "أداء بطيء جدا"
+
+msgid "Web browser"
+msgstr "متصفح الويب"
+
+msgid "Workstation"
+msgstr "مَحَطّة عَمَلٍ"
+
+msgid "Workstation name"
+msgstr "اسم محطة العمل"
+
+msgid "Workstation performances"
+msgstr "أداء محطة العمل"
+
+msgid "Workstation:"
+msgstr "مَحَطّة عَمَلٍ:"
+
+msgid "Yes"
+msgstr "نعم"
+
+msgid "Your fingerprint is %s"
+msgstr "بصمة أصبعك هي %s"
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr "بصمة إصبعك هي %s. ومع ذلك، يبدو أنها قد تغيرت منذ الفحص الأخير. قد يكون ذلك مرتبطا بالتغييرات في نظامك."
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
+msgstr "بصمة إصبعك هي %s. ومع ذلك، واجهنا مشكلة خلال استرجاع البيانات. ربما تكون مساحة القرص المتاحة لديك صغيرة جدا"
+
+msgid "Your system is fully compliant."
+msgstr "نظامك متوافق تماما."
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr "نظامك ليس مثاليا، يرجى الاتصال بمسؤول النظام."
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr "يتطلب نظامك تحديثا للتوافق، يرجى الاتصال بمسؤول النظام."
+
