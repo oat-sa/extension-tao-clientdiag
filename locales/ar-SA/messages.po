@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-14 15:13\n"
+"PO-Revision-Date: 2023-12-04 16:02\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ar\n"
@@ -21,380 +21,380 @@ msgstr ""
 "Language-Team: Arabic\n"
 
 msgid "%d sources (%s)"
-msgstr ""
+msgstr "%d مصادر (%s)"
 
 msgid "All rights reserved."
-msgstr ""
+msgstr "جميع الحقوق محفوظة."
 
 msgid "An error occurred! Please verify your input!"
-msgstr ""
+msgstr "حدث خطأ! يرجى التحقق من مدخلاتك!"
 
 msgid "Average bandwidth"
-msgstr ""
+msgstr "متوسط عرض النطاق الترددي"
 
 msgid "Average intensive bandwidth"
-msgstr ""
+msgstr "متوسط عرض النطاق الترددي المكثف"
 
 msgid "Average performances"
-msgstr ""
+msgstr "متوسط الأداء"
 
 msgid "Average rendering time"
-msgstr ""
+msgstr "متوسط وقت التقديم"
 
 msgid "Average upload speed"
-msgstr ""
+msgstr "متوسط سرعة التحميل"
 
 msgid "Bandwidth"
-msgstr ""
+msgstr "النطاق الترددي"
 
 msgid "Be aware that these tests will take up to several minutes."
-msgstr ""
+msgstr "كن على علم بأن هذه الاختبارات ستستغرق عدة دقائق."
 
 msgid "Browser"
-msgstr ""
+msgstr "متصفح"
 
 msgid "Cannot get your fingerprint"
-msgstr ""
+msgstr "لا يمكنني الحصول على بصمتك"
 
 msgid "Cannot retrieve the school name. Please verify your input"
-msgstr ""
+msgstr "لا يمكن استرداد اسم المؤسسة. يرجى التحقق من مدخلاتك"
 
 msgid "Change since last fingerprint"
-msgstr ""
+msgstr "تغيير منذ آخر بصمة"
 
 msgid "Checking the bandwidth..."
-msgstr ""
+msgstr "التحقق من عرض النطاق الترددي..."
 
 msgid "Checking the browser..."
-msgstr ""
+msgstr "التحقق من المتصفح..."
 
 msgid "Checking the media intensive bandwidth..."
-msgstr ""
+msgstr "التحقق من النطاق الترددي المكثف للوسائط..."
 
 msgid "Checking the performances..."
-msgstr ""
+msgstr "التحقق من الأداء..."
 
 msgid "Checking the screen..."
-msgstr ""
+msgstr "التحقق من الشاشة..."
 
 msgid "Checking upload speed..."
-msgstr ""
+msgstr "التحقق من سرعة التحميل..."
 
 msgid "Compatible"
-msgstr ""
+msgstr "متوافق"
 
 msgid "Computing the fingerprint..."
-msgstr ""
+msgstr "حساب بصمة الإصبع..."
 
 msgid "Connect to the diagnostic tool"
-msgstr ""
+msgstr "الاتصال بأداة التشخيص"
 
 msgid "Date"
-msgstr ""
+msgstr "التاريخ"
 
 msgid "Details"
-msgstr ""
+msgstr "تفاصيل"
 
 msgid "Diagnostic Tool"
-msgstr ""
+msgstr "أداة التشخيص"
 
 msgid "diagnostics.csv"
-msgstr ""
+msgstr "التشخيص.csv"
 
 msgid "Done!"
-msgstr ""
+msgstr "منجز!"
 
 msgid "Dynamic UID"
-msgstr ""
+msgstr "UID ديناميكي"
 
 msgid "Errors occurred! Please see details"
-msgstr ""
+msgstr "حدثت أخطاء! يرجى الاطلاع على التفاصيل"
 
 msgid "Exit"
-msgstr ""
+msgstr "خروج"
 
 msgid "Export CSV"
-msgstr ""
+msgstr "تصدير CSV"
 
 msgid "Failed to get school name"
-msgstr ""
+msgstr "فشل في الحصول على اسم المؤسسة"
 
 msgid "Fingerprint"
-msgstr ""
+msgstr "بصمة الأصبع"
 
 msgid "Fingerprint error"
-msgstr ""
+msgstr "خطأ في بصمة الإصبع"
 
 msgid "Fingerprint errors"
-msgstr ""
+msgstr "أخطاء في بصمة الإصبع"
 
 msgid "Fingerprint sources"
-msgstr ""
+msgstr "مصادر بصمة الأصبع"
 
 msgid "Getting school name..."
-msgstr ""
+msgstr "الحصول على اسم المؤسسة..."
 
 msgid "Good bandwidth"
-msgstr ""
+msgstr "عرض نطاق جيد"
 
 msgid "Good performances"
-msgstr ""
+msgstr "أداء جيد"
 
 msgid "Good upload speed"
-msgstr ""
+msgstr "سرعة تحميل جيدة"
 
 msgid "Hide Details"
-msgstr ""
+msgstr "إخفاء التفاصيل"
 
 msgid "Intensive bandwidth"
-msgstr ""
+msgstr "نطاق ترددي مكثف"
 
 msgid "Interface not available"
-msgstr ""
+msgstr "الواجهة غير متوفرة"
 
 msgid "Launch another readiness check"
-msgstr ""
+msgstr "تشغيل فحص جاهزية آخر"
 
 msgid "Launch readiness check"
-msgstr ""
+msgstr "تشغيل فحص الجاهزية"
 
 msgid "List of readiness checks"
-msgstr ""
+msgstr "قائمة فحوص الجاهزية"
 
 msgid "Loading"
-msgstr ""
+msgstr "جار التحميل"
 
 msgid "Log in"
-msgstr ""
+msgstr "تسجيل الدخول"
 
 msgid "Login"
-msgstr ""
+msgstr "تسجيل الدخول"
 
 msgid "Logout"
-msgstr ""
+msgstr "تسجيل الخروج"
 
 msgid "Low bandwidth"
-msgstr ""
+msgstr "نطاق ترددي منخفض"
 
 msgid "Low upload speed"
-msgstr ""
+msgstr "سرعة تحميل منخفضة"
 
 msgid "Max upload speed"
-msgstr ""
+msgstr "أقصى سرعة تحميل"
 
 msgid "Maximum bandwidth"
-msgstr ""
+msgstr "الحد الأقصى للنطاق الترددي"
 
 msgid "Maximum intensive bandwidth"
-msgstr ""
+msgstr "أقصى نطاق ترددي مكثف"
 
 msgid "Maximum rendering time"
-msgstr ""
+msgstr "الحد الأقصى لوقت التقديم"
 
 msgid "Media intensive bandwidth"
-msgstr ""
+msgstr "النطاق الترددي المكثف لوسائل الإعلام"
 
 msgid "Minimum bandwidth"
-msgstr ""
+msgstr "الحد الأدنى للنطاق الترددي"
 
 msgid "Minimum intensive bandwidth"
-msgstr ""
+msgstr "الحد الأدنى من النطاق الترددي المكثف"
 
 msgid "Minimum rendering time"
-msgstr ""
+msgstr "الحد الأدنى لوقت التقديم"
 
 msgid "Missing field %s"
-msgstr ""
+msgstr "حقل مفقود %s"
 
 msgid "No"
 msgstr "لا"
 
 msgid "No diagnostic service defined"
-msgstr ""
+msgstr "لم يتم تحديد أي خدمة تشخيصية"
 
 msgid "No readiness checks have been done!"
-msgstr ""
+msgstr "لم يتم إجراء أي فحوص للجاهزية!"
 
 msgid "Number of simultaneous test takers the connection can handle"
-msgstr ""
+msgstr "عدد الخاضعين للاختبار الذين يمكن للاتصال التعامل معهم في وقت واحد"
 
 msgid "Number of simultaneous test takers the connection can handle with media intensive"
-msgstr ""
+msgstr "عدد الخاضعين للاختبار الذين يمكن للاتصال التعامل معهم بالوسائط المكثفة في وقت واحد"
 
 msgid "Operating system"
-msgstr ""
+msgstr "نظام تشغيل"
 
 msgid "Operating system and web browser"
-msgstr ""
+msgstr "نظام التشغيل ومتصفح الويب"
 
 msgid "OS"
-msgstr ""
+msgstr "OS"
 
 msgid "Performances"
-msgstr ""
+msgstr "الأداء"
 
 msgid "Readiness Check"
-msgstr ""
+msgstr "التحقق من الجاهزية"
 
 msgid "Readiness checks already done"
-msgstr ""
+msgstr "تم إجراء فحوص الجاهزية مقدّمًا"
 
 msgid "Readiness diagnostics"
-msgstr ""
+msgstr "تشخيص الجاهزية"
 
 msgid "Refresh"
-msgstr ""
+msgstr "تحديث"
 
 msgid "Refresh the page"
-msgstr ""
+msgstr "تحديث الصفحة"
 
 msgid "Remove"
-msgstr ""
+msgstr "إزالة"
 
 msgid "Remove the readiness check result?"
-msgstr ""
+msgstr "إزالة نتيجة فحص الجاهزية؟"
 
 msgid "Remove the selected readiness check results"
-msgstr ""
+msgstr "إزالة نتائج فحص الاستعداد المختارة"
 
 msgid "Return to the list"
-msgstr ""
+msgstr "العودة إلى القائمة"
 
 msgid "School ID"
-msgstr ""
+msgstr "معرف المؤسسة"
 
 msgid "School id"
-msgstr ""
+msgstr "معرف المؤسسة"
 
 msgid "School ID:"
-msgstr ""
+msgstr "معرف المؤسسة:"
 
 msgid "School name"
-msgstr ""
+msgstr "اسم المؤسسة"
 
 msgid "School name:"
-msgstr ""
+msgstr "اسم المؤسسة:"
 
 msgid "School number"
-msgstr ""
+msgstr "رقم المؤسسة"
 
 msgid "School number:"
-msgstr ""
+msgstr "رقم المؤسسة:"
 
 msgid "School PIN code (4 digits)"
-msgstr ""
+msgstr "رمز تعريف المؤسسة (4 أرقام)"
 
 msgid "School PIN:"
-msgstr ""
+msgstr "رمز تعريف المؤسسة:"
 
 msgid "Screen Height"
-msgstr ""
+msgstr "ارتفاع الشاشة"
 
 msgid "Screen resolution"
-msgstr ""
+msgstr "دقة الشاشة"
 
 msgid "Screen Width"
-msgstr ""
+msgstr "عرض الشاشة"
 
 msgid "Show Details"
-msgstr ""
+msgstr "أظهر التفاصيل"
 
 msgid "Show fingerprint details"
-msgstr ""
+msgstr "أظهر تفاصيل بصمة الإصبع"
 
 msgid "Simultaneous test takers under normal connection conditions."
-msgstr ""
+msgstr "الخاضعون للاختبار في وقت واحد في ظروف الاتصال العادية."
 
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "حدث خطأ ما ..."
 
 msgid "Starting..."
-msgstr ""
+msgstr "البَدْء..."
 
 msgid "System Compatibility"
-msgstr ""
+msgstr "توافق النظام"
 
 msgid "Test system compatibility"
-msgstr ""
+msgstr "اختبار توافق النظام"
 
 msgid "The device screen does not meet the minimum resolution of %s!"
-msgstr ""
+msgstr "لا تفي شاشة الجهاز بالحد الأدنى من الدقة ل %s!"
 
 msgid "The device screen has the minimum required resolution."
-msgstr ""
+msgstr "تتوفر شاشة الجهاز على الحد الأدنى من الدقة المطلوبة."
 
 msgid "The device screen resolution meets the requirements."
-msgstr ""
+msgstr "تتوفر شاشة الجهاز على الدقة المطلوبة."
 
 msgid "The readiness check result have been removed"
-msgstr ""
+msgstr "تمت إزالة نتيجة التحقق من الجاهزية"
 
 msgid "The readiness check result will be removed. Continue ?"
-msgstr ""
+msgstr "ستتم إزالة نتيجة التحقق من الجاهزية. هل تريد الاستمرار؟"
 
 msgid "The selected readiness check results will be removed. Continue ?"
-msgstr ""
+msgstr "ستتم إزالة نتيجة التحقق من الجاهزية. هل تريد الاستمرار؟"
 
 msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
-msgstr ""
+msgstr "يجب ترقية خدمة التخزين المقدمة لتخزين نتائج التشخيص لدعم عمليات القراءة!"
 
 msgid "This browser is not tested."
-msgstr ""
+msgstr "لم يتم اختبار هذا المتصفح."
 
 msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
-msgstr ""
+msgstr "ستقوم هذه الأداة بإجراء عدد من الاختبارات لتحديد مدى ملاءمة بيئتك الحالية لتشغيل منصة TAO."
 
 msgid "Total"
-msgstr ""
+msgstr "مجموع"
 
 msgid "Try a test delivery"
-msgstr ""
+msgstr "جرب تسليم الاختبار"
 
 msgid "Unable to get the workstation name!"
-msgstr ""
+msgstr "غير قادر على الحصول على اسم محطة العمل!"
 
 msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
-msgstr ""
+msgstr "قد يؤثر النطاق الترددي غير المستقر والتقلبات المؤقتة في سرعة الاتصال على تجرِبة الخاضعين للاختبار."
 
 msgid "Upload speed"
-msgstr ""
+msgstr "سرعة التحميل"
 
 msgid "Very slow performances"
-msgstr ""
+msgstr "أداء بطيء جدا"
 
 msgid "Web browser"
-msgstr ""
+msgstr "متصفح الويب"
 
 msgid "Workstation"
-msgstr ""
+msgstr "مَحَطّة عَمَلٍ"
 
 msgid "Workstation name"
-msgstr ""
+msgstr "اسم محطة العمل"
 
 msgid "Workstation performances"
-msgstr ""
+msgstr "أداء محطة العمل"
 
 msgid "Workstation:"
-msgstr ""
+msgstr "مَحَطّة عَمَلٍ:"
 
 msgid "Yes"
 msgstr "نعم"
 
 msgid "Your fingerprint is %s"
-msgstr ""
+msgstr "بصمة أصبعك هي %s"
 
 msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
-msgstr ""
+msgstr "بصمة إصبعك هي %s. ومع ذلك، يبدو أنها قد تغيرت منذ الفحص الأخير. قد يكون ذلك مرتبطا بالتغييرات في نظامك."
 
 msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
-msgstr ""
+msgstr "بصمة إصبعك هي %s. ومع ذلك، واجهنا مشكلة خلال استرجاع البيانات. ربما تكون مساحة القرص المتاحة لديك صغيرة جدا"
 
 msgid "Your system is fully compliant."
-msgstr ""
+msgstr "نظامك متوافق تماما."
 
 msgid "Your system is not optimal, please contact your system administrator."
-msgstr ""
+msgstr "نظامك ليس مثاليا، يرجى الاتصال بمسؤول النظام."
 
 msgid "Your system requires a compatibility update, please contact your system administrator."
-msgstr ""
+msgstr "يتطلب نظامك تحديثا للتوافق، يرجى الاتصال بمسؤول النظام."
 

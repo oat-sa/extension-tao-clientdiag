@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-07 10:43\n"
+"PO-Revision-Date: 2023-12-04 16:02\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ja\n"
@@ -24,7 +24,7 @@ msgid "%d sources (%s)"
 msgstr "%d リソース (%s)"
 
 msgid "All rights reserved."
-msgstr ""
+msgstr "All rights reserved."
 
 msgid "An error occurred! Please verify your input!"
 msgstr "エラーが発生しました！入力を確認してください！"
@@ -81,7 +81,7 @@ msgid "Checking upload speed..."
 msgstr "アップロード速度 チェック中..."
 
 msgid "Compatible"
-msgstr ""
+msgstr "互換性"
 
 msgid "Computing the fingerprint..."
 msgstr "フィンガープリント計算中..."
@@ -99,7 +99,7 @@ msgid "Diagnostic Tool"
 msgstr "診断ツール"
 
 msgid "diagnostics.csv"
-msgstr ""
+msgstr "diagnostics.csv"
 
 msgid "Done!"
 msgstr "診断完了！"
@@ -228,7 +228,7 @@ msgid "Operating system and web browser"
 msgstr "オペレーティングシステムとWebブラウザ"
 
 msgid "OS"
-msgstr ""
+msgstr "OS"
 
 msgid "Performances"
 msgstr "パフォーマンス"
@@ -342,7 +342,7 @@ msgid "This browser is not tested."
 msgstr "このブラウザは検証されていません。"
 
 msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
-msgstr ""
+msgstr "このツールでは、皆さんの環境がTAOを動かすのに適しているかどうかをチェックします。"
 
 msgid "Total"
 msgstr "合計"
@@ -354,7 +354,7 @@ msgid "Unable to get the workstation name!"
 msgstr "ワークステーション名が取得できません!"
 
 msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
-msgstr ""
+msgstr "帯域幅や通信速度が不安定な場合、受験者の体験を損ねる可能性があります。"
 
 msgid "Upload speed"
 msgstr "アップロード速度"
@@ -378,16 +378,16 @@ msgid "Workstation:"
 msgstr "ワークステーション:"
 
 msgid "Yes"
-msgstr ""
+msgstr "Yes"
 
 msgid "Your fingerprint is %s"
 msgstr "フィンガープリント：%s"
 
 msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
-msgstr ""
+msgstr "あなたのフィンガープリントは %s です。しかし最後のチェックからは変更されているようです。これはシステムの変更が影響されている可能性があります。"
 
 msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
-msgstr ""
+msgstr "あなたのフィンガープリントは %s です。しかし、データの取得中に問題が発生しました。使用可能なディスク容量が小さすぎる可能性があります。"
 
 msgid "Your system is fully compliant."
 msgstr "お使いのシステムは完全に適合しています。"
