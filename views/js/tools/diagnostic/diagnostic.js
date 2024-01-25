@@ -144,7 +144,7 @@ define([
             const config = this.config;
             const url = urlHelper.route(config.actionStore, config.controller, config.extension, config.storeParams);
 
-            data = _.omitBy(data, 'values');
+            data = _.omit(data, 'values');
             data.type = type;
 
             request({ url, data, method: 'POST', noToken: true })
