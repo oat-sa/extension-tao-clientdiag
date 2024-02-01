@@ -418,7 +418,7 @@ define([
                     // launch each testers in series, then display the results
                     async.series(testers, () => {
                         // pick the lowest percentage as the main score
-                        const total = _.min(scores, 'globalPercentage');
+                        const total = _.minBy(scores, 'globalPercentage');
 
                         // get a status according to the main score
                         const status = getStatus(total.globalPercentage, _thresholds);
