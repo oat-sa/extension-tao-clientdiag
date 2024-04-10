@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-07 10:43\n"
+"PO-Revision-Date: 2024-04-09 07:39\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: fr\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Language-Team: French\n"
 
 msgid "%d sources (%s)"
-msgstr ""
+msgstr "%d sources (%s)"
 
 msgid "All rights reserved."
 msgstr "Tous droits réservés."
@@ -90,7 +90,7 @@ msgid "Connect to the diagnostic tool"
 msgstr "Accéder à l'outil de diagnostic"
 
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 msgid "Details"
 msgstr "Détails"
@@ -114,7 +114,7 @@ msgid "Exit"
 msgstr "Sortie"
 
 msgid "Export CSV"
-msgstr ""
+msgstr "Exporter en CSV"
 
 msgid "Failed to get school name"
 msgstr "Impossible d'obtenir le nom d'école"
@@ -228,10 +228,10 @@ msgid "Operating system and web browser"
 msgstr "Navigateur et système d’exploitation"
 
 msgid "OS"
-msgstr ""
+msgstr "OS"
 
 msgid "Performances"
-msgstr ""
+msgstr "Performances"
 
 msgid "Readiness Check"
 msgstr "Vérification de disponibilité"
