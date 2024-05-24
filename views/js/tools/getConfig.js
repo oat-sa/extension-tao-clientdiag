@@ -13,7 +13,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
- * Copyright (c) 2016-2021 (original work) Open Assessment Technologies SA ;
+ * Copyright (c) 2016-2024 (original work) Open Assessment Technologies SA ;
  */
 define(['lodash'], function(_) {
     'use strict';
@@ -26,7 +26,7 @@ define(['lodash'], function(_) {
      */
     return function getConfig(config, defaults) {
         return _(config || {})
-            .omit(value => value === null || typeof value === 'undefined')
+            .omitBy(value => value === null || typeof value === 'undefined')
             .defaults(defaults || {})
             .value();
     };
