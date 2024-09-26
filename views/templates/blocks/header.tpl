@@ -11,7 +11,7 @@ use oat\tao\model\theme\Theme;
     <?php endif; ?>
 
     <?php /* main navigation bar */
-    Template::inc('blocks/header-main-navi.tpl', 'tao');
+    Template::inc('blocks/header-main-navi.tpl');
     ?>
 
 </header>
