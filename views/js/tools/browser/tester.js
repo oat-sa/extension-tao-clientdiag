@@ -136,7 +136,7 @@ define([
                     // Some useful traversal algorithms are needed and they don't have polyfill in our bundles.
                     // The versions come with an inconsistent format and they need to be processed upfront.
                     return _(versions)
-                        .map(version => version.split('-'))
+                        .map(version => version.toString().split('-'))
                         .flatten()
                         .value()
                         .some(version => currentVersion.localeCompare(version, void 0, { numeric: true }) >= 0);
