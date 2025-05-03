@@ -57,7 +57,10 @@ class CompatibilityChecker extends \tao_actions_CommonModule
 
             $this->setData('client_config_url', $this->getClientConfigUrl());
             $this->setData('content-config', $config);
-            $this->setData('logout', $this->getServiceLocator()->get(DefaultUrlService::SERVICE_ID)->getLogoutUrl());
+            $this->setData(
+                'logout',
+                $this->getServiceLocator()->get(DefaultUrlService::SERVICE_ID)->getUrl('diagLogout')
+            );
             $this->setData('content-controller', 'taoClientDiagnostic/controller/CompatibilityChecker/diagnostics');
             $this->setData('content-template', 'CompatibilityChecker' . DIRECTORY_SEPARATOR . 'diagnostics.tpl');
             $this->setView('index.tpl');
