@@ -1,0 +1,400 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2025-12-05 08:42\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: hu\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: hu\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-clientdiag] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 669\n"
+"Language-Team: Hungarian\n"
+
+msgid "%d sources (%s)"
+msgstr "%d források (%s)"
+
+msgid "All rights reserved."
+msgstr "Minden jog fenntartva."
+
+msgid "An error occurred! Please verify your input!"
+msgstr "Hiba történt! Kérjük, ellenőrizze a bevitelt!"
+
+msgid "Average bandwidth"
+msgstr "Átlagos sávszélesség"
+
+msgid "Average intensive bandwidth"
+msgstr "Átlagos intenzív sávszélesség"
+
+msgid "Average performances"
+msgstr "Átlagos teljesítmények"
+
+msgid "Average rendering time"
+msgstr "Átlagos renderelési idő"
+
+msgid "Average upload speed"
+msgstr "Átlagos feltöltési sebesség"
+
+msgid "Bandwidth"
+msgstr "Sávszélesség"
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr "Ne feledd, hogy ezek a tesztek akár több percig is eltarthatnak."
+
+msgid "Browser"
+msgstr "Böngésző"
+
+msgid "Cannot get your fingerprint"
+msgstr "Nem tudom lekérni az ujjlenyomatát"
+
+msgid "Cannot retrieve the school name. Please verify your input"
+msgstr "Nem sikerült lekérni az iskola nevét. Kérjük, ellenőrizze a beírt adatokat."
+
+msgid "Change since last fingerprint"
+msgstr "Változás az utolsó ujjlenyomat óta"
+
+msgid "Checking the bandwidth..."
+msgstr "Sávszélesség ellenőrzése..."
+
+msgid "Checking the browser..."
+msgstr "A böngésző ellenőrzése..."
+
+msgid "Checking the media intensive bandwidth..."
+msgstr "Médiaigényes sávszélesség ellenőrzése..."
+
+msgid "Checking the performances..."
+msgstr "Az előadások ellenőrzése..."
+
+msgid "Checking the screen..."
+msgstr "A képernyő ellenőrzése..."
+
+msgid "Checking upload speed..."
+msgstr "Feltöltési sebesség ellenőrzése..."
+
+msgid "Compatible"
+msgstr "Összeegyeztethető"
+
+msgid "Computing the fingerprint..."
+msgstr "Ujjlenyomat-számítás..."
+
+msgid "Connect to the diagnostic tool"
+msgstr "Csatlakozás a diagnosztikai eszközhöz"
+
+msgid "Date"
+msgstr "Dátum"
+
+msgid "Details"
+msgstr "Részletek"
+
+msgid "Diagnostic Tool"
+msgstr "Diagnosztikai eszköz"
+
+msgid "diagnostics.csv"
+msgstr "diagnosztika.csv"
+
+msgid "Done!"
+msgstr "Kész!"
+
+msgid "Dynamic UID"
+msgstr "Dinamikus UID"
+
+msgid "Errors occurred! Please see details"
+msgstr "Hibák történtek! Kérjük, tekintse meg a részleteket"
+
+msgid "Exit"
+msgstr "Kijárat"
+
+msgid "Export CSV"
+msgstr "CSV exportálása"
+
+msgid "Failed to get school name"
+msgstr "Nem sikerült lekérni az iskola nevét"
+
+msgid "Fingerprint"
+msgstr "Ujjlenyomat"
+
+msgid "Fingerprint error"
+msgstr "Ujjlenyomat-hiba"
+
+msgid "Fingerprint errors"
+msgstr "Ujjlenyomat-hibák"
+
+msgid "Fingerprint sources"
+msgstr "Ujjlenyomat-források"
+
+msgid "Getting school name..."
+msgstr "Iskola nevének megkeresése..."
+
+msgid "Good bandwidth"
+msgstr "Jó sávszélesség"
+
+msgid "Good performances"
+msgstr "Jó teljesítmények"
+
+msgid "Good upload speed"
+msgstr "Jó feltöltési sebesség"
+
+msgid "Hide Details"
+msgstr "Részletek elrejtése"
+
+msgid "Intensive bandwidth"
+msgstr "Intenzív sávszélesség"
+
+msgid "Interface not available"
+msgstr "Interfész nem érhető el"
+
+msgid "Launch another readiness check"
+msgstr "Indítson el egy újabb készenléti ellenőrzést"
+
+msgid "Launch readiness check"
+msgstr "Indítási készenléti ellenőrzés"
+
+msgid "List of readiness checks"
+msgstr "Készenléti ellenőrzések listája"
+
+msgid "Loading"
+msgstr "Terhelés"
+
+msgid "Log in"
+msgstr "Bejelentkezés"
+
+msgid "Login"
+msgstr "Bejelentkezés"
+
+msgid "Logout"
+msgstr "Kijelentkezés"
+
+msgid "Low bandwidth"
+msgstr "Alacsony sávszélesség"
+
+msgid "Low upload speed"
+msgstr "Alacsony feltöltési sebesség"
+
+msgid "Max upload speed"
+msgstr "Maximális feltöltési sebesség"
+
+msgid "Maximum bandwidth"
+msgstr "Maximális sávszélesség"
+
+msgid "Maximum intensive bandwidth"
+msgstr "Maximális intenzív sávszélesség"
+
+msgid "Maximum rendering time"
+msgstr "Maximális renderelési idő"
+
+msgid "Media intensive bandwidth"
+msgstr "Médiaigényes sávszélesség"
+
+msgid "Minimum bandwidth"
+msgstr "Minimális sávszélesség"
+
+msgid "Minimum intensive bandwidth"
+msgstr "Minimális intenzív sávszélesség"
+
+msgid "Minimum rendering time"
+msgstr "Minimális renderelési idő"
+
+msgid "Missing field %s"
+msgstr "Hiányzó mező %s"
+
+msgid "No"
+msgstr "Nem"
+
+msgid "No diagnostic service defined"
+msgstr "Nincs definiált diagnosztikai szolgáltatás"
+
+msgid "No readiness checks have been done!"
+msgstr "Készenléti ellenőrzést nem végeztek!"
+
+msgid "Number of simultaneous test takers the connection can handle"
+msgstr "A kapcsolat által kezelhető egyidejű vizsgázók száma"
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr "Az egyidejű vizsgázók száma, amelyet a kapcsolat médiaintenzív környezetben képes kezelni"
+
+msgid "Operating system"
+msgstr "Operációs rendszer"
+
+msgid "Operating system and web browser"
+msgstr "Operációs rendszer és webböngésző"
+
+msgid "OS"
+msgstr "operációs rendszer"
+
+msgid "Performances"
+msgstr "Előadások"
+
+msgid "Readiness Check"
+msgstr "Készenléti ellenőrzés"
+
+msgid "Readiness checks already done"
+msgstr "Készenléti ellenőrzések már elvégezve"
+
+msgid "Readiness diagnostics"
+msgstr "Készenléti diagnosztika"
+
+msgid "Refresh"
+msgstr "Frissítés"
+
+msgid "Refresh the page"
+msgstr "Frissítsd az oldalt"
+
+msgid "Remove"
+msgstr "Eltávolítás"
+
+msgid "Remove the readiness check result?"
+msgstr "Eltávolítja a készenléti ellenőrzés eredményét?"
+
+msgid "Remove the selected readiness check results"
+msgstr "A kiválasztott készenléti ellenőrzés eredményeinek eltávolítása"
+
+msgid "Return to the list"
+msgstr "Vissza a listához"
+
+msgid "School ID"
+msgstr "Iskolai azonosító"
+
+msgid "School id"
+msgstr "Iskolai azonosító"
+
+msgid "School ID:"
+msgstr "Iskolaazonosító:"
+
+msgid "School name"
+msgstr "Iskola neve"
+
+msgid "School name:"
+msgstr "Iskola neve:"
+
+msgid "School number"
+msgstr "Iskolaszám"
+
+msgid "School number:"
+msgstr "Iskolaszám:"
+
+msgid "School PIN code (4 digits)"
+msgstr "Iskolai PIN-kód (4 számjegy)"
+
+msgid "School PIN:"
+msgstr "Iskolai PIN-kód:"
+
+msgid "Screen Height"
+msgstr "Képernyő magassága"
+
+msgid "Screen resolution"
+msgstr "Képernyőfelbontás"
+
+msgid "Screen Width"
+msgstr "Képernyő szélessége"
+
+msgid "Show Details"
+msgstr "Részletek megjelenítése"
+
+msgid "Show fingerprint details"
+msgstr "Ujjlenyomat-adatok megjelenítése"
+
+msgid "Simultaneous test takers under normal connection conditions."
+msgstr "Egyidejű vizsgázók normál csatlakozási feltételek mellett."
+
+msgid "Something went wrong ..."
+msgstr "Valami rosszul sült el..."
+
+msgid "Starting..."
+msgstr "Kezdés..."
+
+msgid "System Compatibility"
+msgstr "Rendszerkompatibilitás"
+
+msgid "Test system compatibility"
+msgstr "Tesztrendszer kompatibilitása"
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr "A készülék képernyője nem éri el a %sminimális felbontási követelményt!"
+
+msgid "The device screen has the minimum required resolution."
+msgstr "A készülék képernyője rendelkezik a minimálisan szükséges felbontással."
+
+msgid "The device screen resolution meets the requirements."
+msgstr "A készülék képernyőfelbontása megfelel a követelményeknek."
+
+msgid "The readiness check result have been removed"
+msgstr "A készenléti ellenőrzés eredményét eltávolították."
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr "A készenléti ellenőrzés eredménye eltávolításra kerül. Folytatja?"
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr "A kiválasztott készenléti ellenőrzés eredményei eltávolításra kerülnek. Folytatja?"
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr "A diagnosztikai eredmények tárolására biztosított tárolási szolgáltatást frissíteni kell az olvasás támogatására!"
+
+msgid "This browser is not tested."
+msgstr "Ez a böngésző nincs tesztelve."
+
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
+msgstr "Ez az eszköz számos tesztet fog lefuttatni annak megállapítására, hogy a jelenlegi környezet mennyire alkalmas a TAO platform futtatására."
+
+msgid "Total"
+msgstr "Teljes"
+
+msgid "Try a test delivery"
+msgstr "Próbáljon ki egy tesztküldést"
+
+msgid "Unable to get the workstation name!"
+msgstr "Nem sikerült lekérdezni a munkaállomás nevét!"
+
+msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
+msgstr "Az instabil sávszélesség, a kapcsolat sebességének átmeneti ingadozása befolyásolhatja a vizsgázók élményét."
+
+msgid "Upload speed"
+msgstr "Feltöltési sebesség"
+
+msgid "Very slow performances"
+msgstr "Nagyon lassú előadások"
+
+msgid "Web browser"
+msgstr "Webböngésző"
+
+msgid "Workstation"
+msgstr "Munkaállomás"
+
+msgid "Workstation name"
+msgstr "Munkaállomás neve"
+
+msgid "Workstation performances"
+msgstr "Munkaállomási előadások"
+
+msgid "Workstation:"
+msgstr "Munkaállomás:"
+
+msgid "Yes"
+msgstr "Igen"
+
+msgid "Your fingerprint is %s"
+msgstr "Az ujjlenyomatod %s"
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr "Az ujjlenyomatod %s. Úgy tűnik azonban, hogy megváltozott a legutóbbi ellenőrzés óta. Ez összefüggésben lehet a rendszeredben bekövetkezett változásokkal."
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
+msgstr "Az ujjlenyomatod %s. Azonban problémát tapasztaltunk az adatok lekérésekor. Lehetséges, hogy túl kevés a rendelkezésre álló lemezterület."
+
+msgid "Your system is fully compliant."
+msgstr "A rendszered teljes mértékben megfelel a követelményeknek."
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr "A rendszered nem optimális, kérjük, vedd fel a kapcsolatot a rendszergazdával."
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr "A rendszeréhez kompatibilitási frissítésre van szükség, kérjük, vegye fel a kapcsolatot a rendszergazdával."
+

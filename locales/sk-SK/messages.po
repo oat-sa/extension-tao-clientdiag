@@ -1,0 +1,400 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tao-open-source\n"
+"PO-Revision-Date: 2025-12-05 08:42\n"
+"Last-Translator: TAO Translation Team <translation@tao.lu>\n"
+"MIME-Version: 1.0\n"
+"Language: sk\n"
+"sourceLanguage: en-US\n"
+"targetLanguage: en-US\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ../../\n"
+"X-Poedit-KeywordsList: __\n"
+"X-Poedit-SearchPath-0: .\n"
+"Plural-Forms: nplurals=4; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 3;\n"
+"X-Crowdin-Project: tao-open-source\n"
+"X-Crowdin-Project-ID: 590867\n"
+"X-Crowdin-Language: sk\n"
+"X-Crowdin-File: /[oat-sa.extension-tao-clientdiag] develop/locales/en-US/messages.po\n"
+"X-Crowdin-File-ID: 669\n"
+"Language-Team: Slovak\n"
+
+msgid "%d sources (%s)"
+msgstr "%d zdrojov (%s)"
+
+msgid "All rights reserved."
+msgstr "Všetky práva vyhradené."
+
+msgid "An error occurred! Please verify your input!"
+msgstr "Vyskytla sa chyba! Prosím, overte svoj vstup!"
+
+msgid "Average bandwidth"
+msgstr "Priemerná šírka pásma"
+
+msgid "Average intensive bandwidth"
+msgstr "Priemerná intenzívna šírka pásma"
+
+msgid "Average performances"
+msgstr "Priemerné výkony"
+
+msgid "Average rendering time"
+msgstr "Priemerný čas vykresľovania"
+
+msgid "Average upload speed"
+msgstr "Priemerná rýchlosť nahrávania"
+
+msgid "Bandwidth"
+msgstr "Šírka pásma"
+
+msgid "Be aware that these tests will take up to several minutes."
+msgstr "Uvedomte si, že tieto testy budú trvať až niekoľko minút."
+
+msgid "Browser"
+msgstr "Prehliadač"
+
+msgid "Cannot get your fingerprint"
+msgstr "Nedá sa získať odtlačok prsta"
+
+msgid "Cannot retrieve the school name. Please verify your input"
+msgstr "Nepodarilo sa načítať názov školy. Overte, prosím, svoj vstup."
+
+msgid "Change since last fingerprint"
+msgstr "Zmena od posledného odtlačku prsta"
+
+msgid "Checking the bandwidth..."
+msgstr "Kontrola šírky pásma..."
+
+msgid "Checking the browser..."
+msgstr "Kontrola prehliadača..."
+
+msgid "Checking the media intensive bandwidth..."
+msgstr "Kontrola šírky pásma pre médiá s vysokou náplňou..."
+
+msgid "Checking the performances..."
+msgstr "Kontrola výkonov..."
+
+msgid "Checking the screen..."
+msgstr "Kontrola obrazovky..."
+
+msgid "Checking upload speed..."
+msgstr "Kontrola rýchlosti nahrávania..."
+
+msgid "Compatible"
+msgstr "Kompatibilné"
+
+msgid "Computing the fingerprint..."
+msgstr "Výpočet odtlačkov prstov..."
+
+msgid "Connect to the diagnostic tool"
+msgstr "Pripojte sa k diagnostickému nástroju"
+
+msgid "Date"
+msgstr "Dátum"
+
+msgid "Details"
+msgstr "Detaily"
+
+msgid "Diagnostic Tool"
+msgstr "Diagnostický nástroj"
+
+msgid "diagnostics.csv"
+msgstr "diagnostika.csv"
+
+msgid "Done!"
+msgstr "Hotovo!"
+
+msgid "Dynamic UID"
+msgstr "Dynamické UID"
+
+msgid "Errors occurred! Please see details"
+msgstr "Vyskytli sa chyby! Pozrite si podrobnosti."
+
+msgid "Exit"
+msgstr "Ukončiť"
+
+msgid "Export CSV"
+msgstr "Exportovať CSV"
+
+msgid "Failed to get school name"
+msgstr "Nepodarilo sa získať názov školy"
+
+msgid "Fingerprint"
+msgstr "Odtlačok prsta"
+
+msgid "Fingerprint error"
+msgstr "Chyba odtlačku prsta"
+
+msgid "Fingerprint errors"
+msgstr "Chyby odtlačkov prstov"
+
+msgid "Fingerprint sources"
+msgstr "Zdroje odtlačkov prstov"
+
+msgid "Getting school name..."
+msgstr "Získanie názvu školy..."
+
+msgid "Good bandwidth"
+msgstr "Dobrá šírka pásma"
+
+msgid "Good performances"
+msgstr "Dobré výkony"
+
+msgid "Good upload speed"
+msgstr "Dobrá rýchlosť nahrávania"
+
+msgid "Hide Details"
+msgstr "Skryť podrobnosti"
+
+msgid "Intensive bandwidth"
+msgstr "Intenzívna šírka pásma"
+
+msgid "Interface not available"
+msgstr "Rozhranie nie je k dispozícii"
+
+msgid "Launch another readiness check"
+msgstr "Spustiť ďalšiu kontrolu pripravenosti"
+
+msgid "Launch readiness check"
+msgstr "Kontrola pripravenosti na spustenie"
+
+msgid "List of readiness checks"
+msgstr "Zoznam kontrol pripravenosti"
+
+msgid "Loading"
+msgstr "Načítava sa"
+
+msgid "Log in"
+msgstr "Prihlásiť sa"
+
+msgid "Login"
+msgstr "Prihlásenie"
+
+msgid "Logout"
+msgstr "Odhlásiť sa"
+
+msgid "Low bandwidth"
+msgstr "Nízka šírka pásma"
+
+msgid "Low upload speed"
+msgstr "Nízka rýchlosť nahrávania"
+
+msgid "Max upload speed"
+msgstr "Maximálna rýchlosť nahrávania"
+
+msgid "Maximum bandwidth"
+msgstr "Maximálna šírka pásma"
+
+msgid "Maximum intensive bandwidth"
+msgstr "Maximálna intenzívna šírka pásma"
+
+msgid "Maximum rendering time"
+msgstr "Maximálny čas vykresľovania"
+
+msgid "Media intensive bandwidth"
+msgstr "Šírka pásma náročná na médiá"
+
+msgid "Minimum bandwidth"
+msgstr "Minimálna šírka pásma"
+
+msgid "Minimum intensive bandwidth"
+msgstr "Minimálna intenzívna šírka pásma"
+
+msgid "Minimum rendering time"
+msgstr "Minimálny čas vykresľovania"
+
+msgid "Missing field %s"
+msgstr "Chýbajúce pole %s"
+
+msgid "No"
+msgstr "Nie"
+
+msgid "No diagnostic service defined"
+msgstr "Nie je definovaná žiadna diagnostická služba"
+
+msgid "No readiness checks have been done!"
+msgstr "Neboli vykonané žiadne kontroly pripravenosti!"
+
+msgid "Number of simultaneous test takers the connection can handle"
+msgstr "Počet účastníkov testu, ktorých je pripojenie schopné spracovať súčasne"
+
+msgid "Number of simultaneous test takers the connection can handle with media intensive"
+msgstr "Počet simultánnych účastníkov testu, ktorých pripojenie dokáže spracovať pri náročných médiách"
+
+msgid "Operating system"
+msgstr "Operačný systém"
+
+msgid "Operating system and web browser"
+msgstr "Operačný systém a webový prehliadač"
+
+msgid "OS"
+msgstr "OS"
+
+msgid "Performances"
+msgstr "Predstavenia"
+
+msgid "Readiness Check"
+msgstr "Kontrola pripravenosti"
+
+msgid "Readiness checks already done"
+msgstr "Kontroly pripravenosti už boli vykonané"
+
+msgid "Readiness diagnostics"
+msgstr "Diagnostika pripravenosti"
+
+msgid "Refresh"
+msgstr "Obnoviť"
+
+msgid "Refresh the page"
+msgstr "Obnoviť stránku"
+
+msgid "Remove"
+msgstr "Odstrániť"
+
+msgid "Remove the readiness check result?"
+msgstr "Odstrániť výsledok kontroly pripravenosti?"
+
+msgid "Remove the selected readiness check results"
+msgstr "Odstrániť vybrané výsledky kontroly pripravenosti"
+
+msgid "Return to the list"
+msgstr "Späť na zoznam"
+
+msgid "School ID"
+msgstr "ID školy"
+
+msgid "School id"
+msgstr "ID školy"
+
+msgid "School ID:"
+msgstr "ID školy:"
+
+msgid "School name"
+msgstr "Názov školy"
+
+msgid "School name:"
+msgstr "Názov školy:"
+
+msgid "School number"
+msgstr "Číslo školy"
+
+msgid "School number:"
+msgstr "Číslo školy:"
+
+msgid "School PIN code (4 digits)"
+msgstr "Školský PIN kód (4 číslice)"
+
+msgid "School PIN:"
+msgstr "PIN školy:"
+
+msgid "Screen Height"
+msgstr "Výška obrazovky"
+
+msgid "Screen resolution"
+msgstr "Rozlíšenie obrazovky"
+
+msgid "Screen Width"
+msgstr "Šírka obrazovky"
+
+msgid "Show Details"
+msgstr "Zobraziť podrobnosti"
+
+msgid "Show fingerprint details"
+msgstr "Zobraziť podrobnosti o odtlačkoch prstov"
+
+msgid "Simultaneous test takers under normal connection conditions."
+msgstr "Súčasní účastníci testu za normálnych podmienok pripojenia."
+
+msgid "Something went wrong ..."
+msgstr "Niečo sa pokazilo..."
+
+msgid "Starting..."
+msgstr "Začína sa..."
+
+msgid "System Compatibility"
+msgstr "Kompatibilita systému"
+
+msgid "Test system compatibility"
+msgstr "Kompatibilita testovacích systémov"
+
+msgid "The device screen does not meet the minimum resolution of %s!"
+msgstr "Obrazovka zariadenia nespĺňa minimálne rozlíšenie %s!"
+
+msgid "The device screen has the minimum required resolution."
+msgstr "Obrazovka zariadenia má minimálne požadované rozlíšenie."
+
+msgid "The device screen resolution meets the requirements."
+msgstr "Rozlíšenie obrazovky zariadenia spĺňa požiadavky."
+
+msgid "The readiness check result have been removed"
+msgstr "Výsledky kontroly pripravenosti boli odstránené"
+
+msgid "The readiness check result will be removed. Continue ?"
+msgstr "Výsledok kontroly pripravenosti bude odstránený. Pokračovať?"
+
+msgid "The selected readiness check results will be removed. Continue ?"
+msgstr "Vybrané výsledky kontroly pripravenosti budú odstránené. Pokračovať?"
+
+msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
+msgstr "Úložná služba poskytovaná na ukladanie diagnostických výsledkov musí byť aktualizovaná na podporu čítania!"
+
+msgid "This browser is not tested."
+msgstr "Tento prehliadač nie je testovaný."
+
+msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
+msgstr "Tento nástroj vykoná niekoľko testov, aby zistil, ako dobre je vaše súčasné prostredie vhodné na spustenie platformy TAO."
+
+msgid "Total"
+msgstr "Celkom"
+
+msgid "Try a test delivery"
+msgstr "Vyskúšajte skúšobnú dodávku"
+
+msgid "Unable to get the workstation name!"
+msgstr "Nepodarilo sa získať názov pracovnej stanice!"
+
+msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
+msgstr "Nestabilná šírka pásma a dočasné výkyvy rýchlosti pripojenia môžu ovplyvniť zážitok účastníka testu."
+
+msgid "Upload speed"
+msgstr "Rýchlosť nahrávania"
+
+msgid "Very slow performances"
+msgstr "Veľmi pomalé výkony"
+
+msgid "Web browser"
+msgstr "Webový prehliadač"
+
+msgid "Workstation"
+msgstr "Pracovná stanica"
+
+msgid "Workstation name"
+msgstr "Názov pracovnej stanice"
+
+msgid "Workstation performances"
+msgstr "Výkony pracovných staníc"
+
+msgid "Workstation:"
+msgstr "Pracovná stanica:"
+
+msgid "Yes"
+msgstr "Áno"
+
+msgid "Your fingerprint is %s"
+msgstr "Váš odtlačok prsta je %s"
+
+msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
+msgstr "Váš odtlačok prsta je %s. Zdá sa však, že sa od poslednej kontroly zmenil. Mohlo by to súvisieť so zmenami vo vašom systéme."
+
+msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
+msgstr "Váš odtlačok prsta je %s. Pri načítavaní údajov sa však vyskytol problém. Možno máte príliš málo miesta na disku."
+
+msgid "Your system is fully compliant."
+msgstr "Váš systém je plne kompatibilný."
+
+msgid "Your system is not optimal, please contact your system administrator."
+msgstr "Váš systém nie je optimálny, kontaktujte, prosím, správcu systému."
+
+msgid "Your system requires a compatibility update, please contact your system administrator."
+msgstr "Váš systém vyžaduje aktualizáciu kompatibility, kontaktujte, prosím, správcu systému."
+
