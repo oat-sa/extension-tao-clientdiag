@@ -22,7 +22,7 @@ namespace oat\taoClientDiagnostic\scripts\update;
 
 use common_ext_ExtensionsManager;
 use common_ext_ExtensionUpdater;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
 use oat\tao\model\accessControl\func\AccessRule;
@@ -271,7 +271,7 @@ class Updater extends common_ext_ExtensionUpdater
                 $sql =  'SELECT ' . Sql::DIAGNOSTIC_ID . ', ' . Sql::DIAGNOSTIC_COMPATIBLE .
                         ' FROM ' . Sql::DIAGNOSTIC_TABLE;
                 $stmt = $persistence->query($sql);
-                $results = $stmt->fetchAll();
+                $results = $stmt->fetchAllAssociative();
 
                 foreach ($results as $result) {
                     if ($result['compatible'] === true || $result['compatible'] == 1) {
