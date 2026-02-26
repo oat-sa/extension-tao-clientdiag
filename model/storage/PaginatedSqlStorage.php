@@ -21,8 +21,8 @@
 
 namespace oat\taoClientDiagnostic\model\storage;
 
-use Doctrine\DBAL\DBALException;
-use Doctrine\DBAL\Driver\PDOStatement;
+use Doctrine\DBAL\Exception as DBALException;
+use Doctrine\DBAL\Result;
 use oat\taoClientDiagnostic\exception\StorageException;
 
 /**
@@ -44,7 +44,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
         }
 
         try {
-            return $this->select(null, [self::DIAGNOSTIC_ID => $id], 1)->fetch(\PDO::FETCH_ASSOC);
+            return $this->select(null, [self::DIAGNOSTIC_ID => $id], 1)->fetchAssociative();
         } catch (DBALException $e) {
             throw new StorageException($e->getMessage());
         }
@@ -62,7 +62,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
     {
         try {
             $offset = ($page - 1) * $size;
-            return $this->select(null, $filter, $size, $offset)->fetchAll(\PDO::FETCH_ASSOC);
+            return $this->select(null, $filter, $size, $offset)->fetchAllAssociative();
         } catch (DBALException $e) {
             throw new StorageException($e->getMessage());
         }
@@ -77,7 +77,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
     public function count($filter = null)
     {
         try {
-            return $this->select('COUNT(*)', $filter)->fetchColumn();
+            return $this->select('COUNT(*)', $filter)->fetchOne();
         } catch (DBALException $e) {
             throw new StorageException($e->getMessage());
         }
@@ -117,7 +117,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
      * @param array $where
      * @param int $size
      * @param int $offset
-     * @return PDOStatement
+     * @return Result
      */
     protected function select($columns = null, $where = null, $size = null, $offset = null)
     {
@@ -139,7 +139,7 @@ class PaginatedSqlStorage extends Sql implements PaginatedStorage
      * @param array $where
      * @param int $size
      * @param int $offset
-     * @return PDOStatement
+     * @return Result
      */
     protected function query($query, $where = null, $size = null, $offset = null)
     {

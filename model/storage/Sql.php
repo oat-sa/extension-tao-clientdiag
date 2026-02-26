@@ -23,7 +23,7 @@ namespace oat\taoClientDiagnostic\model\storage;
 use common_persistence_Persistence;
 use oat\oatbox\service\ConfigurableService;
 use oat\taoClientDiagnostic\exception\StorageException;
-use Doctrine\DBAL\DBALException;
+use Doctrine\DBAL\Exception as DBALException;
 
 /**
  * Class Sql
