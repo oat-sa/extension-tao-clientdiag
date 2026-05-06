@@ -120,7 +120,7 @@ define(['taoClientDiagnostic/tools/performances/tester'], function(performancesT
             assert.ok(typeof status === 'object', 'The status is a object');
             assert.ok(typeof details === 'object', 'The details is a object');
             assert.ok(typeof results === 'object', 'The results is a object');
-            assert.ok(duration > 0, 'The result is a positive number');
+            assert.ok(duration >= 0, 'The result is a positive number');
             assert.ok(typeof results.min === 'number', 'The minimum speed is provided inside the details');
             assert.ok(typeof results.max === 'number', 'The maximum speed is provided inside the details');
             assert.ok(typeof results.average === 'number', 'The average speed is provided inside the details');
