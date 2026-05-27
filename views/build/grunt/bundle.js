@@ -31,6 +31,7 @@ module.exports = function(grunt) {
                     dependencies : ['taoQtiItem', 'taoItems'],
                     outputDir : 'loader',
                     paths: require('./paths.json'),
+                    babelPreTransform: { enabled: true, exclude: ['mathjax'] },
                     bundles : [{
                         name : 'taoClientDiagnostic',
                         default : true,
