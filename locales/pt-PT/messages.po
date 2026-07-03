@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-07 10:43\n"
+"PO-Revision-Date: 2026-07-03 12:14\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: pt\n"
@@ -75,7 +75,7 @@ msgid "Checking the performances..."
 msgstr "A verificar as performances..."
 
 msgid "Checking the screen..."
-msgstr ""
+msgstr "Verificando a tela..."
 
 msgid "Checking upload speed..."
 msgstr "A verificar a velocidade de upload"
@@ -99,7 +99,7 @@ msgid "Diagnostic Tool"
 msgstr "Ferramenta de diagnóstico"
 
 msgid "diagnostics.csv"
-msgstr ""
+msgstr "diagnósticos.csv"
 
 msgid "Done!"
 msgstr "Concluído!"
@@ -114,7 +114,7 @@ msgid "Exit"
 msgstr "Sair"
 
 msgid "Export CSV"
-msgstr ""
+msgstr "Exportar como CSV"
 
 msgid "Failed to get school name"
 msgstr "Não foi possível obter os dados da escola"
@@ -207,7 +207,7 @@ msgid "Missing field %s"
 msgstr "Campo %s não encontrado"
 
 msgid "No"
-msgstr ""
+msgstr "Não"
 
 msgid "No diagnostic service defined"
 msgstr "Serviço de diagnóstico não definido"
@@ -231,7 +231,7 @@ msgid "OS"
 msgstr "SO"
 
 msgid "Performances"
-msgstr ""
+msgstr "Desempenho"
 
 msgid "Readiness Check"
 msgstr "Verificação de prontidão"
@@ -249,7 +249,7 @@ msgid "Refresh the page"
 msgstr "Refrescar a página"
 
 msgid "Remove"
-msgstr ""
+msgstr "Excluir"
 
 msgid "Remove the readiness check result?"
 msgstr "Eliminar o resultado da verificação de prontidão"
@@ -261,13 +261,13 @@ msgid "Return to the list"
 msgstr "Retornar à lista"
 
 msgid "School ID"
-msgstr ""
+msgstr "ID da Escola"
 
 msgid "School id"
-msgstr ""
+msgstr "id da escola"
 
 msgid "School ID:"
-msgstr ""
+msgstr "ID da Escola:"
 
 msgid "School name"
 msgstr "Nome da escola"
@@ -288,13 +288,13 @@ msgid "School PIN:"
 msgstr "Código PIN:"
 
 msgid "Screen Height"
-msgstr ""
+msgstr "Altura da tela"
 
 msgid "Screen resolution"
-msgstr ""
+msgstr "Resolução da tela"
 
 msgid "Screen Width"
-msgstr ""
+msgstr "Largura da tela"
 
 msgid "Show Details"
 msgstr "Mostrar os detalhes"
@@ -303,7 +303,7 @@ msgid "Show fingerprint details"
 msgstr "Mostrar os resultados da identificação"
 
 msgid "Simultaneous test takers under normal connection conditions."
-msgstr ""
+msgstr "Tickets simultâneos sob condições de conexão normais."
 
 msgid "Something went wrong ..."
 msgstr "Algo correu mal ..."
@@ -312,19 +312,19 @@ msgid "Starting..."
 msgstr "A iniciar ..."
 
 msgid "System Compatibility"
-msgstr ""
+msgstr "Compatibilidade do sistema"
 
 msgid "Test system compatibility"
-msgstr ""
+msgstr "Testar compatibilidade do sistema"
 
 msgid "The device screen does not meet the minimum resolution of %s!"
-msgstr ""
+msgstr "A tela do dispositivo não atende à resolução mínima de %s!"
 
 msgid "The device screen has the minimum required resolution."
-msgstr ""
+msgstr "A tela do dispositivo tem a resolução mínima necessária."
 
 msgid "The device screen resolution meets the requirements."
-msgstr ""
+msgstr "A resolução de tela do dispositivo atende aos requisitos."
 
 msgid "The readiness check result have been removed"
 msgstr "O resultado da verificação de prontidão foi removido"
@@ -345,7 +345,7 @@ msgid "This tool will run a number of tests in order to establish how well your 
 msgstr "Esta ferramenta vai executar um conjunto de testes."
 
 msgid "Total"
-msgstr ""
+msgstr "Total:"
 
 msgid "Try a test delivery"
 msgstr "Testar uma entrega de testes"
@@ -354,7 +354,7 @@ msgid "Unable to get the workstation name!"
 msgstr "Não foi possível recolher o nome da máquina!"
 
 msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
-msgstr ""
+msgstr "Largura de banda instável, flutuações temporárias na velocidade de conexão podem afetar a experiência do taker."
 
 msgid "Upload speed"
 msgstr "Velocidade de upload"
@@ -378,7 +378,7 @@ msgid "Workstation:"
 msgstr "Máquina:"
 
 msgid "Yes"
-msgstr ""
+msgstr "sim"
 
 msgid "Your fingerprint is %s"
 msgstr "A identificação desta máquina é %s"

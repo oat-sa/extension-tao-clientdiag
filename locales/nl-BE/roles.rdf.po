@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-07 10:44\n"
+"PO-Revision-Date: 2026-07-03 12:15\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: nl_BE\n"
@@ -14,16 +14,16 @@ msgstr ""
 "X-Crowdin-Project-ID: 590867\n"
 "X-Crowdin-Language: nl-BE\n"
 "X-Crowdin-File: /[oat-sa.extension-tao-clientdiag] develop/locales/en-US/roles.rdf.po\n"
-"X-Crowdin-File-ID: 671\n"
+"X-Crowdin-File-ID: 1241\n"
 "Language-Team: Dutch, Belgium\n"
 
 # http://www.taotesting.com/ontologies/TAOClientDiagnostic.rdf#ReadinessCheckerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#label"
 msgid "Readiness checker"
-msgstr ""
+msgstr "Gereedheid controle"
 
 # http://www.taotesting.com/ontologies/TAOClientDiagnostic.rdf#ReadinessCheckerRole
 msgctxt "http://www.w3.org/2000/01/rdf-schema#comment"
 msgid "Role to check readiness"
-msgstr ""
+msgstr "Rol om de gereedheid te controleren"
 
