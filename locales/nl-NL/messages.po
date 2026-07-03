@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-07 10:43\n"
+"PO-Revision-Date: 2026-07-03 12:14\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: nl\n"
@@ -51,7 +51,7 @@ msgid "Be aware that these tests will take up to several minutes."
 msgstr "Houdt er rekening mee dat deze testen tot enkele minuten kunnen duren."
 
 msgid "Browser"
-msgstr ""
+msgstr "browser"
 
 msgid "Cannot get your fingerprint"
 msgstr "Kan uw vingerafdruk niet verkrijgen"
@@ -93,19 +93,19 @@ msgid "Date"
 msgstr "Datum"
 
 msgid "Details"
-msgstr ""
+msgstr "Beschrijving"
 
 msgid "Diagnostic Tool"
 msgstr "Diagnostische tool"
 
 msgid "diagnostics.csv"
-msgstr ""
+msgstr "diagnostieken.csv"
 
 msgid "Done!"
 msgstr "Klaar!"
 
 msgid "Dynamic UID"
-msgstr ""
+msgstr "Dynamische UID"
 
 msgid "Errors occurred! Please see details"
 msgstr "Er zijn fouten opgetreden! Zie details"
@@ -114,7 +114,7 @@ msgid "Exit"
 msgstr "Afsluiten"
 
 msgid "Export CSV"
-msgstr ""
+msgstr "Exporteren als CSV"
 
 msgid "Failed to get school name"
 msgstr "We zijn er niet in geslaagd om de naam van de school te achterhalen"
@@ -129,7 +129,7 @@ msgid "Fingerprint errors"
 msgstr "Fouten in de vingerafdruk"
 
 msgid "Fingerprint sources"
-msgstr ""
+msgstr "Vingerafdruk bronnen"
 
 msgid "Getting school name..."
 msgstr "Het verkrijgen van schoolnaam..."
@@ -261,13 +261,13 @@ msgid "Return to the list"
 msgstr "Keer terug naar de lijst"
 
 msgid "School ID"
-msgstr ""
+msgstr "School ID"
 
 msgid "School id"
-msgstr ""
+msgstr "School ID"
 
 msgid "School ID:"
-msgstr ""
+msgstr "School ID:"
 
 msgid "School name"
 msgstr "Naam van de school"
@@ -303,7 +303,7 @@ msgid "Show fingerprint details"
 msgstr "Toon vingerafdrukgegevens"
 
 msgid "Simultaneous test takers under normal connection conditions."
-msgstr ""
+msgstr "Gelijktijdige testtakers onder normale verbindingsomstandigheden."
 
 msgid "Something went wrong ..."
 msgstr "Er ging iets verkeerd..."
@@ -312,10 +312,10 @@ msgid "Starting..."
 msgstr "Bezig met starten..."
 
 msgid "System Compatibility"
-msgstr ""
+msgstr "Compatibiliteit systeem"
 
 msgid "Test system compatibility"
-msgstr ""
+msgstr "Test systeem compatibiliteit"
 
 msgid "The device screen does not meet the minimum resolution of %s!"
 msgstr "Het scherm voldoet niet aan de minimale resolutie van %s!"
@@ -354,7 +354,7 @@ msgid "Unable to get the workstation name!"
 msgstr "Het lukt niet om de naam van het werkstation te achterhalen!"
 
 msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
-msgstr ""
+msgstr "Onstabiele bandbreedte, tijdelijke fluctuaties in verbindingssnelheid kunnen de ervaring van de testtaker beïnvloeden."
 
 msgid "Upload speed"
 msgstr "Uploadsnelheid"
