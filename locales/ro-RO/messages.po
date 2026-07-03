@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2025-12-05 08:42\n"
+"PO-Revision-Date: 2026-07-03 12:14\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: ro\n"
@@ -21,380 +21,380 @@ msgstr ""
 "Language-Team: Romanian\n"
 
 msgid "%d sources (%s)"
-msgstr ""
+msgstr "Surse %d (%s)"
 
 msgid "All rights reserved."
-msgstr ""
+msgstr "Toate drepturile rezervate."
 
 msgid "An error occurred! Please verify your input!"
-msgstr ""
+msgstr "A apărut o eroare! Te rugăm să verifici datele introduse!"
 
 msgid "Average bandwidth"
-msgstr ""
+msgstr "Lățime medie de bandă"
 
 msgid "Average intensive bandwidth"
-msgstr ""
+msgstr "Lățime medie mare de bandă"
 
 msgid "Average performances"
-msgstr ""
+msgstr "Performanțe medii"
 
 msgid "Average rendering time"
-msgstr ""
+msgstr "Timpul mediu de redare"
 
 msgid "Average upload speed"
-msgstr ""
+msgstr "Viteza medie de încărcare"
 
 msgid "Bandwidth"
-msgstr ""
+msgstr "Lățimea benzii"
 
 msgid "Be aware that these tests will take up to several minutes."
-msgstr ""
+msgstr "Fiți conștient că aceste teste vor dura până la câteva minute."
 
 msgid "Browser"
-msgstr ""
+msgstr "Browser"
 
 msgid "Cannot get your fingerprint"
-msgstr ""
+msgstr "Nu se poate obține amprenta"
 
 msgid "Cannot retrieve the school name. Please verify your input"
-msgstr ""
+msgstr "Nu se poate prelua numele școlii. Te rugăm să verifici datele introduse"
 
 msgid "Change since last fingerprint"
-msgstr ""
+msgstr "Schimbă de la ultima amprentă"
 
 msgid "Checking the bandwidth..."
-msgstr ""
+msgstr "Verificare lățime de bandă..."
 
 msgid "Checking the browser..."
-msgstr ""
+msgstr "Verificare browser..."
 
 msgid "Checking the media intensive bandwidth..."
-msgstr ""
+msgstr "Verificare lățime de bandă mare pentru mass-media..."
 
 msgid "Checking the performances..."
-msgstr ""
+msgstr "Verificare performanțe..."
 
 msgid "Checking the screen..."
-msgstr ""
+msgstr "Se verifică ecranul..."
 
 msgid "Checking upload speed..."
-msgstr ""
+msgstr "Se verifică viteza de încărcare..."
 
 msgid "Compatible"
-msgstr ""
+msgstr "Compatibil"
 
 msgid "Computing the fingerprint..."
-msgstr ""
+msgstr "Calcularea amprentei..."
 
 msgid "Connect to the diagnostic tool"
-msgstr ""
+msgstr "Conectează-te la instrumentul de diagnosticare"
 
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 msgid "Details"
-msgstr ""
+msgstr "Detalii"
 
 msgid "Diagnostic Tool"
-msgstr ""
+msgstr "Instrument de diagnosticare"
 
 msgid "diagnostics.csv"
-msgstr ""
+msgstr "diagnostics.csv"
 
 msgid "Done!"
-msgstr ""
+msgstr "Gata!"
 
 msgid "Dynamic UID"
-msgstr ""
+msgstr "UID dinamic"
 
 msgid "Errors occurred! Please see details"
-msgstr ""
+msgstr "S-au produs erori! Vedeți detaliile"
 
 msgid "Exit"
-msgstr ""
+msgstr "Ieșire"
 
 msgid "Export CSV"
-msgstr ""
+msgstr "Exportă CSV"
 
 msgid "Failed to get school name"
-msgstr ""
+msgstr "Obținerea numelui școlii a eșuat"
 
 msgid "Fingerprint"
-msgstr ""
+msgstr "Amprentă"
 
 msgid "Fingerprint error"
-msgstr ""
+msgstr "Eroare amprentă"
 
 msgid "Fingerprint errors"
-msgstr ""
+msgstr "Erori de amprentă"
 
 msgid "Fingerprint sources"
-msgstr ""
+msgstr "Surse de amprentă"
 
 msgid "Getting school name..."
-msgstr ""
+msgstr "Obținerea numelui școli..."
 
 msgid "Good bandwidth"
-msgstr ""
+msgstr "Lățime de bandă bună"
 
 msgid "Good performances"
-msgstr ""
+msgstr "Performanțe bune"
 
 msgid "Good upload speed"
-msgstr ""
+msgstr "Viteză bună de încărcare"
 
 msgid "Hide Details"
-msgstr ""
+msgstr "Ascunde detalii"
 
 msgid "Intensive bandwidth"
-msgstr ""
+msgstr "Lățime de bandă mare"
 
 msgid "Interface not available"
-msgstr ""
+msgstr "Interfața nu este disponibilă"
 
 msgid "Launch another readiness check"
-msgstr ""
+msgstr "Lansați o nouă verificare a disponibilității"
 
 msgid "Launch readiness check"
-msgstr ""
+msgstr "Lansați verificarea disponibilității"
 
 msgid "List of readiness checks"
-msgstr ""
+msgstr "Lista controalelor de disponibilitate"
 
 msgid "Loading"
-msgstr ""
+msgstr "Încărcare"
 
 msgid "Log in"
-msgstr ""
+msgstr "Autentificare"
 
 msgid "Login"
-msgstr ""
+msgstr "Autentificare"
 
 msgid "Logout"
-msgstr ""
+msgstr "Deconectare"
 
 msgid "Low bandwidth"
-msgstr ""
+msgstr "Lățime de bandă scăzută"
 
 msgid "Low upload speed"
-msgstr ""
+msgstr "Viteză mică de încărcare"
 
 msgid "Max upload speed"
-msgstr ""
+msgstr "Viteza maximă de încărcare"
 
 msgid "Maximum bandwidth"
-msgstr ""
+msgstr "Lățime de bandă maximă"
 
 msgid "Maximum intensive bandwidth"
-msgstr ""
+msgstr "Lățime de bandă maximă intensivă"
 
 msgid "Maximum rendering time"
-msgstr ""
+msgstr "Timpul maxim de redare"
 
 msgid "Media intensive bandwidth"
-msgstr ""
+msgstr "Lățime de bandă mare media"
 
 msgid "Minimum bandwidth"
-msgstr ""
+msgstr "Lățime minimă de bandă"
 
 msgid "Minimum intensive bandwidth"
-msgstr ""
+msgstr "Lățime de bandă minimă intensivă"
 
 msgid "Minimum rendering time"
-msgstr ""
+msgstr "Timpul minim de redare"
 
 msgid "Missing field %s"
-msgstr ""
+msgstr "Câmp lipsă %s"
 
 msgid "No"
-msgstr ""
+msgstr "Nr"
 
 msgid "No diagnostic service defined"
-msgstr ""
+msgstr "Niciun serviciu de diagnostic definit"
 
 msgid "No readiness checks have been done!"
-msgstr ""
+msgstr "Nu au fost efectuate verificări privind disponibilitatea!"
 
 msgid "Number of simultaneous test takers the connection can handle"
-msgstr ""
+msgstr "Numărul de încercări simultane pe care conexiunea le poate manevra"
 
 msgid "Number of simultaneous test takers the connection can handle with media intensive"
-msgstr ""
+msgstr "Numărul de încercări simultane la care conexiunea se poate ocupa cu media intensivă"
 
 msgid "Operating system"
-msgstr ""
+msgstr "Sistem de operare"
 
 msgid "Operating system and web browser"
-msgstr ""
+msgstr "Sistem de operare și browser web"
 
 msgid "OS"
-msgstr ""
+msgstr "Sistem de operare"
 
 msgid "Performances"
-msgstr ""
+msgstr "Performanțe"
 
 msgid "Readiness Check"
-msgstr ""
+msgstr "Verificare Readiness"
 
 msgid "Readiness checks already done"
-msgstr ""
+msgstr "Verificările de pregătire deja efectuate"
 
 msgid "Readiness diagnostics"
-msgstr ""
+msgstr "Diagnosticare de pregătire"
 
 msgid "Refresh"
-msgstr ""
+msgstr "Reîmprospătează"
 
 msgid "Refresh the page"
-msgstr ""
+msgstr "Reîmprospătează pagina"
 
 msgid "Remove"
-msgstr ""
+msgstr "Elimină"
 
 msgid "Remove the readiness check result?"
-msgstr ""
+msgstr "Eliminați rezultatul verificării disponibilității?"
 
 msgid "Remove the selected readiness check results"
-msgstr ""
+msgstr "Eliminați rezultatele de verificare selectate"
 
 msgid "Return to the list"
-msgstr ""
+msgstr "Revenire la listă"
 
 msgid "School ID"
-msgstr ""
+msgstr "ID-ul școlii"
 
 msgid "School id"
-msgstr ""
+msgstr "ID Școală"
 
 msgid "School ID:"
-msgstr ""
+msgstr "ID-ul şcolii:"
 
 msgid "School name"
-msgstr ""
+msgstr "Numele şcolii"
 
 msgid "School name:"
-msgstr ""
+msgstr "Numele școlii:"
 
 msgid "School number"
-msgstr ""
+msgstr "Numărul școlii"
 
 msgid "School number:"
-msgstr ""
+msgstr "Numărul școlii:"
 
 msgid "School PIN code (4 digits)"
-msgstr ""
+msgstr "Codul PIN al școlii (4 cifre)"
 
 msgid "School PIN:"
-msgstr ""
+msgstr "Codul PIN al școlii:"
 
 msgid "Screen Height"
-msgstr ""
+msgstr "Înălțimea ecranului"
 
 msgid "Screen resolution"
-msgstr ""
+msgstr "Rezoluția ecranului"
 
 msgid "Screen Width"
-msgstr ""
+msgstr "Lățime ecran"
 
 msgid "Show Details"
-msgstr ""
+msgstr "Arată detalii"
 
 msgid "Show fingerprint details"
-msgstr ""
+msgstr "Afișare detalii amprentă"
 
 msgid "Simultaneous test takers under normal connection conditions."
-msgstr ""
+msgstr "Testare simultană în condiţii normale de conectare."
 
 msgid "Something went wrong ..."
-msgstr ""
+msgstr "Ceva nu a mers bine..."
 
 msgid "Starting..."
-msgstr ""
+msgstr "Pornire..."
 
 msgid "System Compatibility"
-msgstr ""
+msgstr "Compatibilitatea sistemului"
 
 msgid "Test system compatibility"
-msgstr ""
+msgstr "Testează compatibilitatea sistemului"
 
 msgid "The device screen does not meet the minimum resolution of %s!"
-msgstr ""
+msgstr "Ecranul dispozitivului nu îndeplinește rezoluția minimă de %s!"
 
 msgid "The device screen has the minimum required resolution."
-msgstr ""
+msgstr "Ecranul dispozitivului are rezoluția minimă necesară."
 
 msgid "The device screen resolution meets the requirements."
-msgstr ""
+msgstr "Rezoluția ecranului dispozitivului îndeplinește cerințele."
 
 msgid "The readiness check result have been removed"
-msgstr ""
+msgstr "Rezultatul verificării disponibilității a fost eliminat"
 
 msgid "The readiness check result will be removed. Continue ?"
-msgstr ""
+msgstr "Rezultatul verificării disponibilității va fi eliminat. Continuați?"
 
 msgid "The selected readiness check results will be removed. Continue ?"
-msgstr ""
+msgstr "Rezultatele de verificare a disponibilității selectate vor fi eliminate. Continuați?"
 
 msgid "The storage service provided to store the diagnostic results must be upgraded to support reads!"
-msgstr ""
+msgstr "Serviciul de stocare furnizat pentru a stoca rezultatele diagnostice trebuie să fie actualizat pentru a putea citi citire!"
 
 msgid "This browser is not tested."
-msgstr ""
+msgstr "Acest browser nu este testat."
 
 msgid "This tool will run a number of tests in order to establish how well your current environment is suitable to run the TAO platform."
-msgstr ""
+msgstr "Acest instrument va rula o serie de teste pentru a stabili cât de bine este mediul curent adecvat pentru a rula platforma TAO."
 
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 msgid "Try a test delivery"
-msgstr ""
+msgstr "Încercați o livrare de test"
 
 msgid "Unable to get the workstation name!"
-msgstr ""
+msgstr "Nu s-a putut obține numele postului de lucru!"
 
 msgid "Unstable bandwidth, temporary fluctuations in connection speed may affect test taker experience."
-msgstr ""
+msgstr "Lățimea de bandă instabilă, fluctuațiile temporare ale vitezei de conectare pot afecta experiența persoanei care efectuează încercarea."
 
 msgid "Upload speed"
-msgstr ""
+msgstr "Viteza de încărcare"
 
 msgid "Very slow performances"
-msgstr ""
+msgstr "Performanțe foarte lente"
 
 msgid "Web browser"
-msgstr ""
+msgstr "Browser web"
 
 msgid "Workstation"
-msgstr ""
+msgstr "Stație de lucru"
 
 msgid "Workstation name"
-msgstr ""
+msgstr "Numele postului de lucru"
 
 msgid "Workstation performances"
-msgstr ""
+msgstr "Performanțele posturilor de lucru"
 
 msgid "Workstation:"
-msgstr ""
+msgstr "Lucrători:"
 
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 msgid "Your fingerprint is %s"
-msgstr ""
+msgstr "Amprenta ta este %s"
 
 msgid "Your fingerprint is %s. However it seems it has changed since the last check. It could be related to changes in your system."
-msgstr ""
+msgstr "Amprenta ta este %s. Cu toate acestea, se pare că s-a schimbat de la ultima verificare. Ar putea fi legată de modificările din sistemul tău."
 
 msgid "Your fingerprint is %s. However we encountered issue while retrieving the data. Maybe your available disk space is too small"
-msgstr ""
+msgstr "Amprenta ta este %s. Cu toate acestea, am întâmpinat probleme în timpul recuperării datelor. Poate spațiul disponibil pe disc este prea mic"
 
 msgid "Your system is fully compliant."
-msgstr ""
+msgstr "Sistemul dvs. este pe deplin conform."
 
 msgid "Your system is not optimal, please contact your system administrator."
-msgstr ""
+msgstr "Sistemul nu este optim, vă rugăm să contactaţi administratorul de sistem."
 
 msgid "Your system requires a compatibility update, please contact your system administrator."
-msgstr ""
+msgstr "Sistemul necesită o actualizare de compatibilitate, vă rugăm să contactați administratorul de sistem."
 
