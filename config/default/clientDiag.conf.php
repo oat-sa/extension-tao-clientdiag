@@ -380,6 +380,28 @@ return array(
             ],
 
             /**
+             * Microphone detection (INV-1321 / INVALSI audio items)
+             * @type array
+             */
+            'microphone' => [
+                'enabled' => true,
+                'level' => 1,
+                'tester' => 'taoClientDiagnostic/tools/microphone/tester',
+                'customMsgKey' => 'diagMicrophoneCheckResult',
+            ],
+
+            /**
+             * Audio output playback smoke test (INV-1321)
+             * @type array
+             */
+            'audio_playback' => [
+                'enabled' => true,
+                'level' => 1,
+                'tester' => 'taoClientDiagnostic/tools/audioPlayback/tester',
+                'customMsgKey' => 'diagAudioPlaybackCheckResult',
+            ],
+
+            /**
              * Browser fingerprint config
              * @type array
              */
