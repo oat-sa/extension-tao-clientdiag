@@ -380,7 +380,7 @@ return array(
             ],
 
             /**
-             * Microphone detection (INV-1321 / INVALSI audio items)
+             * Microphone detection
              * @type array
              */
             'microphone' => [
@@ -391,7 +391,7 @@ return array(
             ],
 
             /**
-             * Audio output playback smoke test (INV-1321)
+             * Audio output playback smoke test
              * @type array
              */
             'audio_playback' => [

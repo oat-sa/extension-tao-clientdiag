@@ -152,13 +152,13 @@ class CompatibilityCheckerDummy extends CompatibilityChecker
         $this->browserDetector = $browserDetector;
     }
 
-    public function getOsDetector(): Os
-    {
-        return $this->osDetector;
-    }
-
     protected function getBrowserDetector(): HttpRequestBrowserDetector
     {
         return $this->browserDetector;
+    }
+
+    public function getOsDetector(): Os
+    {
+        return $this->osDetector;
     }
 }
