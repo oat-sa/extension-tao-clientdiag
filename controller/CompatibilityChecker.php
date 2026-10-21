@@ -78,6 +78,30 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             'osVersion' => $this->getOsDetector()->getVersion(),
             'isMobile' => $this->getOsDetector()->isMobile(),
         ];
+        
+        // @TODO @FIXME TMP code - Apply proper fix after
+        $request = $this->getPsrRequest();
+        $userAgent = $request->getHeaderLine('User-Agent');
+
+        $isKiosked = (bool) preg_match(
+            '/\b(?:kiosked|KioskED-[A-Za-z0-9]+)\/(?<version>\d+(?:\.\d+)*)/i',
+            $userAgent,
+            $m
+        );
+        $version = $isKiosked ? $m['version'] : null; // e.g. "1.8.2"
+
+        \common_Logger::i('========================== $isKiosked ' . var_export($isKiosked, true));
+        \common_Logger::i('========================== $version ' . var_export($version, true));
+        \common_Logger::i('========================== ' . $userAgent . ' === ' . __CLASS__);
+        \common_Logger::i('========================== ' . var_export($_REQUEST, true));
+
+        if ($isKiosked) {
+            $result['browser'] = 'kiosked';
+            $result['browserVersion'] = $version;
+        }
+
+        // @TODO @FIXME TMP code - Apply proper fix after
+                 
         $this->returnJson($result);
     }
 
