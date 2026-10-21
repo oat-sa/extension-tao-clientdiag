@@ -22,10 +22,12 @@ declare(strict_types=1);
 
 namespace oat\taoClientDiagnostic\test\unit;
 
-use oat\taoClientDiagnostic\model\CompatibilityChecker;
-use Sinergi\BrowserDetector\Browser;
-use Sinergi\BrowserDetector\Os;
+use GuzzleHttp\Psr7\ServerRequest;
 use oat\generis\test\TestCase;
+use oat\tao\model\browser\Entity\Browser as DetectedBrowser;
+use oat\tao\model\browser\Service\HttpRequestBrowserDetector;
+use oat\taoClientDiagnostic\model\CompatibilityChecker;
+use Sinergi\BrowserDetector\Os;
 
 class CompatibilityCheckerTest extends TestCase
 {
@@ -88,16 +90,26 @@ class CompatibilityCheckerTest extends TestCase
             $supported,
             $excludedBrowsers,
             $excludedOS,
-            $this->getDetectorMock(Os::class, $osName, $osVersion, false),
-            $this->getDetectorMock(Browser::class, $browserName, $browserVersion, false)
+            $this->getOsDetectorMock($osName, $osVersion, false),
+            $this->getBrowserDetectorMock($browserName, $browserVersion)
         );
 
-        $this->assertEquals($checker->isCompatibleConfig(), $expectedResult);
+        $request = new ServerRequest('GET', '/');
+
+        $this->assertEquals($checker->isCompatibleConfig($request), $expectedResult);
     }
 
-    protected function getDetectorMock($class, $name, $version, $mobile)
+    protected function getBrowserDetectorMock(string $name, string $version): HttpRequestBrowserDetector
     {
-        $detector = $this->getMockBuilder($class)
+        $detector = $this->createMock(HttpRequestBrowserDetector::class);
+        $detector->method('detect')->willReturn(new DetectedBrowser($name, $version));
+
+        return $detector;
+    }
+
+    protected function getOsDetectorMock($name, $version, $mobile)
+    {
+        $detector = $this->getMockBuilder(Os::class)
             ->disableOriginalConstructor()
             ->setMethods(['getName', 'getVersion', 'isMobile'])
             ->getMock();
@@ -140,13 +152,13 @@ class CompatibilityCheckerDummy extends CompatibilityChecker
         $this->browserDetector = $browserDetector;
     }
 
-    protected function getBrowserDetector(): Browser
-    {
-        return $this->browserDetector;
-    }
-
     public function getOsDetector(): Os
     {
         return $this->osDetector;
+    }
+
+    protected function getBrowserDetector(): HttpRequestBrowserDetector
+    {
+        return $this->browserDetector;
     }
 }

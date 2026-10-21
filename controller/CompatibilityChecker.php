@@ -22,6 +22,7 @@ namespace oat\taoClientDiagnostic\controller;
 
 use common_exception_MissingParameter;
 use common_session_SessionManager;
+use oat\tao\model\browser\Service\HttpRequestBrowserDetector;
 use oat\tao\model\mvc\DefaultUrlService;
 use oat\taoClientDiagnostic\exception\StorageException;
 use oat\taoClientDiagnostic\model\authorization\Authorization;
@@ -29,7 +30,6 @@ use oat\taoClientDiagnostic\model\CompatibilityChecker as CompatibilityCheckerMo
 use oat\taoClientDiagnostic\model\diagnostic\DiagnosticServiceInterface;
 use oat\taoClientDiagnostic\model\schoolName\SchoolNameService;
 use oat\taoClientDiagnostic\model\storage\Storage;
-use Sinergi\BrowserDetector\Browser;
 use Sinergi\BrowserDetector\Os;
 use tao_helpers_Display;
 
@@ -71,37 +71,15 @@ class CompatibilityChecker extends \tao_actions_CommonModule
      */
     public function whichBrowser()
     {
+        $browser = $this->getBrowserDetector()->detect($this->getPsrRequest());
         $result = [
-            'browser' =>  $this->getBrowserDetector()->getName(),
-            'browserVersion' => $this->getBrowserDetector()->getVersion(),
+            'browser' =>  $browser->name,
+            'browserVersion' => $browser->version,
             'os' => $this->getOsDetector()->getName(),
             'osVersion' => $this->getOsDetector()->getVersion(),
             'isMobile' => $this->getOsDetector()->isMobile(),
         ];
-        
-        // @TODO @FIXME TMP code - Apply proper fix after
-        $request = $this->getPsrRequest();
-        $userAgent = $request->getHeaderLine('User-Agent');
 
-        $isKiosked = (bool) preg_match(
-            '/\b(?:kiosked|KioskED-[A-Za-z0-9]+)\/(?<version>\d+(?:\.\d+)*)/i',
-            $userAgent,
-            $m
-        );
-        $version = $isKiosked ? $m['version'] : null; // e.g. "1.8.2"
-
-        \common_Logger::i('========================== $isKiosked ' . var_export($isKiosked, true));
-        \common_Logger::i('========================== $version ' . var_export($version, true));
-        \common_Logger::i('========================== ' . $userAgent . ' === ' . __CLASS__);
-        \common_Logger::i('========================== ' . var_export($_REQUEST, true));
-
-        if ($isKiosked) {
-            $result['browser'] = 'kiosked';
-            $result['browserVersion'] = $version;
-        }
-
-        // @TODO @FIXME TMP code - Apply proper fix after
-                 
         $this->returnJson($result);
     }
 
@@ -117,7 +95,7 @@ class CompatibilityChecker extends \tao_actions_CommonModule
             $id   = $this->getId();
 
             $checker            = $this->getServiceLocator()->get(CompatibilityCheckerModel::SERVICE_ID);
-            $isCompatible       = (int)$checker->isCompatibleConfig();
+            $isCompatible       = (int)$checker->isCompatibleConfig($this->getPsrRequest());
             $data['compatible'] = $isCompatible;
 
             try {
@@ -413,16 +391,6 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     }
 
     /**
-     * Get the browser detector
-     *
-     * @return Browser
-     */
-    protected function getBrowserDetector()
-    {
-        return new Browser();
-    }
-
-    /**
      * Get the operating system detector
      *
      * @return Os
@@ -430,5 +398,10 @@ class CompatibilityChecker extends \tao_actions_CommonModule
     protected function getOsDetector()
     {
         return new Os();
+    }
+
+    private function getBrowserDetector(): HttpRequestBrowserDetector
+    {
+        return $this->getServiceManager()->getContainer()->get(HttpRequestBrowserDetector::class);
     }
 }
