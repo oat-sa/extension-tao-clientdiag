@@ -384,7 +384,7 @@ return array(
              * @type array
              */
             'microphone' => [
-                'enabled' => true,
+                'enabled' => false,
                 'level' => 1,
                 'tester' => 'taoClientDiagnostic/tools/microphone/tester',
                 'customMsgKey' => 'diagMicrophoneCheckResult',
@@ -395,7 +395,7 @@ return array(
              * @type array
              */
             'audio_playback' => [
-                'enabled' => true,
+                'enabled' => false,
                 'level' => 1,
                 'tester' => 'taoClientDiagnostic/tools/audioPlayback/tester',
                 'customMsgKey' => 'diagAudioPlaybackCheckResult',
