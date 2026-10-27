@@ -376,7 +376,7 @@ return array(
                  * The API to call for the detailed list of default supported browsers
                  * @type string
                  */
-                'browserslistUrl' => 'https://raw.githubusercontent.com/oat-sa/browserslist-app-tao/feat/INV-1156/lockdown-browser-poc/public/api.json',
+                'browserslistUrl' => 'https://oat-sa.github.io/browserslist-app-tao/api.json',
             ],
 
             /**
