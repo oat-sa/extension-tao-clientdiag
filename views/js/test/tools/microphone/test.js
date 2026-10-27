@@ -9,7 +9,21 @@
 define(['taoClientDiagnostic/tools/microphone/tester'], function (microphoneTester) {
     'use strict';
 
-    var mediaDevicesBackup;
+    var mediaDevicesDescriptor = Object.getOwnPropertyDescriptor(navigator, 'mediaDevices');
+
+    function stubMediaDevices(value) {
+        Object.defineProperty(navigator, 'mediaDevices', {
+            configurable: true,
+            writable: true,
+            value: value
+        });
+    }
+
+    function restoreMediaDevices() {
+        if (mediaDevicesDescriptor) {
+            Object.defineProperty(navigator, 'mediaDevices', mediaDevicesDescriptor);
+        }
+    }
 
     function fakeStream(label) {
         var track = {
@@ -27,12 +41,8 @@ define(['taoClientDiagnostic/tools/microphone/tester'], function (microphoneTest
         };
     }
 
-    QUnit.testStart(function () {
-        mediaDevicesBackup = navigator.mediaDevices;
-    });
-
     QUnit.testDone(function () {
-        navigator.mediaDevices = mediaDevicesBackup;
+        restoreMediaDevices();
     });
 
     QUnit.module('API');
@@ -144,7 +154,7 @@ define(['taoClientDiagnostic/tools/microphone/tester'], function (microphoneTest
 
         assert.expect(3);
 
-        navigator.mediaDevices = undefined;
+        stubMediaDevices({});
 
         microphoneTester({}).start(function (status, summary, result) {
             assert.strictEqual(result.ok, false, 'The check failed');
@@ -160,11 +170,11 @@ define(['taoClientDiagnostic/tools/microphone/tester'], function (microphoneTest
 
         assert.expect(4);
 
-        navigator.mediaDevices = {
+        stubMediaDevices({
             getUserMedia: function () {
                 return Promise.resolve(fakeStream('USB Mic'));
             }
-        };
+        });
 
         microphoneTester({}).start(function (status, summary, result) {
             assert.strictEqual(result.ok, true, 'The check succeeded');
@@ -181,11 +191,11 @@ define(['taoClientDiagnostic/tools/microphone/tester'], function (microphoneTest
 
         assert.expect(2);
 
-        navigator.mediaDevices = {
+        stubMediaDevices({
             getUserMedia: function () {
                 return Promise.reject({ name: 'NotAllowedError' });
             }
-        };
+        });
 
         microphoneTester({}).start(function (status, summary, result) {
             assert.strictEqual(result.ok, false, 'The check failed');
@@ -200,11 +210,11 @@ define(['taoClientDiagnostic/tools/microphone/tester'], function (microphoneTest
 
         assert.expect(2);
 
-        navigator.mediaDevices = {
+        stubMediaDevices({
             getUserMedia: function () {
                 return Promise.reject({ name: 'NotFoundError' });
             }
-        };
+        });
 
         microphoneTester({}).start(function (status, summary, result) {
             assert.strictEqual(result.ok, false, 'The check failed');
@@ -219,11 +229,11 @@ define(['taoClientDiagnostic/tools/microphone/tester'], function (microphoneTest
 
         assert.expect(3);
 
-        navigator.mediaDevices = {
+        stubMediaDevices({
             getUserMedia: function () {
                 return new Promise(function () {});
             }
-        };
+        });
 
         microphoneTester({ permissionTimeoutMs: 20 }).start(function (status, summary, result) {
             assert.strictEqual(result.ok, false, 'The check failed');
