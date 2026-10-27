@@ -30,7 +30,7 @@ use oat\tao\scripts\tools\migrations\AbstractMigration;
  */
 final class Version202109201454385081_taoClientDiagnostic extends AbstractMigration
 {
-    private $browserlistUrl = 'https://oat-sa.github.io/browserslist-app-tao/api.json';
+    private $browserlistUrl = 'https://raw.githubusercontent.com/oat-sa/browserslist-app-tao/feat/INV-1156/lockdown-browser-poc/public/api.json';
 
     public function getDescription(): string
     {
