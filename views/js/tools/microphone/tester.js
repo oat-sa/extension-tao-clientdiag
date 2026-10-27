@@ -17,6 +17,8 @@ define([
 
     const logger = loggerFactory('taoClientDiagnostic/microphone');
 
+    const PERMISSION_TIMEOUT_MS = 30000;
+
     const _defaults = {
         id: 'microphone'
     };
@@ -65,25 +67,33 @@ define([
             });
         }
 
-        return navigator.mediaDevices
-            .getUserMedia({ audio: true, video: false })
-            .then(stream => {
+        return Promise.race([
+            navigator.mediaDevices.getUserMedia({ audio: true, video: false }).then(stream => {
                 const track = stream.getAudioTracks()[0];
                 const label = (track && track.label) || __('Default microphone');
 
                 stopStream(stream);
 
                 return { ok: true, label };
+            }),
+            new Promise((_, reject) => {
+                window.setTimeout(() => {
+                    reject(
+                        Object.assign(new Error('getUserMedia timed out'), {
+                            name: 'TimeoutError'
+                        })
+                    );
+                }, PERMISSION_TIMEOUT_MS);
             })
-            .catch(err => {
-                logger.error(err);
+        ]).catch(err => {
+            logger.error(err);
 
-                return {
-                    ok: false,
-                    label: err && err.name === 'NotFoundError' ? __('No microphone detected') : __('Denied or unavailable'),
-                    errorName: err && err.name
-                };
-            });
+            return {
+                ok: false,
+                label: err && err.name === 'NotFoundError' ? __('No microphone detected') : __('Denied or unavailable'),
+                errorName: err && err.name
+            };
+        });
     }
 
     return function microphoneTester(config) {

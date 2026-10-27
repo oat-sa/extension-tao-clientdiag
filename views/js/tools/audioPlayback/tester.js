@@ -17,6 +17,8 @@ define([
 
     const logger = loggerFactory('taoClientDiagnostic/audioPlayback');
 
+    const RESUME_TIMEOUT_MS = 3000;
+
     const _defaults = {
         id: 'audio_playback',
         toneDurationMs: 250,
@@ -89,11 +91,26 @@ define([
                 oscillator.stop(ctx.currentTime + durationMs / 1000);
             });
 
-        if (ctx.state === 'suspended') {
-            return ctx.resume().then(run);
-        }
+        const afterResume =
+            ctx.state === 'suspended'
+                ? Promise.race([
+                      ctx.resume(),
+                      new Promise((_, reject) => {
+                          window.setTimeout(() => {
+                              reject(
+                                  Object.assign(new Error('AudioContext resume timed out'), {
+                                      name: 'NotAllowedError'
+                                  })
+                              );
+                          }, RESUME_TIMEOUT_MS);
+                      })
+                  ])
+                : Promise.resolve();
 
-        return run();
+        return afterResume.then(run).catch(err => {
+            ctx.close().catch(() => {});
+            return Promise.reject(err);
+        });
     }
 
     return function audioPlaybackTester(config) {
