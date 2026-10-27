@@ -22,7 +22,8 @@ define([
     const _defaults = {
         id: 'audio_playback',
         toneDurationMs: 250,
-        toneFrequencyHz: 440
+        toneFrequencyHz: 440,
+        resumeTimeoutMs: RESUME_TIMEOUT_MS
     };
 
     const _thresholds = [
@@ -56,7 +57,7 @@ define([
      * @param {number} frequencyHz
      * @returns {Promise<'ok'|'soft-fail'>}
      */
-    function playTestTone(durationMs, frequencyHz) {
+    function playTestTone(durationMs, frequencyHz, resumeTimeoutMs) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
 
         if (!AudioContext) {
@@ -102,7 +103,7 @@ define([
                                       name: 'NotAllowedError'
                                   })
                               );
-                          }, RESUME_TIMEOUT_MS);
+                          }, resumeTimeoutMs);
                       })
                   ])
                 : Promise.resolve();
@@ -119,7 +120,11 @@ define([
 
         return {
             start(done) {
-                playTestTone(initConfig.toneDurationMs, initConfig.toneFrequencyHz)
+                playTestTone(
+                    initConfig.toneDurationMs,
+                    initConfig.toneFrequencyHz,
+                    initConfig.resumeTimeoutMs
+                )
                     .then(() => {
                         const status = this.getFeedback(100);
                         const summary = this.getSummary({ ok: true });

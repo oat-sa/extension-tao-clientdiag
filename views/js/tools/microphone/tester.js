@@ -20,7 +20,8 @@ define([
     const PERMISSION_TIMEOUT_MS = 30000;
 
     const _defaults = {
-        id: 'microphone'
+        id: 'microphone',
+        permissionTimeoutMs: PERMISSION_TIMEOUT_MS
     };
 
     const _thresholds = [
@@ -58,7 +59,7 @@ define([
     /**
      * @returns {Promise<{ ok: boolean, label: string, errorName?: string }>}
      */
-    function probeMicrophone() {
+    function probeMicrophone(permissionTimeoutMs) {
         if (!navigator.mediaDevices || typeof navigator.mediaDevices.getUserMedia !== 'function') {
             return Promise.resolve({
                 ok: false,
@@ -83,7 +84,7 @@ define([
                             name: 'TimeoutError'
                         })
                     );
-                }, PERMISSION_TIMEOUT_MS);
+                }, permissionTimeoutMs);
             })
         ]).catch(err => {
             logger.error(err);
@@ -102,7 +103,7 @@ define([
 
         return {
             start(done) {
-                probeMicrophone().then(result => {
+                probeMicrophone(initConfig.permissionTimeoutMs).then(result => {
                     const percentage = result.ok ? 100 : 0;
                     const status = this.getFeedback(percentage);
                     const summary = this.getSummary(result);
