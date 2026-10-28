@@ -228,7 +228,7 @@ class CompatibilityChecker extends ConfigurableService
         return self::COMPATIBILITY_NOT_TESTED;
     }
 
-    protected function getBrowserDetector(): HttpRequestBrowserDetector
+    private function getBrowserDetector(): HttpRequestBrowserDetector
     {
         return $this->getServiceManager()->getContainer()->get(HttpRequestBrowserDetector::class);
     }
