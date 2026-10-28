@@ -47,7 +47,7 @@ define([
         browserVersionExtension: 'taoClientDiagnostic',
         action: 'check',
         controller: 'DiagnosticChecker',
-        browserslistUrl: 'https://oat-sa.github.io/browserslist-app-tao/api.json'
+        browserslistUrl: 'https://raw.githubusercontent.com/oat-sa/browserslist-app-tao/feat/INV-1156/lockdown-browser-poc/public/api.json'
     };
 
     /**

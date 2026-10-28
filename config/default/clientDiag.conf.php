@@ -380,6 +380,28 @@ return array(
             ],
 
             /**
+             * Microphone detection
+             * @type array
+             */
+            'microphone' => [
+                'enabled' => false,
+                'level' => 1,
+                'tester' => 'taoClientDiagnostic/tools/microphone/tester',
+                'customMsgKey' => 'diagMicrophoneCheckResult',
+            ],
+
+            /**
+             * Audio output playback smoke test
+             * @type array
+             */
+            'audio_playback' => [
+                'enabled' => false,
+                'level' => 1,
+                'tester' => 'taoClientDiagnostic/tools/audioPlayback/tester',
+                'customMsgKey' => 'diagAudioPlaybackCheckResult',
+            ],
+
+            /**
              * Browser fingerprint config
              * @type array
              */

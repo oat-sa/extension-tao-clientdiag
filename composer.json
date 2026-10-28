@@ -24,7 +24,7 @@
         "oat-sa/oatbox-extension-installer": "~1.1||dev-master",
         "sinergi/browser-detector": "^6.0.2",
         "oat-sa/generis" : ">=17.0.0",
-        "oat-sa/tao-core" : ">=56.0.0",
+        "oat-sa/tao-core" : "dev-feat/INV-1156/lockdown-browser-poc as 99.99",
         "oat-sa/extension-tao-itemqti" : ">=27.0.0"
     },
     "autoload" : {

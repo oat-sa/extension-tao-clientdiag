@@ -22,13 +22,18 @@ declare(strict_types=1);
 
 namespace oat\taoClientDiagnostic\test\unit;
 
+use GuzzleHttp\Psr7\ServerRequest;
+use oat\generis\test\ServiceManagerMockTrait;
+use oat\tao\model\browser\Entity\Browser as DetectedBrowser;
+use oat\tao\model\browser\Service\HttpRequestBrowserDetector;
 use oat\taoClientDiagnostic\model\CompatibilityChecker;
-use Sinergi\BrowserDetector\Browser;
+use PHPUnit\Framework\TestCase;
 use Sinergi\BrowserDetector\Os;
-use oat\generis\test\TestCase;
 
 class CompatibilityCheckerTest extends TestCase
 {
+    use ServiceManagerMockTrait;
+
     public function versionsProvider()
     {
         return [
@@ -88,16 +93,31 @@ class CompatibilityCheckerTest extends TestCase
             $supported,
             $excludedBrowsers,
             $excludedOS,
-            $this->getDetectorMock(Os::class, $osName, $osVersion, false),
-            $this->getDetectorMock(Browser::class, $browserName, $browserVersion, false)
+            $this->getOsDetectorMock($osName, $osVersion, false)
         );
 
-        $this->assertEquals($checker->isCompatibleConfig(), $expectedResult);
+        $checker->setServiceManager(
+            $this->getServiceManagerMock([
+                HttpRequestBrowserDetector::class => $this->getBrowserDetectorMock($browserName, $browserVersion)
+            ])
+        );
+
+        $request = new ServerRequest('GET', '/');
+
+        $this->assertEquals($checker->isCompatibleConfig($request), $expectedResult);
     }
 
-    protected function getDetectorMock($class, $name, $version, $mobile)
+    private function getBrowserDetectorMock(string $name, string $version): HttpRequestBrowserDetector
     {
-        $detector = $this->getMockBuilder($class)
+        $detector = $this->createMock(HttpRequestBrowserDetector::class);
+        $detector->method('detect')->willReturn(new DetectedBrowser($name, $version));
+
+        return $detector;
+    }
+
+    private function getOsDetectorMock($name, $version, $mobile)
+    {
+        $detector = $this->getMockBuilder(Os::class)
             ->disableOriginalConstructor()
             ->setMethods(['getName', 'getVersion', 'isMobile'])
             ->getMock();
@@ -122,30 +142,22 @@ class CompatibilityCheckerTest extends TestCase
 class CompatibilityCheckerDummy extends CompatibilityChecker
 {
     private $osDetector;
-    private $browserDetector;
 
     public function __construct(
         $compatibility,
         $supported,
         $excludedBrowsers,
         $excludedOS,
-        $osDetector,
-        $browserDetector
+        $osDetector
     ) {
         $this->compatibility = $compatibility;
         $this->supported = $supported;
         $this->excludedBrowsers = $excludedBrowsers;
         $this->excludedOS = $excludedOS;
         $this->osDetector = $osDetector;
-        $this->browserDetector = $browserDetector;
     }
 
-    protected function getBrowserDetector(): Browser
-    {
-        return $this->browserDetector;
-    }
-
-    public function getOsDetector(): Os
+    protected function getOsDetector(): Os
     {
         return $this->osDetector;
     }
