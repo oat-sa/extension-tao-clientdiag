@@ -93,7 +93,7 @@ class CompatibilityCheckerTest extends TestCase
             $supported,
             $excludedBrowsers,
             $excludedOS,
-            $this->getOsDetectorMock($osName, $osVersion, false)         
+            $this->getOsDetectorMock($osName, $osVersion, false)
         );
 
         $checker->setServiceManager(
