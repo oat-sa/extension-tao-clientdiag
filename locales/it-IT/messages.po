@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: tao-open-source\n"
-"PO-Revision-Date: 2023-06-07 10:43\n"
+"PO-Revision-Date: 2026-11-10 17:45\n"
 "Last-Translator: TAO Translation Team <translation@tao.lu>\n"
 "MIME-Version: 1.0\n"
 "Language: it\n"
@@ -28,18 +28,6 @@ msgstr "Diritti riservati"
 
 msgid "An error occurred! Please verify your input!"
 msgstr ""
-
-msgid "Audio output"
-msgstr "Uscita audio"
-
-msgid "Audio output could not be verified automatically; confirm you hear sound."
-msgstr "Impossibile verificare automaticamente l'uscita audio; conferma di sentire il suono."
-
-msgid "Audio output test completed."
-msgstr "Test di uscita audio completato."
-
-msgid "Audio output test failed. Check volume and system audio settings."
-msgstr "Test di uscita audio non riuscito. Verificare il volume e le impostazioni audio di sistema."
 
 msgid "Average bandwidth"
 msgstr "Media della larghezza della banda"
@@ -74,9 +62,6 @@ msgstr ""
 msgid "Change since last fingerprint"
 msgstr ""
 
-msgid "Checking microphone access..."
-msgstr "Verifica dell'accesso al microfono..."
-
 msgid "Checking the bandwidth..."
 msgstr "Controllo di banda"
 
@@ -101,20 +86,11 @@ msgstr "Compatibile"
 msgid "Computing the fingerprint..."
 msgstr ""
 
-msgid "Confirm audio manually"
-msgstr "Confermare manualmente l'audio"
-
 msgid "Connect to the diagnostic tool"
 msgstr "Connesso al Diagnostic Tool"
 
 msgid "Date"
 msgstr ""
-
-msgid "Default microphone"
-msgstr "Microfono predefinito"
-
-msgid "Denied or unavailable"
-msgstr "Negato o non disponibile"
 
 msgid "Details"
 msgstr "Dettagli"
@@ -169,9 +145,6 @@ msgstr "Buona velocita' di upload"
 
 msgid "Hide Details"
 msgstr "Nascondi dettagli"
-
-msgid "Input device"
-msgstr "Dispositivo di input"
 
 msgid "Intensive bandwidth"
 msgstr "Elevato impiego di banda"
@@ -233,29 +206,14 @@ msgstr "Tempo di esecuzione minimo"
 msgid "Missing field %s"
 msgstr ""
 
-msgid "Microphone"
-msgstr "Microfono"
-
-msgid "Microphone access is working."
-msgstr "L'accesso al microfono funziona."
-
-msgid "Microphone is not available or permission was denied."
-msgstr "Il microfono non è disponibile o l'autorizzazione è stata negata."
-
 msgid "No"
 msgstr ""
 
 msgid "No diagnostic service defined"
 msgstr ""
 
-msgid "No microphone detected"
-msgstr "Nessun microfono rilevato"
-
 msgid "No readiness checks have been done!"
 msgstr ""
-
-msgid "Not supported"
-msgstr "Non supportato"
 
 msgid "Number of simultaneous test takers the connection can handle"
 msgstr "Numero di partecipanti simultaneo che la connessione può gestire."
@@ -274,15 +232,6 @@ msgstr ""
 
 msgid "Performances"
 msgstr "Performance"
-
-msgid "Playback"
-msgstr "Riproduzione"
-
-msgid "Playback failed"
-msgstr "Riproduzione non riuscita"
-
-msgid "Playback verified"
-msgstr "Riproduzione verificata"
 
 msgid "Readiness Check"
 msgstr ""
@@ -367,9 +316,6 @@ msgstr ""
 
 msgid "Test system compatibility"
 msgstr "Testa la compatibilità del sistema"
-
-msgid "Testing audio playback..."
-msgstr "Test di riproduzione audio..."
 
 msgid "The device screen does not meet the minimum resolution of %s!"
 msgstr ""
