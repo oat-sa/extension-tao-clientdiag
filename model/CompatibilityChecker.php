@@ -24,10 +24,11 @@ use common_exception_InconsistentData;
 use common_exception_FileSystemError;
 use common_exception_MissingParameter;
 use oat\oatbox\service\ConfigurableService;
+use oat\tao\model\browser\Service\HttpRequestBrowserDetector;
 use oat\taoClientDiagnostic\model\exclusionList\ExcludedBrowserService;
 use oat\taoClientDiagnostic\model\exclusionList\ExcludedOSService;
 use oat\taoClientDiagnostic\model\SupportedList\SupportedListInterface;
-use Sinergi\BrowserDetector\Browser;
+use Psr\Http\Message\ServerRequestInterface;
 use Sinergi\BrowserDetector\Os;
 
 class CompatibilityChecker extends ConfigurableService
@@ -178,13 +179,15 @@ class CompatibilityChecker extends ConfigurableService
      * @throws common_exception_InconsistentData
      * @throws common_exception_MissingParameter
      */
-    public function isCompatibleConfig(): int
+    public function isCompatibleConfig(ServerRequestInterface $request): int
     {
+        $browser = $this->getBrowserDetector()->detect($request);
+
         $clientDevice = $this->getOsDetector()->isMobile() ? 'mobile' : 'desktop';
         $clientOS = strtolower($this->getOsDetector()->getName());
         $clientOSVersion = $this->getOsDetector()->getVersion();
-        $clientBrowser = strtolower($this->getBrowserDetector()->getName());
-        $clientBrowserVersion = $this->getBrowserDetector()->getVersion();
+        $clientBrowser = strtolower($browser->name);
+        $clientBrowserVersion = $browser->version;
 
         if (
             $this->isOsExcluded($clientOS, $clientOSVersion) ||
@@ -225,12 +228,9 @@ class CompatibilityChecker extends ConfigurableService
         return self::COMPATIBILITY_NOT_TESTED;
     }
 
-    /**
-     * Get the browser detector
-     */
-    protected function getBrowserDetector(): Browser
+    private function getBrowserDetector(): HttpRequestBrowserDetector
     {
-        return new Browser();
+        return $this->getServiceManager()->getContainer()->get(HttpRequestBrowserDetector::class);
     }
 
     /**
